@@ -60,12 +60,10 @@ class ValidatorAgentPromptGenerator:
 
     def format_fragment_details(self) -> None:
         tool_source_projects_path = self.configs["agents"]["validator_agent"]["tool_source_projects_path"]
-        self.source_file_path = f"{tool_source_projects_path}/{self.source_schema_name.replace('.', '/').replace('_python_partial', '')}.java"
+        self.source_file_path = f"{tool_source_projects_path}/{self.source_schema_name.replace('.', '/')}.java"
 
         tool_target_projects_path = self.configs["agents"]["validator_agent"]["tool_target_projects_path"]
-        self.target_file_path = (
-            f"{tool_target_projects_path}/{self.target_schema_name.replace('.', '/').replace('_python_partial', '')}.py"
-        )
+        self.target_file_path = f"{tool_target_projects_path}/{self.target_schema_name.replace('.', '/')}.py"
 
         self.source_method_implementation = "\n".join(self.method_pair["source_code"]).strip()
         self.target_method_implementation = "\n".join(self.method_pair["target_code"]).strip()
