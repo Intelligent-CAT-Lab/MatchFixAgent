@@ -1,0 +1,50 @@
+templates:
+  validator_agent:
+    instruction: |-
+      <instruction>
+        Use the given Java and Python file paths to analyze whether the "{{ method_name }}" implementation is functionally equivalent. You can explore other files in the project to make your decision.
+      </instruction>
+    fragment_details: |-
+      <fragment_details>
+        
+        <source_fragment_path>
+          {{ source_file_path }}
+        </source_fragment_path>
+
+        <target_fragment_path>
+          {{ target_file_path }}
+        </target_fragment_path>
+
+        <source_fragment_class>
+          {{ source_class_name }}
+        </source_fragment_class>
+
+        <target_fragment_class>
+          {{ target_class_name }}
+        </target_fragment_class>
+
+        <source_fragment_method>
+          {{ source_method_implementation }}
+        </source_fragment_method>
+
+        <target_fragment_method>
+          {{ target_method_implementation }}
+        </target_fragment_method>
+
+      </fragment_details>
+    response_format: |-
+      Provide your response in the following format and DO NOT include any additional text outside the JSON response. Make sure you wrap the JSON inside <final_response_format> tags.
+
+      <final_response_format>
+      {
+        "is_equivalent": "yes" / "no" / "need_more_context",
+        "explanation": "<explanation>"
+      }
+      </final_response_format>
+    general_notes: |-
+      <general_notes>
+        - If you need more context to make a decision, please indicate that in your response so I could provide you with more context.
+        - Always write an explanation in natural language to justify your decision.
+        - Please THINK HARD to make sure your answer is correct.
+        - Please follow the provided response format strictly and DO NOT include any additional text outside the JSON response.
+      </general_notes>
