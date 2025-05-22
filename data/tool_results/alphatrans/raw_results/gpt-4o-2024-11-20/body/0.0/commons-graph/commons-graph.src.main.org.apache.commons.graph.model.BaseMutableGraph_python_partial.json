@@ -1,0 +1,1009 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-graph/src/main/java/org/apache/commons/graph/model/BaseMutableGraph.java",
+    "imports": {
+        "25-25:import LinkedHashSet": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.util.LinkedHashSet;\n"
+            ]
+        },
+        "22-22:import MutableGraph": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import org.apache.commons.graph.MutableGraph;\n"
+            ]
+        },
+        "23-23:import VertexPair": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import org.apache.commons.graph.VertexPair;\n"
+            ]
+        }
+    },
+    "classes": {
+        "BaseMutableGraph": {
+            "start": 36,
+            "end": 36,
+            "is_abstract": true,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "MutableGraph",
+                "BaseGraph"
+            ],
+            "methods": {
+                "142-152:removeVertex": {
+                    "start": 142,
+                    "end": 152,
+                    "body": [
+                        "    public final void removeVertex(V v) {\n",
+                        "        checkGraphCondition(v != null, \"Impossible to remove a null Vertex from the Graph\");\n",
+                        "        checkGraphCondition(containsVertex(v), \"Vertex '%s' not present in the Graph\", v);\n",
+                        "\n",
+                        "        for (V tail : getAdjacencyList().get(v)) {\n",
+                        "            getIndexedEdges().remove(new VertexPair<V>(v, tail));\n",
+                        "        }\n",
+                        "        getAdjacencyList().remove(v);\n",
+                        "\n",
+                        "        decorateRemoveVertex(v);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "final"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "removeVertex(V)",
+                    "parameters": [
+                        "v"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseGraph",
+                            "BaseGraph",
+                            "65-70:checkGraphCondition"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseGraph",
+                            "containsVertex(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "get(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseGraph",
+                            "getAdjacencyList()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "remove(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseGraph",
+                            "getIndexedEdges()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/VertexPair",
+                            "VertexPair<V>(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                            "BaseMutableGraph",
+                            "97-97:decorateRemoveVertex"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def removeVertex(self, v: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def removeVertex(self, v: typing.Any) -> None:",
+                        "        self._checkGraphCondition(v is not None, \"Impossible to remove a null Vertex from the Graph\")",
+                        "        self._checkGraphCondition(v in self._adjacencyList, f\"Vertex '{v}' not present in the Graph\")",
+                        "",
+                        "        for tail in self._adjacencyList[v]:",
+                        "            self._indexedEdges.pop(VertexPair(v, tail), None)",
+                        "        self._adjacencyList.pop(v, None)",
+                        "",
+                        "        self._decorateRemoveVertex(v)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 185.56556797027588,
+                    "generation_timestamp": "2024-11-28T10:02:20.187787",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "132-139:removeEdge": {
+                    "start": 132,
+                    "end": 139,
+                    "body": [
+                        "    public final void removeEdge(E e) {\n",
+                        "        checkGraphCondition(e != null, \"Impossible to remove a null Edge from the Graph\");\n",
+                        "        checkGraphCondition(containsEdge(e), \"Edge '%s' not present in the Graph\", e);\n",
+                        "        final VertexPair<V> vertexPair = getVertices1(e);\n",
+                        "        decorateRemoveEdge(e);\n",
+                        "        internalRemoveEdge(vertexPair.getHead(), e, vertexPair.getTail());\n",
+                        "        getAllEdges().remove(e);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "final"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "removeEdge(E)",
+                    "parameters": [
+                        "e"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseGraph",
+                            "getVertices1(java.lang.Object)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseGraph",
+                            "BaseGraph",
+                            "65-70:checkGraphCondition"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseGraph",
+                            "containsEdge(java.lang.Object)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                            "BaseMutableGraph",
+                            "90-90:decorateRemoveEdge"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                            "BaseMutableGraph",
+                            "124-129:internalRemoveEdge"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/VertexPair",
+                            "getHead()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/VertexPair",
+                            "getTail()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "remove(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseGraph",
+                            "getAllEdges()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def removeEdge(self, e: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def removeEdge(self, e: typing.Any) -> None:",
+                        "        self._checkGraphCondition(e is not None, \"Impossible to remove a null Edge from the Graph\", [])",
+                        "        self._checkGraphCondition(self.containsEdge(e), f\"Edge '{e}' not present in the Graph\", [e])",
+                        "        vertex_pair = self.getVertices1(e)",
+                        "        self._decorateRemoveEdge(e)",
+                        "        self._internalRemoveEdge(vertex_pair.getHead(), e, vertex_pair.getTail())",
+                        "        self.getAllEdges().remove(e)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "failure",
+                        "message": "org.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdge_test4_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdge_test5_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdge_test6_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdgeNotExists_test1_decomposed: java.lang.Exception\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdge_test4_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdge_test5_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdge_test6_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdgeNotExists_test1_decomposed: java.lang.Exception"
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 447.2240369319916,
+                    "generation_timestamp": "2024-11-28T10:09:47.878991",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 1,
+                        "test_execution": 2
+                    }
+                },
+                "124-129:internalRemoveEdge": {
+                    "start": 124,
+                    "end": 129,
+                    "body": [
+                        "    protected void internalRemoveEdge(V head, E e, V tail) {\n",
+                        "        final VertexPair<V> vertexPair = new VertexPair<V>(head, tail);\n",
+                        "        getIndexedVertices().remove(e);\n",
+                        "        getIndexedEdges().remove(vertexPair);\n",
+                        "        getAdjacencyList().get(vertexPair.getHead()).remove(vertexPair.getTail());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "internalRemoveEdge(V, E, V)",
+                    "parameters": [
+                        "head",
+                        "e",
+                        "tail"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/VertexPair",
+                            "VertexPair<V>(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "remove(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseGraph",
+                            "getIndexedVertices()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseGraph",
+                            "getIndexedEdges()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "remove(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "get(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/VertexPair",
+                            "getTail()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseGraph",
+                            "getAdjacencyList()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/VertexPair",
+                            "getHead()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _internalRemoveEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _internalRemoveEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:",
+                        "        vertex_pair = VertexPair(head, tail)",
+                        "        self.getIndexedVertices().remove(e)",
+                        "        self.getIndexedEdges().remove(vertex_pair)",
+                        "        self.getAdjacencyList()[vertex_pair.head].remove(vertex_pair.tail)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "failure",
+                        "message": "org.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdge_test4_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdge_test5_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdge_test6_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdge_test4_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdge_test5_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdge_test6_decomposed: AttributeError"
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 231.7997670173645,
+                    "generation_timestamp": "2024-11-28T04:02:47.377800",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 1,
+                        "test_execution": 2
+                    }
+                },
+                "106-115:internalAddEdge": {
+                    "start": 106,
+                    "end": 115,
+                    "body": [
+                        "    protected void internalAddEdge(V head, E e, V tail) {\n",
+                        "        getAdjacencyList().get(head).add(tail);\n",
+                        "\n",
+                        "        final VertexPair<V> vertexPair = new VertexPair<V>(head, tail);\n",
+                        "        getIndexedEdges().put(vertexPair, e);\n",
+                        "\n",
+                        "        if (!getIndexedVertices().containsKey(e)) {\n",
+                        "            getIndexedVertices().put(e, vertexPair);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "internalAddEdge(V, E, V)",
+                    "parameters": [
+                        "head",
+                        "e",
+                        "tail"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/VertexPair",
+                            "VertexPair<V>(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "add(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "get(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseGraph",
+                            "getAdjacencyList()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "put(org.apache.commons.graph.VertexPair,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseGraph",
+                            "getIndexedEdges()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "containsKey(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseGraph",
+                            "getIndexedVertices()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "put(java.lang.Object,org.apache.commons.graph.VertexPair)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _internalAddEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _internalAddEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:",
+                        "        self.getAdjacencyList()[head].add(tail)",
+                        "",
+                        "        vertex_pair = VertexPair(head, tail)",
+                        "        self.getIndexedEdges()[vertex_pair] = e",
+                        "",
+                        "        if e not in self.getIndexedVertices():",
+                        "            self.getIndexedVertices()[e] = vertex_pair"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "failure",
+                        "message": "org.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCrawnGraph_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCrawnGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCrawnGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCrawnGraph_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCrawnGraph_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCrawnGraph_test5_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCrawnGraph_test6_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test5_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test6_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test7_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test8_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test9_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberBiparted_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberBiparted_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberBiparted_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberBiparted_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberBiparted_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberBiparted_test5_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberBiparted_test6_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberComplete_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberComplete_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberComplete_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberComplete_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberComplete_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberComplete_test5_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberComplete_test6_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testNotEnoughtColorGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testNotEnoughtColorGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testNotEnoughtColorGraph_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testNotEnoughtColorGraph_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testNotEnoughtColorGraph_test5_decomposed: java.lang.Exception\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test5_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test6_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test7_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test8_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test9_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test5_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test6_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test7_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test8_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test9_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test10_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test11_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test12_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVerticesNPE_test1_decomposed: java.lang.Exception\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEdge_test0_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test0_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test1_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test2_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test3_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test4_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test5_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test6_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test7_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test8_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test12_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test13_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test14_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test15_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test16_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test17_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test18_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdge_test2_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdge_test3_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdge_test4_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdge_test5_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdge_test6_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdgeNotExists_test0_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdgeNotExists_test1_decomposed: java.lang.Exception\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedMultiTh_test5_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedMultiTh_test6_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedMultiTh_test7_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVertices_test0_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVertices_test1_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVertices_test2_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVertices_test3_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVertices_test4_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVertices_test5_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVerticesNPE_test0_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEdge_test1_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEdge_test2_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEdge_test3_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEdge_test4_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEgdeNotExistsVertex_test0_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEgdeNotExistsVertex_test1_decomposed: java.lang.Exception\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEgdeNotExistsVertex_2_test0_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEgdeNotExistsVertex_2_test1_decomposed: java.lang.Exception\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testMultiThreadUndirectGraph_test5_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testMultiThreadUndirectGraph_test6_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testMultiThreadUndirectGraph_test7_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdge_test2_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdge_test3_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdge_test4_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdge_test5_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdge_test6_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdgeNotExists_test0_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdgeNotExists_test1_decomposed: java.lang.Exception\norg.apache.commons.graph.spanning.BoruvkaTestCase.testVerifyWikipediaMinimumSpanningTree_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.testVerifyWikipediaMinimumSpanningTree_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.testVerifyWikipediaMinimumSpanningTree_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.testVerifyWikipediaMinimumSpanningTree_test11_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.testVerifyWikipediaMinimumSpanningTree_test12_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.testVerifyWikipediaMinimumSpanningTree_test13_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.testVerifyWikipediaMinimumSpanningTree_test14_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.testVerifyWikipediaMinimumSpanningTree_test15_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test16_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test8_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test9_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test10_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test11_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test12_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test13_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test14_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test15_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test16_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test17_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test18_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test19_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test20_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test21_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test22_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test23_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test24_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test25_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test26_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test27_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test8_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test9_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test10_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test11_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test12_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test13_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test14_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test15_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test17_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test18_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test19_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test20_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test21_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test22_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test23_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test24_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test25_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test26_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test27_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeDirectedGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeDirectedGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeDirectedWeightdGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeDirectedWeightdGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeSpanningTree_test2_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeSpanningTree_test3_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeSyncronyzedDirectedWeightdGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeSyncronyzedDirectedWeightdGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeSyncronyzedDirectedWeightdGraph_test3_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeUndirectedGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeUndirectedGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeUndirectedWeightdGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeUndirectedWeightdGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyBreadthFirstSearch_test0_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyBreadthFirstSearch_test1_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyBreadthFirstSearch_test2_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyBreadthFirstSearch_test3_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyBreadthFirstSearch_test4_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyDepthFirstSearch_test0_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyDepthFirstSearch_test1_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyDepthFirstSearch_test2_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyDepthFirstSearch_test3_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyDepthFirstSearch_test4_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.FloydWarshallTestCase.testDirectedShortestPath_test0_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.FloydWarshallTestCase.testUndirectedShortestPath_test0_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testFindMaxFlowAndVerify_test2_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testFindMaxFlowAndVerify_test3_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testFindMaxFlowAndVerify_test4_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testFindMaxFlowAndVerify_test5_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testFindMaxFlowAndVerify_test6_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testFindMaxFlowAndVerify_test7_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testFindMaxFlowAndVerify_test8_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_2_test2_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_2_test3_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_2_test4_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_2_test5_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_2_test6_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_2_test7_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_2_test8_decomposed: AttributeError\norg.apache.commons.graph.builder.GraphBuilderTestCase.testVerifyProducedGraphesAreEquals_test8_decomposed: AttributeError\norg.apache.commons.graph.builder.GraphBuilderTestCase.testVerifyProducedGraphesAreEquals_test9_decomposed: AttributeError\norg.apache.commons.graph.builder.GraphBuilderTestCase.testVerifyProducedGraphesAreEquals_test10_decomposed: AttributeError\norg.apache.commons.graph.export.ExportTestCase.testShouldPrintDotFormat_test0_decomposed: AttributeError\norg.apache.commons.graph.export.ExportTestCase.testShouldPrintDotFormat_test1_decomposed: AttributeError\norg.apache.commons.graph.export.ExportTestCase.testShouldPrintDotFormat_test2_decomposed: AttributeError\norg.apache.commons.graph.export.ExportTestCase.testShouldPrintDotFormat_test3_decomposed: AttributeError\norg.apache.commons.graph.export.ExportTestCase.testShouldPrintDotFormat_test4_decomposed: AttributeError\norg.apache.commons.graph.export.ExportTestCase.testShouldPrintDotFormat_test5_decomposed: AttributeError\norg.apache.commons.graph.export.ExportTestCase.testShouldPrintDotFormat_test6_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents2_test1_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents2_test2_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents2_test3_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents2_test4_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents2_test5_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents2_test6_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents3_test1_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents3_test2_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents3_test3_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents3_test4_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents3_test5_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents3_test6_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponentsIncludingVertices_test1_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponentsIncludingVertices_test2_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponentsIncludingVertices_test3_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponentsIncludingVertices_test4_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponentsIncludingVertices_test5_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponentsIncludingVertices_test6_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCrawnGraph_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCrawnGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCrawnGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCrawnGraph_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCrawnGraph_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumber_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumber_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumber_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumber_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumber_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberBiparted_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberBiparted_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberBiparted_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberBiparted_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberBiparted_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberComplete_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberComplete_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberComplete_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberComplete_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberComplete_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberComplete_test5_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testNotEnoughtColorGreedyGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testNotEnoughtColorGreedyGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testNotEnoughtColorGreedyGraph_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testNotEnoughtColorGreedyGraph_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testNotEnoughtColorGreedyGraph_test5_decomposed: java.lang.Exception\norg.apache.commons.graph.coloring.GraphColoringTestCase.testSudoku_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testSudoku_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testSudoku_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testSudoku_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testSudoku_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testSudoku_test5_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test16_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test8_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test9_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test10_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test11_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test12_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test13_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test14_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test15_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test17_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test18_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test7_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test8_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test9_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test10_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test11_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test12_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test13_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test14_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test15_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyMinimumSpanningTree_test4_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyMinimumSpanningTree_test5_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyMinimumSpanningTree_test6_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyMinimumSpanningTree_test7_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyMinimumSpanningTree_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyMinimumSpanningTree_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyMinimumSpanningTree_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph2_test6_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph2_test7_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph2_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph2_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph2_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph2_test11_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph2_test12_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph3_test7_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph3_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph3_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph3_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph3_test11_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph3_test12_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph3_test13_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test6_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test7_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test8_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test9_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test10_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test11_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test12_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test13_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test14_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testDisconnectedMinimumSpanningTree_test5_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testDisconnectedMinimumSpanningTree_test6_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testDisconnectedMinimumSpanningTree_test7_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testDisconnectedMinimumSpanningTree_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testDisconnectedMinimumSpanningTree_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testDisconnectedMinimumSpanningTree_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testDisconnectedMinimumSpanningTree_test11_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testDisconnectedMinimumSpanningTree_test12_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testP4NonUniformWeightsMinimumSpanningTree_test5_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testP4NonUniformWeightsMinimumSpanningTree_test6_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testP4NonUniformWeightsMinimumSpanningTree_test7_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testP4NonUniformWeightsMinimumSpanningTree_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testP4NonUniformWeightsMinimumSpanningTree_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testP4NonUniformWeightsMinimumSpanningTree_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testP4NonUniformWeightsMinimumSpanningTree_test11_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testP4NonUniformWeightsMinimumSpanningTree_test12_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyNotConnectedMinimumSpanningTree_test5_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyNotConnectedMinimumSpanningTree_test6_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyNotConnectedMinimumSpanningTree_test7_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyNotConnectedMinimumSpanningTree_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyNotConnectedMinimumSpanningTree_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyNotConnectedMinimumSpanningTree_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyNotConnectedMinimumSpanningTree_test11_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyNotConnectedMinimumSpanningTree_test12_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyWikipediaMinimumSpanningTree_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyWikipediaMinimumSpanningTree_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyWikipediaMinimumSpanningTree_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyWikipediaMinimumSpanningTree_test11_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyWikipediaMinimumSpanningTree_test12_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyWikipediaMinimumSpanningTree_test13_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyWikipediaMinimumSpanningTree_test14_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyWikipediaMinimumSpanningTree_test15_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test8_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test9_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test10_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test11_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test12_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test13_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test14_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test15_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test16_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test17_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testFindMaxFlowAndVerify_test2_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testFindMaxFlowAndVerify_test3_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testFindMaxFlowAndVerify_test4_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testFindMaxFlowAndVerify_test5_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testFindMaxFlowAndVerify_test6_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testFindMaxFlowAndVerify_test7_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testFindMaxFlowAndVerify_test8_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testSparse_test2_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testSparse_test3_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testSparse_test4_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testSparse_test5_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testSparse_test6_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testSparse_test7_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testSparse_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testVerifyMinimumSpanningTree2_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testVerifyMinimumSpanningTree2_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testVerifyMinimumSpanningTree2_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testVerifyMinimumSpanningTree2_test11_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testVerifyWikipediaMinimumSpanningTree_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testVerifyWikipediaMinimumSpanningTree_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testVerifyWikipediaMinimumSpanningTree_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testVerifyWikipediaMinimumSpanningTree_test11_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BidirDijkstraTestCase.: AttributeError\norg.apache.commons.graph.elo.EloTestCase.testPerformElo_test2_decomposed: AttributeError\norg.apache.commons.graph.elo.EloTestCase.testPerformElo_test0_decomposed: AttributeError\norg.apache.commons.graph.elo.EloTestCase.testPerformElo_test1_decomposed: AttributeError\norg.apache.commons.graph.elo.EloTestCase.testPerformElo_test3_decomposed: AttributeError\norg.apache.commons.graph.elo.EloTestCase.testPerformElo_test4_decomposed: AttributeError\norg.apache.commons.graph.elo.EloTestCase.testPerformElo_test5_decomposed: AttributeError"
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 1006.7186815738678,
+                    "generation_timestamp": "2024-11-28T04:19:34.391213",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 3,
+                        "field_exercise": 3,
+                        "graal": 3,
+                        "test_execution": 3
+                    },
+                    "final_budget": {
+                        "syntactic": 3,
+                        "field_exercise": 3,
+                        "graal": 1,
+                        "test_execution": 3
+                    }
+                },
+                "60-67:addVertex": {
+                    "start": 60,
+                    "end": 67,
+                    "body": [
+                        "    public final void addVertex(V v) {\n",
+                        "        checkGraphCondition(v != null, \"Impossible to add a null Vertex to the Graph\");\n",
+                        "        checkGraphCondition(!containsVertex(v), \"Vertex '%s' already present in the Graph\", v);\n",
+                        "\n",
+                        "        getAdjacencyList().put(v, new LinkedHashSet<V>());\n",
+                        "\n",
+                        "        decorateAddVertex(v);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "final"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "addVertex(V)",
+                    "parameters": [
+                        "v"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseGraph",
+                            "BaseGraph",
+                            "65-70:checkGraphCondition"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseGraph",
+                            "containsVertex(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "put(java.lang.Object,java.util.Set)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseGraph",
+                            "getAdjacencyList()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/LinkedHashSet",
+                            "LinkedHashSet<V>()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                            "BaseMutableGraph",
+                            "83-83:decorateAddVertex"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def addVertex(self, v: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def addVertex(self, v: typing.Any) -> None:",
+                        "        self._checkGraphCondition(v is not None, \"Impossible to add a null Vertex to the Graph\", [])",
+                        "        self._checkGraphCondition(not self.containsVertex(v), f\"Vertex '{v}' already present in the Graph\", [v])",
+                        "",
+                        "        self.__adjacencyList[v] = set()",
+                        "",
+                        "        self._decorateAddVertex(v)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "failure",
+                        "message": "org.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCrawnGraph_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCrawnGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCrawnGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCrawnGraph_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCrawnGraph_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCrawnGraph_test5_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCrawnGraph_test6_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test5_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test6_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test7_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test8_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test9_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberBiparted_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberBiparted_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberBiparted_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberBiparted_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberBiparted_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberBiparted_test5_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberBiparted_test6_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberComplete_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberComplete_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberComplete_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberComplete_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberComplete_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberComplete_test5_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberComplete_test6_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberSparseGraph_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberSparseGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberSparseGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberSparseGraph_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberSparseGraph_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberSparseGraph_test5_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberSparseGraph_test6_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testNotEnoughtColorGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testNotEnoughtColorGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testNotEnoughtColorGraph_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testNotEnoughtColorGraph_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testNotEnoughtColorGraph_test5_decomposed: java.lang.Exception\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test5_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test6_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test7_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test8_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test9_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test5_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test6_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test7_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test8_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test9_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test10_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test11_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test12_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVerticesNPE_test1_decomposed: java.lang.Exception\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEdge_test0_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test0_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test1_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test2_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test3_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test4_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test5_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test6_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test7_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test8_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test12_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test13_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test14_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test15_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test16_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test17_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test18_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdge_test2_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdge_test3_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdge_test4_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdge_test5_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdge_test6_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdgeNotExists_test0_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdgeNotExists_test1_decomposed: java.lang.Exception\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedMultiTh_test5_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedMultiTh_test6_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedMultiTh_test7_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVertices_test0_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVertices_test1_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVertices_test2_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVertices_test3_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVertices_test4_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVertices_test5_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVerticesNPE_test0_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVerticesOnNotConnectedGraph_test0_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVerticesOnNotConnectedGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVerticesOnNotConnectedGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVerticesOnNotConnectedGraph_test3_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVerticesOnNotConnectedGraph_test4_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEdge_test1_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEdge_test2_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEdge_test3_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEdge_test4_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEgdeNotExistsVertex_test0_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEgdeNotExistsVertex_test1_decomposed: java.lang.Exception\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEgdeNotExistsVertex_2_test0_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEgdeNotExistsVertex_2_test1_decomposed: java.lang.Exception\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetNotExistsEdge_test0_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetNotExistsEdge_test1_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetNotExistsEdge_test2_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetNotExistsEdge_test3_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetNotExistsEdge_test4_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testMultiThreadUndirectGraph_test5_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testMultiThreadUndirectGraph_test6_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testMultiThreadUndirectGraph_test7_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdge_test2_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdge_test3_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdge_test4_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdge_test5_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdge_test6_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdgeNotExists_test0_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdgeNotExists_test1_decomposed: java.lang.Exception\norg.apache.commons.graph.spanning.BoruvkaTestCase.testNullMonoid_test0_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.testNullMonoid_test1_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.testNullMonoid_test2_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.testNullMonoid_test3_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.testNullMonoid_test4_decomposed: java.lang.Exception\norg.apache.commons.graph.spanning.BoruvkaTestCase.testVerifyWikipediaMinimumSpanningTree_test7_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.testVerifyWikipediaMinimumSpanningTree_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.testVerifyWikipediaMinimumSpanningTree_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.testVerifyWikipediaMinimumSpanningTree_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.testVerifyWikipediaMinimumSpanningTree_test11_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.testVerifyWikipediaMinimumSpanningTree_test12_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.testVerifyWikipediaMinimumSpanningTree_test13_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.testVerifyWikipediaMinimumSpanningTree_test14_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.testVerifyWikipediaMinimumSpanningTree_test15_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.verifySparseGraphMinimumSpanningTree_test0_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.verifySparseGraphMinimumSpanningTree_test1_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.verifySparseGraphMinimumSpanningTree_test2_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.verifySparseGraphMinimumSpanningTree_test3_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.verifySparseGraphMinimumSpanningTree_test4_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.verifySparseGraphMinimumSpanningTree_test5_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.verifySparseGraphMinimumSpanningTree_test6_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.verifySparseGraphMinimumSpanningTree_test7_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.verifySparseGraphMinimumSpanningTree_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.verifySparseGraphMinimumSpanningTree_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.verifySparseGraphMinimumSpanningTree_test10_decomposed: java.lang.Exception\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test16_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test8_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test9_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test10_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test11_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test12_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test13_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test14_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test15_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test16_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test17_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test18_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test19_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test20_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test21_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test22_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test23_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test24_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test25_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test26_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test27_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test8_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test9_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test10_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test11_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test12_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test13_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test14_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test15_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test17_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test18_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test19_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test20_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test21_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test22_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test23_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test24_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test25_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test26_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test27_decomposed: AttributeError\norg.apache.commons.graph.scc.TarjanTestCase.testSparse_test0_decomposed: AttributeError\norg.apache.commons.graph.scc.TarjanTestCase.testSparse_test1_decomposed: AttributeError\norg.apache.commons.graph.scc.TarjanTestCase.testSparse_test2_decomposed: AttributeError\norg.apache.commons.graph.scc.TarjanTestCase.testSparse_test3_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeDirectedGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeDirectedGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeDirectedWeightdGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeDirectedWeightdGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeSpanningTree_test2_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeSpanningTree_test3_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeSyncronyzedDirectedWeightdGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeSyncronyzedDirectedWeightdGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeSyncronyzedDirectedWeightdGraph_test3_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeUndirectedGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeUndirectedGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeUndirectedWeightdGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeUndirectedWeightdGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyBreadthFirstSearch_test0_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyBreadthFirstSearch_test1_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyBreadthFirstSearch_test2_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyBreadthFirstSearch_test3_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyBreadthFirstSearch_test4_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyDepthFirstSearch_test0_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyDepthFirstSearch_test1_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyDepthFirstSearch_test2_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyDepthFirstSearch_test3_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyDepthFirstSearch_test4_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.FloydWarshallTestCase.testDirectedShortestPath_test0_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.FloydWarshallTestCase.testNotConnectGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.FloydWarshallTestCase.testNotConnectGraph_test3_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.FloydWarshallTestCase.testNotConnectGraph_test4_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.FloydWarshallTestCase.testNotConnectGraph_test5_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.FloydWarshallTestCase.testNotConnectGraph_test6_decomposed: java.lang.Exception\norg.apache.commons.graph.shortestpath.FloydWarshallTestCase.testUndirectedShortestPath_test0_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testFindMaxFlowAndVerify_test2_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testFindMaxFlowAndVerify_test3_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testFindMaxFlowAndVerify_test4_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testFindMaxFlowAndVerify_test5_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testFindMaxFlowAndVerify_test6_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testFindMaxFlowAndVerify_test7_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testFindMaxFlowAndVerify_test8_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_test2_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_test3_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_test4_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_test5_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_test6_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_test7_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_test8_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_2_test2_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_2_test3_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_2_test4_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_2_test5_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_2_test6_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_2_test7_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_2_test8_decomposed: AttributeError\norg.apache.commons.graph.builder.GraphBuilderTestCase.testVerifyProducedGraphesAreEquals_test7_decomposed: AttributeError\norg.apache.commons.graph.builder.GraphBuilderTestCase.testVerifyProducedGraphesAreEquals_test8_decomposed: AttributeError\norg.apache.commons.graph.builder.GraphBuilderTestCase.testVerifyProducedGraphesAreEquals_test9_decomposed: AttributeError\norg.apache.commons.graph.builder.GraphBuilderTestCase.testVerifyProducedGraphesAreEquals_test10_decomposed: AttributeError\norg.apache.commons.graph.export.ExportTestCase.testShouldPrintDotFormat_test0_decomposed: AttributeError\norg.apache.commons.graph.export.ExportTestCase.testShouldPrintDotFormat_test1_decomposed: AttributeError\norg.apache.commons.graph.export.ExportTestCase.testShouldPrintDotFormat_test2_decomposed: AttributeError\norg.apache.commons.graph.export.ExportTestCase.testShouldPrintDotFormat_test3_decomposed: AttributeError\norg.apache.commons.graph.export.ExportTestCase.testShouldPrintDotFormat_test4_decomposed: AttributeError\norg.apache.commons.graph.export.ExportTestCase.testShouldPrintDotFormat_test5_decomposed: AttributeError\norg.apache.commons.graph.export.ExportTestCase.testShouldPrintDotFormat_test6_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents_test1_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents_test2_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents_test3_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents_test4_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents_test5_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents_test6_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents2_test1_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents2_test2_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents2_test3_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents2_test4_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents2_test5_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents2_test6_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents3_test1_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents3_test2_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents3_test3_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents3_test4_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents3_test5_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents3_test6_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponentsIncludingVertices_test1_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponentsIncludingVertices_test2_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponentsIncludingVertices_test3_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponentsIncludingVertices_test4_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponentsIncludingVertices_test5_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponentsIncludingVertices_test6_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponentsIncludingVertices2_test2_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponentsIncludingVertices2_test3_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponentsIncludingVertices2_test4_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponentsIncludingVertices2_test5_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponentsIncludingVertices2_test6_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponentsIncludingVertices2_test7_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyNullVerticesGraph_test0_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyNullVerticesGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyNullVerticesGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyNullVerticesGraph_test3_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyNullVerticesGraph_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCrawnGraph_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCrawnGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCrawnGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCrawnGraph_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCrawnGraph_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumber_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumber_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumber_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumber_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumber_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberBiparted_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberBiparted_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberBiparted_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberBiparted_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberBiparted_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberComplete_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberComplete_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberComplete_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberComplete_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberComplete_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberComplete_test5_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberSparseGraph_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberSparseGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberSparseGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberSparseGraph_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberSparseGraph_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberSparseGraph_test5_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testNotEnoughtColorGreedyGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testNotEnoughtColorGreedyGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testNotEnoughtColorGreedyGraph_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testNotEnoughtColorGreedyGraph_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testNotEnoughtColorGreedyGraph_test5_decomposed: java.lang.Exception\norg.apache.commons.graph.coloring.GraphColoringTestCase.testSudoku_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testSudoku_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testSudoku_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testSudoku_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testSudoku_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testSudoku_test5_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test16_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testSparse_test0_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testSparse_test1_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testSparse_test2_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testSparse_test3_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test8_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test9_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test10_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test11_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test12_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test13_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test14_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test15_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test17_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test18_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test6_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test7_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test8_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test9_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test10_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test11_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test12_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test13_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test14_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test15_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testNotConnectGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testNotConnectGraph_test3_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testNotConnectGraph_test4_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testNotConnectGraph_test5_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testNotConnectGraph_test6_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testNotConnectGraph_test7_decomposed: java.lang.Exception\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testNullMonoid_test2_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testNullMonoid_test3_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testNullMonoid_test4_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testNullMonoid_test5_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testNullMonoid_test6_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testNullMonoid_test7_decomposed: java.lang.Exception\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyMinimumSpanningTree_test3_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyMinimumSpanningTree_test4_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyMinimumSpanningTree_test5_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyMinimumSpanningTree_test6_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyMinimumSpanningTree_test7_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyMinimumSpanningTree_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyMinimumSpanningTree_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyMinimumSpanningTree_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph_test3_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph_test4_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph_test5_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph_test6_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph_test7_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph2_test5_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph2_test6_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph2_test7_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph2_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph2_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph2_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph2_test11_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph2_test12_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph3_test6_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph3_test7_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph3_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph3_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph3_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph3_test11_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph3_test12_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph3_test13_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test5_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test6_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test7_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test8_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test9_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test10_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test11_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test12_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test13_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test14_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testNotConnectGraph_test0_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testNotConnectGraph_test1_decomposed: java.lang.Exception\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testNullMonoid_test0_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testNullMonoid_test1_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testNullMonoid_test2_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testNullMonoid_test3_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testNullMonoid_test4_decomposed: java.lang.Exception\norg.apache.commons.graph.spanning.KruskalTestCase.testDisconnectedMinimumSpanningTree_test4_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testDisconnectedMinimumSpanningTree_test5_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testDisconnectedMinimumSpanningTree_test6_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testDisconnectedMinimumSpanningTree_test7_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testDisconnectedMinimumSpanningTree_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testDisconnectedMinimumSpanningTree_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testDisconnectedMinimumSpanningTree_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testDisconnectedMinimumSpanningTree_test11_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testDisconnectedMinimumSpanningTree_test12_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testNullMonoid_test0_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testNullMonoid_test1_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testNullMonoid_test2_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testNullMonoid_test3_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testNullMonoid_test4_decomposed: java.lang.Exception\norg.apache.commons.graph.spanning.KruskalTestCase.testP4NonUniformWeightsMinimumSpanningTree_test4_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testP4NonUniformWeightsMinimumSpanningTree_test5_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testP4NonUniformWeightsMinimumSpanningTree_test6_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testP4NonUniformWeightsMinimumSpanningTree_test7_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testP4NonUniformWeightsMinimumSpanningTree_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testP4NonUniformWeightsMinimumSpanningTree_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testP4NonUniformWeightsMinimumSpanningTree_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testP4NonUniformWeightsMinimumSpanningTree_test11_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testP4NonUniformWeightsMinimumSpanningTree_test12_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyNotConnectedMinimumSpanningTree_test4_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyNotConnectedMinimumSpanningTree_test5_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyNotConnectedMinimumSpanningTree_test6_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyNotConnectedMinimumSpanningTree_test7_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyNotConnectedMinimumSpanningTree_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyNotConnectedMinimumSpanningTree_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyNotConnectedMinimumSpanningTree_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyNotConnectedMinimumSpanningTree_test11_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyNotConnectedMinimumSpanningTree_test12_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyWikipediaMinimumSpanningTree_test7_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyWikipediaMinimumSpanningTree_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyWikipediaMinimumSpanningTree_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyWikipediaMinimumSpanningTree_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyWikipediaMinimumSpanningTree_test11_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyWikipediaMinimumSpanningTree_test12_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyWikipediaMinimumSpanningTree_test13_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyWikipediaMinimumSpanningTree_test14_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyWikipediaMinimumSpanningTree_test15_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test7_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test8_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test9_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test10_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test11_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test12_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test13_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test14_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test15_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test16_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test17_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testNotConnectGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testNotConnectGraph_test3_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testNotConnectGraph_test4_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testNotConnectGraph_test5_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testNotConnectGraph_test6_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testNotConnectGraph_test7_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testNotConnectGraph_test8_decomposed: java.lang.Exception\norg.apache.commons.graph.shortestpath.AStarTestCase.testNullMonoid_test2_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testNullMonoid_test3_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testNullMonoid_test4_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testNullMonoid_test5_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testNullMonoid_test6_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testNullMonoid_test7_decomposed: java.lang.Exception\norg.apache.commons.graph.shortestpath.AStarTestCase.testNullMonoid_test8_decomposed: java.lang.Exception\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testFindMaxFlowAndVerify_test2_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testFindMaxFlowAndVerify_test3_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testFindMaxFlowAndVerify_test4_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testFindMaxFlowAndVerify_test5_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testFindMaxFlowAndVerify_test6_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testFindMaxFlowAndVerify_test7_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testFindMaxFlowAndVerify_test8_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testSparse_test2_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testSparse_test3_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testSparse_test4_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testSparse_test5_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testSparse_test6_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testSparse_test7_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testSparse_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testNullMonoid_test0_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testNullMonoid_test1_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testNullMonoid_test2_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testNullMonoid_test3_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testNullMonoid_test4_decomposed: java.lang.Exception\norg.apache.commons.graph.spanning.PrimTestCase.testVerifyMinimumSpanningTree2_test7_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testVerifyMinimumSpanningTree2_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testVerifyMinimumSpanningTree2_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testVerifyMinimumSpanningTree2_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testVerifyMinimumSpanningTree2_test11_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testVerifyWikipediaMinimumSpanningTree_test7_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testVerifyWikipediaMinimumSpanningTree_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testVerifyWikipediaMinimumSpanningTree_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testVerifyWikipediaMinimumSpanningTree_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testVerifyWikipediaMinimumSpanningTree_test11_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BidirDijkstraTestCase.: AttributeError\norg.apache.commons.graph.elo.EloTestCase.testPerformElo_test2_decomposed: AttributeError\norg.apache.commons.graph.elo.EloTestCase.testPerformElo_test0_decomposed: AttributeError\norg.apache.commons.graph.elo.EloTestCase.testPerformElo_test1_decomposed: AttributeError\norg.apache.commons.graph.elo.EloTestCase.testPerformElo_test3_decomposed: AttributeError\norg.apache.commons.graph.elo.EloTestCase.testPerformElo_test4_decomposed: AttributeError\norg.apache.commons.graph.elo.EloTestCase.testPerformElo_test5_decomposed: AttributeError"
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 2716.2791731357574,
+                    "generation_timestamp": "2024-11-28T10:55:04.525998",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 4,
+                        "field_exercise": 4,
+                        "graal": 4,
+                        "test_execution": 4
+                    },
+                    "final_budget": {
+                        "syntactic": 4,
+                        "field_exercise": 4,
+                        "graal": 1,
+                        "test_execution": 4
+                    }
+                },
+                "41-57:addEdge": {
+                    "start": 41,
+                    "end": 57,
+                    "body": [
+                        "    public void addEdge(V head, E e, V tail) {\n",
+                        "        checkGraphCondition(head != null, \"Null head Vertex not admitted\");\n",
+                        "        checkGraphCondition(e != null, \"Impossible to add a null Edge in the Graph\");\n",
+                        "        checkGraphCondition(tail != null, \"Null tail Vertex not admitted\");\n",
+                        "        checkGraphCondition(\n",
+                        "                containsVertex(head), \"Head Vertex '%s' not present in the Graph\", head);\n",
+                        "        checkGraphCondition(\n",
+                        "                containsVertex(tail), \"Head Vertex '%s' not present in the Graph\", tail);\n",
+                        "        checkGraphCondition(\n",
+                        "                getEdge(head, tail) == null, \"Edge %s is already present in the Graph\", e);\n",
+                        "\n",
+                        "        getAllEdges().add(e);\n",
+                        "\n",
+                        "        internalAddEdge(head, e, tail);\n",
+                        "\n",
+                        "        decorateAddEdge(head, e, tail);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "addEdge(V, E, V)",
+                    "parameters": [
+                        "head",
+                        "e",
+                        "tail"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseGraph",
+                            "BaseGraph",
+                            "65-70:checkGraphCondition"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseGraph",
+                            "containsVertex(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseGraph",
+                            "getEdge(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "add(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseGraph",
+                            "getAllEdges()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                            "BaseMutableGraph",
+                            "106-115:internalAddEdge"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                            "BaseMutableGraph",
+                            "76-76:decorateAddEdge"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def addEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def addEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:",
+                        "        self._checkGraphCondition(head is not None, \"Null head Vertex not admitted\", [])",
+                        "        self._checkGraphCondition(e is not None, \"Impossible to add a null Edge in the Graph\", [])",
+                        "        self._checkGraphCondition(tail is not None, \"Null tail Vertex not admitted\", [])",
+                        "        self._checkGraphCondition(",
+                        "            self.containsVertex(head), f\"Head Vertex '{head}' not present in the Graph\", [head]",
+                        "        )",
+                        "        self._checkGraphCondition(",
+                        "            self.containsVertex(tail), f\"Tail Vertex '{tail}' not present in the Graph\", [tail]",
+                        "        )",
+                        "        self._checkGraphCondition(",
+                        "            self.getEdge(head, tail) is None, f\"Edge {e} is already present in the Graph\", [e]",
+                        "        )",
+                        "",
+                        "        self.getAllEdges().add(e)",
+                        "",
+                        "        self._internalAddEdge(head, e, tail)",
+                        "",
+                        "        self._decorateAddEdge(head, e, tail)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "failure",
+                        "message": "org.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCrawnGraph_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCrawnGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCrawnGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCrawnGraph_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCrawnGraph_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCrawnGraph_test5_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCrawnGraph_test6_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test5_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test6_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test7_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test8_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumber_test9_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberBiparted_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberBiparted_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberBiparted_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberBiparted_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberBiparted_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberBiparted_test5_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberBiparted_test6_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberComplete_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberComplete_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberComplete_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberComplete_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberComplete_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberComplete_test5_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testCromaticNumberComplete_test6_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testNotEnoughtColorGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testNotEnoughtColorGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testNotEnoughtColorGraph_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testNotEnoughtColorGraph_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testNotEnoughtColorGraph_test5_decomposed: java.lang.Exception\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test5_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test6_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test7_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test8_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudoku_test9_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test5_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test6_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test7_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test8_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test9_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test10_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test11_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringBackTrackingTestCase.testSudokuWithConstraints_test12_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVerticesNPE_test1_decomposed: java.lang.Exception\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEdge_test0_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test0_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test1_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test2_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test3_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test4_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test5_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test6_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test7_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test8_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test12_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test13_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test14_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test15_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test16_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test17_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testAddVertexAndEdge_test18_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdge_test2_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdge_test3_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdge_test4_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdge_test5_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdge_test6_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdgeNotExists_test0_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedGraphRemoveEdgeNotExists_test1_decomposed: java.lang.Exception\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedMultiTh_test5_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedMultiTh_test6_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testDirectedMultiTh_test7_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVertices_test0_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVertices_test1_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVertices_test2_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVertices_test3_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVertices_test4_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVertices_test5_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetConnectedVerticesNPE_test0_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEdge_test1_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEdge_test2_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEdge_test3_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEdge_test4_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEgdeNotExistsVertex_test0_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEgdeNotExistsVertex_test1_decomposed: java.lang.Exception\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEgdeNotExistsVertex_2_test0_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testGetEgdeNotExistsVertex_2_test1_decomposed: java.lang.Exception\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testMultiThreadUndirectGraph_test5_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testMultiThreadUndirectGraph_test6_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testMultiThreadUndirectGraph_test7_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdge_test2_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdge_test3_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdge_test4_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdge_test5_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdge_test6_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdgeNotExists_test0_decomposed: AttributeError\norg.apache.commons.graph.model.BaseMutableGraphTestCase.testUndirectedGraphRemoveEdgeNotExists_test1_decomposed: java.lang.Exception\norg.apache.commons.graph.spanning.BoruvkaTestCase.testVerifyWikipediaMinimumSpanningTree_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.testVerifyWikipediaMinimumSpanningTree_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.testVerifyWikipediaMinimumSpanningTree_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.testVerifyWikipediaMinimumSpanningTree_test11_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.testVerifyWikipediaMinimumSpanningTree_test12_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.testVerifyWikipediaMinimumSpanningTree_test13_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.testVerifyWikipediaMinimumSpanningTree_test14_decomposed: AttributeError\norg.apache.commons.graph.spanning.BoruvkaTestCase.testVerifyWikipediaMinimumSpanningTree_test15_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test16_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test8_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test9_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test10_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test11_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test12_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test13_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test14_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test15_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test16_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test17_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test18_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test19_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test20_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test21_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test22_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test23_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test24_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test25_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test26_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testUnconnectedGraph_test27_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test8_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test9_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test10_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test11_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test12_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test13_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test14_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test15_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test17_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test18_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test19_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test20_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test21_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test22_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test23_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test24_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test25_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test26_decomposed: AttributeError\norg.apache.commons.graph.scc.KosarajuSharirTestCase.testVerifyHasStronglyConnectedComponents_test27_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeDirectedGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeDirectedGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeDirectedWeightdGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeDirectedWeightdGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeSpanningTree_test2_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeSpanningTree_test3_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeSyncronyzedDirectedWeightdGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeSyncronyzedDirectedWeightdGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeSyncronyzedDirectedWeightdGraph_test3_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeUndirectedGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeUndirectedGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeUndirectedWeightdGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.model.GraphSerializationTestCase.testSerializeUndirectedWeightdGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyBreadthFirstSearch_test0_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyBreadthFirstSearch_test1_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyBreadthFirstSearch_test2_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyBreadthFirstSearch_test3_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyBreadthFirstSearch_test4_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyDepthFirstSearch_test0_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyDepthFirstSearch_test1_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyDepthFirstSearch_test2_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyDepthFirstSearch_test3_decomposed: AttributeError\norg.apache.commons.graph.visit.VisitTestCase.testVerifyDepthFirstSearch_test4_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.FloydWarshallTestCase.testDirectedShortestPath_test0_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.FloydWarshallTestCase.testUndirectedShortestPath_test0_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testFindMaxFlowAndVerify_test2_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testFindMaxFlowAndVerify_test3_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testFindMaxFlowAndVerify_test4_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testFindMaxFlowAndVerify_test5_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testFindMaxFlowAndVerify_test6_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testFindMaxFlowAndVerify_test7_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testFindMaxFlowAndVerify_test8_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_2_test2_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_2_test3_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_2_test4_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_2_test5_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_2_test6_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_2_test7_decomposed: AttributeError\norg.apache.commons.graph.flow.FordFulkersonTestCase.testNotConnected_2_test8_decomposed: AttributeError\norg.apache.commons.graph.builder.GraphBuilderTestCase.testVerifyProducedGraphesAreEquals_test8_decomposed: AttributeError\norg.apache.commons.graph.builder.GraphBuilderTestCase.testVerifyProducedGraphesAreEquals_test9_decomposed: AttributeError\norg.apache.commons.graph.builder.GraphBuilderTestCase.testVerifyProducedGraphesAreEquals_test10_decomposed: AttributeError\norg.apache.commons.graph.export.ExportTestCase.testShouldPrintDotFormat_test0_decomposed: AttributeError\norg.apache.commons.graph.export.ExportTestCase.testShouldPrintDotFormat_test1_decomposed: AttributeError\norg.apache.commons.graph.export.ExportTestCase.testShouldPrintDotFormat_test2_decomposed: AttributeError\norg.apache.commons.graph.export.ExportTestCase.testShouldPrintDotFormat_test3_decomposed: AttributeError\norg.apache.commons.graph.export.ExportTestCase.testShouldPrintDotFormat_test4_decomposed: AttributeError\norg.apache.commons.graph.export.ExportTestCase.testShouldPrintDotFormat_test5_decomposed: AttributeError\norg.apache.commons.graph.export.ExportTestCase.testShouldPrintDotFormat_test6_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents2_test1_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents2_test2_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents2_test3_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents2_test4_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents2_test5_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents2_test6_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents3_test1_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents3_test2_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents3_test3_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents3_test4_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents3_test5_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponents3_test6_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponentsIncludingVertices_test1_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponentsIncludingVertices_test2_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponentsIncludingVertices_test3_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponentsIncludingVertices_test4_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponentsIncludingVertices_test5_decomposed: AttributeError\norg.apache.commons.graph.connectivity.FindConnectedComponetTestCase.testVerifyConnectedComponentsIncludingVertices_test6_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCrawnGraph_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCrawnGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCrawnGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCrawnGraph_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCrawnGraph_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumber_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumber_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumber_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumber_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumber_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberBiparted_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberBiparted_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberBiparted_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberBiparted_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberBiparted_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberComplete_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberComplete_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberComplete_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberComplete_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberComplete_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testCromaticNumberComplete_test5_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testNotEnoughtColorGreedyGraph_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testNotEnoughtColorGreedyGraph_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testNotEnoughtColorGreedyGraph_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testNotEnoughtColorGreedyGraph_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testNotEnoughtColorGreedyGraph_test5_decomposed: java.lang.Exception\norg.apache.commons.graph.coloring.GraphColoringTestCase.testSudoku_test0_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testSudoku_test1_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testSudoku_test2_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testSudoku_test3_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testSudoku_test4_decomposed: AttributeError\norg.apache.commons.graph.coloring.GraphColoringTestCase.testSudoku_test5_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test16_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test8_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test9_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test10_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test11_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test12_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test13_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test14_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test15_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test17_decomposed: AttributeError\norg.apache.commons.graph.scc.CheriyanMehlhornGabowTestCase.testVerifyHasStronglyConnectedComponents_test18_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test7_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test8_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test9_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test10_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test11_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test12_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test13_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test14_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.DijkstraTestCase.testFindShortestPathAndVerify_test15_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyMinimumSpanningTree_test4_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyMinimumSpanningTree_test5_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyMinimumSpanningTree_test6_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyMinimumSpanningTree_test7_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyMinimumSpanningTree_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyMinimumSpanningTree_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyMinimumSpanningTree_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph2_test6_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph2_test7_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph2_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph2_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph2_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph2_test11_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph2_test12_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph3_test7_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph3_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph3_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph3_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph3_test11_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph3_test12_decomposed: AttributeError\norg.apache.commons.graph.spanning.ReverseDeleteTestCase.testVerifyNotConnectGraph3_test13_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test6_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test7_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test8_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test9_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test10_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test11_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test12_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test13_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BellmannFordTestCase.testFindShortestPathAndVerify_test14_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testDisconnectedMinimumSpanningTree_test5_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testDisconnectedMinimumSpanningTree_test6_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testDisconnectedMinimumSpanningTree_test7_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testDisconnectedMinimumSpanningTree_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testDisconnectedMinimumSpanningTree_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testDisconnectedMinimumSpanningTree_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testDisconnectedMinimumSpanningTree_test11_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testDisconnectedMinimumSpanningTree_test12_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testP4NonUniformWeightsMinimumSpanningTree_test5_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testP4NonUniformWeightsMinimumSpanningTree_test6_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testP4NonUniformWeightsMinimumSpanningTree_test7_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testP4NonUniformWeightsMinimumSpanningTree_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testP4NonUniformWeightsMinimumSpanningTree_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testP4NonUniformWeightsMinimumSpanningTree_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testP4NonUniformWeightsMinimumSpanningTree_test11_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testP4NonUniformWeightsMinimumSpanningTree_test12_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyNotConnectedMinimumSpanningTree_test5_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyNotConnectedMinimumSpanningTree_test6_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyNotConnectedMinimumSpanningTree_test7_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyNotConnectedMinimumSpanningTree_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyNotConnectedMinimumSpanningTree_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyNotConnectedMinimumSpanningTree_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyNotConnectedMinimumSpanningTree_test11_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyNotConnectedMinimumSpanningTree_test12_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyWikipediaMinimumSpanningTree_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyWikipediaMinimumSpanningTree_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyWikipediaMinimumSpanningTree_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyWikipediaMinimumSpanningTree_test11_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyWikipediaMinimumSpanningTree_test12_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyWikipediaMinimumSpanningTree_test13_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyWikipediaMinimumSpanningTree_test14_decomposed: AttributeError\norg.apache.commons.graph.spanning.KruskalTestCase.testVerifyWikipediaMinimumSpanningTree_test15_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test8_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test9_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test10_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test11_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test12_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test13_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test14_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test15_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test16_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.AStarTestCase.testFindShortestPathAndVerify_test17_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testFindMaxFlowAndVerify_test2_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testFindMaxFlowAndVerify_test3_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testFindMaxFlowAndVerify_test4_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testFindMaxFlowAndVerify_test5_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testFindMaxFlowAndVerify_test6_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testFindMaxFlowAndVerify_test7_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testFindMaxFlowAndVerify_test8_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testSparse_test2_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testSparse_test3_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testSparse_test4_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testSparse_test5_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testSparse_test6_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testSparse_test7_decomposed: AttributeError\norg.apache.commons.graph.flow.EdmondsKarpTestCase.testSparse_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testVerifyMinimumSpanningTree2_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testVerifyMinimumSpanningTree2_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testVerifyMinimumSpanningTree2_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testVerifyMinimumSpanningTree2_test11_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testVerifyWikipediaMinimumSpanningTree_test8_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testVerifyWikipediaMinimumSpanningTree_test9_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testVerifyWikipediaMinimumSpanningTree_test10_decomposed: AttributeError\norg.apache.commons.graph.spanning.PrimTestCase.testVerifyWikipediaMinimumSpanningTree_test11_decomposed: AttributeError\norg.apache.commons.graph.shortestpath.BidirDijkstraTestCase.: AttributeError\norg.apache.commons.graph.elo.EloTestCase.testPerformElo_test2_decomposed: AttributeError\norg.apache.commons.graph.elo.EloTestCase.testPerformElo_test0_decomposed: AttributeError\norg.apache.commons.graph.elo.EloTestCase.testPerformElo_test1_decomposed: AttributeError\norg.apache.commons.graph.elo.EloTestCase.testPerformElo_test3_decomposed: AttributeError\norg.apache.commons.graph.elo.EloTestCase.testPerformElo_test4_decomposed: AttributeError\norg.apache.commons.graph.elo.EloTestCase.testPerformElo_test5_decomposed: AttributeError"
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 2029.0500900745392,
+                    "generation_timestamp": "2024-11-28T11:28:53.964428",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 3,
+                        "field_exercise": 3,
+                        "graal": 3,
+                        "test_execution": 3
+                    },
+                    "final_budget": {
+                        "syntactic": 3,
+                        "field_exercise": 3,
+                        "graal": 1,
+                        "test_execution": 3
+                    }
+                },
+                "97-97:decorateRemoveVertex": {
+                    "start": 97,
+                    "end": 97,
+                    "body": [
+                        "    protected abstract void decorateRemoveVertex(V v);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "decorateRemoveVertex(V)",
+                    "parameters": [
+                        "v"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _decorateRemoveVertex(self, v: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _decorateRemoveVertex(self, v: typing.Any) -> None:",
+                        "        raise NotImplementedError(\"Subclasses must implement this method.\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 96.33754968643188,
+                    "generation_timestamp": "2024-11-28T04:21:10.949828",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "90-90:decorateRemoveEdge": {
+                    "start": 90,
+                    "end": 90,
+                    "body": [
+                        "    protected abstract void decorateRemoveEdge(E e);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "decorateRemoveEdge(E)",
+                    "parameters": [
+                        "e"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _decorateRemoveEdge(self, e: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _decorateRemoveEdge(self, e: typing.Any) -> None:",
+                        "        # Abstract method placeholder",
+                        "        # Implement this method in a subclass",
+                        "        pass"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 94.88209581375122,
+                    "generation_timestamp": "2024-11-28T04:22:46.131623",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "83-83:decorateAddVertex": {
+                    "start": 83,
+                    "end": 83,
+                    "body": [
+                        "    protected abstract void decorateAddVertex(V v);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "decorateAddVertex(V)",
+                    "parameters": [
+                        "v"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _decorateAddVertex(self, v: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _decorateAddVertex(self, v: typing.Any) -> None:",
+                        "        raise NotImplementedError(\"Subclasses must implement this method.\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 93.60818791389465,
+                    "generation_timestamp": "2024-11-28T04:24:20.024310",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "76-76:decorateAddEdge": {
+                    "start": 76,
+                    "end": 76,
+                    "body": [
+                        "    protected abstract void decorateAddEdge(V head, E e, V tail);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "decorateAddEdge(V, E, V)",
+                    "parameters": [
+                        "head",
+                        "e",
+                        "tail"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _decorateAddEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _decorateAddEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:",
+                        "        # This method is abstract in Java, so it should remain unimplemented here.",
+                        "        # You can raise a NotImplementedError to indicate it must be overridden in subclasses.",
+                        "        raise NotImplementedError(\"Subclasses must implement this method\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 93.81839799880981,
+                    "generation_timestamp": "2024-11-28T04:25:54.204567",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "38-38:serialVersionUID": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "    private static final long serialVersionUID = 1549113549446254183L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = 1549113549446254183"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 31.488511323928833,
+                    "generation_timestamp": "2024-11-27T11:31:25.022811",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class BaseMutableGraph(MutableGraph, BaseGraph, ABC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "from abc import ABC",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.graph.MutableGraph import *",
+        "from src.main.org.apache.commons.graph.VertexPair import *",
+        "from src.main.org.apache.commons.graph.model.BaseGraph import *"
+    ]
+}

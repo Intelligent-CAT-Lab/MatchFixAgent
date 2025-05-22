@@ -1,0 +1,492 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/jansi/src/main/java/org/fusesource/jansi/io/FastBufferedOutputStream.java",
+    "imports": {
+        "19-19:import IOException": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "20-20:import OutputStream": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.io.OutputStream;\n"
+            ]
+        },
+        "18-18:import FilterOutputStream": {
+            "start": 18,
+            "end": 18,
+            "body": [
+                "import java.io.FilterOutputStream;\n"
+            ]
+        }
+    },
+    "classes": {
+        "FastBufferedOutputStream": {
+            "start": 25,
+            "end": 25,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "64-67:flush": {
+                    "start": 64,
+                    "end": 67,
+                    "body": [
+                        "    public void flush() throws IOException {\n",
+                        "        flushBuffer();\n",
+                        "        out.flush();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "flush()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.io.FastBufferedOutputStream",
+                            "FastBufferedOutputStream",
+                            "56-61:flushBuffer"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/OutputStream",
+                            "flush()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def flush(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def flush(self) -> None:",
+                        "        self.__flushBuffer()",
+                        "        self.out.flush()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 19.11236333847046,
+                    "generation_timestamp": "2024-11-30T14:48:09.387856",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "42-54:write1": {
+                    "start": 42,
+                    "end": 54,
+                    "body": [
+                        "    // @Override\n",
+                        "    public void write1(byte b[], int off, int len) throws IOException {\n",
+                        "        if (len >= buf.length) {\n",
+                        "            flushBuffer();\n",
+                        "            out.write(b, off, len);\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        if (len > buf.length - count) {\n",
+                        "            flushBuffer();\n",
+                        "        }\n",
+                        "        System.arraycopy(b, off, buf, count, len);\n",
+                        "        count += len;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "write1(byte[], int, int)",
+                    "parameters": [
+                        "b",
+                        "off",
+                        "len"
+                    ],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.io.FastBufferedOutputStream",
+                            "FastBufferedOutputStream",
+                            "56-61:flushBuffer"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/OutputStream",
+                            "write(byte[],int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "arraycopy(java.lang.Object,int,java.lang.Object,int,int)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def write1(self, b: typing.List[int], off: int, len_: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def write1(self, b: typing.List[int], off: int, len_: int) -> None:",
+                        "        if len_ >= len(self._buf):",
+                        "            self.__flushBuffer()",
+                        "            self.out.write(bytes(b[off:off + len_]))",
+                        "            return",
+                        "        if len_ > len(self._buf) - self._count:",
+                        "            self.__flushBuffer()",
+                        "        self._buf[self._count:self._count + len_] = b[off:off + len_]",
+                        "        self._count += len_"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 21.39781093597412,
+                    "generation_timestamp": "2024-11-30T14:48:30.825582",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "34-40:write0": {
+                    "start": 34,
+                    "end": 40,
+                    "body": [
+                        "    // @Override\n",
+                        "    public void write0(int b) throws IOException {\n",
+                        "        if (count >= buf.length) {\n",
+                        "            flushBuffer();\n",
+                        "        }\n",
+                        "        buf[count++] = (byte) b;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "write0(int)",
+                    "parameters": [
+                        "b"
+                    ],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.io.FastBufferedOutputStream",
+                            "FastBufferedOutputStream",
+                            "56-61:flushBuffer"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def write0(self, b: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def write0(self, b: int) -> None:",
+                        "        if self._count >= len(self._buf):",
+                        "            self.__flushBuffer()",
+                        "        self._buf[self._count] = b & 0xFF  # Ensure the value is within byte range (0-255)",
+                        "        self._count += 1"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 20.366360425949097,
+                    "generation_timestamp": "2024-11-30T14:48:51.222166",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "30-32:FastBufferedOutputStream": {
+                    "start": 30,
+                    "end": 32,
+                    "body": [
+                        "    public FastBufferedOutputStream(OutputStream out) {\n",
+                        "        super(out);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "FastBufferedOutputStream(OutputStream)",
+                    "parameters": [
+                        "out"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/FilterOutputStream",
+                            "FilterOutputStream(java.io.OutputStream)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, out: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, out: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter]) -> None:",
+                        "        super().__init__(out)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 19.27132296562195,
+                    "generation_timestamp": "2024-11-30T14:34:30.873947",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "56-61:flushBuffer": {
+                    "start": 56,
+                    "end": 61,
+                    "body": [
+                        "    private void flushBuffer() throws IOException {\n",
+                        "        if (count > 0) {\n",
+                        "            out.write(buf, 0, count);\n",
+                        "            count = 0;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "flushBuffer()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/OutputStream",
+                            "write(byte[],int,int)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __flushBuffer(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __flushBuffer(self) -> None:",
+                        "        if self._count > 0:",
+                        "            self.out.write(bytes(self._buf[:self._count]))",
+                        "            self._count = 0"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 20.550959825515747,
+                    "generation_timestamp": "2024-11-30T14:43:38.723121",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "28-28:count": {
+                    "start": 28,
+                    "end": 28,
+                    "body": [
+                        "    protected int count;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _count: int = 0",
+                        ""
+                    ],
+                    "translation": [
+                        "    _count: int = 0",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-11-29T19:38:21.326973",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "27-27:buf": {
+                    "start": 27,
+                    "end": 27,
+                    "body": [
+                        "    protected final byte[] buf = new byte[8192];\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _buf: typing.List[int] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    _buf: typing.List[int] = [0] * 8192"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 6.0774407386779785,
+                    "generation_timestamp": "2024-11-29T19:38:27.448710",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class FastBufferedOutputStream():\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "from io import StringIO",
+        "import io",
+        "from io import BytesIO",
+        "import typing\nfrom typing import *"
+    ]
+}

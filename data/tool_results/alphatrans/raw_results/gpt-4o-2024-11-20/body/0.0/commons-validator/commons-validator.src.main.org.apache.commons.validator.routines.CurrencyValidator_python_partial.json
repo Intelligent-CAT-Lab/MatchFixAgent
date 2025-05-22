@@ -1,0 +1,1851 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/main/java/org/apache/commons/validator/routines/CurrencyValidator.java",
+    "imports": {
+        "20-20:import Format": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.text.Format;\n"
+            ]
+        },
+        "19-19:import DecimalFormat": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.text.DecimalFormat;\n"
+            ]
+        }
+    },
+    "classes": {
+        "CurrencyValidator": {
+            "start": 46,
+            "end": 46,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "BigDecimalValidator"
+            ],
+            "methods": {
+                "94-114:parse": {
+                    "start": 94,
+                    "end": 114,
+                    "body": [
+                        "    protected Object parse(String value, Format formatter) {\n",
+                        "\n",
+                        "        Object parsedValue = super.parse(value, formatter);\n",
+                        "        if (parsedValue != null || !(formatter instanceof DecimalFormat)) {\n",
+                        "            return parsedValue;\n",
+                        "        }\n",
+                        "\n",
+                        "        DecimalFormat decimalFormat = (DecimalFormat) formatter;\n",
+                        "        String pattern = decimalFormat.toPattern();\n",
+                        "        if (pattern.indexOf(CURRENCY_SYMBOL) >= 0) {\n",
+                        "            StringBuilder buffer = new StringBuilder(pattern.length());\n",
+                        "            for (int i = 0; i < pattern.length(); i++) {\n",
+                        "                if (pattern.charAt(i) != CURRENCY_SYMBOL) {\n",
+                        "                    buffer.append(pattern.charAt(i));\n",
+                        "                }\n",
+                        "            }\n",
+                        "            decimalFormat.applyPattern(buffer.toString());\n",
+                        "            parsedValue = super.parse(value, decimalFormat);\n",
+                        "        }\n",
+                        "        return parsedValue;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "parse(String, Format)",
+                    "parameters": [
+                        "value",
+                        "formatter"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractFormatValidator",
+                            "AbstractFormatValidator",
+                            "167-184:parse"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/text/DecimalFormat",
+                            "toPattern()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "indexOf(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "charAt(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(char)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/text/DecimalFormat",
+                            "applyPattern(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _parse(self, value: str, formatter: Format) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _parse(self, value: str, formatter: Format) -> typing.Any:",
+                        "        parsed_value = super()._parse(value, formatter)",
+                        "        if parsed_value is not None or not isinstance(formatter, DecimalFormat):",
+                        "            return parsed_value",
+                        "",
+                        "        decimal_format: DecimalFormat = formatter",
+                        "        pattern: str = decimal_format.toPattern()",
+                        "        if self.__CURRENCY_SYMBOL in pattern:",
+                        "            buffer = []",
+                        "            for char in pattern:",
+                        "                if char != self.__CURRENCY_SYMBOL:",
+                        "                    buffer.append(char)",
+                        "            decimal_format.applyPattern(\"\".join(buffer))",
+                        "            parsed_value = super()._parse(value, decimal_format)",
+                        "",
+                        "        return parsed_value"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 77.5722804069519,
+                    "generation_timestamp": "2024-11-28T05:19:12.652314",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "69-71:CurrencyValidator1": {
+                    "start": 69,
+                    "end": 71,
+                    "body": [
+                        "    public static CurrencyValidator CurrencyValidator1() {\n",
+                        "        return new CurrencyValidator(true, true);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "CurrencyValidator",
+                            "CurrencyValidator"
+                        ]
+                    ],
+                    "signature": "CurrencyValidator1()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                            "CurrencyValidator",
+                            "65-67:CurrencyValidator"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def CurrencyValidator1() -> CurrencyValidator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def CurrencyValidator1() -> CurrencyValidator:",
+                        "        return CurrencyValidator(True, True)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "success",
+                        "message": ""
+                    },
+                    "test_execution": {
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testValid_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py\", line 108, in testValid_test0_decomposed\n    orig_default = Locale.getDefault()\n                   ^^^^^^\nNameError: name 'Locale' is not defined",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "111-115:testValid_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testFormatType_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "60-62:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "82-84:testFormatType_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testPattern_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py\", line 54, in testPattern_test0_decomposed\n    locale.setlocale(locale.LC_ALL, orig_default[0])\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/locale.py\", line 627, in setlocale\n    return _setlocale(category, locale)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nlocale.Error: unsupported locale setting",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "60-62:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "307-311:testPattern_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testInvalid_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "60-62:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "203-205:testInvalid_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testFormatType_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "60-62:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "79-81:getFormatType"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "58-62:AbstractNumberValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "87-90:testFormatType_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testPattern_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py\", line 286, in testPattern_test1_decomposed\n    validator.validate1(self.__UK_POUND + \"1,234.567\", pattern),\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/main/org/apache/commons/validator/routines/BigDecimalValidator.py\", line 56, in validate1\n    return self._parse(value, pattern, None)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: CurrencyValidator._parse() takes 3 positional arguments but 4 were given",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "140-142:validate1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractFormatValidator",
+                                    "class": "AbstractFormatValidator",
+                                    "method": "43-45:AbstractFormatValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "60-62:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "58-62:AbstractNumberValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "314-323:testPattern_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testValid_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py\", line 599, in testValid_test1_decomposed\n    validator.validate0(self.__UK_POUND + \"1,234.56\"),\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/main/org/apache/commons/validator/routines/BigDecimalValidator.py\", line 59, in validate0\n    return self._parse(value, None, None)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: CurrencyValidator._parse() takes 3 positional arguments but 4 were given",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "128-130:validate0"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "60-62:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "58-62:AbstractNumberValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "118-127:testValid_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testInvalid_test2_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py\", line 433, in testInvalid_test2_decomposed\n    self.assertFalse(validator.isValid0(None), \"isValid() Null Value\")\n                     ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/main/org/apache/commons/validator/routines/AbstractFormatValidator.py\", line 55, in isValid0\n    return self.isValid3(value, None, None)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/main/org/apache/commons/validator/routines/AbstractNumberValidator.py\", line 27, in isValid3\n    parsed_value = self._parse(value, pattern, locale)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: CurrencyValidator._parse() takes 3 positional arguments but 4 were given",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractFormatValidator",
+                                    "class": "AbstractFormatValidator",
+                                    "method": "68-70:isValid0"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "60-62:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "93-96:isValid3"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "58-62:AbstractNumberValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "215-221:testInvalid_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testPattern_test5_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py\", line 84, in testPattern_test5_decomposed\n    orig_default = Locale.getDefault()\n                   ^^^^^^\nNameError: name 'Locale' is not defined",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "58-62:AbstractNumberValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "399-427:testPattern_test5_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testIntegerValid_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "58-62:AbstractNumberValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "239-243:testIntegerValid_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testIntegerValid_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py\", line 391, in testIntegerValid_test1_decomposed\n    validator.validate0(self.__UK_POUND + \"1,234\"),\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/main/org/apache/commons/validator/routines/BigDecimalValidator.py\", line 59, in validate0\n    return self._parse(value, None, None)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: CurrencyValidator._parse() takes 3 positional arguments but 4 were given",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "128-130:validate0"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "58-62:AbstractNumberValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "246-253:testIntegerValid_test1_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 414.07704520225525,
+                    "generation_timestamp": "2024-11-29T03:03:55.541952",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 1
+                    },
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "65-67:CurrencyValidator": {
+                    "start": 65,
+                    "end": 67,
+                    "body": [
+                        "    public CurrencyValidator(boolean strict, boolean allowFractions) {\n",
+                        "        super(strict, CURRENCY_FORMAT, allowFractions);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "CurrencyValidator(boolean, boolean)",
+                    "parameters": [
+                        "strict",
+                        "allowFractions"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                            "BigDecimalValidator",
+                            "83-85:BigDecimalValidator"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, strict: bool, allowFractions: bool) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, strict: bool, allowFractions: bool) -> None:",
+                        "        super().__init__(strict, self.CURRENCY_FORMAT, allowFractions)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "failure",
+                        "message": "org.apache.commons.validator.routines.CurrencyValidatorTest.testInvalid_test2_decomposed: java.lang.ExceptionInInitializerError\norg.apache.commons.validator.routines.CurrencyValidatorTest.testIntegerValid_test1_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.CurrencyValidatorTest.testInvalid_test3_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.CurrencyValidatorTest.testIntegerValid_test2_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.CurrencyValidatorTest.testIntegerValid_test3_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.CurrencyValidatorTest.testIntegerInvalid_test0_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.CurrencyValidatorTest.testIntegerInvalid_test1_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.CurrencyValidatorTest.testFormatType_test0_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.CurrencyValidatorTest.testFormatType_test1_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.CurrencyValidatorTest.testFormatType_test2_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.CurrencyValidatorTest.testFormatType_test3_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.CurrencyValidatorTest.testPattern_test0_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.CurrencyValidatorTest.testPattern_test1_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.CurrencyValidatorTest.testPattern_test2_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.CurrencyValidatorTest.testPattern_test3_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.CurrencyValidatorTest.testPattern_test4_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.CurrencyValidatorTest.testPattern_test5_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.CurrencyValidatorTest.testPattern_test6_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.CurrencyValidatorTest.testValid_test0_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.CurrencyValidatorTest.testValid_test1_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.CurrencyValidatorTest.testValid_test2_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.CurrencyValidatorTest.testValid_test3_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.CurrencyValidatorTest.testInvalid_test0_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.CurrencyValidatorTest.testInvalid_test1_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.CurrencyValidatorTest.testIntegerValid_test0_decomposed: java.lang.NoClassDefFoundError"
+                    },
+                    "test_execution": {
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testPattern_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py\", line 54, in testPattern_test0_decomposed\n    locale.setlocale(locale.LC_ALL, orig_default[0])\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/locale.py\", line 627, in setlocale\n    return _setlocale(category, locale)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nlocale.Error: unsupported locale setting",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "60-62:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "307-311:testPattern_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testInvalid_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "60-62:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "203-205:testInvalid_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testValid_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py\", line 108, in testValid_test0_decomposed\n    orig_default = Locale.getDefault()\n                   ^^^^^^\nNameError: name 'Locale' is not defined",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "111-115:testValid_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testFormatType_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "60-62:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "82-84:testFormatType_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testFormatType_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "60-62:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "79-81:getFormatType"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "58-62:AbstractNumberValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "87-90:testFormatType_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testPattern_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py\", line 286, in testPattern_test1_decomposed\n    validator.validate1(self.__UK_POUND + \"1,234.567\", pattern),\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/main/org/apache/commons/validator/routines/BigDecimalValidator.py\", line 56, in validate1\n    return self._parse(value, pattern, None)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: CurrencyValidator._parse() takes 3 positional arguments but 4 were given",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "140-142:validate1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractFormatValidator",
+                                    "class": "AbstractFormatValidator",
+                                    "method": "43-45:AbstractFormatValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "60-62:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "58-62:AbstractNumberValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "314-323:testPattern_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testValid_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py\", line 599, in testValid_test1_decomposed\n    validator.validate0(self.__UK_POUND + \"1,234.56\"),\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/main/org/apache/commons/validator/routines/BigDecimalValidator.py\", line 59, in validate0\n    return self._parse(value, None, None)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: CurrencyValidator._parse() takes 3 positional arguments but 4 were given",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "128-130:validate0"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "60-62:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "58-62:AbstractNumberValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "118-127:testValid_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testInvalid_test2_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py\", line 433, in testInvalid_test2_decomposed\n    self.assertFalse(validator.isValid0(None), \"isValid() Null Value\")\n                     ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/main/org/apache/commons/validator/routines/AbstractFormatValidator.py\", line 55, in isValid0\n    return self.isValid3(value, None, None)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/main/org/apache/commons/validator/routines/AbstractNumberValidator.py\", line 27, in isValid3\n    parsed_value = self._parse(value, pattern, locale)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: CurrencyValidator._parse() takes 3 positional arguments but 4 were given",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractFormatValidator",
+                                    "class": "AbstractFormatValidator",
+                                    "method": "68-70:isValid0"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "60-62:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "93-96:isValid3"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "58-62:AbstractNumberValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "215-221:testInvalid_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testPattern_test5_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py\", line 84, in testPattern_test5_decomposed\n    orig_default = Locale.getDefault()\n                   ^^^^^^\nNameError: name 'Locale' is not defined",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "58-62:AbstractNumberValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "399-427:testPattern_test5_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testIntegerValid_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "58-62:AbstractNumberValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "239-243:testIntegerValid_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testIntegerValid_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py\", line 391, in testIntegerValid_test1_decomposed\n    validator.validate0(self.__UK_POUND + \"1,234\"),\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/main/org/apache/commons/validator/routines/BigDecimalValidator.py\", line 59, in validate0\n    return self._parse(value, None, None)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: CurrencyValidator._parse() takes 3 positional arguments but 4 were given",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "128-130:validate0"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "58-62:AbstractNumberValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "246-253:testIntegerValid_test1_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 164.7440025806427,
+                    "generation_timestamp": "2024-11-29T02:39:51.668339",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 1,
+                        "test_execution": 2
+                    },
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "60-62:getInstance": {
+                    "start": 60,
+                    "end": 62,
+                    "body": [
+                        "    public static BigDecimalValidator getInstance() {\n",
+                        "        return VALIDATOR;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "BigDecimalValidator",
+                            "BigDecimalValidator"
+                        ]
+                    ],
+                    "signature": "getInstance()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def getInstance() -> BigDecimalValidator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInstance() -> BigDecimalValidator:",
+                        "        return CurrencyValidator.__VALIDATOR"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "success",
+                        "message": ""
+                    },
+                    "test_execution": {
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testFormatType_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "60-62:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "82-84:testFormatType_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testPattern_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py\", line 54, in testPattern_test0_decomposed\n    locale.setlocale(locale.LC_ALL, orig_default[0])\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/locale.py\", line 627, in setlocale\n    return _setlocale(category, locale)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nlocale.Error: unsupported locale setting",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "60-62:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "307-311:testPattern_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testInvalid_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "60-62:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "203-205:testInvalid_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testFormatType_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "60-62:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "79-81:getFormatType"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "58-62:AbstractNumberValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "87-90:testFormatType_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testPattern_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py\", line 286, in testPattern_test1_decomposed\n    validator.validate1(self.__UK_POUND + \"1,234.567\", pattern),\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/main/org/apache/commons/validator/routines/BigDecimalValidator.py\", line 56, in validate1\n    return self._parse(value, pattern, None)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: CurrencyValidator._parse() takes 3 positional arguments but 4 were given",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "140-142:validate1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractFormatValidator",
+                                    "class": "AbstractFormatValidator",
+                                    "method": "43-45:AbstractFormatValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "60-62:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "58-62:AbstractNumberValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "314-323:testPattern_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testInvalid_test2_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py\", line 433, in testInvalid_test2_decomposed\n    self.assertFalse(validator.isValid0(None), \"isValid() Null Value\")\n                     ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/main/org/apache/commons/validator/routines/AbstractFormatValidator.py\", line 55, in isValid0\n    return self.isValid3(value, None, None)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/main/org/apache/commons/validator/routines/AbstractNumberValidator.py\", line 27, in isValid3\n    parsed_value = self._parse(value, pattern, locale)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: CurrencyValidator._parse() takes 3 positional arguments but 4 were given",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractFormatValidator",
+                                    "class": "AbstractFormatValidator",
+                                    "method": "68-70:isValid0"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "60-62:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "93-96:isValid3"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "58-62:AbstractNumberValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "215-221:testInvalid_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py::CurrencyValidatorTest::testValid_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/CurrencyValidatorTest.py\", line 599, in testValid_test1_decomposed\n    validator.validate0(self.__UK_POUND + \"1,234.56\"),\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/main/org/apache/commons/validator/routines/BigDecimalValidator.py\", line 59, in validate0\n    return self._parse(value, None, None)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: CurrencyValidator._parse() takes 3 positional arguments but 4 were given",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "128-130:validate0"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "69-71:CurrencyValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "65-67:CurrencyValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                                    "class": "CurrencyValidator",
+                                    "method": "60-62:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "58-62:AbstractNumberValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.CurrencyValidatorTest",
+                                    "class": "CurrencyValidatorTest",
+                                    "method": "118-127:testValid_test1_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 385.16576409339905,
+                    "generation_timestamp": "2024-11-28T01:00:37.358486",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 1
+                    }
+                }
+            },
+            "fields": {
+                "53-53:CURRENCY_SYMBOL": {
+                    "start": 53,
+                    "end": 53,
+                    "body": [
+                        "    private static final char CURRENCY_SYMBOL = '\\u00A4';\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char",
+                            "char"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __CURRENCY_SYMBOL: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __CURRENCY_SYMBOL: str = '\\u00A4'"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 26.40744924545288,
+                    "generation_timestamp": "2024-11-27T11:22:43.111326",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "50-50:VALIDATOR": {
+                    "start": 50,
+                    "end": 50,
+                    "body": [
+                        "    private static final CurrencyValidator VALIDATOR = CurrencyValidator.CurrencyValidator1();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "CurrencyValidator",
+                            "CurrencyValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __VALIDATOR: CurrencyValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __VALIDATOR: CurrencyValidator = CurrencyValidator.CurrencyValidator1()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 23.0889093875885,
+                    "generation_timestamp": "2024-11-27T11:23:06.231145",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "48-48:serialVersionUID": {
+                    "start": 48,
+                    "end": 48,
+                    "body": [
+                        "    private static final long serialVersionUID = -4201640771171486514L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = -4201640771171486514"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 24.327272415161133,
+                    "generation_timestamp": "2024-11-27T11:23:30.593843",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class CurrencyValidator(BigDecimalValidator):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.validator.routines.AbstractNumberValidator import *",
+        "from src.main.org.apache.commons.validator.routines.BigDecimalValidator import *"
+    ]
+}

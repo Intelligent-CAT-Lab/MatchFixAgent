@@ -1,0 +1,1482 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/main/java/org/apache/commons/validator/routines/ISINValidator.java",
+    "imports": {
+        "21-21:import Serializable": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.io.Serializable;\n"
+            ]
+        },
+        "23-23:import Locale": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.Locale;\n"
+            ]
+        },
+        "22-22:import Arrays": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        },
+        "19-19:import ISINCheckDigit": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import org.apache.commons.validator.routines.checkdigit.ISINCheckDigit;\n"
+            ]
+        }
+    },
+    "classes": {
+        "ISINValidator": {
+            "start": 39,
+            "end": 39,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "102-108:validate": {
+                    "start": 102,
+                    "end": 108,
+                    "body": [
+                        "    public Object validate(String code) {\n",
+                        "        final Object validate = VALIDATOR.validate(code);\n",
+                        "        if (validate != null && checkCountryCode) {\n",
+                        "            return checkCode(code.substring(0, 2)) ? validate : null;\n",
+                        "        }\n",
+                        "        return validate;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "validate(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "245-273:validate"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                            "ISINValidator",
+                            "110-112:checkCode"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def validate(self, code: str) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def validate(self, code: str) -> typing.Any:",
+                        "        validate = self.__VALIDATOR.validate(code)",
+                        "        if validate is not None and self.__checkCountryCode:",
+                        "            return validate if self.__checkCode(code[:2]) else None",
+                        "        return validate"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 84.25985407829285,
+                    "generation_timestamp": "2024-11-28T20:57:37.886558",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "88-94:isValid": {
+                    "start": 88,
+                    "end": 94,
+                    "body": [
+                        "    public boolean isValid(String code) {\n",
+                        "        final boolean valid = VALIDATOR.isValid(code);\n",
+                        "        if (valid && checkCountryCode) {\n",
+                        "            return checkCode(code.substring(0, 2));\n",
+                        "        }\n",
+                        "        return valid;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValid(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "232-234:isValid"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                            "ISINValidator",
+                            "110-112:checkCode"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def isValid(self, code: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def isValid(self, code: str) -> bool:",
+                        "        valid = self.__VALIDATOR.isValid(code)",
+                        "        if valid and self.__checkCountryCode:",
+                        "            return self.__checkCode(code[:2])",
+                        "        return valid"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "success",
+                        "message": ""
+                    },
+                    "test_execution": {
+                        "commons-validator/src/test/org/apache/commons/validator/routines/ISINValidatorTest.py::ISINValidatorTest::testInvalidFalse_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "245-273:validate"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "232-234:isValid"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "121-123:CodeValidator4"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "87-109:CodeValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "88-94:isValid"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "74-76:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "78-80:ISINValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ISINCheckDigit",
+                                    "class": "ISINCheckDigit",
+                                    "method": "48-50:ISINCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit",
+                                    "class": "ModulusCheckDigit",
+                                    "method": "46-48:ModulusCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.ISINValidatorTest",
+                                    "class": "ISINValidatorTest",
+                                    "method": "101-105:testInvalidFalse_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/ISINValidatorTest.py::ISINValidatorTest::testIsValidFalse_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/ISINValidatorTest.py\", line 57, in testIsValidFalse_test0_decomposed\n    self.assertTrue(self.__VALIDATOR_FALSE.isValid(f), f)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 715, in assertTrue\n    raise self.failureException(msg)\nAssertionError: False is not true : US0378331005",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "245-273:validate"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "232-234:isValid"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "121-123:CodeValidator4"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "87-109:CodeValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "88-94:isValid"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "74-76:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "78-80:ISINValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ISINCheckDigit",
+                                    "class": "ISINCheckDigit",
+                                    "method": "48-50:ISINCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit",
+                                    "class": "ModulusCheckDigit",
+                                    "method": "46-48:ModulusCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.ISINValidatorTest",
+                                    "class": "ISINValidatorTest",
+                                    "method": "94-98:testIsValidFalse_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/ISINValidatorTest.py::ISINValidatorTest::testInvalidTrue_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "245-273:validate"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "232-234:isValid"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "121-123:CodeValidator4"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "87-109:CodeValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "88-94:isValid"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "74-76:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "78-80:ISINValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ISINCheckDigit",
+                                    "class": "ISINCheckDigit",
+                                    "method": "48-50:ISINCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit",
+                                    "class": "ModulusCheckDigit",
+                                    "method": "46-48:ModulusCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.ISINValidatorTest",
+                                    "class": "ISINValidatorTest",
+                                    "method": "84-91:testInvalidTrue_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/ISINValidatorTest.py::ISINValidatorTest::testIsValidTrue_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/ISINValidatorTest.py\", line 67, in testIsValidTrue_test0_decomposed\n    self.assertTrue(self.__VALIDATOR_TRUE.isValid(f), f)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 715, in assertTrue\n    raise self.failureException(msg)\nAssertionError: False is not true : US0378331005",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "245-273:validate"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "232-234:isValid"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "121-123:CodeValidator4"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "87-109:CodeValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "88-94:isValid"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "74-76:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "78-80:ISINValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ISINCheckDigit",
+                                    "class": "ISINCheckDigit",
+                                    "method": "48-50:ISINCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit",
+                                    "class": "ModulusCheckDigit",
+                                    "method": "46-48:ModulusCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.ISINValidatorTest",
+                                    "class": "ISINValidatorTest",
+                                    "method": "77-81:testIsValidTrue_test0_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 134.86508083343506,
+                    "generation_timestamp": "2024-11-28T21:43:27.990266",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": -3,
+                        "test_execution": -4
+                    }
+                },
+                "74-76:getInstance": {
+                    "start": 74,
+                    "end": 76,
+                    "body": [
+                        "    public static ISINValidator getInstance(boolean checkCountryCode) {\n",
+                        "        return checkCountryCode ? ISIN_VALIDATOR_TRUE : ISIN_VALIDATOR_FALSE;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "ISINValidator",
+                            "ISINValidator"
+                        ]
+                    ],
+                    "signature": "getInstance(boolean)",
+                    "parameters": [
+                        "checkCountryCode"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def getInstance(checkCountryCode: bool) -> ISINValidator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInstance(checkCountryCode: bool) -> ISINValidator:",
+                        "        return ISINValidator.__ISIN_VALIDATOR_TRUE if checkCountryCode else ISINValidator.__ISIN_VALIDATOR_FALSE"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": {
+                        "commons-validator/src/test/org/apache/commons/validator/routines/ISINValidatorTest.py::ISINValidatorTest::testInvalidFalse_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "245-273:validate"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "232-234:isValid"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "121-123:CodeValidator4"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "87-109:CodeValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "88-94:isValid"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "74-76:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "78-80:ISINValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ISINCheckDigit",
+                                    "class": "ISINCheckDigit",
+                                    "method": "48-50:ISINCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit",
+                                    "class": "ModulusCheckDigit",
+                                    "method": "46-48:ModulusCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.ISINValidatorTest",
+                                    "class": "ISINValidatorTest",
+                                    "method": "101-105:testInvalidFalse_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/ISINValidatorTest.py::ISINValidatorTest::testIsValidFalse_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/ISINValidatorTest.py\", line 57, in testIsValidFalse_test0_decomposed\n    self.assertTrue(self.__VALIDATOR_FALSE.isValid(f), f)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 715, in assertTrue\n    raise self.failureException(msg)\nAssertionError: False is not true : US0378331005",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "245-273:validate"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "232-234:isValid"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "121-123:CodeValidator4"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "87-109:CodeValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "88-94:isValid"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "74-76:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "78-80:ISINValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ISINCheckDigit",
+                                    "class": "ISINCheckDigit",
+                                    "method": "48-50:ISINCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit",
+                                    "class": "ModulusCheckDigit",
+                                    "method": "46-48:ModulusCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.ISINValidatorTest",
+                                    "class": "ISINValidatorTest",
+                                    "method": "94-98:testIsValidFalse_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/ISINValidatorTest.py::ISINValidatorTest::testInvalidTrue_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "245-273:validate"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "232-234:isValid"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "121-123:CodeValidator4"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "87-109:CodeValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "88-94:isValid"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "74-76:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "78-80:ISINValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ISINCheckDigit",
+                                    "class": "ISINCheckDigit",
+                                    "method": "48-50:ISINCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit",
+                                    "class": "ModulusCheckDigit",
+                                    "method": "46-48:ModulusCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.ISINValidatorTest",
+                                    "class": "ISINValidatorTest",
+                                    "method": "84-91:testInvalidTrue_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/ISINValidatorTest.py::ISINValidatorTest::testIsValidTrue_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/ISINValidatorTest.py\", line 67, in testIsValidTrue_test0_decomposed\n    self.assertTrue(self.__VALIDATOR_TRUE.isValid(f), f)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 715, in assertTrue\n    raise self.failureException(msg)\nAssertionError: False is not true : US0378331005",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "245-273:validate"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "232-234:isValid"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "121-123:CodeValidator4"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "87-109:CodeValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "88-94:isValid"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "74-76:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "78-80:ISINValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ISINCheckDigit",
+                                    "class": "ISINCheckDigit",
+                                    "method": "48-50:ISINCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit",
+                                    "class": "ModulusCheckDigit",
+                                    "method": "46-48:ModulusCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.ISINValidatorTest",
+                                    "class": "ISINValidatorTest",
+                                    "method": "77-81:testIsValidTrue_test0_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 160.84471225738525,
+                    "generation_timestamp": "2024-11-28T15:45:29.900163",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "110-112:checkCode": {
+                    "start": 110,
+                    "end": 112,
+                    "body": [
+                        "    private boolean checkCode(String code) {\n",
+                        "        return Arrays.binarySearch(CCODES, code) >= 0 || Arrays.binarySearch(SPECIALS, code) >= 0;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "checkCode(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "binarySearch(java.lang.Object[],java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __checkCode(self, code: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __checkCode(self, code: str) -> bool:",
+                        "        return code in self.__CCODES or code in self.__SPECIALS"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 153.96428060531616,
+                    "generation_timestamp": "2024-11-28T15:48:04.297896",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "78-80:ISINValidator": {
+                    "start": 78,
+                    "end": 80,
+                    "body": [
+                        "    private ISINValidator(boolean checkCountryCode) {\n",
+                        "        this.checkCountryCode = checkCountryCode;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "ISINValidator(boolean)",
+                    "parameters": [
+                        "checkCountryCode"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, checkCountryCode: bool) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, checkCountryCode: bool) -> None:",
+                        "        self.__checkCountryCode = checkCountryCode"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": {
+                        "commons-validator/src/test/org/apache/commons/validator/routines/ISINValidatorTest.py::ISINValidatorTest::testInvalidFalse_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "245-273:validate"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "232-234:isValid"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "121-123:CodeValidator4"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "87-109:CodeValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "88-94:isValid"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "74-76:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "78-80:ISINValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ISINCheckDigit",
+                                    "class": "ISINCheckDigit",
+                                    "method": "48-50:ISINCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit",
+                                    "class": "ModulusCheckDigit",
+                                    "method": "46-48:ModulusCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.ISINValidatorTest",
+                                    "class": "ISINValidatorTest",
+                                    "method": "101-105:testInvalidFalse_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/ISINValidatorTest.py::ISINValidatorTest::testIsValidFalse_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/ISINValidatorTest.py\", line 57, in testIsValidFalse_test0_decomposed\n    self.assertTrue(self.__VALIDATOR_FALSE.isValid(f), f)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 715, in assertTrue\n    raise self.failureException(msg)\nAssertionError: False is not true : US0378331005",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "245-273:validate"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "232-234:isValid"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "121-123:CodeValidator4"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "87-109:CodeValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "88-94:isValid"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "74-76:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "78-80:ISINValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ISINCheckDigit",
+                                    "class": "ISINCheckDigit",
+                                    "method": "48-50:ISINCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit",
+                                    "class": "ModulusCheckDigit",
+                                    "method": "46-48:ModulusCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.ISINValidatorTest",
+                                    "class": "ISINValidatorTest",
+                                    "method": "94-98:testIsValidFalse_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/ISINValidatorTest.py::ISINValidatorTest::testInvalidTrue_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "245-273:validate"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "232-234:isValid"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "121-123:CodeValidator4"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "87-109:CodeValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "88-94:isValid"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "74-76:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "78-80:ISINValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ISINCheckDigit",
+                                    "class": "ISINCheckDigit",
+                                    "method": "48-50:ISINCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit",
+                                    "class": "ModulusCheckDigit",
+                                    "method": "46-48:ModulusCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.ISINValidatorTest",
+                                    "class": "ISINValidatorTest",
+                                    "method": "84-91:testInvalidTrue_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/ISINValidatorTest.py::ISINValidatorTest::testIsValidTrue_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/ISINValidatorTest.py\", line 67, in testIsValidTrue_test0_decomposed\n    self.assertTrue(self.__VALIDATOR_TRUE.isValid(f), f)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 715, in assertTrue\n    raise self.failureException(msg)\nAssertionError: False is not true : US0378331005",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "245-273:validate"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "232-234:isValid"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "121-123:CodeValidator4"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "87-109:CodeValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "88-94:isValid"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "74-76:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISINValidator",
+                                    "class": "ISINValidator",
+                                    "method": "78-80:ISINValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ISINCheckDigit",
+                                    "class": "ISINCheckDigit",
+                                    "method": "48-50:ISINCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit",
+                                    "class": "ModulusCheckDigit",
+                                    "method": "46-48:ModulusCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.ISINValidatorTest",
+                                    "class": "ISINValidatorTest",
+                                    "method": "77-81:testIsValidTrue_test0_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 153.99089646339417,
+                    "generation_timestamp": "2024-11-28T15:50:38.660175",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "66-66:checkCountryCode": {
+                    "start": 66,
+                    "end": 66,
+                    "body": [
+                        "    private final boolean checkCountryCode;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __checkCountryCode: bool = False",
+                        ""
+                    ],
+                    "translation": [
+                        "    __checkCountryCode: bool = False",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-11-27T14:14:19.406324",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "56-59:SPECIALS": {
+                    "start": 56,
+                    "end": 59,
+                    "body": [
+                        "    private static final String[] SPECIALS = {\n",
+                        "        \"EZ\", // http://www.anna-web.org/standards/isin-iso-6166/\n",
+                        "        \"XS\", // https://www.isin.org/isin/\n",
+                        "    };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __SPECIALS: typing.List[typing.List[str]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __SPECIALS: List[str] = [",
+                        "        \"EZ\",  # http://www.anna-web.org/standards/isin-iso-6166/",
+                        "        \"XS\",  # https://www.isin.org/isin/",
+                        "    ]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 29.683735609054565,
+                    "generation_timestamp": "2024-11-27T14:14:49.137269",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "54-54:CCODES": {
+                    "start": 54,
+                    "end": 54,
+                    "body": [
+                        "    private static final String[] CCODES = Locale.getISOCountries();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __CCODES: typing.List[typing.List[str]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __CCODES: List[str] = list(locale.locale_alias.keys())"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 31.350972890853882,
+                    "generation_timestamp": "2024-11-27T14:15:20.546496",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "52-52:ISIN_VALIDATOR_TRUE": {
+                    "start": 52,
+                    "end": 52,
+                    "body": [
+                        "    private static final ISINValidator ISIN_VALIDATOR_TRUE = new ISINValidator(true);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "ISINValidator",
+                            "ISINValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ISIN_VALIDATOR_TRUE: ISINValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ISIN_VALIDATOR_TRUE: ISINValidator = ISINValidator(True)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 28.00336480140686,
+                    "generation_timestamp": "2024-11-27T14:15:48.610251",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "49-49:ISIN_VALIDATOR_FALSE": {
+                    "start": 49,
+                    "end": 49,
+                    "body": [
+                        "    private static final ISINValidator ISIN_VALIDATOR_FALSE = new ISINValidator(false);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "ISINValidator",
+                            "ISINValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ISIN_VALIDATOR_FALSE: ISINValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ISIN_VALIDATOR_FALSE: ISINValidator = ISINValidator(False)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 30.63701629638672,
+                    "generation_timestamp": "2024-11-27T14:16:19.289992",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "45-46:VALIDATOR": {
+                    "start": 45,
+                    "end": 46,
+                    "body": [
+                        "    private static final CodeValidator VALIDATOR =\n",
+                        "            CodeValidator.CodeValidator4(ISIN_REGEX, 12, ISINCheckDigit.ISIN_CHECK_DIGIT);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "CodeValidator",
+                            "CodeValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __VALIDATOR: CodeValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __VALIDATOR: CodeValidator = CodeValidator.CodeValidator4(__ISIN_REGEX, 12, ISINCheckDigit.ISIN_CHECK_DIGIT)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 26.212711572647095,
+                    "generation_timestamp": "2024-11-27T14:16:45.547171",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "43-43:ISIN_REGEX": {
+                    "start": 43,
+                    "end": 43,
+                    "body": [
+                        "    private static final String ISIN_REGEX = \"([A-Z]{2}[A-Z0-9]{9}[0-9])\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ISIN_REGEX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ISIN_REGEX: str = \"([A-Z]{2}[A-Z0-9]{9}[0-9])\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 29.058003664016724,
+                    "generation_timestamp": "2024-11-27T14:17:14.638791",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "41-41:serialVersionUID": {
+                    "start": 41,
+                    "end": 41,
+                    "body": [
+                        "    private static final long serialVersionUID = -5964391439144260936L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = -5964391439144260936"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 29.918594360351562,
+                    "generation_timestamp": "2024-11-27T14:17:44.604554",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "static_initializers": {
+                "61-64:run_static_init": {
+                    "start": 61,
+                    "end": 64,
+                    "body": [
+                        "    static {\n",
+                        "        Arrays.sort(CCODES); // we cannot assume the codes are sorted\n",
+                        "        Arrays.sort(SPECIALS); // Just in case ...\n",
+                        "    }\n"
+                    ],
+                    "partial_translation": [],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def run_static_init():",
+                        "        ISINValidator.__CCODES.sort()  # we cannot assume the codes are sorted",
+                        "        ISINValidator.__SPECIALS.sort()  # Just in case ..."
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 33.05929756164551,
+                    "generation_timestamp": "2024-11-27T14:18:17.711687",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class ISINValidator():\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.validator.routines.CodeValidator import *",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.ISINCheckDigit import *"
+    ]
+}

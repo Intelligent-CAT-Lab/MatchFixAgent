@@ -1,0 +1,2685 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/main/java/org/apache/commons/validator/UrlValidator.java",
+    "imports": {
+        "22-22:import Serializable": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.io.Serializable;\n"
+            ]
+        },
+        "25-25:import Set": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.util.Set;\n"
+            ]
+        },
+        "23-23:import Arrays": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        },
+        "24-24:import HashSet": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.util.HashSet;\n"
+            ]
+        },
+        "26-26:import Matcher": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.util.regex.Matcher;\n"
+            ]
+        },
+        "27-27:import Pattern": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.util.regex.Pattern;\n"
+            ]
+        },
+        "19-19:import InetAddressValidator": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import org.apache.commons.validator.routines.InetAddressValidator;\n"
+            ]
+        },
+        "20-20:import Flags": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.apache.commons.validator.util.Flags;\n"
+            ]
+        }
+    },
+    "classes": {
+        "UrlValidator": {
+            "start": 77,
+            "end": 77,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "429-440:countToken": {
+                    "start": 429,
+                    "end": 440,
+                    "body": [
+                        "    protected int countToken(String token, String target) {\n",
+                        "        int tokenIndex = 0;\n",
+                        "        int count = 0;\n",
+                        "        while (tokenIndex != -1) {\n",
+                        "            tokenIndex = target.indexOf(token, tokenIndex);\n",
+                        "            if (tokenIndex > -1) {\n",
+                        "                tokenIndex++;\n",
+                        "                count++;\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return count;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "countToken(String, String)",
+                    "parameters": [
+                        "token",
+                        "target"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "indexOf(java.lang.String,int)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _countToken(self, token: str, target: str) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _countToken(self, token: str, target: str) -> int:",
+                        "        token_index = 0",
+                        "        count = 0",
+                        "        while token_index != -1:",
+                        "            token_index = target.find(token, token_index)",
+                        "            if token_index > -1:",
+                        "                token_index += 1",
+                        "                count += 1",
+                        "        return count"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 86.58675026893616,
+                    "generation_timestamp": "2024-11-28T01:39:09.265440",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "414-420:isValidFragment": {
+                    "start": 414,
+                    "end": 420,
+                    "body": [
+                        "    protected boolean isValidFragment(String fragment) {\n",
+                        "        if (fragment == null) {\n",
+                        "            return true;\n",
+                        "        }\n",
+                        "\n",
+                        "        return options.isOff(NO_FRAGMENTS);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValidFragment(String)",
+                    "parameters": [
+                        "fragment"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                            "Flags",
+                            "88-90:isOff"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _isValidFragment(self, fragment: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _isValidFragment(self, fragment: str) -> bool:",
+                        "        if fragment is None:",
+                        "            return True",
+                        "",
+                        "        return self.__options.isOff(self.NO_FRAGMENTS)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 82.53758502006531,
+                    "generation_timestamp": "2024-11-28T02:29:02.949732",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "400-406:isValidQuery": {
+                    "start": 400,
+                    "end": 406,
+                    "body": [
+                        "    protected boolean isValidQuery(String query) {\n",
+                        "        if (query == null) {\n",
+                        "            return true;\n",
+                        "        }\n",
+                        "\n",
+                        "        return QUERY_PATTERN.matcher(query).matches();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValidQuery(String)",
+                    "parameters": [
+                        "query"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "matches()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Pattern",
+                            "matcher(java.lang.CharSequence)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _isValidQuery(self, query: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _isValidQuery(self, query: str) -> bool:",
+                        "        if query is None:",
+                        "            return True",
+                        "",
+                        "        return self.__QUERY_PATTERN.match(query) is not None"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 87.42626810073853,
+                    "generation_timestamp": "2024-11-28T01:40:36.983800",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "371-392:isValidPath": {
+                    "start": 371,
+                    "end": 392,
+                    "body": [
+                        "    protected boolean isValidPath(String path) {\n",
+                        "        if (path == null) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (!PATH_PATTERN.matcher(path).matches()) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        int slash2Count = countToken(\"//\", path);\n",
+                        "        if (options.isOff(ALLOW_2_SLASHES) && (slash2Count > 0)) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        int slashCount = countToken(\"/\", path);\n",
+                        "        int dot2Count = countToken(\"..\", path);\n",
+                        "        if (dot2Count > 0 && (slashCount - slash2Count - 1) <= dot2Count) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        return true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValidPath(String)",
+                    "parameters": [
+                        "path"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.UrlValidator",
+                            "UrlValidator",
+                            "429-440:countToken"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "matches()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Pattern",
+                            "matcher(java.lang.CharSequence)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                            "Flags",
+                            "88-90:isOff"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _isValidPath(self, path: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _isValidPath(self, path: str) -> bool:",
+                        "        if path is None:",
+                        "            return False",
+                        "",
+                        "        if not self.__PATH_PATTERN.match(path):",
+                        "            return False",
+                        "",
+                        "        slash2_count = self._countToken(\"//\", path)",
+                        "        if self.__options.isOff(self.ALLOW_2_SLASHES) and (slash2_count > 0):",
+                        "            return False",
+                        "",
+                        "        slash_count = self._countToken(\"/\", path)",
+                        "        dot2_count = self._countToken(\"..\", path)",
+                        "        if dot2_count > 0 and (slash_count - slash2_count - 1) <= dot2_count:",
+                        "            return False",
+                        "",
+                        "        return True"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 104.02016425132751,
+                    "generation_timestamp": "2024-11-28T02:30:47.213400",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "286-363:isValidAuthority": {
+                    "start": 286,
+                    "end": 363,
+                    "body": [
+                        "    protected boolean isValidAuthority(String authority) {\n",
+                        "        if (authority == null) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        InetAddressValidator inetAddressValidator = InetAddressValidator.getInstance();\n",
+                        "\n",
+                        "        Matcher authorityMatcher = AUTHORITY_PATTERN.matcher(authority);\n",
+                        "        if (!authorityMatcher.matches()) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        boolean hostname = false;\n",
+                        "        String hostIP = authorityMatcher.group(PARSE_AUTHORITY_HOST_IP);\n",
+                        "        boolean ipV4Address = inetAddressValidator.isValid(hostIP);\n",
+                        "\n",
+                        "        if (!ipV4Address) {\n",
+                        "            hostname = DOMAIN_PATTERN.matcher(hostIP).matches();\n",
+                        "        }\n",
+                        "\n",
+                        "        if (hostname) {\n",
+                        "            char[] chars = hostIP.toCharArray();\n",
+                        "            int size = 1;\n",
+                        "            for (int i = 0; i < chars.length; i++) {\n",
+                        "                if (chars[i] == '.') {\n",
+                        "                    size++;\n",
+                        "                }\n",
+                        "            }\n",
+                        "            String[] domainSegment = new String[size];\n",
+                        "            boolean match = true;\n",
+                        "            int segmentCount = 0;\n",
+                        "            int segmentLength = 0;\n",
+                        "\n",
+                        "            while (match) {\n",
+                        "                Matcher atomMatcher = ATOM_PATTERN.matcher(hostIP);\n",
+                        "                match = atomMatcher.matches();\n",
+                        "                if (match) {\n",
+                        "                    domainSegment[segmentCount] = atomMatcher.group(1);\n",
+                        "                    segmentLength = domainSegment[segmentCount].length() + 1;\n",
+                        "                    hostIP =\n",
+                        "                            (segmentLength >= hostIP.length())\n",
+                        "                                    ? \"\"\n",
+                        "                                    : hostIP.substring(segmentLength);\n",
+                        "\n",
+                        "                    segmentCount++;\n",
+                        "                }\n",
+                        "            }\n",
+                        "            String topLevel = domainSegment[segmentCount - 1];\n",
+                        "            if (topLevel.length() < 2\n",
+                        "                    || topLevel.length() > 4) { // CHECKSTYLE IGNORE MagicNumber (deprecated code)\n",
+                        "                return false;\n",
+                        "            }\n",
+                        "\n",
+                        "            if (!ALPHA_PATTERN.matcher(topLevel.substring(0, 1)).matches()) {\n",
+                        "                return false;\n",
+                        "            }\n",
+                        "\n",
+                        "            if (segmentCount < 2) {\n",
+                        "                return false;\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        if (!hostname && !ipV4Address) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        String port = authorityMatcher.group(PARSE_AUTHORITY_PORT);\n",
+                        "        if (port != null && !PORT_PATTERN.matcher(port).matches()) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        String extra = authorityMatcher.group(PARSE_AUTHORITY_EXTRA);\n",
+                        "        if (!GenericValidator.isBlankOrNull(extra)) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        return true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValidAuthority(String)",
+                    "parameters": [
+                        "authority"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.InetAddressValidator",
+                            "InetAddressValidator",
+                            "63-65:getInstance"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Pattern",
+                            "matcher(java.lang.CharSequence)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "group(int)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.InetAddressValidator",
+                            "InetAddressValidator",
+                            "73-75:isValid"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "matches()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "toCharArray()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.GenericValidator",
+                            "GenericValidator",
+                            "51-53:isBlankOrNull"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _isValidAuthority(self, authority: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _isValidAuthority(self, authority: str) -> bool:",
+                        "        if authority is None:",
+                        "            return False",
+                        "",
+                        "        inet_address_validator = InetAddressValidator.getInstance()",
+                        "",
+                        "        authority_matcher = self.__AUTHORITY_PATTERN.match(authority)",
+                        "        if not authority_matcher:",
+                        "            return False",
+                        "",
+                        "        hostname = False",
+                        "        host_ip = authority_matcher.group(self.__PARSE_AUTHORITY_HOST_IP)",
+                        "        ipv4_address = inet_address_validator.isValid(host_ip)",
+                        "",
+                        "        if not ipv4_address:",
+                        "            hostname = bool(self.__DOMAIN_PATTERN.match(host_ip))",
+                        "",
+                        "        if hostname:",
+                        "            chars = list(host_ip)",
+                        "            size = 1",
+                        "            for char in chars:",
+                        "                if char == '.':",
+                        "                    size += 1",
+                        "",
+                        "            domain_segment = [None] * size",
+                        "            match = True",
+                        "            segment_count = 0",
+                        "            segment_length = 0",
+                        "",
+                        "            while match:",
+                        "                atom_matcher = self.__ATOM_PATTERN.match(host_ip)",
+                        "                match = bool(atom_matcher)",
+                        "                if match:",
+                        "                    domain_segment[segment_count] = atom_matcher.group(1)",
+                        "                    segment_length = len(domain_segment[segment_count]) + 1",
+                        "                    host_ip = \"\" if segment_length >= len(host_ip) else host_ip[segment_length:]",
+                        "                    segment_count += 1",
+                        "",
+                        "            top_level = domain_segment[segment_count - 1]",
+                        "            if len(top_level) < 2 or len(top_level) > 4:",
+                        "                return False",
+                        "",
+                        "            if not self.__ALPHA_PATTERN.match(top_level[0]):",
+                        "                return False",
+                        "",
+                        "            if segment_count < 2:",
+                        "                return False",
+                        "",
+                        "        if not hostname and not ipv4_address:",
+                        "            return False",
+                        "",
+                        "        port = authority_matcher.group(self.__PARSE_AUTHORITY_PORT)",
+                        "        if port is not None and not self.__PORT_PATTERN.match(port):",
+                        "            return False",
+                        "",
+                        "        extra = authority_matcher.group(self.__PARSE_AUTHORITY_EXTRA)",
+                        "        if not GenericValidator.isBlankOrNull(extra):",
+                        "            return False",
+                        "",
+                        "        return True"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "failure",
+                        "message": "org.apache.commons.validator.UrlTest.testValidator204_test1_decomposed: error\norg.apache.commons.validator.UrlTest.testValidator202_test1_decomposed: error\norg.apache.commons.validator.UrlTest.testIsValid0_test0_decomposed: error\norg.apache.commons.validator.UrlTest.testIsValid0_test1_decomposed: error\norg.apache.commons.validator.UrlTest.testIsValid0_test2_decomposed: error"
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 187.27765607833862,
+                    "generation_timestamp": "2024-11-28T03:22:10.057990",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 1,
+                        "test_execution": 2
+                    }
+                },
+                "263-277:isValidScheme": {
+                    "start": 263,
+                    "end": 277,
+                    "body": [
+                        "    protected boolean isValidScheme(String scheme) {\n",
+                        "        if (scheme == null) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (!SCHEME_PATTERN.matcher(scheme).matches()) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (options.isOff(ALLOW_ALL_SCHEMES) && !allowedSchemes.contains(scheme)) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        return true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValidScheme(String)",
+                    "parameters": [
+                        "scheme"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "matches()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Pattern",
+                            "matcher(java.lang.CharSequence)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                            "Flags",
+                            "88-90:isOff"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "contains(java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _isValidScheme(self, scheme: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _isValidScheme(self, scheme: str) -> bool:",
+                        "        if scheme is None:",
+                        "            return False",
+                        "",
+                        "        if not self.__SCHEME_PATTERN.match(scheme):",
+                        "            return False",
+                        "",
+                        "        if self.__options.isOff(self.ALLOW_ALL_SCHEMES) and scheme not in self.__allowedSchemes:",
+                        "            return False",
+                        "",
+                        "        return True"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "failure",
+                        "message": "org.apache.commons.validator.UrlTest.testValidator204_test1_decomposed: error\norg.apache.commons.validator.UrlTest.testValidator202_test1_decomposed: error\norg.apache.commons.validator.UrlTest.testIsValidScheme_test1_decomposed: error\norg.apache.commons.validator.UrlTest.testIsValidScheme_test2_decomposed: error\norg.apache.commons.validator.UrlTest.testIsValid0_test0_decomposed: error\norg.apache.commons.validator.UrlTest.testIsValid0_test1_decomposed: error\norg.apache.commons.validator.UrlTest.testIsValid0_test2_decomposed: error"
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 167.28131461143494,
+                    "generation_timestamp": "2024-11-28T02:33:34.764749",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 1,
+                        "test_execution": 2
+                    }
+                },
+                "220-254:isValid": {
+                    "start": 220,
+                    "end": 254,
+                    "body": [
+                        "    public boolean isValid(String value) {\n",
+                        "        if (value == null) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "        if (!LEGAL_ASCII_PATTERN.matcher(value).matches()) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        Matcher urlMatcher = URL_PATTERN.matcher(value);\n",
+                        "        if (!urlMatcher.matches()) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (!isValidScheme(urlMatcher.group(PARSE_URL_SCHEME))) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (!isValidAuthority(urlMatcher.group(PARSE_URL_AUTHORITY))) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (!isValidPath(urlMatcher.group(PARSE_URL_PATH))) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (!isValidQuery(urlMatcher.group(PARSE_URL_QUERY))) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (!isValidFragment(urlMatcher.group(PARSE_URL_FRAGMENT))) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        return true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValid(String)",
+                    "parameters": [
+                        "value"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/regex/Pattern",
+                            "matcher(java.lang.CharSequence)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "matches()"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.UrlValidator",
+                            "UrlValidator",
+                            "263-277:isValidScheme"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "group(int)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.UrlValidator",
+                            "UrlValidator",
+                            "286-363:isValidAuthority"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.UrlValidator",
+                            "UrlValidator",
+                            "371-392:isValidPath"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.UrlValidator",
+                            "UrlValidator",
+                            "400-406:isValidQuery"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.UrlValidator",
+                            "UrlValidator",
+                            "414-420:isValidFragment"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def isValid(self, value: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def isValid(self, value: str) -> bool:",
+                        "        if value is None:",
+                        "            return False",
+                        "",
+                        "        if not self.__LEGAL_ASCII_PATTERN.match(value):",
+                        "            return False",
+                        "",
+                        "        url_matcher = self.__URL_PATTERN.match(value)",
+                        "        if not url_matcher:",
+                        "            return False",
+                        "",
+                        "        if not self._isValidScheme(url_matcher.group(self.__PARSE_URL_SCHEME)):",
+                        "            return False",
+                        "",
+                        "        if not self._isValidAuthority(url_matcher.group(self.__PARSE_URL_AUTHORITY)):",
+                        "            return False",
+                        "",
+                        "        if not self._isValidPath(url_matcher.group(self.__PARSE_URL_PATH)):",
+                        "            return False",
+                        "",
+                        "        if not self._isValidQuery(url_matcher.group(self.__PARSE_URL_QUERY)):",
+                        "            return False",
+                        "",
+                        "        if not self._isValidFragment(url_matcher.group(self.__PARSE_URL_FRAGMENT)):",
+                        "            return False",
+                        "",
+                        "        return True"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "failure",
+                        "message": "org.apache.commons.validator.UrlTest.testValidator204_test1_decomposed: error\norg.apache.commons.validator.UrlTest.testValidator202_test1_decomposed: error\norg.apache.commons.validator.UrlTest.testIsValid0_test0_decomposed: error\norg.apache.commons.validator.UrlTest.testIsValid0_test1_decomposed: error\norg.apache.commons.validator.UrlTest.testIsValid0_test2_decomposed: error"
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 172.9929895401001,
+                    "generation_timestamp": "2024-11-28T03:25:03.473937",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 1,
+                        "test_execution": 2
+                    }
+                },
+                "183-185:UrlValidator3": {
+                    "start": 183,
+                    "end": 185,
+                    "body": [
+                        "    public static UrlValidator UrlValidator3() {\n",
+                        "        return UrlValidator2(null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "UrlValidator",
+                            "UrlValidator"
+                        ]
+                    ],
+                    "signature": "UrlValidator3()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.UrlValidator",
+                            "UrlValidator",
+                            "179-181:UrlValidator2"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def UrlValidator3() -> UrlValidator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def UrlValidator3() -> UrlValidator:",
+                        "        return UrlValidator.UrlValidator2(None)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 57.39027976989746,
+                    "generation_timestamp": "2024-11-28T03:00:18.988911",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "179-181:UrlValidator2": {
+                    "start": 179,
+                    "end": 181,
+                    "body": [
+                        "    public static UrlValidator UrlValidator2(String[] schemes) {\n",
+                        "        return new UrlValidator(schemes, 0);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "UrlValidator",
+                            "UrlValidator"
+                        ]
+                    ],
+                    "signature": "UrlValidator2(String[])",
+                    "parameters": [
+                        "schemes"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.UrlValidator",
+                            "UrlValidator",
+                            "161-173:UrlValidator"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def UrlValidator2(schemes: typing.List[typing.List[str]]) -> UrlValidator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def UrlValidator2(schemes: Optional[List[str]]) -> UrlValidator:",
+                        "        return UrlValidator(schemes, 0)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "success",
+                        "message": ""
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 195.7941493988037,
+                    "generation_timestamp": "2024-11-28T02:57:44.968849",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 1
+                    }
+                },
+                "175-177:UrlValidator1": {
+                    "start": 175,
+                    "end": 177,
+                    "body": [
+                        "    public static UrlValidator UrlValidator1(int options) {\n",
+                        "        return new UrlValidator(null, options);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "UrlValidator",
+                            "UrlValidator"
+                        ]
+                    ],
+                    "signature": "UrlValidator1(int)",
+                    "parameters": [
+                        "options"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.UrlValidator",
+                            "UrlValidator",
+                            "161-173:UrlValidator"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def UrlValidator1(options: int) -> UrlValidator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def UrlValidator1(options: int) -> UrlValidator:",
+                        "        return UrlValidator(None, options)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 70.39629578590393,
+                    "generation_timestamp": "2024-11-28T02:59:21.361049",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "161-173:UrlValidator": {
+                    "start": 161,
+                    "end": 173,
+                    "body": [
+                        "    public UrlValidator(String[] schemes, int options) {\n",
+                        "        this.options = new Flags(1, options);\n",
+                        "\n",
+                        "        if (this.options.isOn(ALLOW_ALL_SCHEMES)) {\n",
+                        "            return;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (schemes == null) {\n",
+                        "            schemes = this.defaultSchemes;\n",
+                        "        }\n",
+                        "\n",
+                        "        this.allowedSchemes.addAll(Arrays.asList(schemes));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "UrlValidator(String[], int)",
+                    "parameters": [
+                        "schemes",
+                        "options"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                            "Flags",
+                            "54-59:Flags"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                            "Flags",
+                            "77-79:isOn"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "addAll(java.util.Collection)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "asList(java.lang.Object[])"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, schemes: typing.List[typing.List[str]], options: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, schemes: Optional[List[str]], options: int) -> None:",
+                        "        self.__options = Flags(1, options)",
+                        "",
+                        "        if self.__options.isOn(self.ALLOW_ALL_SCHEMES):",
+                        "            return",
+                        "",
+                        "        if schemes is None:",
+                        "            schemes = self._defaultSchemes",
+                        "",
+                        "        self.__allowedSchemes.update(schemes)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "success",
+                        "message": ""
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 205.72940039634705,
+                    "generation_timestamp": "2024-11-28T02:54:03.710944",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 1
+                    }
+                }
+            },
+            "fields": {
+                "158-158:defaultSchemes": {
+                    "start": 158,
+                    "end": 158,
+                    "body": [
+                        "    protected String[] defaultSchemes = {\"http\", \"https\", \"ftp\"};\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _defaultSchemes: typing.List[typing.List[str]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    _defaultSchemes: List[str] = [\"http\", \"https\", \"ftp\"]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 25.6404869556427,
+                    "generation_timestamp": "2024-11-27T11:36:21.992993",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "91-91:NO_FRAGMENTS": {
+                    "start": 91,
+                    "end": 91,
+                    "body": [
+                        "    public static final int NO_FRAGMENTS = 1 << 2;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    NO_FRAGMENTS: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    NO_FRAGMENTS: int = 1 << 2"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 25.362338066101074,
+                    "generation_timestamp": "2024-11-27T11:36:47.425781",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "88-88:ALLOW_2_SLASHES": {
+                    "start": 88,
+                    "end": 88,
+                    "body": [
+                        "    public static final int ALLOW_2_SLASHES = 1 << 1;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    ALLOW_2_SLASHES: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    ALLOW_2_SLASHES: int = 1 << 1"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 26.215731620788574,
+                    "generation_timestamp": "2024-11-27T11:37:13.695610",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "85-85:ALLOW_ALL_SCHEMES": {
+                    "start": 85,
+                    "end": 85,
+                    "body": [
+                        "    public static final int ALLOW_ALL_SCHEMES = 1 << 0;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    ALLOW_ALL_SCHEMES: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    ALLOW_ALL_SCHEMES: int = 1 << 0"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 23.841230154037476,
+                    "generation_timestamp": "2024-11-27T11:37:37.580189",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "155-155:allowedSchemes": {
+                    "start": 155,
+                    "end": 155,
+                    "body": [
+                        "    private final Set<String> allowedSchemes = new HashSet<String>();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Set<String>",
+                            "java.util.Set<String>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __allowedSchemes: typing.Set[str] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __allowedSchemes: typing.Set[str] = set()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 24.316368341445923,
+                    "generation_timestamp": "2024-11-27T11:38:01.961252",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "152-152:options": {
+                    "start": 152,
+                    "end": 152,
+                    "body": [
+                        "    private final Flags options;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Flags",
+                            "Flags"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __options: Flags = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __options: Flags = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-11-27T11:38:01.989246",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "149-149:ALPHA_PATTERN": {
+                    "start": 149,
+                    "end": 149,
+                    "body": [
+                        "    private static final Pattern ALPHA_PATTERN = Pattern.compile(\"^[\" + ALPHA_CHARS + \"]\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ALPHA_PATTERN: re.Pattern = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ALPHA_CHARS: str = \"a-zA-Z\"",
+                        "",
+                        "    __ALPHA_PATTERN: re.Pattern = re.compile(f\"^[{__ALPHA_CHARS}]\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 26.90281653404236,
+                    "generation_timestamp": "2024-11-27T11:38:28.922318",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "147-147:ATOM_PATTERN": {
+                    "start": 147,
+                    "end": 147,
+                    "body": [
+                        "    private static final Pattern ATOM_PATTERN = Pattern.compile(\"^(\" + ATOM + \").*?$\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ATOM_PATTERN: re.Pattern = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ATOM: str = VALID_CHARS + '+'",
+                        "",
+                        "    __ATOM_PATTERN: re.Pattern = re.compile(rf\"^({__ATOM}).*?$\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 25.736942291259766,
+                    "generation_timestamp": "2024-11-27T11:38:54.695744",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "145-145:PORT_PATTERN": {
+                    "start": 145,
+                    "end": 145,
+                    "body": [
+                        "    private static final Pattern PORT_PATTERN = Pattern.compile(\"^:(\\\\d{1,5})$\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __PORT_PATTERN: re.Pattern = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __PORT_PATTERN: re.Pattern = re.compile(r\"^:(\\d{1,5})$\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 29.02471351623535,
+                    "generation_timestamp": "2024-11-27T11:39:23.755572",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "142-143:DOMAIN_PATTERN": {
+                    "start": 142,
+                    "end": 143,
+                    "body": [
+                        "    private static final Pattern DOMAIN_PATTERN =\n",
+                        "            Pattern.compile(\"^\" + ATOM + \"(\\\\.\" + ATOM + \")*$\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __DOMAIN_PATTERN: re.Pattern = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __DOMAIN_PATTERN: re.Pattern = re.compile(rf\"^{__ATOM}(\\.{__ATOM})*$\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 28.262508630752563,
+                    "generation_timestamp": "2024-11-27T11:39:52.102285",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "140-140:LEGAL_ASCII_PATTERN": {
+                    "start": 140,
+                    "end": 140,
+                    "body": [
+                        "    private static final Pattern LEGAL_ASCII_PATTERN = Pattern.compile(\"^\\\\p{ASCII}+$\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __LEGAL_ASCII_PATTERN: re.Pattern = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __LEGAL_ASCII_PATTERN: re.Pattern = re.compile(r\"^[\\x00-\\x7F]+$\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 48.66528010368347,
+                    "generation_timestamp": "2024-11-27T11:40:40.822153",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 1,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "138-138:QUERY_PATTERN": {
+                    "start": 138,
+                    "end": 138,
+                    "body": [
+                        "    private static final Pattern QUERY_PATTERN = Pattern.compile(\"^(.*)$\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __QUERY_PATTERN: re.Pattern = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __QUERY_PATTERN: re.Pattern = re.compile(r\"^(.*)$\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 23.26321506500244,
+                    "generation_timestamp": "2024-11-27T11:41:04.155739",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "136-136:PATH_PATTERN": {
+                    "start": 136,
+                    "end": 136,
+                    "body": [
+                        "    private static final Pattern PATH_PATTERN = Pattern.compile(\"^(/[-\\\\w:@&?=+,.!/~*'%$_;]*)?$\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __PATH_PATTERN: re.Pattern = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __PATH_PATTERN: re.Pattern = re.compile(r\"^(/[-\\w:@&?=+,.!/~*'%$_;]*)?$\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 25.622382164001465,
+                    "generation_timestamp": "2024-11-27T11:41:29.840970",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "134-134:PARSE_AUTHORITY_EXTRA": {
+                    "start": 134,
+                    "end": 134,
+                    "body": [
+                        "    private static final int PARSE_AUTHORITY_EXTRA = 3;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __PARSE_AUTHORITY_EXTRA: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __PARSE_AUTHORITY_EXTRA: int = 3"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 28.757463693618774,
+                    "generation_timestamp": "2024-11-27T11:41:58.657122",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "131-131:PARSE_AUTHORITY_PORT": {
+                    "start": 131,
+                    "end": 131,
+                    "body": [
+                        "    private static final int PARSE_AUTHORITY_PORT = 2;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __PARSE_AUTHORITY_PORT: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __PARSE_AUTHORITY_PORT: int = 2"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 23.83287262916565,
+                    "generation_timestamp": "2024-11-27T11:42:22.554183",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "129-129:PARSE_AUTHORITY_HOST_IP": {
+                    "start": 129,
+                    "end": 129,
+                    "body": [
+                        "    private static final int PARSE_AUTHORITY_HOST_IP = 1;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __PARSE_AUTHORITY_HOST_IP: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __PARSE_AUTHORITY_HOST_IP: int = 1"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 25.75157904624939,
+                    "generation_timestamp": "2024-11-27T11:42:48.369359",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "127-127:AUTHORITY_PATTERN": {
+                    "start": 127,
+                    "end": 127,
+                    "body": [
+                        "    private static final Pattern AUTHORITY_PATTERN = Pattern.compile(AUTHORITY_REGEX);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __AUTHORITY_PATTERN: re.Pattern = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __AUTHORITY_PATTERN: re.Pattern = re.compile(__AUTHORITY_REGEX)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "failed",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 48.56552481651306,
+                    "generation_timestamp": "2024-11-27T11:43:36.983125",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 1,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "125-126:AUTHORITY_REGEX": {
+                    "start": 125,
+                    "end": 126,
+                    "body": [
+                        "    private static final String AUTHORITY_REGEX =\n",
+                        "            \"^([\" + AUTHORITY_CHARS_REGEX + \"]*)(:\\\\d*)?(.*)?\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __AUTHORITY_REGEX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __AUTHORITY_REGEX: str = r\"^([\\w\\-.]*)(:\\d*)?(.*)?\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 25.906684637069702,
+                    "generation_timestamp": "2024-11-27T11:44:02.931975",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "122-123:SCHEME_PATTERN": {
+                    "start": 122,
+                    "end": 123,
+                    "body": [
+                        "    private static final Pattern SCHEME_PATTERN =\n",
+                        "            Pattern.compile(\"^\\\\p{Alpha}[\\\\p{Alnum}\\\\+\\\\-\\\\.]*\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __SCHEME_PATTERN: re.Pattern = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __SCHEME_PATTERN: re.Pattern = re.compile(r\"^[A-Za-z][A-Za-z0-9+\\-\\.]*\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 54.950162410736084,
+                    "generation_timestamp": "2024-11-27T11:44:57.919803",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 1,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "119-119:PARSE_URL_FRAGMENT": {
+                    "start": 119,
+                    "end": 119,
+                    "body": [
+                        "    private static final int PARSE_URL_FRAGMENT = 9;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __PARSE_URL_FRAGMENT: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __PARSE_URL_FRAGMENT: int = 9"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 26.513749837875366,
+                    "generation_timestamp": "2024-11-27T11:45:24.485446",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "117-117:PARSE_URL_QUERY": {
+                    "start": 117,
+                    "end": 117,
+                    "body": [
+                        "    private static final int PARSE_URL_QUERY = 7;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __PARSE_URL_QUERY: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __PARSE_URL_QUERY: int = 7"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 23.878410816192627,
+                    "generation_timestamp": "2024-11-27T11:45:48.408261",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "115-115:PARSE_URL_PATH": {
+                    "start": 115,
+                    "end": 115,
+                    "body": [
+                        "    private static final int PARSE_URL_PATH = 5;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __PARSE_URL_PATH: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __PARSE_URL_PATH: int = 5"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 24.579097509384155,
+                    "generation_timestamp": "2024-11-27T11:46:13.041474",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "113-113:PARSE_URL_AUTHORITY": {
+                    "start": 113,
+                    "end": 113,
+                    "body": [
+                        "    private static final int PARSE_URL_AUTHORITY = 4;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __PARSE_URL_AUTHORITY: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __PARSE_URL_AUTHORITY: int = 4"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 25.325217962265015,
+                    "generation_timestamp": "2024-11-27T11:46:38.410165",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "110-110:PARSE_URL_SCHEME": {
+                    "start": 110,
+                    "end": 110,
+                    "body": [
+                        "    private static final int PARSE_URL_SCHEME = 2;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __PARSE_URL_SCHEME: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __PARSE_URL_SCHEME: int = 2"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 23.681101322174072,
+                    "generation_timestamp": "2024-11-27T11:47:02.145071",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "107-107:URL_PATTERN": {
+                    "start": 107,
+                    "end": 107,
+                    "body": [
+                        "    private static final Pattern URL_PATTERN = Pattern.compile(URL_REGEX);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __URL_PATTERN: re.Pattern = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __URL_PATTERN: re.Pattern = re.compile(r\"^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 23.931905031204224,
+                    "generation_timestamp": "2024-11-27T11:47:26.131680",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "104-105:URL_REGEX": {
+                    "start": 104,
+                    "end": 105,
+                    "body": [
+                        "    private static final String URL_REGEX =\n",
+                        "            \"^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\\\?([^#]*))?(#(.*))?\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __URL_REGEX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __URL_REGEX: str = r\"^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\\\?([^#]*))?(#(.*))?\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 23.76086688041687,
+                    "generation_timestamp": "2024-11-27T11:47:49.928275",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "101-101:ATOM": {
+                    "start": 101,
+                    "end": 101,
+                    "body": [
+                        "    private static final String ATOM = VALID_CHARS + '+';\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ATOM: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ATOM: str = __VALID_CHARS + '+'"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "failed",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 51.8224835395813,
+                    "generation_timestamp": "2024-11-27T11:48:41.795712",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 1,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "99-99:AUTHORITY_CHARS_REGEX": {
+                    "start": 99,
+                    "end": 99,
+                    "body": [
+                        "    private static final String AUTHORITY_CHARS_REGEX = \"\\\\p{Alnum}\\\\-\\\\.\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __AUTHORITY_CHARS_REGEX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __AUTHORITY_CHARS_REGEX: str = r\"\\p{Alnum}\\-\\.\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 25.729490995407104,
+                    "generation_timestamp": "2024-11-27T11:49:07.568686",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "97-97:VALID_CHARS": {
+                    "start": 97,
+                    "end": 97,
+                    "body": [
+                        "    private static final String VALID_CHARS = \"[^\\\\s\" + SPECIAL_CHARS + \"]\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __VALID_CHARS: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __VALID_CHARS: str = r\"[^\\\\s;/@&=,.?:+$]\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 29.3536593914032,
+                    "generation_timestamp": "2024-11-27T11:49:36.973328",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "95-95:SPECIAL_CHARS": {
+                    "start": 95,
+                    "end": 95,
+                    "body": [
+                        "    private static final String SPECIAL_CHARS = \";/@&=,.?:+$\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __SPECIAL_CHARS: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __SPECIAL_CHARS: str = \";/@&=,.?:+$\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 24.987098932266235,
+                    "generation_timestamp": "2024-11-27T11:50:01.998224",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "93-93:ALPHA_CHARS": {
+                    "start": 93,
+                    "end": 93,
+                    "body": [
+                        "    private static final String ALPHA_CHARS = \"a-zA-Z\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ALPHA_CHARS: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ALPHA_CHARS: str = \"a-zA-Z\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 26.956493854522705,
+                    "generation_timestamp": "2024-11-27T11:50:29.018998",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "79-79:serialVersionUID": {
+                    "start": 79,
+                    "end": 79,
+                    "body": [
+                        "    private static final long serialVersionUID = 24137157400029593L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = 24137157400029593"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 29.335432052612305,
+                    "generation_timestamp": "2024-11-27T11:50:58.435234",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class UrlValidator():\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import pathlib",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.validator.GenericValidator import *",
+        "from src.main.org.apache.commons.validator.routines.InetAddressValidator import *",
+        "from src.main.org.apache.commons.validator.util.Flags import *",
+        "from src.main.org.apache.commons.validator.routines.DomainValidator import *",
+        "from src.main.org.apache.commons.validator.routines.RegexValidator import *"
+    ]
+}

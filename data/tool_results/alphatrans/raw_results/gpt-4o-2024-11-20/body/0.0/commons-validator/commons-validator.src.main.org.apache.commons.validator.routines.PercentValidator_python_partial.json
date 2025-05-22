@@ -1,0 +1,1051 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/main/java/org/apache/commons/validator/routines/PercentValidator.java",
+    "imports": {
+        "19-19:import BigDecimal": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.math.BigDecimal;\n"
+            ]
+        },
+        "21-21:import Format": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.text.Format;\n"
+            ]
+        },
+        "20-20:import DecimalFormat": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.text.DecimalFormat;\n"
+            ]
+        }
+    },
+    "classes": {
+        "PercentValidator": {
+            "start": 48,
+            "end": 48,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "BigDecimalValidator"
+            ],
+            "methods": {
+                "96-120:parse": {
+                    "start": 96,
+                    "end": 120,
+                    "body": [
+                        "    protected Object parse(String value, Format formatter) {\n",
+                        "\n",
+                        "        BigDecimal parsedValue = (BigDecimal) super.parse(value, formatter);\n",
+                        "        if (parsedValue != null || !(formatter instanceof DecimalFormat)) {\n",
+                        "            return parsedValue;\n",
+                        "        }\n",
+                        "\n",
+                        "        DecimalFormat decimalFormat = (DecimalFormat) formatter;\n",
+                        "        String pattern = decimalFormat.toPattern();\n",
+                        "        if (pattern.indexOf(PERCENT_SYMBOL) >= 0) {\n",
+                        "            StringBuilder buffer = new StringBuilder(pattern.length());\n",
+                        "            for (int i = 0; i < pattern.length(); i++) {\n",
+                        "                if (pattern.charAt(i) != PERCENT_SYMBOL) {\n",
+                        "                    buffer.append(pattern.charAt(i));\n",
+                        "                }\n",
+                        "            }\n",
+                        "            decimalFormat.applyPattern(buffer.toString());\n",
+                        "            parsedValue = (BigDecimal) super.parse(value, decimalFormat);\n",
+                        "\n",
+                        "            if (parsedValue != null) {\n",
+                        "                parsedValue = parsedValue.multiply(POINT_ZERO_ONE);\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return parsedValue;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "parse(String, Format)",
+                    "parameters": [
+                        "value",
+                        "formatter"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractFormatValidator",
+                            "AbstractFormatValidator",
+                            "167-184:parse"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/text/DecimalFormat",
+                            "toPattern()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "indexOf(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "charAt(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(char)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/text/DecimalFormat",
+                            "applyPattern(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/math/BigDecimal",
+                            "multiply(java.math.BigDecimal)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _parse(self, value: str, formatter: Format) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _parse(self, value: str, formatter: Format) -> typing.Any:",
+                        "        parsed_value = super()._parse(value, formatter)",
+                        "        if parsed_value is not None or not isinstance(formatter, DecimalFormat):",
+                        "            return parsed_value",
+                        "",
+                        "        decimal_format = formatter",
+                        "        pattern = decimal_format.toPattern()",
+                        "        if self.__PERCENT_SYMBOL in pattern:",
+                        "            buffer = []",
+                        "            for char in pattern:",
+                        "                if char != self.__PERCENT_SYMBOL:",
+                        "                    buffer.append(char)",
+                        "            decimal_format.applyPattern(\"\".join(buffer))",
+                        "            parsed_value = super()._parse(value, decimal_format)",
+                        "",
+                        "            if parsed_value is not None:",
+                        "                parsed_value = parsed_value * self.__POINT_ZERO_ONE",
+                        "",
+                        "        return parsed_value"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 88.55115914344788,
+                    "generation_timestamp": "2024-11-28T05:17:54.848793",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "73-75:PercentValidator1": {
+                    "start": 73,
+                    "end": 75,
+                    "body": [
+                        "    public static PercentValidator PercentValidator1() {\n",
+                        "        return new PercentValidator(true);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "PercentValidator",
+                            "PercentValidator"
+                        ]
+                    ],
+                    "signature": "PercentValidator1()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                            "PercentValidator",
+                            "69-71:PercentValidator"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def PercentValidator1() -> PercentValidator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def PercentValidator1() -> PercentValidator:",
+                        "        return PercentValidator(True)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": {
+                        "commons-validator/src/test/org/apache/commons/validator/routines/PercentValidatorTest.py::PercentValidatorTest::testInvalid_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "73-75:PercentValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "69-71:PercentValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "64-66:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.PercentValidatorTest",
+                                    "class": "PercentValidatorTest",
+                                    "method": "185-187:testInvalid_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/PercentValidatorTest.py::PercentValidatorTest::testValid_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "73-75:PercentValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "69-71:PercentValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "64-66:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.PercentValidatorTest",
+                                    "class": "PercentValidatorTest",
+                                    "method": "98-102:testValid_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/PercentValidatorTest.py::PercentValidatorTest::testFormatType_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "73-75:PercentValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "69-71:PercentValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "64-66:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.PercentValidatorTest",
+                                    "class": "PercentValidatorTest",
+                                    "method": "69-71:testFormatType_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/PercentValidatorTest.py::PercentValidatorTest::testFormatType_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/PercentValidatorTest.py\", line 91, in testFormatType_test1_decomposed\n    self.assertEqual(2, validator.getFormatType(), \"Format Type A\")\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 873, in assertEqual\n    assertion_func(first, second, msg=msg)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 866, in _baseAssertEqual\n    raise self.failureException(msg)\nAssertionError: 2 != 0 : Format Type A",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "73-75:PercentValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "69-71:PercentValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "64-66:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "79-81:getFormatType"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "58-62:AbstractNumberValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.PercentValidatorTest",
+                                    "class": "PercentValidatorTest",
+                                    "method": "74-77:testFormatType_test1_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 77.95771503448486,
+                    "generation_timestamp": "2024-11-29T02:57:01.241725",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "69-71:PercentValidator": {
+                    "start": 69,
+                    "end": 71,
+                    "body": [
+                        "    public PercentValidator(boolean strict) {\n",
+                        "        super(strict, PERCENT_FORMAT, true);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "PercentValidator(boolean)",
+                    "parameters": [
+                        "strict"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                            "BigDecimalValidator",
+                            "83-85:BigDecimalValidator"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, strict: bool) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, strict: bool) -> None:",
+                        "        super().__init__(strict, self.PERCENT_FORMAT, True)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "failure",
+                        "message": "org.apache.commons.validator.routines.PercentValidatorTest.testInvalid_test2_decomposed: java.lang.ExceptionInInitializerError\norg.apache.commons.validator.routines.PercentValidatorTest.testInvalid_test3_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.PercentValidatorTest.testFormatType_test0_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.PercentValidatorTest.testFormatType_test1_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.PercentValidatorTest.testFormatType_test2_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.PercentValidatorTest.testFormatType_test3_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.PercentValidatorTest.testValid_test0_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.PercentValidatorTest.testValid_test1_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.PercentValidatorTest.testValid_test2_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.PercentValidatorTest.testValid_test3_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.PercentValidatorTest.testValid_test4_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.PercentValidatorTest.testValid_test5_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.PercentValidatorTest.testInvalid_test0_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.PercentValidatorTest.testInvalid_test1_decomposed: java.lang.NoClassDefFoundError"
+                    },
+                    "test_execution": {
+                        "commons-validator/src/test/org/apache/commons/validator/routines/PercentValidatorTest.py::PercentValidatorTest::testInvalid_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "73-75:PercentValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "69-71:PercentValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "64-66:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.PercentValidatorTest",
+                                    "class": "PercentValidatorTest",
+                                    "method": "185-187:testInvalid_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/PercentValidatorTest.py::PercentValidatorTest::testValid_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "73-75:PercentValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "69-71:PercentValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "64-66:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.PercentValidatorTest",
+                                    "class": "PercentValidatorTest",
+                                    "method": "98-102:testValid_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/PercentValidatorTest.py::PercentValidatorTest::testFormatType_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "73-75:PercentValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "69-71:PercentValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "64-66:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.PercentValidatorTest",
+                                    "class": "PercentValidatorTest",
+                                    "method": "69-71:testFormatType_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/PercentValidatorTest.py::PercentValidatorTest::testFormatType_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/PercentValidatorTest.py\", line 91, in testFormatType_test1_decomposed\n    self.assertEqual(2, validator.getFormatType(), \"Format Type A\")\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 873, in assertEqual\n    assertion_func(first, second, msg=msg)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 866, in _baseAssertEqual\n    raise self.failureException(msg)\nAssertionError: 2 != 0 : Format Type A",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "73-75:PercentValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "69-71:PercentValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "64-66:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "79-81:getFormatType"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "58-62:AbstractNumberValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.PercentValidatorTest",
+                                    "class": "PercentValidatorTest",
+                                    "method": "74-77:testFormatType_test1_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 183.9084587097168,
+                    "generation_timestamp": "2024-11-29T02:37:06.681542",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 1,
+                        "test_execution": 2
+                    }
+                },
+                "64-66:getInstance": {
+                    "start": 64,
+                    "end": 66,
+                    "body": [
+                        "    public static BigDecimalValidator getInstance() {\n",
+                        "        return VALIDATOR;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "BigDecimalValidator",
+                            "BigDecimalValidator"
+                        ]
+                    ],
+                    "signature": "getInstance()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def getInstance() -> BigDecimalValidator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInstance() -> BigDecimalValidator:",
+                        "        return PercentValidator.__VALIDATOR"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "success",
+                        "message": ""
+                    },
+                    "test_execution": {
+                        "commons-validator/src/test/org/apache/commons/validator/routines/PercentValidatorTest.py::PercentValidatorTest::testInvalid_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "73-75:PercentValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "69-71:PercentValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "64-66:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.PercentValidatorTest",
+                                    "class": "PercentValidatorTest",
+                                    "method": "185-187:testInvalid_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/PercentValidatorTest.py::PercentValidatorTest::testFormatType_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "73-75:PercentValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "69-71:PercentValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "64-66:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.PercentValidatorTest",
+                                    "class": "PercentValidatorTest",
+                                    "method": "69-71:testFormatType_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/PercentValidatorTest.py::PercentValidatorTest::testValid_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "73-75:PercentValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "69-71:PercentValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "64-66:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.PercentValidatorTest",
+                                    "class": "PercentValidatorTest",
+                                    "method": "98-102:testValid_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/routines/PercentValidatorTest.py::PercentValidatorTest::testFormatType_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/routines/PercentValidatorTest.py\", line 91, in testFormatType_test1_decomposed\n    self.assertEqual(2, validator.getFormatType(), \"Format Type A\")\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 873, in assertEqual\n    assertion_func(first, second, msg=msg)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 866, in _baseAssertEqual\n    raise self.failureException(msg)\nAssertionError: 2 != 0 : Format Type A",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "91-93:BigDecimalValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "87-89:BigDecimalValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                                    "class": "BigDecimalValidator",
+                                    "method": "83-85:BigDecimalValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "73-75:PercentValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "69-71:PercentValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.PercentValidator",
+                                    "class": "PercentValidator",
+                                    "method": "64-66:getInstance"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "79-81:getFormatType"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                                    "class": "AbstractNumberValidator",
+                                    "method": "58-62:AbstractNumberValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.routines.PercentValidatorTest",
+                                    "class": "PercentValidatorTest",
+                                    "method": "74-77:testFormatType_test1_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 379.3421857357025,
+                    "generation_timestamp": "2024-11-28T00:48:26.758470",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 1
+                    }
+                }
+            },
+            "fields": {
+                "57-57:POINT_ZERO_ONE": {
+                    "start": 57,
+                    "end": 57,
+                    "body": [
+                        "    private static final BigDecimal POINT_ZERO_ONE = new BigDecimal(\"0.01\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "BigDecimal",
+                            "java.math.BigDecimal"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __POINT_ZERO_ONE: decimal.Decimal = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __POINT_ZERO_ONE: decimal.Decimal = decimal.Decimal(\"0.01\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 22.701104402542114,
+                    "generation_timestamp": "2024-11-27T11:15:49.929728",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "55-55:PERCENT_SYMBOL": {
+                    "start": 55,
+                    "end": 55,
+                    "body": [
+                        "    private static final char PERCENT_SYMBOL = '%';\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char",
+                            "char"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __PERCENT_SYMBOL: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __PERCENT_SYMBOL: str = '%'"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 25.745458364486694,
+                    "generation_timestamp": "2024-11-27T11:16:15.708456",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "52-52:VALIDATOR": {
+                    "start": 52,
+                    "end": 52,
+                    "body": [
+                        "    private static final PercentValidator VALIDATOR = PercentValidator.PercentValidator1();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "PercentValidator",
+                            "PercentValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __VALIDATOR: PercentValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __VALIDATOR: PercentValidator = PercentValidator.PercentValidator1()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 24.279130935668945,
+                    "generation_timestamp": "2024-11-27T11:16:40.015611",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "50-50:serialVersionUID": {
+                    "start": 50,
+                    "end": 50,
+                    "body": [
+                        "    private static final long serialVersionUID = -3508241924961535772L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = -3508241924961535772"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 24.73949646949768,
+                    "generation_timestamp": "2024-11-27T11:17:04.792514",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class PercentValidator(BigDecimalValidator):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import decimal",
+        "from src.main.org.apache.commons.validator.routines.AbstractNumberValidator import *",
+        "from src.main.org.apache.commons.validator.routines.BigDecimalValidator import *"
+    ]
+}

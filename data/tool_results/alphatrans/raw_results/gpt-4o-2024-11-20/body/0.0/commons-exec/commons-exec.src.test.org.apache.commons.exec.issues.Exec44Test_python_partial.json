@@ -1,0 +1,1093 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-exec/src/test/java/org/apache/commons/exec/issues/Exec44Test.java",
+    "imports": {
+        "23-23:import File": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.io.File;\n"
+            ]
+        },
+        "25-25:import CommandLine": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import org.apache.commons.exec.CommandLine;\n"
+            ]
+        },
+        "31-31:import Test": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import org.junit.jupiter.api.Test;\n"
+            ]
+        },
+        "27-27:import DefaultExecutor": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.apache.commons.exec.DefaultExecutor;\n"
+            ]
+        },
+        "26-26:import DefaultExecuteResultHandler": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.exec.DefaultExecuteResultHandler;\n"
+            ]
+        },
+        "29-29:import Executor": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import org.apache.commons.exec.Executor;\n"
+            ]
+        },
+        "28-28:import ExecuteWatchdog": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import org.apache.commons.exec.ExecuteWatchdog;\n"
+            ]
+        },
+        "30-30:import TestUtil": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import org.apache.commons.exec.TestUtil;\n"
+            ]
+        },
+        "21-21:import static Assertions.assertTrue": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertTrue;\n"
+            ]
+        },
+        "20-20:import static Assertions.assertFalse": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertFalse;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Exec44Test": {
+            "start": 36,
+            "end": 36,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "122-133:testExec44_test8_decomposed": {
+                    "start": 122,
+                    "end": 133,
+                    "body": [
+                        "    public void testExec44_test8_decomposed() throws Exception {\n",
+                        "        final CommandLine cl = new CommandLine(1, null, foreverTestScript, null);\n",
+                        "        final DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();\n",
+                        "        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(ExecuteWatchdog.INFINITE_TIMEOUT);\n",
+                        "        exec.setWatchdog(watchdog);\n",
+                        "        exec.execute1(cl, resultHandler);\n",
+                        "        Thread.sleep(5000);\n",
+                        "        assertTrue(watchdog.isWatching(), \"The watchdog is watching the process\");\n",
+                        "        watchdog.destroyProcess();\n",
+                        "        assertTrue(watchdog.killedProcess(), \"The watchdog has killed the process\");\n",
+                        "        assertFalse(watchdog.isWatching(), \"The watchdog is no longer watching any process\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec44_test8_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecuteResultHandler",
+                            "DefaultExecuteResultHandler",
+                            "43-46:DefaultExecuteResultHandler"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "147-149:ExecuteWatchdog0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "174-174:setWatchdog"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "70-70:execute1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Thread",
+                            "sleep(long)"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertTrue(boolean,java.lang.String)"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "231-234:isWatching"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "194-198:destroyProcess"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "241-243:killedProcess"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertFalse(boolean,java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec44_test8_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec44_test8_decomposed(self) -> None:",
+                        "        cl = CommandLine(1, executable=self.__foreverTestScript)  # Create a CommandLine object with the script path",
+                        "        result_handler = DefaultExecuteResultHandler()  # Create a result handler",
+                        "        watchdog = ExecuteWatchdog.ExecuteWatchdog0(ExecuteWatchdog.INFINITE_TIMEOUT)  # Create a watchdog with infinite timeout",
+                        "        self.__exec.setWatchdog(watchdog)  # Set the watchdog for the executor",
+                        "        self.__exec.execute1(cl, result_handler)  # Execute the command line with the result handler",
+                        "        time.sleep(5)  # Sleep for 5 seconds",
+                        "        self.assertTrue(watchdog.isWatching(), \"The watchdog is watching the process\")  # Assert that the watchdog is watching",
+                        "        watchdog.destroyProcess()  # Destroy the process",
+                        "        self.assertTrue(watchdog.killedProcess(), \"The watchdog has killed the process\")  # Assert that the process was killed",
+                        "        self.assertFalse(watchdog.isWatching(), \"The watchdog is no longer watching any process\")  # Assert that the watchdog is no longer watching"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 3.093292236328125,
+                    "generation_timestamp": "2024-11-27T14:19:07.634712",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "109-119:testExec44_test7_decomposed": {
+                    "start": 109,
+                    "end": 119,
+                    "body": [
+                        "    public void testExec44_test7_decomposed() throws Exception {\n",
+                        "        final CommandLine cl = new CommandLine(1, null, foreverTestScript, null);\n",
+                        "        final DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();\n",
+                        "        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(ExecuteWatchdog.INFINITE_TIMEOUT);\n",
+                        "        exec.setWatchdog(watchdog);\n",
+                        "        exec.execute1(cl, resultHandler);\n",
+                        "        Thread.sleep(5000);\n",
+                        "        assertTrue(watchdog.isWatching(), \"The watchdog is watching the process\");\n",
+                        "        watchdog.destroyProcess();\n",
+                        "        assertTrue(watchdog.killedProcess(), \"The watchdog has killed the process\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec44_test7_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecuteResultHandler",
+                            "DefaultExecuteResultHandler",
+                            "43-46:DefaultExecuteResultHandler"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "147-149:ExecuteWatchdog0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "174-174:setWatchdog"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "70-70:execute1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Thread",
+                            "sleep(long)"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertTrue(boolean,java.lang.String)"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "231-234:isWatching"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "194-198:destroyProcess"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "241-243:killedProcess"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec44_test7_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec44_test7_decomposed(self) -> None:",
+                        "        cl = CommandLine(1, executable=self.__foreverTestScript)  # Create a CommandLine object with the script",
+                        "        result_handler = DefaultExecuteResultHandler()  # Create a result handler",
+                        "        watchdog = ExecuteWatchdog.ExecuteWatchdog0(ExecuteWatchdog.INFINITE_TIMEOUT)  # Create a watchdog with infinite timeout",
+                        "        self.__exec.setWatchdog(watchdog)  # Set the watchdog for the executor",
+                        "        self.__exec.execute1(cl, result_handler)  # Execute the command line with the result handler",
+                        "        time.sleep(5)  # Sleep for 5 seconds",
+                        "        self.assertTrue(watchdog.isWatching(), \"The watchdog is watching the process\")  # Assert that the watchdog is watching",
+                        "        watchdog.destroyProcess()  # Destroy the process",
+                        "        self.assertTrue(watchdog.killedProcess(), \"The watchdog has killed the process\")  # Assert that the process was killed"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 5.382540225982666,
+                    "generation_timestamp": "2024-11-27T14:19:13.159390",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "97-106:testExec44_test6_decomposed": {
+                    "start": 97,
+                    "end": 106,
+                    "body": [
+                        "    public void testExec44_test6_decomposed() throws Exception {\n",
+                        "        final CommandLine cl = new CommandLine(1, null, foreverTestScript, null);\n",
+                        "        final DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();\n",
+                        "        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(ExecuteWatchdog.INFINITE_TIMEOUT);\n",
+                        "        exec.setWatchdog(watchdog);\n",
+                        "        exec.execute1(cl, resultHandler);\n",
+                        "        Thread.sleep(5000);\n",
+                        "        assertTrue(watchdog.isWatching(), \"The watchdog is watching the process\");\n",
+                        "        watchdog.destroyProcess();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec44_test6_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecuteResultHandler",
+                            "DefaultExecuteResultHandler",
+                            "43-46:DefaultExecuteResultHandler"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "147-149:ExecuteWatchdog0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "174-174:setWatchdog"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "70-70:execute1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Thread",
+                            "sleep(long)"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertTrue(boolean,java.lang.String)"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "231-234:isWatching"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "194-198:destroyProcess"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec44_test6_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec44_test6_decomposed(self) -> None:",
+                        "        cl = CommandLine(1, executable=self.__foreverTestScript)  # Create a CommandLine object with the script",
+                        "        result_handler = DefaultExecuteResultHandler()  # Create a result handler",
+                        "        watchdog = ExecuteWatchdog.ExecuteWatchdog0(ExecuteWatchdog.INFINITE_TIMEOUT)  # Create a watchdog with infinite timeout",
+                        "        self.__exec.setWatchdog(watchdog)  # Set the watchdog for the executor",
+                        "        self.__exec.execute1(cl, result_handler)  # Execute the command line with the result handler",
+                        "        time.sleep(5)  # Sleep for 5 seconds",
+                        "        self.assertTrue(watchdog.isWatching(), \"The watchdog is watching the process\")  # Assert that the watchdog is watching",
+                        "        watchdog.destroyProcess()  # Destroy the process"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 5.2880330085754395,
+                    "generation_timestamp": "2024-11-27T14:19:18.561103",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "86-94:testExec44_test5_decomposed": {
+                    "start": 86,
+                    "end": 94,
+                    "body": [
+                        "    public void testExec44_test5_decomposed() throws Exception {\n",
+                        "        final CommandLine cl = new CommandLine(1, null, foreverTestScript, null);\n",
+                        "        final DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();\n",
+                        "        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(ExecuteWatchdog.INFINITE_TIMEOUT);\n",
+                        "        exec.setWatchdog(watchdog);\n",
+                        "        exec.execute1(cl, resultHandler);\n",
+                        "        Thread.sleep(5000);\n",
+                        "        assertTrue(watchdog.isWatching(), \"The watchdog is watching the process\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec44_test5_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecuteResultHandler",
+                            "DefaultExecuteResultHandler",
+                            "43-46:DefaultExecuteResultHandler"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "147-149:ExecuteWatchdog0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "174-174:setWatchdog"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "70-70:execute1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Thread",
+                            "sleep(long)"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertTrue(boolean,java.lang.String)"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "231-234:isWatching"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec44_test5_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec44_test5_decomposed(self) -> None:",
+                        "        cl = CommandLine(1, executable=self.__foreverTestScript)  # Create a CommandLine object with the script",
+                        "        result_handler = DefaultExecuteResultHandler()  # Create a result handler",
+                        "        watchdog = ExecuteWatchdog.ExecuteWatchdog0(ExecuteWatchdog.INFINITE_TIMEOUT)  # Create a watchdog with infinite timeout",
+                        "        self.__exec.setWatchdog(watchdog)  # Set the watchdog for the executor",
+                        "        self.__exec.execute1(cl, result_handler)  # Execute the command line with the result handler",
+                        "        time.sleep(5)  # Sleep for 5 seconds",
+                        "        self.assertTrue(watchdog.isWatching(), \"The watchdog is watching the process\")  # Assert that the watchdog is watching"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 2.1162681579589844,
+                    "generation_timestamp": "2024-11-27T14:19:20.887090",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "77-83:testExec44_test4_decomposed": {
+                    "start": 77,
+                    "end": 83,
+                    "body": [
+                        "    public void testExec44_test4_decomposed() throws Exception {\n",
+                        "        final CommandLine cl = new CommandLine(1, null, foreverTestScript, null);\n",
+                        "        final DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();\n",
+                        "        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(ExecuteWatchdog.INFINITE_TIMEOUT);\n",
+                        "        exec.setWatchdog(watchdog);\n",
+                        "        exec.execute1(cl, resultHandler);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec44_test4_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecuteResultHandler",
+                            "DefaultExecuteResultHandler",
+                            "43-46:DefaultExecuteResultHandler"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "147-149:ExecuteWatchdog0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "174-174:setWatchdog"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "70-70:execute1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec44_test4_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec44_test4_decomposed(self) -> None:",
+                        "        cl = CommandLine(1, executable=self.__foreverTestScript)",
+                        "        result_handler = DefaultExecuteResultHandler()",
+                        "        watchdog = ExecuteWatchdog.ExecuteWatchdog0(ExecuteWatchdog.INFINITE_TIMEOUT)",
+                        "        self.__exec.setWatchdog(watchdog)",
+                        "        self.__exec.execute1(cl, result_handler)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 4.177446126937866,
+                    "generation_timestamp": "2024-11-27T14:19:25.207342",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "69-74:testExec44_test3_decomposed": {
+                    "start": 69,
+                    "end": 74,
+                    "body": [
+                        "    public void testExec44_test3_decomposed() throws Exception {\n",
+                        "        final CommandLine cl = new CommandLine(1, null, foreverTestScript, null);\n",
+                        "        final DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();\n",
+                        "        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(ExecuteWatchdog.INFINITE_TIMEOUT);\n",
+                        "        exec.setWatchdog(watchdog);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec44_test3_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecuteResultHandler",
+                            "DefaultExecuteResultHandler",
+                            "43-46:DefaultExecuteResultHandler"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "147-149:ExecuteWatchdog0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "174-174:setWatchdog"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec44_test3_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec44_test3_decomposed(self) -> None:",
+                        "        cl = CommandLine(1, executable=self.__foreverTestScript)",
+                        "        result_handler = DefaultExecuteResultHandler()",
+                        "        watchdog = ExecuteWatchdog.ExecuteWatchdog0(ExecuteWatchdog.INFINITE_TIMEOUT)",
+                        "        self.__exec.setWatchdog(watchdog)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 2.96138858795166,
+                    "generation_timestamp": "2024-11-27T14:19:28.360173",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "62-66:testExec44_test2_decomposed": {
+                    "start": 62,
+                    "end": 66,
+                    "body": [
+                        "    public void testExec44_test2_decomposed() throws Exception {\n",
+                        "        final CommandLine cl = new CommandLine(1, null, foreverTestScript, null);\n",
+                        "        final DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();\n",
+                        "        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(ExecuteWatchdog.INFINITE_TIMEOUT);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec44_test2_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecuteResultHandler",
+                            "DefaultExecuteResultHandler",
+                            "43-46:DefaultExecuteResultHandler"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "147-149:ExecuteWatchdog0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec44_test2_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec44_test2_decomposed(self) -> None:",
+                        "        cl = CommandLine(1, executable=self.__foreverTestScript)",
+                        "        result_handler = DefaultExecuteResultHandler()",
+                        "        watchdog = ExecuteWatchdog.ExecuteWatchdog0(ExecuteWatchdog.INFINITE_TIMEOUT)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 3.301576852798462,
+                    "generation_timestamp": "2024-11-27T14:19:31.806315",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "56-59:testExec44_test1_decomposed": {
+                    "start": 56,
+                    "end": 59,
+                    "body": [
+                        "    public void testExec44_test1_decomposed() throws Exception {\n",
+                        "        final CommandLine cl = new CommandLine(1, null, foreverTestScript, null);\n",
+                        "        final DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec44_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecuteResultHandler",
+                            "DefaultExecuteResultHandler",
+                            "43-46:DefaultExecuteResultHandler"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec44_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec44_test1_decomposed(self) -> None:",
+                        "        cl = CommandLine(1, None, self.__foreverTestScript, None)",
+                        "        result_handler = DefaultExecuteResultHandler()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0.7492861747741699,
+                    "generation_timestamp": "2024-11-27T14:19:32.714014",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "51-53:testExec44_test0_decomposed": {
+                    "start": 51,
+                    "end": 53,
+                    "body": [
+                        "    public void testExec44_test0_decomposed() throws Exception {\n",
+                        "        final CommandLine cl = new CommandLine(1, null, foreverTestScript, null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec44_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec44_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec44_test0_decomposed(self) -> None:",
+                        "        cl = CommandLine(1, None, self.__foreverTestScript, None)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0.7634100914001465,
+                    "generation_timestamp": "2024-11-27T14:19:33.610879",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "40-40:foreverTestScript": {
+                    "start": 40,
+                    "end": 40,
+                    "body": [
+                        "    private final File foreverTestScript = TestUtil.resolveScriptForOS(testDir + \"/forever\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "File",
+                            "java.io.File"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __foreverTestScript: pathlib.Path = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __foreverTestScript: pathlib.Path = TestUtil.resolveScriptForOS(str(__testDir / \"forever\"))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "failed",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 18.63016700744629,
+                    "generation_timestamp": "2024-11-26T19:00:44.190170",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 1,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "39-39:testDir": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "    private final File testDir = new File(\"src/test/scripts\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "File",
+                            "java.io.File"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __testDir: pathlib.Path = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __testDir: pathlib.Path = pathlib.Path(\"src/test/scripts\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 9.108124732971191,
+                    "generation_timestamp": "2024-11-26T19:00:53.327548",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "38-38:exec": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "    private final Executor exec = DefaultExecutor.builder().get();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Executor",
+                            "Executor"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __exec: Executor = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __exec: Executor = DefaultExecutor()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "failed",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 18.04494047164917,
+                    "generation_timestamp": "2024-11-26T19:01:11.433220",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 1,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class Exec44Test(unittest.TestCase):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import pathlib",
+        "import io",
+        "import os",
+        "import unittest",
+        "from src.main.org.apache.commons.exec.CommandLine import *",
+        "from src.main.org.apache.commons.exec.DefaultExecuteResultHandler import *",
+        "from src.main.org.apache.commons.exec.DefaultExecutor import *",
+        "from src.main.org.apache.commons.exec.ExecuteResultHandler import *",
+        "from src.main.org.apache.commons.exec.ExecuteWatchdog import *",
+        "from src.main.org.apache.commons.exec.Executor import *",
+        "from src.test.org.apache.commons.exec.TestUtil import *"
+    ]
+}

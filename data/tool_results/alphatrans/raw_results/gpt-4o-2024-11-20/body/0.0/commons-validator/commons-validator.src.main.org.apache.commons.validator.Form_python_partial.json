@@ -1,0 +1,782 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/main/java/org/apache/commons/validator/Form.java",
+    "imports": {
+        "19-19:import Serializable": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.io.Serializable;\n"
+            ]
+        },
+        "23-23:import List": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.List;\n"
+            ]
+        },
+        "22-22:import Iterator": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.Iterator;\n"
+            ]
+        },
+        "20-20:import ArrayList": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.util.ArrayList;\n"
+            ]
+        },
+        "21-21:import Collections": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.util.Collections;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Form": {
+            "start": 34,
+            "end": 34,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "139-153:toString": {
+                    "start": 139,
+                    "end": 153,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        StringBuilder results = new StringBuilder();\n",
+                        "\n",
+                        "        results.append(\"Form: \");\n",
+                        "        results.append(name);\n",
+                        "        results.append(\"\\n\");\n",
+                        "\n",
+                        "        for (Iterator<Field> i = lFields.iterator(); i.hasNext(); ) {\n",
+                        "            results.append(\"\\tField: \\n\");\n",
+                        "            results.append(i.next());\n",
+                        "            results.append(\"\\n\");\n",
+                        "        }\n",
+                        "\n",
+                        "        return results.toString();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "iterator()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Iterator",
+                            "hasNext()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Iterator",
+                            "next()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "        results = io.StringIO()",
+                        "",
+                        "        results.write(\"Form: \")",
+                        "        results.write(self._name if self._name else \"None\")",
+                        "        results.write(\"\\n\")",
+                        "",
+                        "        for field in self._lFields:",
+                        "            results.write(\"\\tField: \\n\")",
+                        "            results.write(str(field))",
+                        "            results.write(\"\\n\")",
+                        "",
+                        "        return results.getvalue()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 86.12369990348816,
+                    "generation_timestamp": "2024-11-28T08:31:53.713846",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "215-217:isExtending": {
+                    "start": 215,
+                    "end": 217,
+                    "body": [
+                        "    public boolean isExtending() {\n",
+                        "        return inherit != null;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isExtending()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def isExtending(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def isExtending(self) -> bool:",
+                        "        return self._inherit is not None"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 77.5350444316864,
+                    "generation_timestamp": "2024-11-28T08:33:11.557600",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "205-207:setExtends": {
+                    "start": 205,
+                    "end": 207,
+                    "body": [
+                        "    public void setExtends(String inherit) {\n",
+                        "        this.inherit = inherit;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setExtends(String)",
+                    "parameters": [
+                        "inherit"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def setExtends(self, inherit: str) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def setExtends(self, inherit: str) -> None:",
+                        "        self._inherit = inherit"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 92.30462408065796,
+                    "generation_timestamp": "2024-11-28T08:34:44.206894",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "195-197:getExtends": {
+                    "start": 195,
+                    "end": 197,
+                    "body": [
+                        "    public String getExtends() {\n",
+                        "        return inherit;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getExtends()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getExtends(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def getExtends(self) -> str:",
+                        "        return self._inherit"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 88.01000714302063,
+                    "generation_timestamp": "2024-11-28T08:36:12.594389",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "185-187:isProcessed": {
+                    "start": 185,
+                    "end": 187,
+                    "body": [
+                        "    public boolean isProcessed() {\n",
+                        "        return processed;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isProcessed()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def isProcessed(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def isProcessed(self) -> bool:",
+                        "        return self.__processed"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 77.56473469734192,
+                    "generation_timestamp": "2024-11-28T08:37:30.468998",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "96-98:getFields": {
+                    "start": 96,
+                    "end": 98,
+                    "body": [
+                        "    public List<Field> getFields() {\n",
+                        "        return Collections.unmodifiableList(lFields);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "List<Field>",
+                            "java.util.List<Field>"
+                        ]
+                    ],
+                    "signature": "getFields()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Collections",
+                            "unmodifiableList(java.util.List)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getFields(self) -> typing.List[Field]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def getFields(self) -> typing.List[Field]:",
+                        "        return self._lFields.copy()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 91.93200707435608,
+                    "generation_timestamp": "2024-11-28T08:39:02.759906",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "81-83:setName": {
+                    "start": 81,
+                    "end": 83,
+                    "body": [
+                        "    public void setName(String name) {\n",
+                        "        this.name = name;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setName(String)",
+                    "parameters": [
+                        "name"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def setName(self, name: str) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def setName(self, name: str) -> None:",
+                        "        self._name = name"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 98.60249972343445,
+                    "generation_timestamp": "2024-11-28T08:40:41.838509",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "72-74:getName": {
+                    "start": 72,
+                    "end": 74,
+                    "body": [
+                        "    public String getName() {\n",
+                        "        return name;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getName()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getName(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def getName(self) -> str:",
+                        "        return self._name"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 95.62609434127808,
+                    "generation_timestamp": "2024-11-28T08:42:17.772409",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "59-59:inherit": {
+                    "start": 59,
+                    "end": 59,
+                    "body": [
+                        "    protected String inherit = null;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _inherit: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    _inherit: str = None"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 41.43968391418457,
+                    "generation_timestamp": "2024-11-27T13:19:53.074699",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "46-46:lFields": {
+                    "start": 46,
+                    "end": 46,
+                    "body": [
+                        "    protected List<Field> lFields = new ArrayList<Field>();\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "List<Field>",
+                            "java.util.List<Field>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _lFields: typing.List[Field] = []",
+                        ""
+                    ],
+                    "translation": [
+                        "    _lFields: typing.List[Field] = []",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-11-27T13:19:53.098018",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "39-39:name": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "    protected String name = null;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _name: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    _name: str = None"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 34.512667417526245,
+                    "generation_timestamp": "2024-11-27T13:20:27.659785",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "65-65:processed": {
+                    "start": 65,
+                    "end": 65,
+                    "body": [
+                        "    private boolean processed = false;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __processed: bool = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __processed: bool = False"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 36.72013258934021,
+                    "generation_timestamp": "2024-11-27T13:21:04.436717",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "36-36:serialVersionUID": {
+                    "start": 36,
+                    "end": 36,
+                    "body": [
+                        "    private static final long serialVersionUID = 6445211789563796371L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = 6445211789563796371"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 31.904446840286255,
+                    "generation_timestamp": "2024-11-27T13:21:36.380195",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class Form():\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.validator.Field import *"
+    ]
+}

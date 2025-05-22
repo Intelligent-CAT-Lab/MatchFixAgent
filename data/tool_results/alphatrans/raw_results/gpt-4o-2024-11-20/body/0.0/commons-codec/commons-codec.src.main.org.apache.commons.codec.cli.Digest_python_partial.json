@@ -1,0 +1,504 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-codec/src/main/java/org/apache/commons/codec/cli/Digest.java",
+    "imports": {
+        "22-22:import IOException": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "23-23:import Arrays": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        },
+        "19-19:import Hex": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import org.apache.commons.codec.binary.Hex;\n"
+            ]
+        },
+        "20-20:import MessageDigestAlgorithms": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.apache.commons.codec.digest.MessageDigestAlgorithms;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Digest": {
+            "start": 31,
+            "end": 31,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "81-83:toString": {
+                    "start": 81,
+                    "end": 83,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        return String.format(\"%s %s\", super.toString(), Arrays.toString(args));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "format(java.lang.String,java.lang.Object[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "toString()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "toString(java.lang.Object[])"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "        return f\"{super().__str__()} {str(self.__args)}\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 118.2570731639862,
+                    "generation_timestamp": "2024-11-28T14:46:16.796931",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "75-78:println1": {
+                    "start": 75,
+                    "end": 78,
+                    "body": [
+                        "    private void println1(final String prefix, final byte[] digest, final String fileName) {\n",
+                        "        System.out.println(\n",
+                        "                prefix + Hex.encodeHexString0(digest) + (fileName != null ? \"  \" + fileName : \"\"));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "println1(String, byte[], String)",
+                    "parameters": [
+                        "prefix",
+                        "digest",
+                        "fileName"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "313-315:encodeHexString0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __println1(self, prefix: str, digest: typing.List[int], fileName: str) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __println1(self, prefix: str, digest: typing.List[int], fileName: str) -> None:",
+                        "        print(",
+                        "            prefix + Hex.encodeHexString0(digest) + (f\"  {fileName}\" if fileName is not None else \"\")",
+                        "        )"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 85.59484958648682,
+                    "generation_timestamp": "2024-11-29T20:33:24.193539",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "71-73:println0": {
+                    "start": 71,
+                    "end": 73,
+                    "body": [
+                        "    private void println0(final String prefix, final byte[] digest) {\n",
+                        "        println1(prefix, digest, null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "println0(String, byte[])",
+                    "parameters": [
+                        "prefix",
+                        "digest"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.cli.Digest",
+                            "Digest",
+                            "75-78:println1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __println0(self, prefix: str, digest: typing.List[int]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __println0(self, prefix: str, digest: typing.List[int]) -> None:",
+                        "        self.__println1(prefix, digest, None)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 78.68246293067932,
+                    "generation_timestamp": "2024-11-29T20:34:43.823565",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "50-69:Digest": {
+                    "start": 50,
+                    "end": 69,
+                    "body": [
+                        "    private Digest(final String[] args) {\n",
+                        "        if (args == null) {\n",
+                        "            throw new IllegalArgumentException(\"args\");\n",
+                        "        }\n",
+                        "        final int argsLength = args.length;\n",
+                        "        if (argsLength == 0) {\n",
+                        "            throw new IllegalArgumentException(\n",
+                        "                    String.format(\n",
+                        "                            \"Usage: java %s [algorithm] [FILE|DIRECTORY|string] ...\",\n",
+                        "                            Digest.class.getName()));\n",
+                        "        }\n",
+                        "        this.args = args;\n",
+                        "        algorithm = args[0];\n",
+                        "        if (argsLength <= 1) {\n",
+                        "            inputs = null;\n",
+                        "        } else {\n",
+                        "            inputs = new String[argsLength - 1];\n",
+                        "            System.arraycopy(args, 1, inputs, 0, inputs.length);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "Digest(String[])",
+                    "parameters": [
+                        "args"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "format(java.lang.String,java.lang.Object[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getName()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "arraycopy(java.lang.Object,int,java.lang.Object,int,int)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, args: typing.List[typing.List[str]]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, args: List[str]) -> None:",
+                        "        if args is None:",
+                        "            raise ValueError(\"args\")",
+                        "        args_length = len(args)",
+                        "        if args_length == 0:",
+                        "            raise ValueError(",
+                        "                f\"Usage: python {self.__class__.__name__} [algorithm] [FILE|DIRECTORY|string] ...\"",
+                        "            )",
+                        "        self.__args = args",
+                        "        self.__algorithm = args[0]",
+                        "        if args_length <= 1:",
+                        "            self.__inputs = None",
+                        "        else:",
+                        "            self.__inputs = args[1:]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 127.55240941047668,
+                    "generation_timestamp": "2024-11-28T14:48:25.355831",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "48-48:inputs": {
+                    "start": 48,
+                    "end": 48,
+                    "body": [
+                        "    private final String[] inputs;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __inputs: typing.List[typing.List[str]] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __inputs: typing.List[typing.List[str]] = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-11-27T12:39:52.666582",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "47-47:args": {
+                    "start": 47,
+                    "end": 47,
+                    "body": [
+                        "    private final String[] args;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __args: typing.List[typing.List[str]] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __args: typing.List[typing.List[str]] = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-11-27T12:39:52.671433",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "45-45:algorithm": {
+                    "start": 45,
+                    "end": 45,
+                    "body": [
+                        "    private final String algorithm;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __algorithm: str = ''",
+                        ""
+                    ],
+                    "translation": [
+                        "    __algorithm: str = ''",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-11-27T12:39:52.676475",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class Digest:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.codec.binary.Hex import *"
+    ]
+}

@@ -1,0 +1,2492 @@
+{
+    "path": "java_projects/cleaned_final_projects_evosuite/commons-csv/src/test/java/org/apache/commons/csv/ExtendedBufferedReader_ESTest.java",
+    "imports": {
+        "29-29:import IOException": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "30-30:import Reader": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import java.io.Reader;\n"
+            ]
+        },
+        "31-31:import StringReader": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import java.io.StringReader;\n"
+            ]
+        },
+        "26-26:import Test": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "34-34:import EvoRunnerParameters": {
+            "start": 34,
+            "end": 34,
+            "body": [
+                "import org.evosuite.runtime.EvoRunnerParameters;\n"
+            ]
+        },
+        "35-35:import RunWith": {
+            "start": 35,
+            "end": 35,
+            "body": [
+                "import org.junit.runner.RunWith;\n"
+            ]
+        },
+        "33-33:import EvoRunner": {
+            "start": 33,
+            "end": 33,
+            "body": [
+                "import org.evosuite.runtime.EvoRunner;\n"
+            ]
+        },
+        "32-32:import ExtendedBufferedReader": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import org.apache.commons.csv.ExtendedBufferedReader;\n"
+            ]
+        },
+        "28-28:import static EvoAssertions.*": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import static org.evosuite.runtime.EvoAssertions.*;\n"
+            ]
+        },
+        "27-27:import static Assert.*": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import static org.junit.Assert.*;\n"
+            ]
+        }
+    },
+    "classes": {
+        "ExtendedBufferedReader_ESTest": {
+            "start": 38,
+            "end": 38,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "380-394:test28": {
+                    "start": 380,
+                    "end": 394,
+                    "body": [
+                        "  public void test28()  throws Throwable  {\n",
+                        "      Reader reader0 = Reader.nullReader();\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(reader0);\n",
+                        "      extendedBufferedReader0.close();\n",
+                        "      try { \n",
+                        "        extendedBufferedReader0.lookAhead0();\n",
+                        "        fail(\"Expecting exception: IOException\");\n",
+                        "      \n",
+                        "      } catch(IOException e) {\n",
+                        "         //\n",
+                        "         // Stream closed\n",
+                        "         //\n",
+                        "         verifyException(\"java.io.BufferedReader\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test28()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "60-64:close"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "115-121:lookAhead0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test28(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test28(self) -> None:",
+                        "        ",
+                        "        reader0 = io.StringIO()",
+                        "        extendedBufferedReader0 = ExtendedBufferedReader(reader0)",
+                        "        extendedBufferedReader0.close()",
+                        "        ",
+                        "        try:",
+                        "            extendedBufferedReader0.lookAhead0()",
+                        "            pytest.fail(\"Expecting exception: IOException\")",
+                        "",
+                        "        except IOError as e:",
+                        "            # Stream closed",
+                        "            assert str(e) == \"java.io.BufferedReader\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 18.22826886177063,
+                    "generation_timestamp": "2024-09-09T12:29:59.894442",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "372-377:test27": {
+                    "start": 372,
+                    "end": 377,
+                    "body": [
+                        "  public void test27()  throws Throwable  {\n",
+                        "      Reader reader0 = Reader.nullReader();\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(reader0);\n",
+                        "      boolean boolean0 = extendedBufferedReader0.isClosed();\n",
+                        "      assertFalse(boolean0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test27()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "104-106:isClosed"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test27(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test27(self) -> None:",
+                        "         reader0 = io.StringIO()",
+                        "         extendedBufferedReader0 = ExtendedBufferedReader(reader0)",
+                        "         boolean0 = extendedBufferedReader0.isClosed()",
+                        "         self.assertFalse(boolean0)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 16.201533794403076,
+                    "generation_timestamp": "2024-09-09T12:30:16.134342",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "364-369:test26": {
+                    "start": 364,
+                    "end": 369,
+                    "body": [
+                        "  public void test26()  throws Throwable  {\n",
+                        "      StringReader stringReader0 = new StringReader(\"1SQFO+3-8;p^-wG-Cnt\");\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(stringReader0);\n",
+                        "      int int0 = extendedBufferedReader0.getLastChar();\n",
+                        "      assertEquals((-2), int0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test26()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "90-92:getLastChar"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test26(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test26(self) -> None:",
+                        "        ",
+                        "        stringReader0 = io.StringIO(\"1SQFO+3-8;p^-wG-Cnt\")",
+                        "        extendedBufferedReader0 = ExtendedBufferedReader(stringReader0)",
+                        "        int0 = extendedBufferedReader0.getLastChar()",
+                        "        self.assertEqual(-2, int0)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 11.770311117172241,
+                    "generation_timestamp": "2024-09-09T12:30:27.925381",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "356-361:test25": {
+                    "start": 356,
+                    "end": 361,
+                    "body": [
+                        "  public void test25()  throws Throwable  {\n",
+                        "      Reader reader0 = Reader.nullReader();\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(reader0);\n",
+                        "      long long0 = extendedBufferedReader0.getPosition();\n",
+                        "      assertEquals(0L, long0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test25()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "100-102:getPosition"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test25(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test25(self) -> None:",
+                        "         reader0 = io.StringIO(\"\")",
+                        "         extendedBufferedReader0 = ExtendedBufferedReader(reader0)",
+                        "         long0 = extendedBufferedReader0.getPosition()",
+                        "         self.assertEqual(0, long0)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 15.647142171859741,
+                    "generation_timestamp": "2024-09-09T12:30:43.613968",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "347-353:test24": {
+                    "start": 347,
+                    "end": 353,
+                    "body": [
+                        "  public void test24()  throws Throwable  {\n",
+                        "      StringReader stringReader0 = new StringReader(\"1SQFO+3-8;p^-wG-Cnt\");\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(stringReader0);\n",
+                        "      String string0 = extendedBufferedReader0.readLine();\n",
+                        "      assertEquals(\"1SQFO+3-8;p^-wG-Cnt\", string0);\n",
+                        "      assertNotNull(string0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test24()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "212-231:readLine"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test24(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test24(self) -> None:",
+                        "        ",
+                        "        stringReader0 = io.StringIO(\"1SQFO+3-8;p^-wG-Cnt\")",
+                        "        extendedBufferedReader0 = ExtendedBufferedReader(stringReader0)",
+                        "        string0 = extendedBufferedReader0.readLine()",
+                        "        self.assertEqual(\"1SQFO+3-8;p^-wG-Cnt\", string0)",
+                        "        self.assertIsNotNone(string0)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 16.649571180343628,
+                    "generation_timestamp": "2024-09-09T12:31:00.293697",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "339-344:test23": {
+                    "start": 339,
+                    "end": 344,
+                    "body": [
+                        "  public void test23()  throws Throwable  {\n",
+                        "      Reader reader0 = Reader.nullReader();\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(reader0);\n",
+                        "      long long0 = extendedBufferedReader0.getCurrentLineNumber();\n",
+                        "      assertEquals(0L, long0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test23()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "71-79:getCurrentLineNumber"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test23(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test23(self) -> None:",
+                        "        ",
+                        "        reader0 = io.StringIO(\"\")",
+                        "        extendedBufferedReader0 = ExtendedBufferedReader(reader0)",
+                        "        long0 = extendedBufferedReader0.getCurrentLineNumber()",
+                        "        self.assertEqual(0, long0)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 7.887100458145142,
+                    "generation_timestamp": "2024-09-09T12:31:08.209651",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "328-336:test22": {
+                    "start": 328,
+                    "end": 336,
+                    "body": [
+                        "  public void test22()  throws Throwable  {\n",
+                        "      Reader reader0 = Reader.nullReader();\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(reader0);\n",
+                        "      int int0 = extendedBufferedReader0.read0();\n",
+                        "      assertEquals((-1), int0);\n",
+                        "      \n",
+                        "      long long0 = extendedBufferedReader0.getCurrentLineNumber();\n",
+                        "      assertEquals(1L, long0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test22()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "155-168:read0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "71-79:getCurrentLineNumber"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test22(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test22(self) -> None:",
+                        "        ",
+                        "        reader0 = io.StringIO(\"\")",
+                        "        extendedBufferedReader0 = ExtendedBufferedReader(reader0)",
+                        "        int0 = extendedBufferedReader0.read0()",
+                        "        self.assertEqual(-1, int0)",
+                        "        ",
+                        "        long0 = extendedBufferedReader0.getCurrentLineNumber()",
+                        "        self.assertEqual(1, long0)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 18.101503610610962,
+                    "generation_timestamp": "2024-09-09T12:31:26.345691",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "315-325:test21": {
+                    "start": 315,
+                    "end": 325,
+                    "body": [
+                        "  public void test21()  throws Throwable  {\n",
+                        "      StringReader stringReader0 = new StringReader(\"q>:2TkH(M\");\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(stringReader0);\n",
+                        "      char[] charArray0 = new char[6];\n",
+                        "      int int0 = extendedBufferedReader0.read1(charArray0, 1, 1);\n",
+                        "      assertEquals(1, int0);\n",
+                        "      assertArrayEquals(new char[] {'\\u0000', 'q', '\\u0000', '\\u0000', '\\u0000', '\\u0000'}, charArray0);\n",
+                        "      \n",
+                        "      long long0 = extendedBufferedReader0.getCurrentLineNumber();\n",
+                        "      assertEquals(1L, long0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test21()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "170-198:read1"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "71-79:getCurrentLineNumber"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test21(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test21(self) -> None:",
+                        "        ",
+                        "        stringReader0 = io.StringIO(\"q>:2TkH(M\")",
+                        "        extendedBufferedReader0 = ExtendedBufferedReader(stringReader0)",
+                        "        charArray0 = ['\\0'] * 6",
+                        "        int0 = extendedBufferedReader0.read1(charArray0, 1, 1)",
+                        "        self.assertEqual(1, int0)",
+                        "        self.assertEqual(['\\0', 'q', '\\0', '\\0', '\\0', '\\0'], charArray0)",
+                        "        ",
+                        "        long0 = extendedBufferedReader0.getCurrentLineNumber()",
+                        "        self.assertEqual(1, long0)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 12.079424858093262,
+                    "generation_timestamp": "2024-09-09T12:31:38.465315",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "306-312:test20": {
+                    "start": 306,
+                    "end": 312,
+                    "body": [
+                        "  public void test20()  throws Throwable  {\n",
+                        "      Reader reader0 = Reader.nullReader();\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(reader0);\n",
+                        "      extendedBufferedReader0.read0();\n",
+                        "      int int0 = extendedBufferedReader0.read0();\n",
+                        "      assertEquals((-1), int0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test20()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "155-168:read0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test20(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test20(self) -> None:",
+                        "        ",
+                        "        reader0 = io.StringIO(\"\")",
+                        "        extendedBufferedReader0 = ExtendedBufferedReader(reader0)",
+                        "        extendedBufferedReader0.read0()",
+                        "        int0 = extendedBufferedReader0.read0()",
+                        "        self.assertEqual(-1, int0)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 18.919497966766357,
+                    "generation_timestamp": "2024-09-09T12:31:57.415501",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "298-303:test19": {
+                    "start": 298,
+                    "end": 303,
+                    "body": [
+                        "  public void test19()  throws Throwable  {\n",
+                        "      Reader reader0 = Reader.nullReader();\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(reader0);\n",
+                        "      int int0 = extendedBufferedReader0.read1((char[]) null, 0, 0);\n",
+                        "      assertEquals(0, int0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test19()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "170-198:read1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test19(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test19(self) -> None:",
+                        "        ",
+                        "        reader0 = io.StringIO(\"\")",
+                        "        extendedBufferedReader0 = ExtendedBufferedReader(reader0)",
+                        "        int0 = extendedBufferedReader0.read1(None, 0, 0)",
+                        "        self.assertEqual(0, int0)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 15.833275556564331,
+                    "generation_timestamp": "2024-09-09T12:32:13.286141",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "290-295:test18": {
+                    "start": 290,
+                    "end": 295,
+                    "body": [
+                        "  public void test18()  throws Throwable  {\n",
+                        "      Reader reader0 = Reader.nullReader();\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(reader0);\n",
+                        "      String string0 = extendedBufferedReader0.readLine();\n",
+                        "      assertNull(string0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test18()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "212-231:readLine"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test18(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test18(self) -> None:",
+                        "        ",
+                        "        reader0 = io.StringIO(\"\")",
+                        "        extendedBufferedReader0 = ExtendedBufferedReader(reader0)",
+                        "        string0 = extendedBufferedReader0.readLine()",
+                        "        self.assertIsNone(string0)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 9.078328132629395,
+                    "generation_timestamp": "2024-09-09T12:32:22.395954",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "275-287:test17": {
+                    "start": 275,
+                    "end": 287,
+                    "body": [
+                        "  public void test17()  throws Throwable  {\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = null;\n",
+                        "      try {\n",
+                        "        extendedBufferedReader0 = new ExtendedBufferedReader((Reader) null);\n",
+                        "        fail(\"Expecting exception: NullPointerException\");\n",
+                        "      \n",
+                        "      } catch(NullPointerException e) {\n",
+                        "         //\n",
+                        "         // no message in exception (getMessage() returned null)\n",
+                        "         //\n",
+                        "         verifyException(\"java.io.Reader\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test17()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test17(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test17(self) -> None:",
+                        "        ",
+                        "        extendedBufferedReader0 = None",
+                        "        try:",
+                        "            extendedBufferedReader0 = ExtendedBufferedReader(None)",
+                        "            pytest.fail(\"Expecting exception: RuntimeError\")",
+                        "",
+                        "        except Exception as e:",
+                        "            assert isinstance(e, TypeError), \"Expecting exception: RuntimeError\"",
+                        "            assert str(e) == \"argument 1 must be str, not NoneType\", \"Expecting exception: RuntimeError\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 22.95381236076355,
+                    "generation_timestamp": "2024-09-09T12:32:45.382763",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "257-272:test16": {
+                    "start": 257,
+                    "end": 272,
+                    "body": [
+                        "  public void test16()  throws Throwable  {\n",
+                        "      Reader reader0 = Reader.nullReader();\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(reader0);\n",
+                        "      extendedBufferedReader0.close();\n",
+                        "      char[] charArray0 = new char[1];\n",
+                        "      try { \n",
+                        "        extendedBufferedReader0.lookAhead1(charArray0);\n",
+                        "        fail(\"Expecting exception: IOException\");\n",
+                        "      \n",
+                        "      } catch(IOException e) {\n",
+                        "         //\n",
+                        "         // Stream closed\n",
+                        "         //\n",
+                        "         verifyException(\"java.io.BufferedReader\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test16()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "60-64:close"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "132-139:lookAhead1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test16(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test16(self) -> None:",
+                        "        ",
+                        "        reader0 = io.StringIO()",
+                        "        extendedBufferedReader0 = ExtendedBufferedReader(reader0)",
+                        "        extendedBufferedReader0.close()",
+                        "        charArray0 = ['\\0']",
+                        "        ",
+                        "        try: ",
+                        "            extendedBufferedReader0.lookAhead1(charArray0)",
+                        "            pytest.fail(\"Expecting exception: IOException\")",
+                        "      ",
+                        "        except IOError as e:",
+                        "            # Stream closed",
+                        "            assert str(e) == \"Stream is closed\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 21.694647789001465,
+                    "generation_timestamp": "2024-09-09T12:33:07.116767",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "240-254:test15": {
+                    "start": 240,
+                    "end": 254,
+                    "body": [
+                        "  public void test15()  throws Throwable  {\n",
+                        "      Reader reader0 = Reader.nullReader();\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(reader0);\n",
+                        "      // Undeclared exception!\n",
+                        "      try { \n",
+                        "        extendedBufferedReader0.lookAhead1((char[]) null);\n",
+                        "        fail(\"Expecting exception: NullPointerException\");\n",
+                        "      \n",
+                        "      } catch(NullPointerException e) {\n",
+                        "         //\n",
+                        "         // no message in exception (getMessage() returned null)\n",
+                        "         //\n",
+                        "         verifyException(\"org.apache.commons.csv.ExtendedBufferedReader\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test15()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "132-139:lookAhead1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test15(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test15(self) -> None:",
+                        "        ",
+                        "        reader0 = io.StringIO()",
+                        "        extendedBufferedReader0 = ExtendedBufferedReader(reader0)",
+                        "        ",
+                        "        with pytest.raises(TypeError):",
+                        "            extendedBufferedReader0.lookAhead1(None)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 13.094905138015747,
+                    "generation_timestamp": "2024-09-09T12:33:20.245603",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "223-237:test14": {
+                    "start": 223,
+                    "end": 237,
+                    "body": [
+                        "  public void test14()  throws Throwable  {\n",
+                        "      Reader reader0 = Reader.nullReader();\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(reader0);\n",
+                        "      extendedBufferedReader0.close();\n",
+                        "      try { \n",
+                        "        extendedBufferedReader0.lookAhead2(212);\n",
+                        "        fail(\"Expecting exception: IOException\");\n",
+                        "      \n",
+                        "      } catch(IOException e) {\n",
+                        "         //\n",
+                        "         // Stream closed\n",
+                        "         //\n",
+                        "         verifyException(\"java.io.BufferedReader\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test14()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "60-64:close"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "150-153:lookAhead2"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test14(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test14(self) -> None:",
+                        "        ",
+                        "        reader0 = io.StringIO()",
+                        "        extendedBufferedReader0 = ExtendedBufferedReader(reader0)",
+                        "        extendedBufferedReader0.close()",
+                        "        ",
+                        "        with pytest.raises(IOError) as e_info:",
+                        "            extendedBufferedReader0.lookAhead2(212)",
+                        "        ",
+                        "        assert str(e_info.value) == \"Stream closed\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 10.623092651367188,
+                    "generation_timestamp": "2024-09-09T12:33:30.907271",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "206-220:test13": {
+                    "start": 206,
+                    "end": 220,
+                    "body": [
+                        "  public void test13()  throws Throwable  {\n",
+                        "      Reader reader0 = Reader.nullReader();\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(reader0);\n",
+                        "      // Undeclared exception!\n",
+                        "      try { \n",
+                        "        extendedBufferedReader0.lookAhead2((-4253));\n",
+                        "        fail(\"Expecting exception: NegativeArraySizeException\");\n",
+                        "      \n",
+                        "      } catch(NegativeArraySizeException e) {\n",
+                        "         //\n",
+                        "         // -4253\n",
+                        "         //\n",
+                        "         verifyException(\"org.apache.commons.csv.ExtendedBufferedReader\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test13()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "150-153:lookAhead2"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test13(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test13(self) -> None:",
+                        "        ",
+                        "        reader0 = io.StringIO()",
+                        "        extendedBufferedReader0 = ExtendedBufferedReader(reader0)",
+                        "        ",
+                        "        with pytest.raises(NegativeArraySizeException):",
+                        "            extendedBufferedReader0.lookAhead2(-4253)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 14.540427684783936,
+                    "generation_timestamp": "2024-09-09T12:33:45.485175",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "189-203:test12": {
+                    "start": 189,
+                    "end": 203,
+                    "body": [
+                        "  public void test12()  throws Throwable  {\n",
+                        "      Reader reader0 = Reader.nullReader();\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(reader0);\n",
+                        "      extendedBufferedReader0.close();\n",
+                        "      try { \n",
+                        "        extendedBufferedReader0.read0();\n",
+                        "        fail(\"Expecting exception: IOException\");\n",
+                        "      \n",
+                        "      } catch(IOException e) {\n",
+                        "         //\n",
+                        "         // Stream closed\n",
+                        "         //\n",
+                        "         verifyException(\"java.io.BufferedReader\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test12()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "60-64:close"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "155-168:read0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test12(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test12(self) -> None:",
+                        "        ",
+                        "        reader0 = io.StringIO()",
+                        "        extendedBufferedReader0 = ExtendedBufferedReader(reader0)",
+                        "        extendedBufferedReader0.close()",
+                        "        try:",
+                        "            extendedBufferedReader0.read0()",
+                        "            pytest.fail(\"Expecting exception: IOException\")",
+                        "",
+                        "        except IOError as e:",
+                        "            # Stream closed",
+                        "            assert str(e) == \"Stream is closed\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 16.176530361175537,
+                    "generation_timestamp": "2024-09-09T12:34:01.702022",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "171-186:test11": {
+                    "start": 171,
+                    "end": 186,
+                    "body": [
+                        "  public void test11()  throws Throwable  {\n",
+                        "      Reader reader0 = Reader.nullReader();\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(reader0);\n",
+                        "      char[] charArray0 = new char[6];\n",
+                        "      extendedBufferedReader0.close();\n",
+                        "      try { \n",
+                        "        extendedBufferedReader0.read1(charArray0, 1, 1);\n",
+                        "        fail(\"Expecting exception: IOException\");\n",
+                        "      \n",
+                        "      } catch(IOException e) {\n",
+                        "         //\n",
+                        "         // Stream closed\n",
+                        "         //\n",
+                        "         verifyException(\"java.io.BufferedReader\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test11()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "60-64:close"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "170-198:read1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test11(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test11(self) -> None:",
+                        "        ",
+                        "        reader0 = io.StringIO()",
+                        "        extendedBufferedReader0 = ExtendedBufferedReader(reader0)",
+                        "        charArray0 = ['\\0'] * 6",
+                        "        extendedBufferedReader0.close()",
+                        "        ",
+                        "        try: ",
+                        "            extendedBufferedReader0.read1(charArray0, 1, 1)",
+                        "            pytest.fail(\"Expecting exception: IOException\")",
+                        "      ",
+                        "        except IOError as e:",
+                        "            # Stream closed",
+                        "            assert str(e) == \"Stream is closed\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 8.88861083984375,
+                    "generation_timestamp": "2024-09-09T12:34:10.622909",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "155-168:test10": {
+                    "start": 155,
+                    "end": 168,
+                    "body": [
+                        "  public void test10()  throws Throwable  {\n",
+                        "      Reader reader0 = Reader.nullReader();\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(reader0);\n",
+                        "      // Undeclared exception!\n",
+                        "      try { \n",
+                        "        extendedBufferedReader0.read1((char[]) null, 30, 30);\n",
+                        "        fail(\"Expecting exception: NullPointerException\");\n",
+                        "      \n",
+                        "      } catch(NullPointerException e) {\n",
+                        "         //\n",
+                        "         // no message in exception (getMessage() returned null)\n",
+                        "         //\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test10()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "170-198:read1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test10(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test10(self) -> None:",
+                        "        ",
+                        "        reader0 = io.StringIO()",
+                        "        extendedBufferedReader0 = ExtendedBufferedReader(reader0)",
+                        "        ",
+                        "        with pytest.raises(TypeError):",
+                        "            extendedBufferedReader0.read1(None, 30, 30)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 19.03922152519226,
+                    "generation_timestamp": "2024-09-09T12:34:29.696403",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "138-152:test09": {
+                    "start": 138,
+                    "end": 152,
+                    "body": [
+                        "  public void test09()  throws Throwable  {\n",
+                        "      Reader reader0 = Reader.nullReader();\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(reader0);\n",
+                        "      extendedBufferedReader0.close();\n",
+                        "      try { \n",
+                        "        extendedBufferedReader0.readLine();\n",
+                        "        fail(\"Expecting exception: IOException\");\n",
+                        "      \n",
+                        "      } catch(IOException e) {\n",
+                        "         //\n",
+                        "         // Stream closed\n",
+                        "         //\n",
+                        "         verifyException(\"java.io.BufferedReader\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test09()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "60-64:close"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "212-231:readLine"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test09(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test09(self) -> None:",
+                        "        ",
+                        "        reader0 = io.StringIO()",
+                        "        extendedBufferedReader0 = ExtendedBufferedReader(reader0)",
+                        "        extendedBufferedReader0.close()",
+                        "        try: ",
+                        "            extendedBufferedReader0.readLine()",
+                        "            pytest.fail(\"Expecting exception: IOException\")",
+                        "      ",
+                        "        except io.UnsupportedOperation:",
+                        "            #",
+                        "            # Stream closed",
+                        "            #",
+                        "            assert extendedBufferedReader0._ExtendedBufferedReader__closed == True"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 19.051125288009644,
+                    "generation_timestamp": "2024-09-09T12:34:48.782140",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "128-135:test08": {
+                    "start": 128,
+                    "end": 135,
+                    "body": [
+                        "  public void test08()  throws Throwable  {\n",
+                        "      StringReader stringReader0 = new StringReader(\"1SQFO+3-8;p^-wG-Cnt\");\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(stringReader0);\n",
+                        "      int int0 = extendedBufferedReader0.read0();\n",
+                        "      int int1 = extendedBufferedReader0.getLastChar();\n",
+                        "      assertEquals(49, int1);\n",
+                        "      assertTrue(int1 == int0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test08()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "155-168:read0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "90-92:getLastChar"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test08(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test08(self) -> None:",
+                        "        ",
+                        "        stringReader0 = io.StringIO(\"1SQFO+3-8;p^-wG-Cnt\")",
+                        "        extendedBufferedReader0 = ExtendedBufferedReader(stringReader0)",
+                        "        int0 = extendedBufferedReader0.read0()",
+                        "        int1 = extendedBufferedReader0.getLastChar()",
+                        "        self.assertEqual(49, int1)",
+                        "        self.assertTrue(int1 == int0)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 19.496889352798462,
+                    "generation_timestamp": "2024-09-09T12:35:08.314277",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "118-125:test07": {
+                    "start": 118,
+                    "end": 125,
+                    "body": [
+                        "  public void test07()  throws Throwable  {\n",
+                        "      Reader reader0 = Reader.nullReader();\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(reader0);\n",
+                        "      char[] charArray0 = new char[2];\n",
+                        "      extendedBufferedReader0.read1(charArray0, 1, 1);\n",
+                        "      long long0 = extendedBufferedReader0.getPosition();\n",
+                        "      assertEquals((-1L), long0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test07()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "100-102:getPosition"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "170-198:read1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test07(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test07(self) -> None:",
+                        "        ",
+                        "        reader0 = io.StringIO(\"\")",
+                        "        extendedBufferedReader0 = ExtendedBufferedReader(reader0)",
+                        "        charArray0 = ['\\0', '\\0']",
+                        "        extendedBufferedReader0.read1(charArray0, 1, 1)",
+                        "        long0 = extendedBufferedReader0.getPosition()",
+                        "        self.assertEqual(-1, long0)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 15.091455936431885,
+                    "generation_timestamp": "2024-09-09T12:35:23.440925",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "107-115:test06": {
+                    "start": 107,
+                    "end": 115,
+                    "body": [
+                        "  public void test06()  throws Throwable  {\n",
+                        "      Reader reader0 = Reader.nullReader();\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(reader0);\n",
+                        "      int int0 = extendedBufferedReader0.read0();\n",
+                        "      assertEquals((-1), int0);\n",
+                        "      \n",
+                        "      long long0 = extendedBufferedReader0.getPosition();\n",
+                        "      assertEquals(1L, long0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test06()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "155-168:read0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "100-102:getPosition"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test06(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test06(self) -> None:",
+                        "        ",
+                        "        reader0 = io.StringIO(\"\")",
+                        "        extendedBufferedReader0 = ExtendedBufferedReader(reader0)",
+                        "        int0 = extendedBufferedReader0.read0()",
+                        "        self.assertEqual(-1, int0)",
+                        "        ",
+                        "        long0 = extendedBufferedReader0.getPosition()",
+                        "        self.assertEqual(1, long0)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 8.083396911621094,
+                    "generation_timestamp": "2024-09-09T12:35:31.571422",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "98-104:test05": {
+                    "start": 98,
+                    "end": 104,
+                    "body": [
+                        "  public void test05()  throws Throwable  {\n",
+                        "      Reader reader0 = Reader.nullReader();\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(reader0);\n",
+                        "      extendedBufferedReader0.close();\n",
+                        "      boolean boolean0 = extendedBufferedReader0.isClosed();\n",
+                        "      assertTrue(boolean0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test05()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "104-106:isClosed"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "60-64:close"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test05(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test05(self) -> None:",
+                        "         reader0 = io.StringIO(\"\")",
+                        "         extendedBufferedReader0 = ExtendedBufferedReader(reader0)",
+                        "         extendedBufferedReader0.close()",
+                        "         boolean0 = extendedBufferedReader0.isClosed()",
+                        "         self.assertTrue(boolean0)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 16.068447589874268,
+                    "generation_timestamp": "2024-09-09T12:35:47.674294",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "85-95:test04": {
+                    "start": 85,
+                    "end": 95,
+                    "body": [
+                        "  public void test04()  throws Throwable  {\n",
+                        "      StringReader stringReader0 = new StringReader(\"F,2=\");\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(stringReader0);\n",
+                        "      char[] charArray0 = extendedBufferedReader0.lookAhead2(4612);\n",
+                        "      int int0 = extendedBufferedReader0.read1(charArray0, 1, 32);\n",
+                        "      assertEquals(4, int0);\n",
+                        "      assertEquals(4612, charArray0.length);\n",
+                        "      \n",
+                        "      int int1 = extendedBufferedReader0.lookAhead0();\n",
+                        "      assertEquals((-1), int1);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test04()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "150-153:lookAhead2"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "170-198:read1"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "115-121:lookAhead0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test04(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test04(self) -> None:",
+                        "        ",
+                        "        stringReader0 = io.StringIO(\"F,2=\")",
+                        "        extendedBufferedReader0 = ExtendedBufferedReader(stringReader0)",
+                        "        charArray0 = extendedBufferedReader0.lookAhead2(4612)",
+                        "        int0 = extendedBufferedReader0.read1(charArray0, 1, 32)",
+                        "        self.assertEqual(4, int0)",
+                        "        self.assertEqual(4612, len(charArray0))",
+                        "        ",
+                        "        int1 = extendedBufferedReader0.lookAhead0()",
+                        "        self.assertEqual(-1, int1)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 16.51489806175232,
+                    "generation_timestamp": "2024-09-09T12:36:04.246547",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "77-82:test03": {
+                    "start": 77,
+                    "end": 82,
+                    "body": [
+                        "  public void test03()  throws Throwable  {\n",
+                        "      StringReader stringReader0 = new StringReader(\"zu-4~(,lL9p (\");\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(stringReader0);\n",
+                        "      int int0 = extendedBufferedReader0.lookAhead0();\n",
+                        "      assertEquals(122, int0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test03()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "115-121:lookAhead0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test03(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test03(self) -> None:",
+                        "        ",
+                        "        stringReader0 = io.StringIO(\"zu-4~(,lL9p (\")",
+                        "        extendedBufferedReader0 = ExtendedBufferedReader(stringReader0)",
+                        "        int0 = extendedBufferedReader0.lookAhead0()",
+                        "        self.assertEqual(122, int0)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 16.59681248664856,
+                    "generation_timestamp": "2024-09-09T12:36:20.883837",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "68-74:test02": {
+                    "start": 68,
+                    "end": 74,
+                    "body": [
+                        "  public void test02()  throws Throwable  {\n",
+                        "      Reader reader0 = Reader.nullReader();\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(reader0);\n",
+                        "      char[] charArray0 = extendedBufferedReader0.lookAhead2(0);\n",
+                        "      char[] charArray1 = extendedBufferedReader0.lookAhead1(charArray0);\n",
+                        "      assertEquals(0, charArray1.length);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test02()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "150-153:lookAhead2"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "132-139:lookAhead1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test02(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test02(self) -> None:",
+                        "        ",
+                        "        reader0 = io.StringIO(\"\")",
+                        "        extendedBufferedReader0 = ExtendedBufferedReader(reader0)",
+                        "        charArray0 = extendedBufferedReader0.lookAhead2(0)",
+                        "        charArray1 = extendedBufferedReader0.lookAhead1(charArray0)",
+                        "        self.assertEqual(0, len(charArray1))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 7.256086349487305,
+                    "generation_timestamp": "2024-09-09T12:36:28.181863",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "59-65:test01": {
+                    "start": 59,
+                    "end": 65,
+                    "body": [
+                        "  public void test01()  throws Throwable  {\n",
+                        "      StringReader stringReader0 = new StringReader(\"1SQFO+3-8;p^-wG-Cnt\");\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(stringReader0);\n",
+                        "      char[] charArray0 = new char[1];\n",
+                        "      char[] charArray1 = extendedBufferedReader0.lookAhead1(charArray0);\n",
+                        "      assertEquals(1, charArray1.length);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test01()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "132-139:lookAhead1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test01(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test01(self) -> None:",
+                        "        ",
+                        "        stringReader0 = io.StringIO(\"1SQFO+3-8;p^-wG-Cnt\")",
+                        "        extendedBufferedReader0 = ExtendedBufferedReader(stringReader0)",
+                        "        charArray0 = ['']",
+                        "        charArray1 = extendedBufferedReader0.lookAhead1(charArray0)",
+                        "        self.assertEqual(1, len(charArray1))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 17.599162578582764,
+                    "generation_timestamp": "2024-09-09T12:36:45.809449",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "41-56:test00": {
+                    "start": 41,
+                    "end": 56,
+                    "body": [
+                        "  public void test00()  throws Throwable  {\n",
+                        "      Reader reader0 = Reader.nullReader();\n",
+                        "      ExtendedBufferedReader extendedBufferedReader0 = new ExtendedBufferedReader(reader0);\n",
+                        "      char[] charArray0 = extendedBufferedReader0.lookAhead2(1406);\n",
+                        "      // Undeclared exception!\n",
+                        "      try { \n",
+                        "        extendedBufferedReader0.read1(charArray0, 478, (-1));\n",
+                        "        fail(\"Expecting exception: IndexOutOfBoundsException\");\n",
+                        "      \n",
+                        "      } catch(IndexOutOfBoundsException e) {\n",
+                        "         //\n",
+                        "         // no message in exception (getMessage() returned null)\n",
+                        "         //\n",
+                        "         verifyException(\"java.io.BufferedReader\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test00()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "150-153:lookAhead2"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "170-198:read1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test00(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test00(self) -> None:",
+                        "        ",
+                        "        reader0 = io.StringIO()",
+                        "        extendedBufferedReader0 = ExtendedBufferedReader(reader0)",
+                        "        charArray0 = extendedBufferedReader0.lookAhead2(1406)",
+                        "        ",
+                        "        with pytest.raises(IndexError):",
+                        "            extendedBufferedReader0.read1(charArray0, 478, -1)",
+                        "            pytest.fail(\"Expecting exception: IndexError\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 20.012070178985596,
+                    "generation_timestamp": "2024-09-09T12:37:05.870914",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class ExtendedBufferedReader_ESTest(unittest.TestCase):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import unittest",
+        "from src.main.org.apache.commons.csv.ExtendedBufferedReader import *",
+        "# from src.test.org.apache.commons.csv.ExtendedBufferedReader_ESTest_scaffolding import *",
+        "# from src.main.org.evosuite.runtime.EvoAssertions import *",
+        "# from src.main.org.evosuite.runtime.EvoRunnerParameters import *"
+    ]
+}

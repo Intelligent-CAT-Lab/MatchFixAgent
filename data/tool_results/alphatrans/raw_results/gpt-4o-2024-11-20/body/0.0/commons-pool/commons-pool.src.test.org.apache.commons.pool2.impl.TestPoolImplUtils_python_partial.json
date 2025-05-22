@@ -1,0 +1,1146 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-pool/src/test/java/org/apache/commons/pool2/impl/TestPoolImplUtils.java",
+    "imports": {
+        "28-28:import TimeUnit": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.util.concurrent.TimeUnit;\n"
+            ]
+        },
+        "25-25:import Duration": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.time.Duration;\n"
+            ]
+        },
+        "26-26:import Instant": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.time.Instant;\n"
+            ]
+        },
+        "27-27:import ChronoUnit": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.time.temporal.ChronoUnit;\n"
+            ]
+        },
+        "22-22:import PooledObject": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import org.apache.commons.pool2.PooledObject;\n"
+            ]
+        },
+        "21-21:import BasePooledObjectFactory": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import org.apache.commons.pool2.BasePooledObjectFactory;\n"
+            ]
+        },
+        "23-23:import Test": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import org.junit.jupiter.api.Test;\n"
+            ]
+        },
+        "19-19:import static Assertions.assertEquals": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertEquals;\n"
+            ]
+        }
+    },
+    "classes": {
+        "TestPoolImplUtils": {
+            "start": 30,
+            "end": 30,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "FactoryAB",
+                "FactoryBA",
+                "FactoryC",
+                "FactoryDE",
+                "FactoryF",
+                "NotSimpleFactory",
+                "SimpleFactory"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "122-128:testToDuration_test0_decomposed": {
+                    "start": 122,
+                    "end": 128,
+                    "body": [
+                        "    public void testToDuration_test0_decomposed()  {\n",
+                        "        assertEquals(Duration.ZERO, PoolImplUtils.toDuration(0, TimeUnit.MILLISECONDS));\n",
+                        "        assertEquals(Duration.ofMillis(1), PoolImplUtils.toDuration(1, TimeUnit.MILLISECONDS));\n",
+                        "        for (final TimeUnit tu : TimeUnit.values()) {\n",
+                        "            assertEquals(Duration.ZERO, PoolImplUtils.toDuration(0, tu));\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testToDuration_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.PoolImplUtils",
+                            "PoolImplUtils",
+                            "222-224:toDuration"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "ofMillis(long)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/TimeUnit",
+                            "values()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testToDuration_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testToDuration_test0_decomposed(self) -> None:",
+                        "        self.assertEqual(datetime.timedelta(0), PoolImplUtils.toDuration(0, datetime.timedelta(milliseconds=1)))",
+                        "        self.assertEqual(datetime.timedelta(milliseconds=1), PoolImplUtils.toDuration(1, datetime.timedelta(milliseconds=1)))",
+                        "        for time_unit in [datetime.timedelta(milliseconds=1), datetime.timedelta(seconds=1), datetime.timedelta(minutes=1), ",
+                        "                          datetime.timedelta(hours=1), datetime.timedelta(days=1)]:",
+                        "            self.assertEqual(datetime.timedelta(0), PoolImplUtils.toDuration(0, time_unit))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": {
+                        "commons-pool/src/test/org/apache/commons/pool2/impl/TestPoolImplUtils.py::TestPoolImplUtils::testToDuration_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-pool.src.main.org.apache.commons.pool2.impl.PoolImplUtils",
+                                    "class": "PoolImplUtils",
+                                    "method": "222-224:toDuration"
+                                },
+                                {
+                                    "file": "commons-pool.src.test.org.apache.commons.pool2.impl.TestPoolImplUtils",
+                                    "class": "TestPoolImplUtils",
+                                    "method": "122-128:testToDuration_test0_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 2.8858749866485596,
+                    "generation_timestamp": "2024-11-28T00:59:45.099493",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "111-119:testToChronoUnit_test0_decomposed": {
+                    "start": 111,
+                    "end": 119,
+                    "body": [
+                        "    public void testToChronoUnit_test0_decomposed()  {\n",
+                        "        assertEquals(ChronoUnit.NANOS, PoolImplUtils.toChronoUnit(TimeUnit.NANOSECONDS));\n",
+                        "        assertEquals(ChronoUnit.MICROS, PoolImplUtils.toChronoUnit(TimeUnit.MICROSECONDS));\n",
+                        "        assertEquals(ChronoUnit.MILLIS, PoolImplUtils.toChronoUnit(TimeUnit.MILLISECONDS));\n",
+                        "        assertEquals(ChronoUnit.SECONDS, PoolImplUtils.toChronoUnit(TimeUnit.SECONDS));\n",
+                        "        assertEquals(ChronoUnit.MINUTES, PoolImplUtils.toChronoUnit(TimeUnit.MINUTES));\n",
+                        "        assertEquals(ChronoUnit.HOURS, PoolImplUtils.toChronoUnit(TimeUnit.HOURS));\n",
+                        "        assertEquals(ChronoUnit.DAYS, PoolImplUtils.toChronoUnit(TimeUnit.DAYS));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testToChronoUnit_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.PoolImplUtils",
+                            "PoolImplUtils",
+                            "182-201:toChronoUnit"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testToChronoUnit_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testToChronoUnit_test0_decomposed(self) -> None:",
+                        "        self.assertEqual(datetime.timedelta(microseconds=1) / 1000, PoolImplUtils.toChronoUnit(\"NANOSECONDS\"))",
+                        "        self.assertEqual(datetime.timedelta(microseconds=1), PoolImplUtils.toChronoUnit(\"MICROSECONDS\"))",
+                        "        self.assertEqual(datetime.timedelta(milliseconds=1), PoolImplUtils.toChronoUnit(\"MILLISECONDS\"))",
+                        "        self.assertEqual(datetime.timedelta(seconds=1), PoolImplUtils.toChronoUnit(\"SECONDS\"))",
+                        "        self.assertEqual(datetime.timedelta(minutes=1), PoolImplUtils.toChronoUnit(\"MINUTES\"))",
+                        "        self.assertEqual(datetime.timedelta(hours=1), PoolImplUtils.toChronoUnit(\"HOURS\"))",
+                        "        self.assertEqual(datetime.timedelta(days=1), PoolImplUtils.toChronoUnit(\"DAYS\"))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": {
+                        "commons-pool/src/test/org/apache/commons/pool2/impl/TestPoolImplUtils.py::TestPoolImplUtils::testToChronoUnit_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-pool.src.main.org.apache.commons.pool2.impl.PoolImplUtils",
+                                    "class": "PoolImplUtils",
+                                    "method": "182-201:toChronoUnit"
+                                },
+                                {
+                                    "file": "commons-pool.src.test.org.apache.commons.pool2.impl.TestPoolImplUtils",
+                                    "class": "TestPoolImplUtils",
+                                    "method": "111-119:testToChronoUnit_test0_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 2.6731321811676025,
+                    "generation_timestamp": "2024-11-28T00:59:42.156270",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "103-108:testMinInstants_test0_decomposed": {
+                    "start": 103,
+                    "end": 108,
+                    "body": [
+                        "    public void testMinInstants_test0_decomposed()  {\n",
+                        "        assertEquals(INSTANT_0, PoolImplUtils.min(INSTANT_0, INSTANT_1));\n",
+                        "        assertEquals(INSTANT_0, PoolImplUtils.min(INSTANT_1, INSTANT_0));\n",
+                        "        assertEquals(INSTANT_1, PoolImplUtils.min(INSTANT_1, INSTANT_1));\n",
+                        "        assertEquals(INSTANT_0, PoolImplUtils.min(INSTANT_0, INSTANT_0));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testMinInstants_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.PoolImplUtils",
+                            "PoolImplUtils",
+                            "172-174:min"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testMinInstants_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testMinInstants_test0_decomposed(self) -> None:",
+                        "        self.assertEqual(self.__INSTANT_0, PoolImplUtils.min(self.__INSTANT_0, self.__INSTANT_1))",
+                        "        self.assertEqual(self.__INSTANT_0, PoolImplUtils.min(self.__INSTANT_1, self.__INSTANT_0))",
+                        "        self.assertEqual(self.__INSTANT_1, PoolImplUtils.min(self.__INSTANT_1, self.__INSTANT_1))",
+                        "        self.assertEqual(self.__INSTANT_0, PoolImplUtils.min(self.__INSTANT_0, self.__INSTANT_0))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": {
+                        "commons-pool/src/test/org/apache/commons/pool2/impl/TestPoolImplUtils.py::TestPoolImplUtils::testMinInstants_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-pool.src.main.org.apache.commons.pool2.impl.PoolImplUtils",
+                                    "class": "PoolImplUtils",
+                                    "method": "172-174:min"
+                                },
+                                {
+                                    "file": "commons-pool.src.test.org.apache.commons.pool2.impl.TestPoolImplUtils",
+                                    "class": "TestPoolImplUtils",
+                                    "method": "103-108:testMinInstants_test0_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 2.645878553390503,
+                    "generation_timestamp": "2024-11-28T00:59:47.807603",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "95-100:testMaxInstants_test0_decomposed": {
+                    "start": 95,
+                    "end": 100,
+                    "body": [
+                        "    public void testMaxInstants_test0_decomposed()  {\n",
+                        "        assertEquals(INSTANT_1, PoolImplUtils.max(INSTANT_0, INSTANT_1));\n",
+                        "        assertEquals(INSTANT_1, PoolImplUtils.max(INSTANT_1, INSTANT_0));\n",
+                        "        assertEquals(INSTANT_1, PoolImplUtils.max(INSTANT_1, INSTANT_1));\n",
+                        "        assertEquals(INSTANT_0, PoolImplUtils.max(INSTANT_0, INSTANT_0));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testMaxInstants_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.PoolImplUtils",
+                            "PoolImplUtils",
+                            "159-161:max"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testMaxInstants_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testMaxInstants_test0_decomposed(self) -> None:",
+                        "        self.assertEqual(self.__INSTANT_1, PoolImplUtils.max(self.__INSTANT_0, self.__INSTANT_1))",
+                        "        self.assertEqual(self.__INSTANT_1, PoolImplUtils.max(self.__INSTANT_1, self.__INSTANT_0))",
+                        "        self.assertEqual(self.__INSTANT_1, PoolImplUtils.max(self.__INSTANT_1, self.__INSTANT_1))",
+                        "        self.assertEqual(self.__INSTANT_0, PoolImplUtils.max(self.__INSTANT_0, self.__INSTANT_0))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 2.477163553237915,
+                    "generation_timestamp": "2024-11-28T00:59:50.335193",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "89-92:testFactoryTypeSimple_test1_decomposed": {
+                    "start": 89,
+                    "end": 92,
+                    "body": [
+                        "    public void testFactoryTypeSimple_test1_decomposed()  {\n",
+                        "        final Class<?> result = PoolImplUtils.getFactoryType(SimpleFactory.class);\n",
+                        "        assertEquals(String.class, result);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testFactoryTypeSimple_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.PoolImplUtils",
+                            "PoolImplUtils",
+                            "44-65:getFactoryType"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testFactoryTypeSimple_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testFactoryTypeSimple_test1_decomposed(self) -> None:",
+                        "        result = PoolImplUtils.getFactoryType(SimpleFactory)",
+                        "        self.assertEqual(str, result)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 2.281975030899048,
+                    "generation_timestamp": "2024-11-28T01:01:31.902171",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "84-86:testFactoryTypeSimple_test0_decomposed": {
+                    "start": 84,
+                    "end": 86,
+                    "body": [
+                        "    public void testFactoryTypeSimple_test0_decomposed()  {\n",
+                        "        final Class<?> result = PoolImplUtils.getFactoryType(SimpleFactory.class);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testFactoryTypeSimple_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.PoolImplUtils",
+                            "PoolImplUtils",
+                            "44-65:getFactoryType"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testFactoryTypeSimple_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testFactoryTypeSimple_test0_decomposed(self) -> None:",
+                        "        result: Type[Any] = PoolImplUtils.getFactoryType(SimpleFactory)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 2.6213600635528564,
+                    "generation_timestamp": "2024-11-28T01:01:34.569827",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "78-81:testFactoryTypeNotSimple_test1_decomposed": {
+                    "start": 78,
+                    "end": 81,
+                    "body": [
+                        "    public void testFactoryTypeNotSimple_test1_decomposed()  {\n",
+                        "        final Class<?> result = PoolImplUtils.getFactoryType(NotSimpleFactory.class);\n",
+                        "        assertEquals(Long.class, result);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testFactoryTypeNotSimple_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.PoolImplUtils",
+                            "PoolImplUtils",
+                            "44-65:getFactoryType"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testFactoryTypeNotSimple_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testFactoryTypeNotSimple_test1_decomposed(self) -> None:",
+                        "        result = PoolImplUtils.getFactoryType(NotSimpleFactory)",
+                        "        self.assertEqual(Long, result)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 2.6468377113342285,
+                    "generation_timestamp": "2024-11-28T01:01:37.263285",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "73-75:testFactoryTypeNotSimple_test0_decomposed": {
+                    "start": 73,
+                    "end": 75,
+                    "body": [
+                        "    public void testFactoryTypeNotSimple_test0_decomposed()  {\n",
+                        "        final Class<?> result = PoolImplUtils.getFactoryType(NotSimpleFactory.class);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testFactoryTypeNotSimple_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.PoolImplUtils",
+                            "PoolImplUtils",
+                            "44-65:getFactoryType"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testFactoryTypeNotSimple_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testFactoryTypeNotSimple_test0_decomposed(self) -> None:",
+                        "        result: Type[Any] = PoolImplUtils.getFactoryType(NotSimpleFactory)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 2.3135123252868652,
+                    "generation_timestamp": "2024-11-28T01:01:39.622271",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "70-70:INSTANT_0": {
+                    "start": 70,
+                    "end": 70,
+                    "body": [
+                        "    private static final Instant INSTANT_0 = Instant.ofEpochMilli(0);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Instant",
+                            "java.time.Instant"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __INSTANT_0: datetime.datetime = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __INSTANT_0: datetime.datetime = datetime.datetime.fromtimestamp(0, tz=datetime.timezone.utc)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 16.01499581336975,
+                    "generation_timestamp": "2024-11-27T11:22:10.009239",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "68-68:INSTANT_1": {
+                    "start": 68,
+                    "end": 68,
+                    "body": [
+                        "    private static final Instant INSTANT_1 = Instant.ofEpochMilli(1);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Instant",
+                            "java.time.Instant"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __INSTANT_1: datetime.datetime = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __INSTANT_1: datetime.datetime = datetime.datetime.fromtimestamp(0.001)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 15.087433099746704,
+                    "generation_timestamp": "2024-11-27T11:22:25.126867",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class TestPoolImplUtils(unittest.TestCase):\n\n"
+        },
+        "NotSimpleFactory": {
+            "start": 44,
+            "end": 44,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "TestPoolImplUtils",
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "FactoryF"
+            ],
+            "methods": {
+                "51-53:wrap": {
+                    "start": 51,
+                    "end": 53,
+                    "body": [
+                        "        public PooledObject<Long> wrap(final Long obj) {\n",
+                        "            return null;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "PooledObject<Long>",
+                            "PooledObject<Long>"
+                        ]
+                    ],
+                    "signature": "wrap(Long)",
+                    "parameters": [
+                        "obj"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def wrap(self, obj: int) -> PooledObject[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def wrap(self, obj: int) -> PooledObject[int]:",
+                        "        return None"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 19.830636262893677,
+                    "generation_timestamp": "2024-11-28T00:19:43.811302",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "46-48:create": {
+                    "start": 46,
+                    "end": 48,
+                    "body": [
+                        "        public Long create() throws Exception {\n",
+                        "            return null;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Long",
+                            "java.lang.Long"
+                        ]
+                    ],
+                    "signature": "create()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def create(self) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def create(self) -> Optional[int]:",
+                        "        return None"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 16.98005437850952,
+                    "generation_timestamp": "2024-11-28T00:19:23.862096",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class NotSimpleFactory(FactoryF):\n\n"
+        },
+        "SimpleFactory": {
+            "start": 56,
+            "end": 56,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "TestPoolImplUtils",
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "BasePooledObjectFactory"
+            ],
+            "methods": {
+                "63-65:wrap": {
+                    "start": 63,
+                    "end": 65,
+                    "body": [
+                        "        public PooledObject<String> wrap(final String obj) {\n",
+                        "            return null;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "PooledObject<String>",
+                            "PooledObject<String>"
+                        ]
+                    ],
+                    "signature": "wrap(String)",
+                    "parameters": [
+                        "obj"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def wrap(self, obj: str) -> PooledObject[str]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def wrap(self, obj: str) -> PooledObject[str]:",
+                        "        return None"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 21.82126784324646,
+                    "generation_timestamp": "2024-11-28T00:19:06.803555",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "58-60:create": {
+                    "start": 58,
+                    "end": 60,
+                    "body": [
+                        "        public String create() throws Exception {\n",
+                        "            return null;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "create()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def create(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def create(self) -> str:",
+                        "        return None"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 18.655606031417847,
+                    "generation_timestamp": "2024-11-28T00:18:44.932600",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class SimpleFactory(BasePooledObjectFactory):\n\n"
+        },
+        "FactoryAB": {
+            "start": 33,
+            "end": 33,
+            "is_abstract": true,
+            "is_interface": false,
+            "nested_inside": "TestPoolImplUtils",
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "BasePooledObjectFactory"
+            ],
+            "methods": {},
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class FactoryAB(BasePooledObjectFactory, ABC):\n\n"
+        },
+        "FactoryBA": {
+            "start": 35,
+            "end": 35,
+            "is_abstract": true,
+            "is_interface": false,
+            "nested_inside": "TestPoolImplUtils",
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "FactoryAB"
+            ],
+            "methods": {},
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class FactoryBA(FactoryAB, ABC):\n\n"
+        },
+        "FactoryC": {
+            "start": 37,
+            "end": 37,
+            "is_abstract": true,
+            "is_interface": false,
+            "nested_inside": "TestPoolImplUtils",
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "FactoryBA"
+            ],
+            "methods": {},
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class FactoryC(FactoryBA, ABC):\n\n"
+        },
+        "FactoryDE": {
+            "start": 40,
+            "end": 40,
+            "is_abstract": true,
+            "is_interface": false,
+            "nested_inside": "TestPoolImplUtils",
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "FactoryC"
+            ],
+            "methods": {},
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class FactoryDE(FactoryC, ABC):\n\n"
+        },
+        "FactoryF": {
+            "start": 42,
+            "end": 42,
+            "is_abstract": true,
+            "is_interface": false,
+            "nested_inside": "TestPoolImplUtils",
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "FactoryDE"
+            ],
+            "methods": {},
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class FactoryF(FactoryDE, ABC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "from abc import ABC",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import datetime",
+        "import os",
+        "import unittest",
+        "from src.main.org.apache.commons.pool2.impl.PoolImplUtils import *",
+        "from src.main.org.apache.commons.pool2.BasePooledObjectFactory import *",
+        "from src.main.org.apache.commons.pool2.PooledObject import *"
+    ]
+}

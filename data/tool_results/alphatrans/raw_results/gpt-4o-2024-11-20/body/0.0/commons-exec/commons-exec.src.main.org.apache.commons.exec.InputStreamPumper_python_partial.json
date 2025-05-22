@@ -1,0 +1,455 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-exec/src/main/java/org/apache/commons/exec/InputStreamPumper.java",
+    "imports": {
+        "21-21:import OutputStream": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.io.OutputStream;\n"
+            ]
+        },
+        "20-20:import InputStream": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.io.InputStream;\n"
+            ]
+        },
+        "23-23:import DebugUtils": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import org.apache.commons.exec.util.DebugUtils;\n"
+            ]
+        }
+    },
+    "classes": {
+        "InputStreamPumper": {
+            "start": 28,
+            "end": 28,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "60-73:run": {
+                    "start": 60,
+                    "end": 73,
+                    "body": [
+                        "    public void run() {\n",
+                        "        try {\n",
+                        "            while (!stop) {\n",
+                        "                while (is.available() > 0 && !stop) {\n",
+                        "                    os.write(is.read());\n",
+                        "                }\n",
+                        "                os.flush();\n",
+                        "                Thread.sleep(SLEEPING_TIME);\n",
+                        "            }\n",
+                        "        } catch (final Exception e) {\n",
+                        "            final String msg = \"Got exception while reading/writing the stream\";\n",
+                        "            DebugUtils.handleException(msg, e);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "run()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/InputStream",
+                            "available()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/OutputStream",
+                            "write(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/InputStream",
+                            "read()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/OutputStream",
+                            "flush()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Thread",
+                            "sleep(long)"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.util.DebugUtils",
+                            "DebugUtils",
+                            "42-53:handleException"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def run(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def run(self) -> None:",
+                        "        try:",
+                        "            while not self.__stop:",
+                        "                while self.__is.readable() and self.__is.peek(1) and not self.__stop:",
+                        "                    self.__os.write(self.__is.read(1))",
+                        "                self.__os.flush()",
+                        "                time.sleep(self.SLEEPING_TIME / 1000)  # Convert milliseconds to seconds",
+                        "        except Exception as e:",
+                        "            msg = \"Got exception while reading/writing the stream\"",
+                        "            DebugUtils.handleException(msg, e)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 46.57382535934448,
+                    "generation_timestamp": "2024-11-27T00:11:41.655609",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "78-80:stopProcessing": {
+                    "start": 78,
+                    "end": 80,
+                    "body": [
+                        "    public void stopProcessing() {\n",
+                        "        stop = true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "stopProcessing()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def stopProcessing(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def stopProcessing(self) -> None:",
+                        "        self.__stop = True"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 92.5016143321991,
+                    "generation_timestamp": "2024-11-26T23:50:41.747520",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "50-54:InputStreamPumper": {
+                    "start": 50,
+                    "end": 54,
+                    "body": [
+                        "    public InputStreamPumper(final InputStream is, final OutputStream os) {\n",
+                        "        this.is = is;\n",
+                        "        this.os = os;\n",
+                        "        this.stop = false;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "InputStreamPumper(InputStream, OutputStream)",
+                    "parameters": [
+                        "is",
+                        "os"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, is_: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader], os: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, is_: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader], os: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter]) -> None:",
+                        "        self.__is = is_",
+                        "        self.__os = os",
+                        "        self.__stop = False"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 55.80171847343445,
+                    "generation_timestamp": "2024-11-26T23:51:37.599656",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "33-33:SLEEPING_TIME": {
+                    "start": 33,
+                    "end": 33,
+                    "body": [
+                        "    public static final int SLEEPING_TIME = 100;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    SLEEPING_TIME: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    SLEEPING_TIME: int = 100"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 8.928791046142578,
+                    "generation_timestamp": "2024-11-26T19:04:44.684803",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "42-42:stop": {
+                    "start": 42,
+                    "end": 42,
+                    "body": [
+                        "    private volatile boolean stop;\n"
+                    ],
+                    "modifiers": [
+                        "private",
+                        "volatile"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __stop: bool = False",
+                        ""
+                    ],
+                    "translation": [
+                        "    __stop: bool = False",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-11-26T19:04:44.696280",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "39-39:os": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "    private final OutputStream os;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "OutputStream",
+                            "java.io.OutputStream"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __os: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __os: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter] = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-11-26T19:04:44.701964",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "36-36:is": {
+                    "start": 36,
+                    "end": 36,
+                    "body": [
+                        "    private final InputStream is;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "InputStream",
+                            "java.io.InputStream"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __is: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __is: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader] = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-11-26T19:04:44.707724",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class InputStreamPumper():\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "from io import StringIO",
+        "import io",
+        "from io import BytesIO",
+        "import typing\nfrom typing import *",
+        "import os",
+        "from src.main.org.apache.commons.exec.util.DebugUtils import *"
+    ]
+}

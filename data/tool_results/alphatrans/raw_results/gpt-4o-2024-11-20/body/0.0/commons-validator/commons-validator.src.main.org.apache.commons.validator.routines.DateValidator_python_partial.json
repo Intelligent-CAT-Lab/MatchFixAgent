@@ -1,0 +1,1582 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/main/java/org/apache/commons/validator/routines/DateValidator.java",
+    "imports": {
+        "23-23:import Locale": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.Locale;\n"
+            ]
+        },
+        "22-22:import Date": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.Date;\n"
+            ]
+        },
+        "19-19:import DateFormat": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.text.DateFormat;\n"
+            ]
+        },
+        "20-20:import Format": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.text.Format;\n"
+            ]
+        },
+        "24-24:import TimeZone": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.util.TimeZone;\n"
+            ]
+        },
+        "21-21:import Calendar": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.util.Calendar;\n"
+            ]
+        }
+    },
+    "classes": {
+        "DateValidator": {
+            "start": 79,
+            "end": 79,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "AbstractCalendarValidator"
+            ],
+            "methods": {
+                "312-314:processParsedValue": {
+                    "start": 312,
+                    "end": 314,
+                    "body": [
+                        "    protected Object processParsedValue(Object value, Format formatter) {\n",
+                        "        return value;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "processParsedValue(Object, Format)",
+                    "parameters": [
+                        "value",
+                        "formatter"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _processParsedValue(self, value: typing.Any, formatter: Format) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _processParsedValue(self, value: typing.Any, formatter: Format) -> typing.Any:",
+                        "        return value"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 151.06667232513428,
+                    "generation_timestamp": "2024-11-27T23:51:34.652297",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 1,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "298-302:compareYears": {
+                    "start": 298,
+                    "end": 302,
+                    "body": [
+                        "    public int compareYears(Date value, Date compare, TimeZone timeZone) {\n",
+                        "        Calendar calendarValue = getCalendar(value, timeZone);\n",
+                        "        Calendar calendarCompare = getCalendar(compare, timeZone);\n",
+                        "        return compare(calendarValue, calendarCompare, Calendar.YEAR);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "compareYears(Date, Date, TimeZone)",
+                    "parameters": [
+                        "value",
+                        "compare",
+                        "timeZone"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.DateValidator",
+                            "DateValidator",
+                            "322-332:getCalendar"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "264-299:compare"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def compareYears(self, value: typing.Union[datetime.datetime, datetime.date], compare: typing.Union[datetime.datetime, datetime.date], timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone]) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def compareYears(self, value: typing.Union[datetime.datetime, datetime.date], compare: typing.Union[datetime.datetime, datetime.date], timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone]) -> int:",
+                        "        calendarValue = self.__getCalendar(value, timeZone)",
+                        "        calendarCompare = self.__getCalendar(compare, timeZone)",
+                        "        return self._compare(calendarValue, calendarCompare, 'year')"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 170.43757247924805,
+                    "generation_timestamp": "2024-11-28T13:28:18.993608",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "282-287:compareQuarters1": {
+                    "start": 282,
+                    "end": 287,
+                    "body": [
+                        "    public int compareQuarters1(\n",
+                        "            Date value, Date compare, TimeZone timeZone, int monthOfFirstQuarter) {\n",
+                        "        Calendar calendarValue = getCalendar(value, timeZone);\n",
+                        "        Calendar calendarCompare = getCalendar(compare, timeZone);\n",
+                        "        return super.compareQuarters(calendarValue, calendarCompare, monthOfFirstQuarter);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "compareQuarters1(Date, Date, TimeZone, int)",
+                    "parameters": [
+                        "value",
+                        "compare",
+                        "timeZone",
+                        "monthOfFirstQuarter"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.DateValidator",
+                            "DateValidator",
+                            "322-332:getCalendar"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "348-358:compareQuarters"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def compareQuarters1(self, value: typing.Union[datetime.datetime, datetime.date], compare: typing.Union[datetime.datetime, datetime.date], timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone], monthOfFirstQuarter: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def compareQuarters1(self, value: typing.Union[datetime.datetime, datetime.date], compare: typing.Union[datetime.datetime, datetime.date], timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone], monthOfFirstQuarter: int) -> int:",
+                        "        calendarValue = self.__getCalendar(value, timeZone)",
+                        "        calendarCompare = self.__getCalendar(compare, timeZone)",
+                        "        return self._compareQuarters(calendarValue, calendarCompare, monthOfFirstQuarter)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 160.45834374427795,
+                    "generation_timestamp": "2024-11-28T13:53:22.405880",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "268-270:compareQuarters0": {
+                    "start": 268,
+                    "end": 270,
+                    "body": [
+                        "    public int compareQuarters0(Date value, Date compare, TimeZone timeZone) {\n",
+                        "        return compareQuarters1(value, compare, timeZone, 1);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "compareQuarters0(Date, Date, TimeZone)",
+                    "parameters": [
+                        "value",
+                        "compare",
+                        "timeZone"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.DateValidator",
+                            "DateValidator",
+                            "282-287:compareQuarters1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def compareQuarters0(self, value: typing.Union[datetime.datetime, datetime.date], compare: typing.Union[datetime.datetime, datetime.date], timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone]) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def compareQuarters0(self, value: typing.Union[datetime.datetime, datetime.date], compare: typing.Union[datetime.datetime, datetime.date], timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone]) -> int:",
+                        "        return self.compareQuarters1(value, compare, timeZone, 1)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 206.59930562973022,
+                    "generation_timestamp": "2024-11-28T13:56:49.456237",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 1,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "253-257:compareMonths": {
+                    "start": 253,
+                    "end": 257,
+                    "body": [
+                        "    public int compareMonths(Date value, Date compare, TimeZone timeZone) {\n",
+                        "        Calendar calendarValue = getCalendar(value, timeZone);\n",
+                        "        Calendar calendarCompare = getCalendar(compare, timeZone);\n",
+                        "        return compare(calendarValue, calendarCompare, Calendar.MONTH);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "compareMonths(Date, Date, TimeZone)",
+                    "parameters": [
+                        "value",
+                        "compare",
+                        "timeZone"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.DateValidator",
+                            "DateValidator",
+                            "322-332:getCalendar"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "264-299:compare"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def compareMonths(self, value: typing.Union[datetime.datetime, datetime.date], compare: typing.Union[datetime.datetime, datetime.date], timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone]) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def compareMonths(self, value: typing.Union[datetime.datetime, datetime.date], compare: typing.Union[datetime.datetime, datetime.date], timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone]) -> int:",
+                        "        calendarValue = self.__getCalendar(value, timeZone)",
+                        "        calendarCompare = self.__getCalendar(compare, timeZone)",
+                        "        return self._compare(calendarValue, calendarCompare, 'month')"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 154.89034724235535,
+                    "generation_timestamp": "2024-11-28T13:30:54.483461",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "238-242:compareWeeks": {
+                    "start": 238,
+                    "end": 242,
+                    "body": [
+                        "    public int compareWeeks(Date value, Date compare, TimeZone timeZone) {\n",
+                        "        Calendar calendarValue = getCalendar(value, timeZone);\n",
+                        "        Calendar calendarCompare = getCalendar(compare, timeZone);\n",
+                        "        return compare(calendarValue, calendarCompare, Calendar.WEEK_OF_YEAR);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "compareWeeks(Date, Date, TimeZone)",
+                    "parameters": [
+                        "value",
+                        "compare",
+                        "timeZone"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.DateValidator",
+                            "DateValidator",
+                            "322-332:getCalendar"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "264-299:compare"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def compareWeeks(self, value: typing.Union[datetime.datetime, datetime.date], compare: typing.Union[datetime.datetime, datetime.date], timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone]) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def compareWeeks(self, value: typing.Union[datetime.datetime, datetime.date], compare: typing.Union[datetime.datetime, datetime.date], timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone]) -> int:",
+                        "        calendarValue = self.__getCalendar(value, timeZone)",
+                        "        calendarCompare = self.__getCalendar(compare, timeZone)",
+                        "        return self._compare(calendarValue, calendarCompare, 'week_of_year')"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 161.04014492034912,
+                    "generation_timestamp": "2024-11-28T13:33:36.171241",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "223-227:compareDates": {
+                    "start": 223,
+                    "end": 227,
+                    "body": [
+                        "    public int compareDates(Date value, Date compare, TimeZone timeZone) {\n",
+                        "        Calendar calendarValue = getCalendar(value, timeZone);\n",
+                        "        Calendar calendarCompare = getCalendar(compare, timeZone);\n",
+                        "        return compare(calendarValue, calendarCompare, Calendar.DATE);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "compareDates(Date, Date, TimeZone)",
+                    "parameters": [
+                        "value",
+                        "compare",
+                        "timeZone"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.DateValidator",
+                            "DateValidator",
+                            "322-332:getCalendar"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "264-299:compare"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def compareDates(self, value: typing.Union[datetime.datetime, datetime.date], compare: typing.Union[datetime.datetime, datetime.date], timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone]) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def compareDates(self, value: typing.Union[datetime.datetime, datetime.date], compare: typing.Union[datetime.datetime, datetime.date], timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone]) -> int:",
+                        "        calendarValue = self.__getCalendar(value, timeZone)",
+                        "        calendarCompare = self.__getCalendar(compare, timeZone)",
+                        "        return self._compare(calendarValue, calendarCompare, 'day')"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 155.51527214050293,
+                    "generation_timestamp": "2024-11-28T13:36:12.114556",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "210-212:validate7": {
+                    "start": 210,
+                    "end": 212,
+                    "body": [
+                        "    public Date validate7(String value, String pattern, Locale locale, TimeZone timeZone) {\n",
+                        "        return (Date) parse(value, pattern, locale, timeZone);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Date",
+                            "java.util.Date"
+                        ]
+                    ],
+                    "signature": "validate7(String, String, Locale, TimeZone)",
+                    "parameters": [
+                        "value",
+                        "pattern",
+                        "locale",
+                        "timeZone"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "167-178:parse"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def validate7(self, value: str, pattern: str, locale: typing.Any, timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone]) -> typing.Union[datetime.datetime, datetime.date]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def validate7(self, value: str, pattern: str, locale: typing.Any, timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone]) -> typing.Union[datetime.datetime, datetime.date]:",
+                        "        return self._parse(value, pattern, locale, timeZone)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 171.65429973602295,
+                    "generation_timestamp": "2024-11-28T11:23:21.317648",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "195-197:validate6": {
+                    "start": 195,
+                    "end": 197,
+                    "body": [
+                        "    public Date validate6(String value, String pattern, Locale locale) {\n",
+                        "        return (Date) parse(value, pattern, locale, (TimeZone) null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Date",
+                            "java.util.Date"
+                        ]
+                    ],
+                    "signature": "validate6(String, String, Locale)",
+                    "parameters": [
+                        "value",
+                        "pattern",
+                        "locale"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "167-178:parse"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def validate6(self, value: str, pattern: str, locale: typing.Any) -> typing.Union[datetime.datetime, datetime.date]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def validate6(self, value: str, pattern: str, locale: typing.Any) -> typing.Union[datetime.datetime, datetime.date]:",
+                        "        return self._parse(value, pattern, locale, None)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 177.66755318641663,
+                    "generation_timestamp": "2024-11-28T11:26:19.460598",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "181-183:validate5": {
+                    "start": 181,
+                    "end": 183,
+                    "body": [
+                        "    public Date validate5(String value, Locale locale, TimeZone timeZone) {\n",
+                        "        return (Date) parse(value, (String) null, locale, timeZone);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Date",
+                            "java.util.Date"
+                        ]
+                    ],
+                    "signature": "validate5(String, Locale, TimeZone)",
+                    "parameters": [
+                        "value",
+                        "locale",
+                        "timeZone"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "167-178:parse"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def validate5(self, value: str, locale: typing.Any, timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone]) -> typing.Union[datetime.datetime, datetime.date]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def validate5(self, value: str, locale: typing.Any, timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone]) -> typing.Union[datetime.datetime, datetime.date]:",
+                        "        return self._parse(value, None, locale, timeZone)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 174.26977920532227,
+                    "generation_timestamp": "2024-11-28T11:29:14.338815",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "168-170:validate4": {
+                    "start": 168,
+                    "end": 170,
+                    "body": [
+                        "    public Date validate4(String value, Locale locale) {\n",
+                        "        return (Date) parse(value, (String) null, locale, (TimeZone) null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Date",
+                            "java.util.Date"
+                        ]
+                    ],
+                    "signature": "validate4(String, Locale)",
+                    "parameters": [
+                        "value",
+                        "locale"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "167-178:parse"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def validate4(self, value: str, locale: typing.Any) -> typing.Union[datetime.datetime, datetime.date]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def validate4(self, value: str, locale: typing.Any) -> typing.Union[datetime.datetime, datetime.date]:",
+                        "        return self._parse(value, None, locale, None)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 154.3435823917389,
+                    "generation_timestamp": "2024-11-28T11:31:49.038273",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "156-158:validate3": {
+                    "start": 156,
+                    "end": 158,
+                    "body": [
+                        "    public Date validate3(String value, String pattern, TimeZone timeZone) {\n",
+                        "        return (Date) parse(value, pattern, (Locale) null, timeZone);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Date",
+                            "java.util.Date"
+                        ]
+                    ],
+                    "signature": "validate3(String, String, TimeZone)",
+                    "parameters": [
+                        "value",
+                        "pattern",
+                        "timeZone"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "167-178:parse"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def validate3(self, value: str, pattern: str, timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone]) -> typing.Union[datetime.datetime, datetime.date]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def validate3(self, value: str, pattern: str, timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone]) -> typing.Union[datetime.datetime, datetime.date]:",
+                        "        return self._parse(value, pattern, None, timeZone)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 167.05342626571655,
+                    "generation_timestamp": "2024-11-28T11:34:36.544280",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "142-144:validate2": {
+                    "start": 142,
+                    "end": 144,
+                    "body": [
+                        "    public Date validate2(String value, String pattern) {\n",
+                        "        return (Date) parse(value, pattern, (Locale) null, (TimeZone) null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Date",
+                            "java.util.Date"
+                        ]
+                    ],
+                    "signature": "validate2(String, String)",
+                    "parameters": [
+                        "value",
+                        "pattern"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "167-178:parse"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def validate2(self, value: str, pattern: str) -> typing.Union[datetime.datetime, datetime.date]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def validate2(self, value: str, pattern: str) -> typing.Union[datetime.datetime, datetime.date]:",
+                        "        return self._parse(value, pattern, None, None)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 156.43294644355774,
+                    "generation_timestamp": "2024-11-28T11:37:13.375893",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "129-131:validate1": {
+                    "start": 129,
+                    "end": 131,
+                    "body": [
+                        "    public Date validate1(String value, TimeZone timeZone) {\n",
+                        "        return (Date) parse(value, (String) null, (Locale) null, timeZone);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Date",
+                            "java.util.Date"
+                        ]
+                    ],
+                    "signature": "validate1(String, TimeZone)",
+                    "parameters": [
+                        "value",
+                        "timeZone"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "167-178:parse"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def validate1(self, value: str, timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone]) -> typing.Union[datetime.datetime, datetime.date]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def validate1(self, value: str, timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone]) -> typing.Union[datetime.datetime, datetime.date]:",
+                        "        return self._parse(value, None, None, timeZone)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 157.3078429698944,
+                    "generation_timestamp": "2024-11-28T11:39:51.097174",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "117-119:validate0": {
+                    "start": 117,
+                    "end": 119,
+                    "body": [
+                        "    public Date validate0(String value) {\n",
+                        "        return (Date) parse(value, (String) null, (Locale) null, (TimeZone) null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Date",
+                            "java.util.Date"
+                        ]
+                    ],
+                    "signature": "validate0(String)",
+                    "parameters": [
+                        "value"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "167-178:parse"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def validate0(self, value: str) -> typing.Union[datetime.datetime, datetime.date]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def validate0(self, value: str) -> typing.Union[datetime.datetime, datetime.date]:",
+                        "        return self._parse(value, None, None, None)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 160.9639823436737,
+                    "generation_timestamp": "2024-11-28T11:42:32.512094",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "99-101:DateValidator1": {
+                    "start": 99,
+                    "end": 101,
+                    "body": [
+                        "    public static DateValidator DateValidator1() {\n",
+                        "        return new DateValidator(true, DateFormat.SHORT);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "DateValidator",
+                            "DateValidator"
+                        ]
+                    ],
+                    "signature": "DateValidator1()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.DateValidator",
+                            "DateValidator",
+                            "95-97:DateValidator"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def DateValidator1() -> DateValidator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def DateValidator1() -> DateValidator:",
+                        "        return DateValidator(True, datetime.date.SHORT)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "failure",
+                        "message": "org.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test7_decomposed: java.lang.ExceptionInInitializerError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test30_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test8_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test31_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test9_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test32_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test20_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test33_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test21_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test34_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test22_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test10_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test35_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test23_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test11_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test36_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test24_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test12_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test37_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test25_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test13_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test38_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test26_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test14_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test39_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test27_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test15_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test28_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test16_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test29_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test17_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testCompare_test0_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test18_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testCompare_test1_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test19_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testCompare_test2_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testCompare_test3_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testCompare_test4_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testCompare_test5_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testCompare_test6_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testCompare_test7_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testCompare_test8_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testCompare_test9_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testLocaleProviders_test0_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testLocaleProviders_test1_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test0_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testLocaleProviders_test2_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test1_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test2_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test3_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test4_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test5_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test40_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test6_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test41_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testSerialization: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testPatternInvalid: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testLocaleInvalid: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testPatternValid: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testLocaleValid: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testFormat: java.lang.NoClassDefFoundError"
+                    },
+                    "test_execution": {
+                        "commons-validator/src/test/org/apache/commons/validator/GenericValidatorTest.py::GenericValidatorTest::testMinLength_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.DateValidator",
+                                    "class": "DateValidator",
+                                    "method": "50-52:DateValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.GenericValidator",
+                                    "class": "GenericValidator",
+                                    "method": "304-307:minLength1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.GenericValidator",
+                                    "class": "GenericValidator",
+                                    "method": "318-330:adjustForLineEnding"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "125-127:CodeValidator5"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "116-119:CodeValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.DomainValidator",
+                                    "class": "IDNBUGHOLDER",
+                                    "method": "2156-2159:keepsTrailingDot"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.DomainValidator",
+                                    "class": "DomainValidator",
+                                    "method": "152-222:DomainValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.EmailValidator",
+                                    "class": "EmailValidator",
+                                    "method": "123-144:EmailValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.UrlValidator",
+                                    "class": "UrlValidator",
+                                    "method": "227-229:UrlValidator6"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CreditCardValidator",
+                                    "class": "CreditCardValidator",
+                                    "method": "283-285:CreditCardValidator0"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.DateValidator",
+                                    "class": "DateValidator",
+                                    "method": "99-101:DateValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.RegexValidator",
+                                    "class": "RegexValidator",
+                                    "method": "75-88:RegexValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.LuhnCheckDigit",
+                                    "class": "LuhnCheckDigit",
+                                    "method": "50-52:LuhnCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.GenericValidatorTest",
+                                    "class": "GenericValidatorTest",
+                                    "method": "35-48:testMinLength_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/GenericValidatorTest.py::GenericValidatorTest::testMaxLength_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.DateValidator",
+                                    "class": "DateValidator",
+                                    "method": "50-52:DateValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.GenericValidator",
+                                    "class": "GenericValidator",
+                                    "method": "280-283:maxLength1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.GenericValidator",
+                                    "class": "GenericValidator",
+                                    "method": "318-330:adjustForLineEnding"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "125-127:CodeValidator5"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "116-119:CodeValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.DomainValidator",
+                                    "class": "IDNBUGHOLDER",
+                                    "method": "2156-2159:keepsTrailingDot"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.DomainValidator",
+                                    "class": "DomainValidator",
+                                    "method": "152-222:DomainValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.EmailValidator",
+                                    "class": "EmailValidator",
+                                    "method": "123-144:EmailValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.UrlValidator",
+                                    "class": "UrlValidator",
+                                    "method": "227-229:UrlValidator6"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CreditCardValidator",
+                                    "class": "CreditCardValidator",
+                                    "method": "283-285:CreditCardValidator0"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.DateValidator",
+                                    "class": "DateValidator",
+                                    "method": "99-101:DateValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.RegexValidator",
+                                    "class": "RegexValidator",
+                                    "method": "75-88:RegexValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.LuhnCheckDigit",
+                                    "class": "LuhnCheckDigit",
+                                    "method": "50-52:LuhnCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.GenericValidatorTest",
+                                    "class": "GenericValidatorTest",
+                                    "method": "51-64:testMaxLength_test0_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 295.56831884384155,
+                    "generation_timestamp": "2024-11-28T13:12:20.850667",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 1,
+                        "test_execution": 2
+                    }
+                },
+                "95-97:DateValidator": {
+                    "start": 95,
+                    "end": 97,
+                    "body": [
+                        "    public DateValidator(boolean strict, int dateStyle) {\n",
+                        "        super(strict, dateStyle, -1);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "DateValidator(boolean, int)",
+                    "parameters": [
+                        "strict",
+                        "dateStyle"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "51-55:AbstractCalendarValidator"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, strict: bool, dateStyle: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, strict: bool, dateStyle: int) -> None:",
+                        "        super().__init__(strict, dateStyle, -1)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "failure",
+                        "message": "org.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test7_decomposed: java.lang.ExceptionInInitializerError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test30_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test8_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test31_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test9_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test32_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test20_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test33_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test21_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test34_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test22_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test10_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test35_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test23_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test11_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test36_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test24_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test12_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test37_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test25_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test13_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test38_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test26_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test14_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test39_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test27_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test15_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test28_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test16_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test29_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test17_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testCompare_test0_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test18_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testCompare_test1_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test19_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testCompare_test2_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testCompare_test3_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testCompare_test4_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testCompare_test5_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testCompare_test6_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testCompare_test7_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testCompare_test8_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testCompare_test9_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testLocaleProviders_test0_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testLocaleProviders_test1_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test0_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testLocaleProviders_test2_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test1_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test2_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test3_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test4_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test5_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test40_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test6_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testDateValidatorMethods_test41_decomposed: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testSerialization: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testPatternInvalid: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testLocaleInvalid: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testPatternValid: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testLocaleValid: java.lang.NoClassDefFoundError\norg.apache.commons.validator.routines.DateValidatorTest.testFormat: java.lang.NoClassDefFoundError"
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 308.96754479408264,
+                    "generation_timestamp": "2024-11-28T12:59:38.937232",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 1,
+                        "test_execution": 2
+                    }
+                },
+                "90-92:getInstance": {
+                    "start": 90,
+                    "end": 92,
+                    "body": [
+                        "    public static DateValidator getInstance() {\n",
+                        "        return VALIDATOR;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "DateValidator",
+                            "DateValidator"
+                        ]
+                    ],
+                    "signature": "getInstance()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def getInstance() -> DateValidator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInstance() -> DateValidator:",
+                        "        return DateValidator.__VALIDATOR"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 110.81831741333008,
+                    "generation_timestamp": "2024-11-27T23:53:25.909925",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "322-332:getCalendar": {
+                    "start": 322,
+                    "end": 332,
+                    "body": [
+                        "    private Calendar getCalendar(Date value, TimeZone timeZone) {\n",
+                        "\n",
+                        "        Calendar calendar = null;\n",
+                        "        if (timeZone != null) {\n",
+                        "            calendar = Calendar.getInstance(timeZone);\n",
+                        "        } else {\n",
+                        "            calendar = Calendar.getInstance();\n",
+                        "        }\n",
+                        "        calendar.setTime(value);\n",
+                        "        return calendar;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "Calendar",
+                            "java.util.Calendar"
+                        ]
+                    ],
+                    "signature": "getCalendar(Date, TimeZone)",
+                    "parameters": [
+                        "value",
+                        "timeZone"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Calendar",
+                            "getInstance(java.util.TimeZone)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Calendar",
+                            "getInstance()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Calendar",
+                            "setTime(java.util.Date)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __getCalendar(self, value: typing.Union[datetime.datetime, datetime.date], timeZone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone]) -> typing.Union[datetime.datetime, datetime.date, datetime.time, datetime.timedelta, datetime.timezone]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __getCalendar(self, value: typing.Union[datetime.datetime, datetime.date], timeZone: typing.Optional[typing.Union[zoneinfo.ZoneInfo, datetime.timezone]]) -> datetime.datetime:",
+                        "        if timeZone is not None:",
+                        "            calendar = datetime.datetime.now(timeZone)",
+                        "        else:",
+                        "            calendar = datetime.datetime.now()",
+                        "        calendar = calendar.replace(",
+                        "            year=value.year, ",
+                        "            month=value.month, ",
+                        "            day=value.day, ",
+                        "            hour=getattr(value, 'hour', 0), ",
+                        "            minute=getattr(value, 'minute', 0), ",
+                        "            second=getattr(value, 'second', 0), ",
+                        "            microsecond=getattr(value, 'microsecond', 0)",
+                        "        )",
+                        "        return calendar"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 103.1027774810791,
+                    "generation_timestamp": "2024-11-27T23:55:09.321969",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "83-83:VALIDATOR": {
+                    "start": 83,
+                    "end": 83,
+                    "body": [
+                        "    private static final DateValidator VALIDATOR = DateValidator.DateValidator1();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "DateValidator",
+                            "DateValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __VALIDATOR: DateValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __VALIDATOR: DateValidator = DateValidator.DateValidator1()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 21.350396394729614,
+                    "generation_timestamp": "2024-11-27T11:12:51.833739",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "81-81:serialVersionUID": {
+                    "start": 81,
+                    "end": 81,
+                    "body": [
+                        "    private static final long serialVersionUID = -3966328400469953190L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = -3966328400469953190"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 21.59567666053772,
+                    "generation_timestamp": "2024-11-27T11:13:13.479477",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class DateValidator(AbstractCalendarValidator):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import datetime",
+        "import zoneinfo",
+        "from src.main.org.apache.commons.validator.routines.AbstractCalendarValidator import *"
+    ]
+}

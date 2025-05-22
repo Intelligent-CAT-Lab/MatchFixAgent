@@ -1,0 +1,2374 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/main/java/org/apache/commons/validator/util/Flags.java",
+    "imports": {
+        "19-19:import Serializable": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.io.Serializable;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Flags": {
+            "start": 40,
+            "end": 40,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "186-192:toString": {
+                    "start": 186,
+                    "end": 192,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        StringBuilder bin = new StringBuilder(Long.toBinaryString(this.flags));\n",
+                        "        for (int i = 64 - bin.length(); i > 0; i--) { // CHECKSTYLE IGNORE MagicNumber\n",
+                        "            bin.insert(0, \"0\");\n",
+                        "        }\n",
+                        "        return bin.toString();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Long",
+                            "toBinaryString(long)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/AbstractStringBuilder",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "insert(int,java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "        bin_str = bin(self.__flags)[2:]  # Convert to binary string and remove '0b' prefix",
+                        "        padded_bin_str = bin_str.zfill(64)  # Pad with leading zeros to make it 64 bits",
+                        "        return padded_bin_str"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": {
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testToString_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "186-192:toString"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "225-228:testToString_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testToString_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "186-192:toString"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "98-100:turnOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "231-236:testToString_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testToString_test3_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "186-192:toString"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "98-100:turnOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "239-245:testToString_test3_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testToString_test4_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "186-192:toString"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "98-100:turnOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "248-256:testToString_test4_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 70.55122089385986,
+                    "generation_timestamp": "2024-11-28T02:11:38.375296",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "175-177:hashCode": {
+                    "start": 175,
+                    "end": 177,
+                    "body": [
+                        "    public int hashCode() {\n",
+                        "        return (int) this.flags;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "hashCode()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def hashCode(self) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def hashCode(self) -> int:",
+                        "        return int(self.__flags)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": {
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testHashCode_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "175-177:hashCode"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "74-77:testHashCode_test1_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 72.38398218154907,
+                    "generation_timestamp": "2024-11-28T02:15:31.221151",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "154-166:equals": {
+                    "start": 154,
+                    "end": 166,
+                    "body": [
+                        "    public boolean equals(Object obj) {\n",
+                        "        if (!(obj instanceof Flags)) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (obj == this) {\n",
+                        "            return true;\n",
+                        "        }\n",
+                        "\n",
+                        "        Flags f = (Flags) obj;\n",
+                        "\n",
+                        "        return this.flags == f.flags;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "equals(Object)",
+                    "parameters": [
+                        "obj"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def equals(self, obj: typing.Any) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def equals(self, obj: typing.Any) -> bool:",
+                        "        if not isinstance(obj, Flags):",
+                        "            return False",
+                        "",
+                        "        if obj is self:",
+                        "            return True",
+                        "",
+                        "        return self.__flags == obj.__flags"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 60.51625204086304,
+                    "generation_timestamp": "2024-11-28T02:16:32.009475",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "138-144:clone": {
+                    "start": 138,
+                    "end": 144,
+                    "body": [
+                        "    public Object clone() {\n",
+                        "        try {\n",
+                        "            return super.clone();\n",
+                        "        } catch (CloneNotSupportedException e) {\n",
+                        "            throw new RuntimeException(\"Couldn't clone Flags object.\");\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "clone()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "clone()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/RuntimeException",
+                            "RuntimeException(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def clone(self) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def clone(self) -> typing.Any:",
+                        "        try:",
+                        "            import copy",
+                        "            return copy.deepcopy(self)",
+                        "        except Exception as e:",
+                        "            raise RuntimeError(\"Couldn't clone Flags object.\") from e"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 60.11736273765564,
+                    "generation_timestamp": "2024-11-28T02:17:32.359361",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "127-129:turnOnAll": {
+                    "start": 127,
+                    "end": 129,
+                    "body": [
+                        "    public void turnOnAll() {\n",
+                        "        this.flags = 0xFFFFFFFFFFFFFFFFl;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "turnOnAll()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def turnOnAll(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def turnOnAll(self) -> None:",
+                        "        self.__flags = 0xFFFFFFFFFFFFFFFF"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "failure",
+                        "message": "org.apache.commons.validator.util.FlagsTest.testTurnOnAll_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.validator.util.FlagsTest.testTurnOnAll_test2_decomposed: java.lang.ClassCastException"
+                    },
+                    "test_execution": {
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testTurnOnAll_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "127-129:turnOnAll"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "183-186:testTurnOnAll_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testTurnOnAll_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "127-129:turnOnAll"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "66-68:getFlags"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "189-193:testTurnOnAll_test2_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 75.46093416213989,
+                    "generation_timestamp": "2024-11-28T02:43:07.702394",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": 1,
+                        "test_execution": 1
+                    }
+                },
+                "122-124:clear": {
+                    "start": 122,
+                    "end": 124,
+                    "body": [
+                        "    public void clear() {\n",
+                        "        this.flags = 0;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "clear()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def clear(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def clear(self) -> None:",
+                        "        self.__flags = 0"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "failure",
+                        "message": "org.apache.commons.validator.util.FlagsTest.testClear_test1_decomposed: java.lang.UnsupportedOperationException\norg.apache.commons.validator.util.FlagsTest.testClear_test2_decomposed: java.lang.UnsupportedOperationException"
+                    },
+                    "test_execution": {
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testClear_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "122-124:clear"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "165-168:testClear_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testClear_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "122-124:clear"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "66-68:getFlags"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "171-175:testClear_test2_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 152.18465518951416,
+                    "generation_timestamp": "2024-11-28T02:22:42.811528",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 1,
+                        "test_execution": 2
+                    }
+                },
+                "113-115:turnOffAll": {
+                    "start": 113,
+                    "end": 115,
+                    "body": [
+                        "    public void turnOffAll() {\n",
+                        "        this.flags = 0;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "turnOffAll()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def turnOffAll(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def turnOffAll(self) -> None:",
+                        "        self.__flags = 0"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": {
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testTurnOffAll_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "113-115:turnOffAll"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "147-150:testTurnOffAll_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testTurnOffAll_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "113-115:turnOffAll"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "66-68:getFlags"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "153-157:testTurnOffAll_test2_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 76.47284746170044,
+                    "generation_timestamp": "2024-11-28T02:23:59.581351",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "108-110:turnOff": {
+                    "start": 108,
+                    "end": 110,
+                    "body": [
+                        "    public void turnOff(long flag) {\n",
+                        "        this.flags &= ~flag;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "turnOff(long)",
+                    "parameters": [
+                        "flag"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def turnOff(self, flag: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def turnOff(self, flag: int) -> None:",
+                        "        self.__flags &= ~flag"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 59.908271074295044,
+                    "generation_timestamp": "2024-11-28T02:24:59.765701",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "98-100:turnOn": {
+                    "start": 98,
+                    "end": 100,
+                    "body": [
+                        "    public void turnOn(long flag) {\n",
+                        "        this.flags |= flag;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "turnOn(long)",
+                    "parameters": [
+                        "flag"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def turnOn(self, flag: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def turnOn(self, flag: int) -> None:",
+                        "        self.__flags |= flag"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": {
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testIsOnOff_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "98-100:turnOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "96-100:testIsOnOff_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testToString_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "186-192:toString"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "98-100:turnOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "231-236:testToString_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testIsOnOff_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "98-100:turnOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "77-79:isOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "103-108:testIsOnOff_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testToString_test3_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "186-192:toString"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "98-100:turnOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "239-245:testToString_test3_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testIsOnOff_test3_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "98-100:turnOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "88-90:isOff"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "77-79:isOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "111-117:testIsOnOff_test3_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testToString_test4_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "186-192:toString"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "98-100:turnOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "248-256:testToString_test4_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testIsOnOff_test4_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "98-100:turnOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "88-90:isOff"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "77-79:isOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "120-127:testIsOnOff_test4_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testIsOnOff_test5_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "98-100:turnOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "88-90:isOff"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "77-79:isOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "130-139:testIsOnOff_test5_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 76.19616508483887,
+                    "generation_timestamp": "2024-11-28T02:26:16.224758",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "88-90:isOff": {
+                    "start": 88,
+                    "end": 90,
+                    "body": [
+                        "    public boolean isOff(long flag) {\n",
+                        "        return (this.flags & flag) == 0;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isOff(long)",
+                    "parameters": [
+                        "flag"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def isOff(self, flag: int) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def isOff(self, flag: int) -> bool:",
+                        "        return (self.__flags & flag) == 0"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": {
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testIsOnOff_test3_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "98-100:turnOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "88-90:isOff"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "77-79:isOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "111-117:testIsOnOff_test3_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testIsOnOff_test4_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "98-100:turnOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "88-90:isOff"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "77-79:isOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "120-127:testIsOnOff_test4_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testIsOnOff_test5_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "98-100:turnOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "88-90:isOff"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "77-79:isOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "130-139:testIsOnOff_test5_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 83.7255687713623,
+                    "generation_timestamp": "2024-11-28T02:27:40.210604",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "77-79:isOn": {
+                    "start": 77,
+                    "end": 79,
+                    "body": [
+                        "    public boolean isOn(long flag) {\n",
+                        "        return (this.flags & flag) == flag;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isOn(long)",
+                    "parameters": [
+                        "flag"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def isOn(self, flag: int) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def isOn(self, flag: int) -> bool:",
+                        "        return (self.__flags & flag) == flag"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "failure",
+                        "message": "org.apache.commons.validator.util.FlagsTest.testIsOn_isTrueWhenHighOrderBitIsSetAndQueried_test1_decomposed: java.lang.ClassCastException"
+                    },
+                    "test_execution": {
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testIsOn_isTrueWhenHighOrderBitIsSetAndQueried_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "77-79:isOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "213-217:testIsOn_isTrueWhenHighOrderBitIsSetAndQueried_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testIsOn_isFalseWhenNotAllFlagsInArgumentAreOn_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "77-79:isOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "201-205:testIsOn_isFalseWhenNotAllFlagsInArgumentAreOn_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testIsOnOff_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "98-100:turnOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "77-79:isOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "103-108:testIsOnOff_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testIsOnOff_test3_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "98-100:turnOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "88-90:isOff"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "77-79:isOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "111-117:testIsOnOff_test3_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testIsOnOff_test4_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "98-100:turnOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "88-90:isOff"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "77-79:isOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "120-127:testIsOnOff_test4_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testIsOnOff_test5_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "98-100:turnOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "88-90:isOff"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "77-79:isOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "130-139:testIsOnOff_test5_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 154.3906090259552,
+                    "generation_timestamp": "2024-11-28T02:36:09.502778",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 1,
+                        "test_execution": 2
+                    }
+                },
+                "66-68:getFlags": {
+                    "start": 66,
+                    "end": 68,
+                    "body": [
+                        "    public long getFlags() {\n",
+                        "        return this.flags;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "getFlags()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getFlags(self) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def getFlags(self) -> int:",
+                        "        return self.__flags"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": {
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testGetFlags_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "66-68:getFlags"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "85-88:testGetFlags_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testTurnOnAll_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "127-129:turnOnAll"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "66-68:getFlags"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "189-193:testTurnOnAll_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testClear_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "122-124:clear"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "66-68:getFlags"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "171-175:testClear_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testTurnOffAll_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "113-115:turnOffAll"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "66-68:getFlags"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "153-157:testTurnOffAll_test2_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 73.51024842262268,
+                    "generation_timestamp": "2024-11-28T02:37:23.278274",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "54-59:Flags": {
+                    "start": 54,
+                    "end": 59,
+                    "body": [
+                        "    public Flags(int constructorId, long flags) {\n",
+                        "        super();\n",
+                        "        if (constructorId == 1) {\n",
+                        "            this.flags = flags;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "Flags(int, long)",
+                    "parameters": [
+                        "constructorId",
+                        "flags"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "Object()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, constructorId: int, flags: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, constructorId: int, flags: int) -> None:",
+                        "        if constructorId == 1:",
+                        "            self.__flags = flags"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "success",
+                        "message": ""
+                    },
+                    "test_execution": {
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testToString_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "220-222:testToString_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testIsOn_isTrueWhenHighOrderBitIsSetAndQueried_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "208-210:testIsOn_isTrueWhenHighOrderBitIsSetAndQueried_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testIsOn_isFalseWhenNotAllFlagsInArgumentAreOn_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "196-198:testIsOn_isFalseWhenNotAllFlagsInArgumentAreOn_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testTurnOnAll_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "178-180:testTurnOnAll_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testClear_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "160-162:testClear_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testTurnOffAll_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "142-144:testTurnOffAll_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testIsOnOff_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "91-93:testIsOnOff_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testGetFlags_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "80-82:testGetFlags_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testHashCode_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "69-71:testHashCode_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testToString_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "186-192:toString"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "225-228:testToString_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testIsOn_isTrueWhenHighOrderBitIsSetAndQueried_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "77-79:isOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "213-217:testIsOn_isTrueWhenHighOrderBitIsSetAndQueried_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testIsOn_isFalseWhenNotAllFlagsInArgumentAreOn_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "77-79:isOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "201-205:testIsOn_isFalseWhenNotAllFlagsInArgumentAreOn_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testTurnOnAll_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "127-129:turnOnAll"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "183-186:testTurnOnAll_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testClear_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "122-124:clear"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "165-168:testClear_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testTurnOffAll_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "113-115:turnOffAll"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "147-150:testTurnOffAll_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testIsOnOff_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "98-100:turnOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "96-100:testIsOnOff_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testGetFlags_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "66-68:getFlags"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "85-88:testGetFlags_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testHashCode_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "175-177:hashCode"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "74-77:testHashCode_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testTurnOnAll_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "127-129:turnOnAll"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "66-68:getFlags"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "189-193:testTurnOnAll_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testToString_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "186-192:toString"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "98-100:turnOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "231-236:testToString_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testClear_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "122-124:clear"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "66-68:getFlags"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "171-175:testClear_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testTurnOffAll_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "113-115:turnOffAll"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "66-68:getFlags"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "153-157:testTurnOffAll_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testIsOnOff_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "98-100:turnOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "77-79:isOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "103-108:testIsOnOff_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testToString_test3_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "186-192:toString"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "98-100:turnOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "239-245:testToString_test3_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testIsOnOff_test3_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "98-100:turnOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "88-90:isOff"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "77-79:isOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "111-117:testIsOnOff_test3_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testToString_test4_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "186-192:toString"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "98-100:turnOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "248-256:testToString_test4_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testIsOnOff_test4_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "98-100:turnOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "88-90:isOff"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "77-79:isOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "120-127:testIsOnOff_test4_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/util/FlagsTest.py::FlagsTest::testIsOnOff_test5_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "98-100:turnOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "88-90:isOff"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "77-79:isOn"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                                    "class": "Flags",
+                                    "method": "54-59:Flags"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.util.FlagsTest",
+                                    "class": "FlagsTest",
+                                    "method": "130-139:testIsOnOff_test5_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 649.3101365566254,
+                    "generation_timestamp": "2024-11-28T02:48:12.834003",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 1
+                    }
+                }
+            },
+            "fields": {
+                "45-45:flags": {
+                    "start": 45,
+                    "end": 45,
+                    "body": [
+                        "    private long flags = 0;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __flags: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __flags: int = 0"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 26.521297931671143,
+                    "generation_timestamp": "2024-11-27T11:51:53.698185",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "42-42:serialVersionUID": {
+                    "start": 42,
+                    "end": 42,
+                    "body": [
+                        "    private static final long serialVersionUID = 8481587558770237995L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = 8481587558770237995"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 32.33150935173035,
+                    "generation_timestamp": "2024-11-27T11:52:26.064104",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class Flags():\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *"
+    ]
+}

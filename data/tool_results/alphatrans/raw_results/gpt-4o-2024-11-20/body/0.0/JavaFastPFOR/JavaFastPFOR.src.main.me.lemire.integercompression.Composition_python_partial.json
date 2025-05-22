@@ -1,0 +1,425 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/main/java/me/lemire/integercompression/Composition.java",
+    "imports": {},
+    "classes": {
+        "Composition": {
+            "start": 14,
+            "end": 14,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "IntegerCODEC"
+            ],
+            "extends": [],
+            "methods": {
+                "65-67:toString": {
+                    "start": 65,
+                    "end": 67,
+                    "body": [
+                        "        public String toString() {\n",
+                        "                return F1.toString() + \" + \" + F2.toString();\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "toString()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "        return self.F1.toString() + \" + \" + self.F2.toString()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 89.10145235061646,
+                    "generation_timestamp": "2024-11-27T15:53:52.138706",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "54-62:uncompress0": {
+                    "start": 54,
+                    "end": 62,
+                    "body": [
+                        "        public void uncompress0(int[] in, IntWrapper inpos, int inlength,\n",
+                        "                                int[] out, IntWrapper outpos) {\n",
+                        "                if (inlength == 0)\n",
+                        "                        return;\n",
+                        "                final int init = inpos.get();\n",
+                        "                F1.uncompress0(in, inpos, inlength, out, outpos);\n",
+                        "                inlength -= inpos.get() - init;\n",
+                        "                F2.uncompress0(in, inpos, inlength, out, outpos);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "uncompress0(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntegerCODEC",
+                            "IntegerCODEC",
+                            "57-59:uncompress0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def uncompress0(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def uncompress0(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:",
+                        "        if inlength == 0:",
+                        "            return",
+                        "        init = inpos.get()",
+                        "        self.F1.uncompress0(in_, inpos, inlength, out, outpos)",
+                        "        inlength -= inpos.get() - init",
+                        "        self.F2.uncompress0(in_, inpos, inlength, out, outpos)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 130.55774664878845,
+                    "generation_timestamp": "2024-11-29T00:23:08.412332",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "37-51:compress0": {
+                    "start": 37,
+                    "end": 51,
+                    "body": [
+                        "        public void compress0(int[] in, IntWrapper inpos, int inlength,\n",
+                        "                              int[] out, IntWrapper outpos) {\n",
+                        "            if (inlength == 0) {\n",
+                        "                return;\n",
+                        "            }\n",
+                        "            int inposInit = inpos.get();\n",
+                        "            int outposInit = outpos.get();\n",
+                        "            F1.compress0(in, inpos, inlength, out, outpos);\n",
+                        "            if (outpos.get() == outposInit) {\n",
+                        "                out[outposInit] = 0;\n",
+                        "                outpos.increment();\n",
+                        "            }\n",
+                        "            inlength -= inpos.get() - inposInit;\n",
+                        "            F2.compress0(in, inpos, inlength, out, outpos);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "compress0(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntegerCODEC",
+                            "IntegerCODEC",
+                            "36-38:compress0"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "69-71:increment"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def compress0(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def compress0(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:",
+                        "        if inlength == 0:",
+                        "            return",
+                        "        ",
+                        "        inpos_init = inpos.get()",
+                        "        outpos_init = outpos.get()",
+                        "        ",
+                        "        self.F1.compress0(in_, inpos, inlength, out, outpos)",
+                        "        ",
+                        "        if outpos.get() == outpos_init:",
+                        "            out[outpos_init] = 0",
+                        "            outpos.increment()",
+                        "        ",
+                        "        inlength -= inpos.get() - inpos_init",
+                        "        self.F2.compress0(in_, inpos, inlength, out, outpos)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 140.1240210533142,
+                    "generation_timestamp": "2024-11-29T00:25:28.602791",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "31-34:Composition": {
+                    "start": 31,
+                    "end": 34,
+                    "body": [
+                        "        public Composition(IntegerCODEC f1, IntegerCODEC f2) {\n",
+                        "                F1 = f1;\n",
+                        "                F2 = f2;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "Composition(IntegerCODEC, IntegerCODEC)",
+                    "parameters": [
+                        "f1",
+                        "f2"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, f1: IntegerCODEC, f2: IntegerCODEC) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, f1: IntegerCODEC, f2: IntegerCODEC) -> None:",
+                        "        self.F1 = f1",
+                        "        self.F2 = f2"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "error",
+                        "message": "Unsupported operation encountered: [JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x74e8ef59>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x7101fb1c>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x700e3b73>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x613452e1>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x4743220d>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x2fcc32ae>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x6b37cadf>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x496de48b>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x45dbf4f6>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0xadd99a4>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x3b7777ea>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x15dbd88e>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x39342312>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x64ed6bc8>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0xb722630>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x4e5361df>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x58ea2bc2>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x36df566>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x28f5b5b4>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x49bf800f>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x6cd75a1b>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x7a9ad451>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x50ed6392>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x4efca68>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x64746794>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x3dc86e03>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x5c4b4c4d>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x63f562b8>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x1328a5de>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x4c864fd0>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0xec4e9e4>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x11c885a6>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x6da0228a>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x6942d9bc>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x7111dd38>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x5ff1aece>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x7239f4ba>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x3434890>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x4e8fa02b>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x6829ec81>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x3312dd3e>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x6da640fe>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x6ed810f3>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x19ea1606>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x92fe6e5>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x2a447744>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x1e35e4d9>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x6a4430d7>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x287b3acd>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x1e7a20d5>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0xbca34d>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x75bbaef2>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x4284bd5>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x2e7d71d9>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x7879348>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x67ee3b1>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x7c329d38>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x3a6b8805>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0xde1b4dd>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x63574fbf>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x2235153c>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x7b5de23c>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x12a7999>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x2e9ab0b3>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x1ba311d0>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x2c20b04a>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x713f708e>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x22d45306>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x4100960>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x76f0017d>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x51aafde5>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x1c0c4d2d>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x486d5c27>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x5d7d454b>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x2ee20713>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x45ecf220>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x6584b606>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0xbabef5e>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0xd325e75>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x6bda9fd9>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x3ecfc685>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x5bddcaef>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x61303259>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x344c2157>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x74918273>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x35219634>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x3fe4d9d4>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x27bcfd19>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x38f381cb>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x1a27077c>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x4f0aa08b>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x1935b63b>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x2adeb7e3>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x1943d46b>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x336bb88c>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x19e7adf0>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x6ed80c52>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x67d0fc1f>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x4809035f>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x23d7dad>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x664a3770>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x55eb1d69>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x290df888>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x3af15569>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x6b873080>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x9d2723e>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x2f94339e>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x377f0737>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x515c6338>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x6cc45cf2>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x1370b4df>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x6d196349>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x69596a73>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x4111c29d>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x7c441275>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0xed23ac6>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x22604e1c>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x209ccf62>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x6fab92d8>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x49b71061>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x67b3cd01>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x43fe629a>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x402e4e9b>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x2fcd3128>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x362f5054>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x253caf40>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x141b6877>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x7cbfa39d>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x2b518f9d>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x364db8d1>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x855628e>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x179683c3>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x6efa105a>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x45b0f44b>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x2ba0bf9c>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x7e0aab75>"
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 277.70607018470764,
+                    "generation_timestamp": "2024-11-27T15:58:29.914275",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 1
+                    }
+                }
+            },
+            "fields": {
+                "15-15:F2": {
+                    "start": 15,
+                    "end": 15,
+                    "body": [
+                        "        IntegerCODEC F1, F2;\n"
+                    ],
+                    "modifiers": [],
+                    "types": [
+                        [
+                            "IntegerCODEC",
+                            "IntegerCODEC"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    F2: IntegerCODEC = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    F2: IntegerCODEC = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-11-27T11:23:44.379692",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "15-15:F1": {
+                    "start": 15,
+                    "end": 15,
+                    "body": [
+                        "        IntegerCODEC F1, F2;\n"
+                    ],
+                    "modifiers": [],
+                    "types": [
+                        [
+                            "IntegerCODEC",
+                            "IntegerCODEC"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    F1: IntegerCODEC = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    F1: IntegerCODEC = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-11-27T11:23:44.390364",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class Composition(IntegerCODEC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os",
+        "from src.main.me.lemire.integercompression.IntWrapper import *",
+        "from src.main.me.lemire.integercompression.IntegerCODEC import *"
+    ]
+}

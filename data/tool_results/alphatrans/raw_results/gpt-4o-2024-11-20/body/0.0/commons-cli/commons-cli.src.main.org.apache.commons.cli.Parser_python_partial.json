@@ -1,0 +1,1597 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-cli/src/main/java/org/apache/commons/cli/Parser.java",
+    "imports": {
+        "23-23:import List": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.List;\n"
+            ]
+        },
+        "22-22:import Enumeration": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.Enumeration;\n"
+            ]
+        },
+        "25-25:import Properties": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.util.Properties;\n"
+            ]
+        },
+        "24-24:import ListIterator": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.util.ListIterator;\n"
+            ]
+        },
+        "20-20:import ArrayList": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.util.ArrayList;\n"
+            ]
+        },
+        "21-21:import Arrays": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Parser": {
+            "start": 34,
+            "end": 34,
+            "is_abstract": true,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "CommandLineParser"
+            ],
+            "extends": [],
+            "methods": {
+                "314-317:setOptions": {
+                    "start": 314,
+                    "end": 317,
+                    "body": [
+                        "    protected void setOptions(final Options options) {\n",
+                        "        this.options = options;\n",
+                        "        this.requiredOptions = new ArrayList<>(options.getRequiredOptions());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setOptions(Options)",
+                    "parameters": [
+                        "options"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "ArrayList<>(java.util.Collection)"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "260-262:getRequiredOptions"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _setOptions(self, options: Options) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _setOptions(self, options: Options) -> None:",
+                        "        self.__options = options",
+                        "        self.__requiredOptions = list(options.getRequiredOptions())"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 53.73804330825806,
+                    "generation_timestamp": "2024-11-26T18:17:14.960595",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "276-312:processProperties": {
+                    "start": 276,
+                    "end": 312,
+                    "body": [
+                        "    protected void processProperties(final Properties properties) throws ParseException {\n",
+                        "        if (properties == null) {\n",
+                        "            return;\n",
+                        "        }\n",
+                        "\n",
+                        "        for (final Enumeration<?> e = properties.propertyNames(); e.hasMoreElements(); ) {\n",
+                        "            final String option = e.nextElement().toString();\n",
+                        "\n",
+                        "            final Option opt = options.getOption(option);\n",
+                        "            if (opt == null) {\n",
+                        "                throw new UnrecognizedOptionException(\"Default option wasn't defined\", option);\n",
+                        "            }\n",
+                        "\n",
+                        "            final OptionGroup group = options.getOptionGroup(opt);\n",
+                        "            final boolean selected = group != null && group.getSelected() != null;\n",
+                        "\n",
+                        "            if (!cmd.hasOption2(option) && !selected) {\n",
+                        "                final String value = properties.getProperty(option);\n",
+                        "\n",
+                        "                if (opt.hasArg()) {\n",
+                        "                    if (opt.getValues() == null || opt.getValues().length == 0) {\n",
+                        "                        try {\n",
+                        "                            opt.addValueForProcessing(value);\n",
+                        "                        } catch (final RuntimeException exp) { // NOPMD\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                } else if (!(\"yes\".equalsIgnoreCase(value)\n",
+                        "                        || \"true\".equalsIgnoreCase(value)\n",
+                        "                        || \"1\".equalsIgnoreCase(value))) {\n",
+                        "                    continue;\n",
+                        "                }\n",
+                        "\n",
+                        "                cmd.addOption(opt);\n",
+                        "                updateRequiredOptions(opt);\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "processProperties(Properties)",
+                    "parameters": [
+                        "properties"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Properties",
+                            "propertyNames()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Enumeration",
+                            "hasMoreElements()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "toString()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Enumeration",
+                            "nextElement()"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "217-225:getOption"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "233-235:getOptionGroup"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.OptionGroup",
+                            "OptionGroup",
+                            "69-71:getSelected"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.UnrecognizedOptionException",
+                            "UnrecognizedOptionException",
+                            "34-37:UnrecognizedOptionException"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                            "CommandLine",
+                            "428-430:hasOption2"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Properties",
+                            "getProperty(java.lang.String)"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "662-664:hasArg"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "635-637:getValues"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "462-467:addValueForProcessing"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "equalsIgnoreCase(java.lang.String)"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                            "CommandLine",
+                            "99-101:addOption"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "324-338:updateRequiredOptions"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _processProperties(self, properties: typing.Union[configparser.ConfigParser, typing.Dict]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _processProperties(self, properties: typing.Union[configparser.ConfigParser, typing.Dict]) -> None:",
+                        "        if properties is None:",
+                        "            return",
+                        "",
+                        "        for option in properties.keys():",
+                        "            opt = self.__options.getOption(option)",
+                        "            if opt is None:",
+                        "                raise UnrecognizedOptionException(\"Default option wasn't defined\", option)",
+                        "",
+                        "            group = self.__options.getOptionGroup(opt)",
+                        "            selected = group is not None and group.getSelected() is not None",
+                        "",
+                        "            if not self._cmd.hasOption2(option) and not selected:",
+                        "                value = properties[option]",
+                        "",
+                        "                if opt.hasArg():",
+                        "                    if opt.getValues() is None or len(opt.getValues()) == 0:",
+                        "                        try:",
+                        "                            opt.addValueForProcessing(value)",
+                        "                        except RuntimeError:",
+                        "                            pass",
+                        "                elif not (value.lower() in [\"yes\", \"true\", \"1\"]):",
+                        "                    continue",
+                        "",
+                        "                self._cmd._addOption(opt)",
+                        "                self.__updateRequiredOptions(opt)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 64.02580380439758,
+                    "generation_timestamp": "2024-11-26T21:55:41.627908",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "251-268:processOption": {
+                    "start": 251,
+                    "end": 268,
+                    "body": [
+                        "    protected void processOption(final String arg, final ListIterator<String> iter)\n",
+                        "            throws ParseException {\n",
+                        "        final boolean hasOption = getOptions().hasOption(arg);\n",
+                        "\n",
+                        "        if (!hasOption) {\n",
+                        "            throw new UnrecognizedOptionException(\"Unrecognized option: \" + arg, arg);\n",
+                        "        }\n",
+                        "\n",
+                        "        final Option opt = (Option) getOptions().getOption(arg).clone();\n",
+                        "\n",
+                        "        updateRequiredOptions(opt);\n",
+                        "\n",
+                        "        if (opt.hasArg()) {\n",
+                        "            processArgs(opt, iter);\n",
+                        "        }\n",
+                        "\n",
+                        "        cmd.addOption(opt);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "processOption(String, ListIterator<String>)",
+                    "parameters": [
+                        "arg",
+                        "iter"
+                    ],
+                    "calls": [
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "283-287:hasOption"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "70-72:getOptions"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "491-500:clone"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "217-225:getOption"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.UnrecognizedOptionException",
+                            "UnrecognizedOptionException",
+                            "34-37:UnrecognizedOptionException"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "324-338:updateRequiredOptions"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "662-664:hasArg"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "220-241:processArgs"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                            "CommandLine",
+                            "99-101:addOption"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _processOption(self, arg: str, iter_: typing.Iterator[str]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _processOption(self, arg: str, iter_: typing.Iterator[str]) -> None:",
+                        "        has_option = self._getOptions().hasOption(arg)",
+                        "",
+                        "        if not has_option:",
+                        "            raise UnrecognizedOptionException(f\"Unrecognized option: {arg}\", arg)",
+                        "",
+                        "        opt = self._getOptions().getOption(arg).clone()",
+                        "",
+                        "        self.__updateRequiredOptions(opt)",
+                        "",
+                        "        if opt.hasArg():",
+                        "            self.processArgs(opt, iter_)",
+                        "",
+                        "        self._cmd._addOption(opt)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 78.13399863243103,
+                    "generation_timestamp": "2024-11-26T21:57:00.007260",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "220-241:processArgs": {
+                    "start": 220,
+                    "end": 241,
+                    "body": [
+                        "    public void processArgs(final Option opt, final ListIterator<String> iter)\n",
+                        "            throws ParseException {\n",
+                        "        while (iter.hasNext()) {\n",
+                        "            final String str = iter.next();\n",
+                        "\n",
+                        "            if (getOptions().hasOption(str) && str.startsWith(\"-\")) {\n",
+                        "                iter.previous();\n",
+                        "                break;\n",
+                        "            }\n",
+                        "\n",
+                        "            try {\n",
+                        "                opt.addValueForProcessing(Util.stripLeadingAndTrailingQuotes(str));\n",
+                        "            } catch (final RuntimeException exp) {\n",
+                        "                iter.previous();\n",
+                        "                break;\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        if (opt.getValues() == null && !opt.hasOptionalArg()) {\n",
+                        "            throw MissingArgumentException.MissingArgumentException1(1, null, opt);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "processArgs(Option, ListIterator<String>)",
+                    "parameters": [
+                        "opt",
+                        "iter"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/ListIterator",
+                            "hasNext()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ListIterator",
+                            "next()"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "283-287:hasOption"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "startsWith(java.lang.String)"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "70-72:getOptions"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ListIterator",
+                            "previous()"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "462-467:addValueForProcessing"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Util",
+                            "Util",
+                            "33-43:stripLeadingAndTrailingQuotes"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "635-637:getValues"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "710-712:hasOptionalArg"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.MissingArgumentException",
+                            "MissingArgumentException",
+                            "42-49:MissingArgumentException1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def processArgs(self, opt: Option, iter_: typing.Iterator[str]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def processArgs(self, opt: Option, iter_: typing.Iterator[str]) -> None:",
+                        "        while True:",
+                        "            try:",
+                        "                str_ = next(iter_)",
+                        "            except StopIteration:",
+                        "                break",
+                        "",
+                        "            if self._getOptions().hasOption(str_) and str_.startswith(\"-\"):",
+                        "                iter_ = self._reverseIterator(iter_)",
+                        "                break",
+                        "",
+                        "            try:",
+                        "                opt.addValueForProcessing(Util.stripLeadingAndTrailingQuotes(str_))",
+                        "            except RuntimeError:",
+                        "                iter_ = self._reverseIterator(iter_)",
+                        "                break",
+                        "",
+                        "        if opt.getValues() is None and not opt.hasOptionalArg():",
+                        "            raise MissingArgumentException.MissingArgumentException1(1, None, opt)",
+                        "",
+                        "    def _reverseIterator(self, iter_: typing.Iterator[str]) -> typing.Iterator[str]:",
+                        "        \"\"\"",
+                        "        Helper method to reverse the iterator by moving it one step back.",
+                        "        This simulates the `previous()` method in Java's ListIterator.",
+                        "        \"\"\"",
+                        "        return iter([*iter_][:-1])"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 54.619584798812866,
+                    "generation_timestamp": "2024-11-26T17:45:48.445132",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "140-210:parse3": {
+                    "start": 140,
+                    "end": 210,
+                    "body": [
+                        "    public CommandLine parse3(\n",
+                        "            final Options options,\n",
+                        "            String[] arguments,\n",
+                        "            final Properties properties,\n",
+                        "            final boolean stopAtNonOption)\n",
+                        "            throws ParseException {\n",
+                        "        for (final Option opt : options.helpOptions()) {\n",
+                        "            opt.clearValues();\n",
+                        "        }\n",
+                        "\n",
+                        "        for (final OptionGroup group : options.getOptionGroups()) {\n",
+                        "            group.setSelected(null);\n",
+                        "        }\n",
+                        "\n",
+                        "        setOptions(options);\n",
+                        "\n",
+                        "        cmd = new CommandLine();\n",
+                        "\n",
+                        "        boolean eatTheRest = false;\n",
+                        "\n",
+                        "        if (arguments == null) {\n",
+                        "            arguments = new String[0];\n",
+                        "        }\n",
+                        "\n",
+                        "        final List<String> tokenList =\n",
+                        "                Arrays.asList(flatten(getOptions(), arguments, stopAtNonOption));\n",
+                        "\n",
+                        "        final ListIterator<String> iterator = tokenList.listIterator();\n",
+                        "\n",
+                        "        while (iterator.hasNext()) {\n",
+                        "            final String t = iterator.next();\n",
+                        "\n",
+                        "            if (\"--\".equals(t)) {\n",
+                        "                eatTheRest = true;\n",
+                        "            } else if (\"-\".equals(t)) {\n",
+                        "                if (stopAtNonOption) {\n",
+                        "                    eatTheRest = true;\n",
+                        "                } else {\n",
+                        "                    cmd.addArg(t);\n",
+                        "                }\n",
+                        "            } else if (t.startsWith(\"-\")) {\n",
+                        "                if (stopAtNonOption && !getOptions().hasOption(t)) {\n",
+                        "                    eatTheRest = true;\n",
+                        "                    cmd.addArg(t);\n",
+                        "                } else {\n",
+                        "                    processOption(t, iterator);\n",
+                        "                }\n",
+                        "            } else {\n",
+                        "                cmd.addArg(t);\n",
+                        "\n",
+                        "                if (stopAtNonOption) {\n",
+                        "                    eatTheRest = true;\n",
+                        "                }\n",
+                        "            }\n",
+                        "\n",
+                        "            if (eatTheRest) {\n",
+                        "                while (iterator.hasNext()) {\n",
+                        "                    final String str = iterator.next();\n",
+                        "\n",
+                        "                    if (!\"--\".equals(str)) {\n",
+                        "                        cmd.addArg(str);\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        processProperties(properties);\n",
+                        "        checkRequiredOptions();\n",
+                        "\n",
+                        "        return cmd;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "CommandLine",
+                            "CommandLine"
+                        ]
+                    ],
+                    "signature": "parse3(Options, String[], Properties, boolean)",
+                    "parameters": [
+                        "options",
+                        "arguments",
+                        "properties",
+                        "stopAtNonOption"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "asList(java.lang.Object[])"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "67-69:flatten"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "70-72:getOptions"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "listIterator()"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "307-309:helpOptions"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "475-477:clearValues"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "242-244:getOptionGroups"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.OptionGroup",
+                            "OptionGroup",
+                            "95-105:setSelected"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "314-317:setOptions"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                            "CommandLine",
+                            "83-83:CommandLine"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ListIterator",
+                            "hasNext()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ListIterator",
+                            "next()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                            "CommandLine",
+                            "90-92:addArg"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "startsWith(java.lang.String)"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "283-287:hasOption"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "251-268:processOption"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "276-312:processProperties"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "49-53:checkRequiredOptions"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def parse3(self, options: Options, arguments: typing.List[typing.List[str]], properties: typing.Union[configparser.ConfigParser, typing.Dict], stopAtNonOption: bool) -> CommandLine:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def parse3(self, options: Options, arguments: typing.List[str], properties: typing.Union[configparser.ConfigParser, typing.Dict], stopAtNonOption: bool) -> CommandLine:",
+                        "        # Clear values for all help options",
+                        "        for opt in options.helpOptions():",
+                        "            opt.clearValues()",
+                        "",
+                        "        # Reset selected options for all option groups",
+                        "        for group in options.getOptionGroups():",
+                        "            group.setSelected(None)",
+                        "",
+                        "        # Set the options for the parser",
+                        "        self._setOptions(options)",
+                        "",
+                        "        # Initialize the CommandLine object",
+                        "        self._cmd = CommandLine()",
+                        "",
+                        "        eat_the_rest = False",
+                        "",
+                        "        # Handle null arguments",
+                        "        if arguments is None:",
+                        "            arguments = []",
+                        "",
+                        "        # Flatten the arguments",
+                        "        token_list = self._flatten(self._getOptions(), arguments, stopAtNonOption)",
+                        "        iterator = iter(token_list)",
+                        "",
+                        "        # Process each token",
+                        "        for t in iterator:",
+                        "            if t == \"--\":",
+                        "                eat_the_rest = True",
+                        "            elif t == \"-\":",
+                        "                if stopAtNonOption:",
+                        "                    eat_the_rest = True",
+                        "                else:",
+                        "                    self._cmd._addArg(t)",
+                        "            elif t.startswith(\"-\"):",
+                        "                if stopAtNonOption and not self._getOptions().hasOption(t):",
+                        "                    eat_the_rest = True",
+                        "                    self._cmd._addArg(t)",
+                        "                else:",
+                        "                    self._processOption(t, iterator)",
+                        "            else:",
+                        "                self._cmd._addArg(t)",
+                        "                if stopAtNonOption:",
+                        "                    eat_the_rest = True",
+                        "",
+                        "            # If we need to eat the rest of the arguments",
+                        "            if eat_the_rest:",
+                        "                for remaining in iterator:",
+                        "                    if remaining != \"--\":",
+                        "                        self._cmd._addArg(remaining)",
+                        "",
+                        "        # Process properties and check required options",
+                        "        self._processProperties(properties)",
+                        "        self._checkRequiredOptions()",
+                        "",
+                        "        return self._cmd"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "failure",
+                        "message": "org.apache.commons.cli.bug.BugCLI133Test.testOrder_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugCLI133Test.testOrder_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test11456_test12_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test12210_test13_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test11456_test13_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test15046_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test12210_test14_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test15648_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test11456_test14_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test15046_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test11457_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test15648_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test11456_test15_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test15046_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test11457_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test11456_test16_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test15046_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test11456_test17_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test15046_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test11456_test18_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test11456_test19_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test31148_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test11456_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test31148_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test11456_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test31148_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test13425_test12_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test11458_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test11458_test11_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test11458_test12_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test14786_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test11458_test13_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test14786_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test11458_test14_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test13935_test12_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test11458_test15_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test13935_test13_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test11458_test16_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test13935_test14_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test13935_test15_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test13935_test16_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test13935_test17_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test11680_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test11680_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test11456_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test11456_test11_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugsTest.test12210_test12_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionsTest.testMissingOptionException_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionsTest.testMissingOptionsException_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertiesOption1_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testLongOptionQuoteHandling_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testStopAtExpectedArg_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testWithRequiredOption_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOverrideValues_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertiesOption1_test11_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testStopAtExpectedArg_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testUnlimitedArgs_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOverrideValues_test11_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testStopAtExpectedArg_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testUnlimitedArgs_test11_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOverrideValues_test12_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testLongWithEqualSingleDash_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testStopAtExpectedArg_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testShortOptionQuoteHandling_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testShortWithEqual_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testLongWithEqualSingleDash_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testShortOptionQuoteHandling_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testShortWithEqual_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertiesOption2_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testLongWithoutEqualDoubleDash_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testArgumentStartingWithHyphen_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testOptionGroup_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertiesOption2_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testLongWithoutEqualDoubleDash_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testArgumentStartingWithHyphen_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testOptionGroup_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertiesOption2_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertiesOption2_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testMissingRequiredOption_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertiesOption2_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testStopAtNonOptionLong_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testMultipleWithLong_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testOptionGroupLong_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testStopAtNonOptionLong_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testSimpleLong_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testMultipleWithLong_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testOptionGroupLong_test11_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testStopAtNonOptionLong_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testMultiple_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testSimpleLong_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testMultipleWithLong_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertiesOption1_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testLongWithEqualDoubleDash_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOptionSingularValue_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testNegativeArgument_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testMultiple_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testStopAtNonOptionShort_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOptionFlags_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testMultipleWithLong_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertiesOption1_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testLongWithEqualDoubleDash_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOptionSingularValue_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testNegativeArgument_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testMultiple_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testStopAtNonOptionShort_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testSimpleLong_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOptionFlags_test11_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testMultipleWithLong_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testOptionAndRequiredOption_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertiesOption1_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOptionRequired_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOptionSingularValue_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testMultiple_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testStopAtNonOptionShort_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOptionFlags_test12_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testMultipleWithLong_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertiesOption1_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOptionRequired_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOptionSingularValue_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testMultiple_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testMissingRequiredGroup_test11_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOptionFlags_test13_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testMultipleWithLong_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertiesOption1_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testMultiple_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOptionFlags_test14_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testMultipleWithLong_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testWithRequiredOption_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testMultiple_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testOptionGroupLong_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOptionFlags_test15_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOptionMultipleValues_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOverrideValues_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testMultiple_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOptionMultipleValues_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOverrideValues_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testMissingRequiredOptions_test12_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testDoubleDash1_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOptionMultipleValues_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testSimpleShort_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOverrideValues_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testDoubleDash1_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testShortWithoutEqual_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testSimpleShort_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testDoubleDash1_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testShortWithoutEqual_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOptionFlags_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testSimpleShort_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testLongOptionWithEqualsQuoteHandling_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testStopAtUnexpectedArg_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOptionFlags_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testOptionAndRequiredOption_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testSingleDash_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testSimpleShort_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertiesOption2_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testUnlimitedArgs_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testLongOptionWithEqualsQuoteHandling_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testStopAtUnexpectedArg_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOptionFlags_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testOptionAndRequiredOption_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testSingleDash_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testUnrecognizedOption_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testUnlimitedArgs_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testStopAtUnexpectedArg_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOptionFlags_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testOptionAndRequiredOption_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testSingleDash_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testUnlimitedArgs_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOptionUnexpected_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testSingleDash_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testReuseOptionsTwice_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testMissingArg_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testShortOptionConcatenatedQuoteHandling_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testMissingArg_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testShortOptionConcatenatedQuoteHandling_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testWithRequiredOption_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOptionGroup_test13_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testLongOptionQuoteHandling_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testWithRequiredOption_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.GnuParserTest.testPropertyOptionGroup_test14_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testValidLongOnlyOptions_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testTwoLongOptionsFromGroup_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testSingleLongOption_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testTwoOptionsFromGroupWithProperties_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testSingleLongOption_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testNoOptionsExtraArgs_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testTwoOptionsFromGroupWithProperties_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testSingleLongOption_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testNoOptionsExtraArgs_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testNoOptionsExtraArgs_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testSingleOption_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testSingleOption_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testSingleOption_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testSingleOptionFromGroup_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testSingleOptionFromGroup_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testSingleOptionFromGroup_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testTwoValidOptions_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testTwoValidOptions_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testTwoValidOptions_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testTwoOptionsFromDifferentGroup_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testTwoOptionsFromGroup_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testTwoOptionsFromDifferentGroup_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testTwoValidLongOptions_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testTwoOptionsFromDifferentGroup_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testTwoValidLongOptions_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testTwoValidLongOptions_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testValidLongOnlyOptions_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testValidLongOnlyOptions_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.OptionGroupTest.testValidLongOnlyOptions_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.CommandLineTest.testGetOptionPropertiesWithOption_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.CommandLineTest.testGetOptionPropertiesWithOption_test11_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.CommandLineTest.testGetOptionPropertiesWithOption_test12_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.CommandLineTest.testGetOptionPropertiesWithOption_test13_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.CommandLineTest.testGetOptionPropertiesWithOption_test14_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.CommandLineTest.testGetOptionPropertiesWithOption_test15_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.CommandLineTest.testGetOptionProperties_test11_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.CommandLineTest.testGetOptionProperties_test12_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.CommandLineTest.testGetOptionProperties_test13_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.CommandLineTest.testGetOptionProperties_test14_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.CommandLineTest.testGetOptionProperties_test15_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.CommandLineTest.testGetOptionProperties_test16_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testTwoArgValues_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testTwoArgValues_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testCharSeparator_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testCharSeparator_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testCharSeparator_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testComplexValues_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testCharSeparator_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testComplexValues_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testMultipleArgValues_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testCharSeparator_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testMultipleArgValues_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testCharSeparator_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testCharSeparator_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testCharSeparator_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testCharSeparator_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testShortArgsWithValue_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testCharSeparator_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testShortArgsWithValue_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testShortArgsWithValue_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testShortArgsWithValue_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testShortArgsWithValue_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testShortArgsWithValue_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testCharSeparator_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testCharSeparator_test11_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testShortArgs_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testShortArgs_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValuesTest.testExtraArgs_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugCLI71Test.testMistakenArgument_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugCLI71Test.testMistakenArgument_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugCLI71Test.testMistakenArgument_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugCLI71Test.testLackOfError_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugCLI71Test.testGetsDefaultIfOptional_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugCLI71Test.testGetsDefaultIfOptional_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugCLI71Test.testGetsDefaultIfOptional_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugCLI71Test.testBasic_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugCLI71Test.testBasic_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ApplicationTest.testAnt_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ApplicationTest.testAnt_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ApplicationTest.testAnt_test11_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ApplicationTest.testAnt_test12_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ApplicationTest.testAnt_test13_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ApplicationTest.testNLT_test32_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ApplicationTest.testAnt_test14_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ApplicationTest.testNLT_test33_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ApplicationTest.testNLT_test34_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ApplicationTest.testLs_test11_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ApplicationTest.testLs_test12_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ApplicationTest.testGroovy_test60_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ApplicationTest.testLs_test13_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ApplicationTest.testGroovy_test58_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ApplicationTest.testGroovy_test59_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugCLI148Test.testWorkaround1_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugCLI148Test.testWorkaround2_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugCLI148Test.testWorkaround2_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugCLI148Test.testWorkaround1_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ArgumentIsOptionTest.testOption_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ArgumentIsOptionTest.testOption_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ArgumentIsOptionTest.testOption_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ArgumentIsOptionTest.testOptionWithArgument_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ArgumentIsOptionTest.testOptionWithArgument_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ArgumentIsOptionTest.testOptionWithArgument_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ArgumentIsOptionTest.testOptionWithArgument_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ArgumentIsOptionTest.testOptionAndOptionWithArgument_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ArgumentIsOptionTest.testOptionAndOptionWithArgument_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ArgumentIsOptionTest.testOptionAndOptionWithArgument_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ArgumentIsOptionTest.testOptionAndOptionWithArgument_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValuesWithOption_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalNArgValuesWithOption_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortWithArg_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValuesWithOption_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalNArgValuesWithOption_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongWithArg_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalNArgValuesWithOption_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValues_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongWithArg_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalNArgValuesWithOption_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValues_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalNArgValuesWithOption_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalNArgValues_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValues_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongNoArgWithOption_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalNArgValuesWithOption_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalNArgValues_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValues_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgNoValue_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongNoArgWithOption_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalNArgValuesWithOption_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNoValueWithOption_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalNArgValues_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValues_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgNoValue_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongNoArgWithOption_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalNArgValuesWithOption_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNoValueWithOption_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalNArgValues_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValues_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgNoValue_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongNoArgWithOption_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalNArgValuesWithOption_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNoValueWithOption_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalNArgValues_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgNoValue_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValueWithOption_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNoValueWithOption_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalNArgValues_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValueWithOption_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNoValueWithOption_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNArgValues_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValueWithOption_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNoValueWithOption_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNArgValues_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValueWithOption_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNArgValues_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValueWithOption_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNArgValues_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValueWithOption_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNArgValues_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNArgValues_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValue_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValueWithOption_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValue_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValuesWithOption_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValue_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValueWithOption_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongWithArgWithOption_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValue_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValue_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValueWithOption_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNArgValuesWithOption_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongWithArgWithOption_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValue_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValue_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValueWithOption_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNArgValuesWithOption_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongWithArgWithOption_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValue_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNoValue_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValueWithOption_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNArgValuesWithOption_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongWithArgWithOption_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortNoArgWithOption_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNoValue_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValueWithOption_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValuesWithOption_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNArgValuesWithOption_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongWithArgWithOption_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortNoArgWithOption_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNoValue_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValuesWithOption_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNArgValuesWithOption_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongWithArgWithOption_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortNoArgWithOption_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNoValue_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValuesWithOption_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNArgValuesWithOption_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortNoArgWithOption_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValuesWithOption_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgNoValueWithOption_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValuesWithOption_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNArgValuesWithOption_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNArgValuesWithOption_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValuesWithOption_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgNoValueWithOption_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValuesWithOption_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongNoArg_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNArgValuesWithOption_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValuesWithOption_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortWithArgWithOption_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgNoValueWithOption_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValues_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValuesWithOption_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongNoArg_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNArgValuesWithOption_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValuesWithOption_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortWithArgWithOption_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgNoValueWithOption_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValues_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValuesWithOption_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalNArgValuesWithOption_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValuesWithOption_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortWithArgWithOption_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgNoValueWithOption_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValues_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValuesWithOption_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValuesWithOption_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortWithArgWithOption_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgNoValueWithOption_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValues_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValuesWithOption_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValuesWithOption_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValuesWithOption_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortWithArgWithOption_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValues_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValuesWithOption_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortNoArg_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalArgValuesWithOption_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortOptionalNArgValuesWithOption_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortWithArgWithOption_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testLongOptionalArgValues_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortNoArg_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.ValueTest.testShortWithArg_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testSimplePattern_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testSimplePattern_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testObjectPattern_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testObjectPattern_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testExistingFilePattern_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testExistingFilePattern_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testExistingFilePattern_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testNumberPattern_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testUntypedPattern_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testNumberPattern_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testUntypedPattern_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testUntypedPattern_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testUntypedPattern_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testRequiredOption_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testURLPattern_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testExistingFilePatternFileNotExist_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testUntypedPattern_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testURLPattern_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testExistingFilePatternFileNotExist_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testUntypedPattern_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testUntypedPattern_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testSimplePattern_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testSimplePattern_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testSimplePattern_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testSimplePattern_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testClassPattern_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testSimplePattern_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testClassPattern_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testSimplePattern_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PatternOptionBuilderTest.testSimplePattern_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testLongOptionQuoteHandling_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testStopAtExpectedArg_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testWithRequiredOption_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOverrideValues_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testStopAtExpectedArg_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testUnlimitedArgs_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOverrideValues_test11_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testStopAtExpectedArg_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testUnlimitedArgs_test11_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOverrideValues_test12_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testStopAtExpectedArg_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testShortOptionQuoteHandling_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testShortOptionQuoteHandling_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testShortWithUnexpectedArgument_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testShortWithUnexpectedArgument_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testLongWithoutEqualDoubleDash_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testArgumentStartingWithHyphen_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testOptionGroup_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testLongWithoutEqualDoubleDash_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testArgumentStartingWithHyphen_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testOptionGroup_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testMissingRequiredOption_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testStopAtNonOptionLong_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testMultipleWithLong_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testOptionGroupLong_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testStopAtNonOptionLong_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testLongWithUnexpectedArgument2_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testSimpleLong_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testMultipleWithLong_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testOptionGroupLong_test11_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testStopAtNonOptionLong_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testMultiple_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testLongWithUnexpectedArgument2_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testSimpleLong_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testMultipleWithLong_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOptionSingularValue_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testNegativeArgument_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testMultiple_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testStopAtNonOptionShort_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testSimpleLong_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOptionFlags_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testMultipleWithLong_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOptionSingularValue_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testNegativeArgument_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testMultiple_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testStopAtNonOptionShort_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testSimpleLong_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOptionFlags_test11_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testMultipleWithLong_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testOptionAndRequiredOption_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOptionRequired_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOptionSingularValue_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testMultiple_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testStopAtNonOptionShort_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOptionFlags_test12_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testMultipleWithLong_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOptionRequired_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOptionSingularValue_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testMultiple_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testMissingRequiredGroup_test11_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOptionFlags_test13_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testMultipleWithLong_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testMultiple_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOptionFlags_test14_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testMultipleWithLong_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testWithRequiredOption_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testMultiple_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testOptionGroupLong_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOptionFlags_test15_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOptionMultipleValues_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testLongWithUnexpectedArgument1_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOverrideValues_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testMultiple_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOptionMultipleValues_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testLongWithUnexpectedArgument1_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOverrideValues_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testMissingRequiredOptions_test12_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testDoubleDash1_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOptionMultipleValues_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testSimpleShort_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOverrideValues_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testDoubleDash1_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testSimpleShort_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testDoubleDash1_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOptionFlags_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testSimpleShort_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testStopAtUnexpectedArg_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOptionFlags_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testOptionAndRequiredOption_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testSingleDash_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testSimpleShort_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testUnlimitedArgs_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testStopAtUnexpectedArg_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOptionFlags_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testOptionAndRequiredOption_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testSingleDash_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testUnrecognizedOption_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testUnlimitedArgs_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testStopAtUnexpectedArg_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOptionFlags_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testOptionAndRequiredOption_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testSingleDash_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testUnlimitedArgs_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOptionUnexpected_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testSingleDash_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testReuseOptionsTwice_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testMissingArg_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testMissingArg_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testWithRequiredOption_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOptionGroup_test13_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testLongOptionQuoteHandling_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testWithRequiredOption_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.BasicParserTest.testPropertyOptionGroup_test14_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertiesOption1_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testLongOptionQuoteHandling_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testStopAtExpectedArg_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testWithRequiredOption_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOverrideValues_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertiesOption1_test11_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testStopAtExpectedArg_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testUnlimitedArgs_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOverrideValues_test11_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testStopAtExpectedArg_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testUnlimitedArgs_test11_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOverrideValues_test12_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testStopAtExpectedArg_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testShortOptionQuoteHandling_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testShortOptionQuoteHandling_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testUnambiguousPartialLongOption3_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testAmbiguousPartialLongOption3_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testUnambiguousPartialLongOption3_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testUnambiguousPartialLongOption3_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testAmbiguousPartialLongOption3_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testShortWithUnexpectedArgument_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertiesOption2_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testShortWithUnexpectedArgument_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testLongWithoutEqualDoubleDash_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testArgumentStartingWithHyphen_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testOptionGroup_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertiesOption2_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testLongWithoutEqualDoubleDash_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testArgumentStartingWithHyphen_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testOptionGroup_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertiesOption2_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertiesOption2_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testBursting_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testUnambiguousPartialLongOption2_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testMissingRequiredOption_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertiesOption2_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testAmbiguousPartialLongOption2_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testBursting_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testUnambiguousPartialLongOption2_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testStopAtNonOptionLong_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testAmbiguousPartialLongOption2_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testBursting_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testMultipleWithLong_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testOptionGroupLong_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testStopAtNonOptionLong_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testLongWithUnexpectedArgument2_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testBursting_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testSimpleLong_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testMultipleWithLong_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testOptionGroupLong_test11_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testStopAtNonOptionLong_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testMultiple_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testLongWithUnexpectedArgument2_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testSimpleLong_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testMultipleWithLong_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertiesOption1_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testLongWithEqualDoubleDash_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOptionSingularValue_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testNegativeArgument_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testMultiple_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testStopAtNonOptionShort_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testSimpleLong_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOptionFlags_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testMultipleWithLong_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertiesOption1_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testLongWithEqualDoubleDash_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOptionSingularValue_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testNegativeArgument_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testMultiple_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testStopAtNonOptionShort_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testSimpleLong_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOptionFlags_test11_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testUnrecognizedOptionWithBursting_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testMultipleWithLong_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testOptionAndRequiredOption_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertiesOption1_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOptionRequired_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOptionSingularValue_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testMultiple_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testStopAtNonOptionShort_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOptionFlags_test12_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testMultipleWithLong_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertiesOption1_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOptionRequired_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOptionSingularValue_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testMultiple_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testUnambiguousPartialLongOption1_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testMissingRequiredGroup_test11_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOptionFlags_test13_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testMultipleWithLong_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertiesOption1_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testAmbiguousPartialLongOption1_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testMultiple_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testUnambiguousPartialLongOption1_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOptionFlags_test14_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testMultipleWithLong_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testWithRequiredOption_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testAmbiguousPartialLongOption1_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testMultiple_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testOptionGroupLong_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOptionFlags_test15_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOptionMultipleValues_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testStopBursting_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOverrideValues_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testMultiple_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testMissingArgWithBursting_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOptionMultipleValues_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testStopBursting_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOverrideValues_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testMissingRequiredOptions_test12_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testDoubleDash1_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testMissingArgWithBursting_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOptionMultipleValues_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testStopBursting_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testSimpleShort_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOverrideValues_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testDoubleDash1_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testShortWithoutEqual_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testSimpleShort_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testDoubleDash1_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testShortWithoutEqual_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOptionFlags_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testSimpleShort_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testStopBursting2_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testLongOptionWithEqualsQuoteHandling_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testStopAtUnexpectedArg_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOptionFlags_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testOptionAndRequiredOption_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testSingleDash_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testSimpleShort_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertiesOption2_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testStopBursting2_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testUnlimitedArgs_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testLongOptionWithEqualsQuoteHandling_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testStopAtUnexpectedArg_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOptionFlags_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testOptionAndRequiredOption_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testSingleDash_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPartialLongOptionSingleDash_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testUnrecognizedOption_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testStopBursting2_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testUnlimitedArgs_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testStopAtUnexpectedArg_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOptionFlags_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testOptionAndRequiredOption_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testSingleDash_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPartialLongOptionSingleDash_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testStopBursting2_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testUnlimitedArgs_test9_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOptionUnexpected_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testSingleDash_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testReuseOptionsTwice_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testStopBursting2_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testMissingArg_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testShortOptionConcatenatedQuoteHandling_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testStopBursting2_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testMissingArg_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testShortOptionConcatenatedQuoteHandling_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testStopBursting2_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testWithRequiredOption_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOptionGroup_test13_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testLongOptionQuoteHandling_test0_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testStopBursting2_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testWithRequiredOption_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.PosixParserTest.testPropertyOptionGroup_test14_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugCLI13Test.testCLI13_test10_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugCLI13Test.testCLI13_test11_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugCLI13Test.testCLI13_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugCLI13Test.testCLI13_test8_decomposed: java.lang.ClassCastException\norg.apache.commons.cli.bug.BugCLI13Test.testCLI13_test9_decomposed: java.lang.ClassCastException"
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 116.59313321113586,
+                    "generation_timestamp": "2024-11-26T21:58:56.814697",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 1,
+                        "test_execution": 2
+                    }
+                },
+                "120-124:parse2": {
+                    "start": 120,
+                    "end": 124,
+                    "body": [
+                        "    public CommandLine parse2(\n",
+                        "            final Options options, final String[] arguments, final Properties properties)\n",
+                        "            throws ParseException {\n",
+                        "        return parse3(options, arguments, properties, false);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "CommandLine",
+                            "CommandLine"
+                        ]
+                    ],
+                    "signature": "parse2(Options, String[], Properties)",
+                    "parameters": [
+                        "options",
+                        "arguments",
+                        "properties"
+                    ],
+                    "calls": [
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "140-210:parse3"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def parse2(self, options: Options, arguments: typing.List[typing.List[str]], properties: typing.Union[configparser.ConfigParser, typing.Dict]) -> CommandLine:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def parse2(self, options: Options, arguments: typing.List[str], properties: typing.Union[configparser.ConfigParser, typing.Dict]) -> CommandLine:",
+                        "        return self.parse3(options, arguments, properties, False)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "success",
+                        "message": ""
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 110.75142526626587,
+                    "generation_timestamp": "2024-11-26T22:00:47.766247",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 1
+                    }
+                },
+                "103-107:parse1": {
+                    "start": 103,
+                    "end": 107,
+                    "body": [
+                        "    public CommandLine parse1(\n",
+                        "            final Options options, final String[] arguments, final boolean stopAtNonOption)\n",
+                        "            throws ParseException {\n",
+                        "        return parse3(options, arguments, null, stopAtNonOption);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "CommandLine",
+                            "CommandLine"
+                        ]
+                    ],
+                    "signature": "parse1(Options, String[], boolean)",
+                    "parameters": [
+                        "options",
+                        "arguments",
+                        "stopAtNonOption"
+                    ],
+                    "calls": [
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "140-210:parse3"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def parse1(self, options: Options, arguments: typing.List[typing.List[str]], stopAtNonOption: bool) -> CommandLine:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def parse1(self, options: Options, arguments: typing.List[str], stopAtNonOption: bool) -> CommandLine:",
+                        "        return self.parse3(options, arguments, None, stopAtNonOption)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "success",
+                        "message": ""
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 162.07156610488892,
+                    "generation_timestamp": "2024-11-26T22:03:47.653215",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 1
+                    }
+                },
+                "87-90:parse0": {
+                    "start": 87,
+                    "end": 90,
+                    "body": [
+                        "    public CommandLine parse0(final Options options, final String[] arguments)\n",
+                        "            throws ParseException {\n",
+                        "        return parse3(options, arguments, null, false);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "CommandLine",
+                            "CommandLine"
+                        ]
+                    ],
+                    "signature": "parse0(Options, String[])",
+                    "parameters": [
+                        "options",
+                        "arguments"
+                    ],
+                    "calls": [
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "140-210:parse3"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def parse0(self, options: Options, arguments: typing.List[typing.List[str]]) -> CommandLine:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def parse0(self, options: Options, arguments: typing.List[str]) -> CommandLine:",
+                        "        return self.parse3(options, arguments, None, False)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "success",
+                        "message": ""
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 226.83121252059937,
+                    "generation_timestamp": "2024-11-26T22:08:02.028623",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 1
+                    }
+                },
+                "74-76:getRequiredOptions": {
+                    "start": 74,
+                    "end": 76,
+                    "body": [
+                        "    protected List getRequiredOptions() {\n",
+                        "        return requiredOptions;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "List<>",
+                            "java.util.List<>"
+                        ]
+                    ],
+                    "signature": "getRequiredOptions()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _getRequiredOptions(self) -> typing.List[typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _getRequiredOptions(self) -> typing.List[typing.Any]:",
+                        "        return self.__requiredOptions"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 46.803115129470825,
+                    "generation_timestamp": "2024-11-26T15:37:39.687895",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "70-72:getOptions": {
+                    "start": 70,
+                    "end": 72,
+                    "body": [
+                        "    protected Options getOptions() {\n",
+                        "        return options;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "Options",
+                            "Options"
+                        ]
+                    ],
+                    "signature": "getOptions()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _getOptions(self) -> Options:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _getOptions(self) -> Options:",
+                        "        return self.__options"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 63.69407320022583,
+                    "generation_timestamp": "2024-11-26T15:38:43.550829",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "49-53:checkRequiredOptions": {
+                    "start": 49,
+                    "end": 53,
+                    "body": [
+                        "    protected void checkRequiredOptions() throws MissingOptionException {\n",
+                        "        if (!getRequiredOptions().isEmpty()) {\n",
+                        "            throw MissingOptionException.MissingOptionException1(1, getRequiredOptions(), null);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "checkRequiredOptions()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "isEmpty()"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "74-76:getRequiredOptions"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.MissingOptionException",
+                            "MissingOptionException",
+                            "68-75:MissingOptionException1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _checkRequiredOptions(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _checkRequiredOptions(self) -> None:",
+                        "        if self._getRequiredOptions():",
+                        "            raise MissingOptionException.MissingOptionException1(1, self._getRequiredOptions(), None)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 50.68534231185913,
+                    "generation_timestamp": "2024-11-26T16:33:29.962458",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "324-338:updateRequiredOptions": {
+                    "start": 324,
+                    "end": 338,
+                    "body": [
+                        "    private void updateRequiredOptions(final Option opt) throws ParseException {\n",
+                        "        if (opt.isRequired()) {\n",
+                        "            getRequiredOptions().remove(opt.getKey());\n",
+                        "        }\n",
+                        "\n",
+                        "        if (getOptions().getOptionGroup(opt) != null) {\n",
+                        "            final OptionGroup group = getOptions().getOptionGroup(opt);\n",
+                        "\n",
+                        "            if (group.isRequired()) {\n",
+                        "                getRequiredOptions().remove(group);\n",
+                        "            }\n",
+                        "\n",
+                        "            group.setSelected(opt);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "updateRequiredOptions(Option)",
+                    "parameters": [
+                        "opt"
+                    ],
+                    "calls": [
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "729-731:isRequired"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "remove(java.lang.Object)"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "74-76:getRequiredOptions"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "562-564:getKey"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "233-235:getOptionGroup"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "70-72:getOptions"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.OptionGroup",
+                            "OptionGroup",
+                            "78-80:isRequired"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.OptionGroup",
+                            "OptionGroup",
+                            "95-105:setSelected"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __updateRequiredOptions(self, opt: Option) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __updateRequiredOptions(self, opt: Option) -> None:",
+                        "        if opt.isRequired():",
+                        "            self._getRequiredOptions().remove(opt.getKey())",
+                        "",
+                        "        option_group = self._getOptions().getOptionGroup(opt)",
+                        "        if option_group is not None:",
+                        "            if option_group.isRequired():",
+                        "                self._getRequiredOptions().remove(option_group)",
+                        "",
+                        "            option_group.setSelected(opt)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 59.26419162750244,
+                    "generation_timestamp": "2024-11-26T18:19:04.963475",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "67-69:flatten": {
+                    "start": 67,
+                    "end": 69,
+                    "body": [
+                        "    protected abstract String[] flatten(Options opts, String[] arguments, boolean stopAtNonOption)\n",
+                        "            throws ParseException;\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ],
+                    "signature": "flatten(Options, String[], boolean)",
+                    "parameters": [
+                        "opts",
+                        "arguments",
+                        "stopAtNonOption"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _flatten(self, opts: Options, arguments: typing.List[typing.List[str]], stopAtNonOption: bool) -> typing.List[typing.List[str]]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _flatten(self, opts: Options, arguments: List[str], stopAtNonOption: bool) -> List[str]:",
+                        "        raise ParseException(\"This method must be implemented by a subclass\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 24.094189405441284,
+                    "generation_timestamp": "2024-11-26T15:39:07.818356",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "36-36:cmd": {
+                    "start": 36,
+                    "end": 36,
+                    "body": [
+                        "    protected CommandLine cmd;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "CommandLine",
+                            "CommandLine"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _cmd: CommandLine = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    _cmd: CommandLine = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-11-26T13:56:17.235808",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "42-42:requiredOptions": {
+                    "start": 42,
+                    "end": 42,
+                    "body": [
+                        "    private List requiredOptions;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "List<>",
+                            "java.util.List<>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __requiredOptions: typing.List[typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __requiredOptions: typing.List[typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-11-26T13:56:17.251600",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "39-39:options": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "    private Options options;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Options",
+                            "Options"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __options: Options = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __options: Options = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-11-26T13:56:17.267032",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class Parser(CommandLineParser, ABC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "from abc import ABC",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import configparser",
+        "from src.main.org.apache.commons.cli.CommandLine import *",
+        "from src.main.org.apache.commons.cli.CommandLineParser import *",
+        "from src.main.org.apache.commons.cli.MissingArgumentException import *",
+        "from src.main.org.apache.commons.cli.MissingOptionException import *",
+        "from src.main.org.apache.commons.cli.Option import *",
+        "from src.main.org.apache.commons.cli.OptionGroup import *",
+        "from src.main.org.apache.commons.cli.Options import *",
+        "from src.main.org.apache.commons.cli.ParseException import *",
+        "from src.main.org.apache.commons.cli.UnrecognizedOptionException import *",
+        "from src.main.org.apache.commons.cli.Util import *"
+    ]
+}

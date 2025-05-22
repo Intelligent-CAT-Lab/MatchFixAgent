@@ -1,0 +1,1196 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-fileupload/src/main/java/org/apache/commons/fileupload/util/mime/Base64Decoder.java",
+    "imports": {
+        "19-19:import IOException": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "20-20:import OutputStream": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.io.OutputStream;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Base64Decoder": {
+            "start": 25,
+            "end": 25,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "138-181:decode": {
+                    "start": 138,
+                    "end": 181,
+                    "body": [
+                        "    public static int decode(byte[] data, OutputStream out) throws IOException {\n",
+                        "        int outLen = 0;\n",
+                        "        byte[] cache = new byte[INPUT_BYTES_PER_CHUNK];\n",
+                        "        int cachedBytes = 0;\n",
+                        "\n",
+                        "        for (byte b : data) {\n",
+                        "            final byte d = DECODING_TABLE[MASK_BYTE_UNSIGNED & b];\n",
+                        "            if (d == INVALID_BYTE) {\n",
+                        "                continue; // Ignore invalid bytes\n",
+                        "            }\n",
+                        "            cache[cachedBytes++] = d;\n",
+                        "            if (cachedBytes == INPUT_BYTES_PER_CHUNK) {\n",
+                        "                final byte b1 = cache[0];\n",
+                        "                final byte b2 = cache[1];\n",
+                        "                final byte b3 = cache[2];\n",
+                        "                final byte b4 = cache[3];\n",
+                        "                if (b1 == PAD_BYTE || b2 == PAD_BYTE) {\n",
+                        "                    throw new IOException(\n",
+                        "                            \"Invalid Base64 input: incorrect padding, first two bytes cannot be\"\n",
+                        "                                + \" padding\");\n",
+                        "                }\n",
+                        "                out.write((b1 << 2) | (b2 >> 4)); // 6 bits of b1 plus 2 bits of b2\n",
+                        "                outLen++;\n",
+                        "                if (b3 != PAD_BYTE) {\n",
+                        "                    out.write((b2 << 4) | (b3 >> 2)); // 4 bits of b2 plus 4 bits of b3\n",
+                        "                    outLen++;\n",
+                        "                    if (b4 != PAD_BYTE) {\n",
+                        "                        out.write((b3 << 6) | b4); // 2 bits of b3 plus 6 bits of b4\n",
+                        "                        outLen++;\n",
+                        "                    }\n",
+                        "                } else if (b4 != PAD_BYTE) { // if byte 3 is pad, byte 4 must be pad too\n",
+                        "                    throw new // line wrap to avoid 120 char limit\n",
+                        "                    IOException(\n",
+                        "                            \"Invalid Base64 input: incorrect padding, 4th byte must be padding if\"\n",
+                        "                                + \" 3rd byte is\");\n",
+                        "                }\n",
+                        "                cachedBytes = 0;\n",
+                        "            }\n",
+                        "        }\n",
+                        "        if (cachedBytes != 0) {\n",
+                        "            throw new IOException(\"Invalid Base64 input: truncated\");\n",
+                        "        }\n",
+                        "        return outLen;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "decode(byte[], OutputStream)",
+                    "parameters": [
+                        "data",
+                        "out"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/IOException",
+                            "IOException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/OutputStream",
+                            "write(int)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def decode(data: typing.List[int], out: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter]) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def decode(data: typing.List[int], out: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter]) -> int:",
+                        "        out_len = 0",
+                        "        cache = [0] * Base64Decoder.__INPUT_BYTES_PER_CHUNK",
+                        "        cached_bytes = 0",
+                        "",
+                        "        for b in data:",
+                        "            d = Base64Decoder.__DECODING_TABLE[Base64Decoder.__MASK_BYTE_UNSIGNED & b]",
+                        "            if d == Base64Decoder.__INVALID_BYTE:",
+                        "                continue  # Ignore invalid bytes",
+                        "            cache[cached_bytes] = d",
+                        "            cached_bytes += 1",
+                        "            if cached_bytes == Base64Decoder.__INPUT_BYTES_PER_CHUNK:",
+                        "                b1, b2, b3, b4 = cache",
+                        "                if b1 == Base64Decoder.__PAD_BYTE or b2 == Base64Decoder.__PAD_BYTE:",
+                        "                    raise IOError(",
+                        "                        \"Invalid Base64 input: incorrect padding, first two bytes cannot be padding\"",
+                        "                    )",
+                        "                out.write(bytes([(b1 << 2) | (b2 >> 4)]))  # 6 bits of b1 plus 2 bits of b2",
+                        "                out_len += 1",
+                        "                if b3 != Base64Decoder.__PAD_BYTE:",
+                        "                    out.write(bytes([((b2 << 4) | (b3 >> 2)) & Base64Decoder.__MASK_BYTE_UNSIGNED]))  # 4 bits of b2 plus 4 bits of b3",
+                        "                    out_len += 1",
+                        "                    if b4 != Base64Decoder.__PAD_BYTE:",
+                        "                        out.write(bytes([((b3 << 6) | b4) & Base64Decoder.__MASK_BYTE_UNSIGNED]))  # 2 bits of b3 plus 6 bits of b4",
+                        "                        out_len += 1",
+                        "                elif b4 != Base64Decoder.__PAD_BYTE:  # if byte 3 is pad, byte 4 must be pad too",
+                        "                    raise IOError(",
+                        "                        \"Invalid Base64 input: incorrect padding, 4th byte must be padding if 3rd byte is\"",
+                        "                    )",
+                        "                cached_bytes = 0",
+                        "",
+                        "        if cached_bytes != 0:",
+                        "            raise IOError(\"Invalid Base64 input: truncated\")",
+                        "",
+                        "        return out_len"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "error",
+                        "message": "Unsupported operation encountered: [JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0x9eaaecf>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0x78e5b18>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0x35ab67d4>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0x5e1db27e>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0xcd7871e>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0x27bf05af>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0x30cd72a4>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0xfac6d4a>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0x4f168322>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0x3a273e53>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0xfff33b4>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0x28d61fc>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0x102e9731>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0x18161415>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0x98bae1e>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0x5b7ee413>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0x752daa1f>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0x5b60accd>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0xc822a3>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0x27e688ad>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0x18de84f0>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0x787073b3>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0x224bff6>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0x5ca4763f>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0x69cf9acb>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0x58a01e47>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0x285bee4e>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0x221b9c2b>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0x39c78cf9>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.io.ByteArrayOutputStream] at 0x29f94912>"
+                    },
+                    "test_execution": {
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/Base64DecoderTestCase.py::Base64DecoderTestCase::testtruncatedString_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.Base64Decoder",
+                                    "class": "Base64Decoder",
+                                    "method": "138-181:decode"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.Base64DecoderTestCase",
+                                    "class": "Base64DecoderTestCase",
+                                    "method": "130-133:truncatedString_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/MimeUtilityTestCase.py::MimeUtilityTestCase::testdecodeInvalidEncoding_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "158-208:decodeWord"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.Base64Decoder",
+                                    "class": "Base64Decoder",
+                                    "method": "138-181:decode"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.MimeUtilityTestCase",
+                                    "class": "MimeUtilityTestCase",
+                                    "method": "81-83:decodeInvalidEncoding_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testfileUpload199_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "193-209:parse0"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "158-208:decodeWord"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.Base64Decoder",
+                                    "class": "Base64Decoder",
+                                    "method": "138-181:decode"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "432-439:fileUpload199_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testfileUpload199_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "193-209:parse0"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "158-208:decodeWord"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.Base64Decoder",
+                                    "class": "Base64Decoder",
+                                    "method": "138-181:decode"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "442-450:fileUpload199_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/MimeUtilityTestCase.py::MimeUtilityTestCase::testdecodeIso88591Base64EncodedWithWhiteSpace_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 145, in __decodeWord\n    Base64Decoder.decode(encoded_data, out)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/Base64Decoder.py\", line 128, in decode\n    bytes([(b2 << 4) | (b3 >> 2)])\nValueError: bytes must be in range(0, 256)\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/MimeUtilityTestCase.py\", line 18, in testdecodeIso88591Base64EncodedWithWhiteSpace_test0_decomposed\n    self.__assertEncoded(\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/MimeUtilityTestCase.py\", line 47, in __assertEncoded\n    decoded = MimeUtility.decodeText(encoded)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 77, in decodeText\n    decoded_word = MimeUtility.__decodeWord(word)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 154, in __decodeWord\n    raise ValueError(f\"Invalid RFC 2047 encoding: {str(e)}\")\nValueError: Invalid RFC 2047 encoding: bytes must be in range(0, 256)",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "158-208:decodeWord"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.Base64Decoder",
+                                    "class": "Base64Decoder",
+                                    "method": "138-181:decode"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.MimeUtilityTestCase",
+                                    "class": "MimeUtilityTestCase",
+                                    "method": "73-78:decodeIso88591Base64EncodedWithWhiteSpace_test0_decomposed"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.MimeUtilityTestCase",
+                                    "class": "MimeUtilityTestCase",
+                                    "method": "43-45:assertEncoded"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/MimeUtilityTestCase.py::MimeUtilityTestCase::testdecodeIso88591Base64Encoded_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 145, in __decodeWord\n    Base64Decoder.decode(encoded_data, out)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/Base64Decoder.py\", line 128, in decode\n    bytes([(b2 << 4) | (b3 >> 2)])\nValueError: bytes must be in range(0, 256)\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/MimeUtilityTestCase.py\", line 25, in testdecodeIso88591Base64Encoded_test0_decomposed\n    self.__assertEncoded(\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/MimeUtilityTestCase.py\", line 47, in __assertEncoded\n    decoded = MimeUtility.decodeText(encoded)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 77, in decodeText\n    decoded_word = MimeUtility.__decodeWord(word)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 154, in __decodeWord\n    raise ValueError(f\"Invalid RFC 2047 encoding: {str(e)}\")\nValueError: Invalid RFC 2047 encoding: bytes must be in range(0, 256)",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "158-208:decodeWord"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.Base64Decoder",
+                                    "class": "Base64Decoder",
+                                    "method": "138-181:decode"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.MimeUtilityTestCase",
+                                    "class": "MimeUtilityTestCase",
+                                    "method": "65-70:decodeIso88591Base64Encoded_test0_decomposed"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.MimeUtilityTestCase",
+                                    "class": "MimeUtilityTestCase",
+                                    "method": "43-45:assertEncoded"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/MimeUtilityTestCase.py::MimeUtilityTestCase::testdecodeUtf8Base64Encoded_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 145, in __decodeWord\n    Base64Decoder.decode(encoded_data, out)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/Base64Decoder.py\", line 133, in decode\n    bytes([(b3 << 6) | b4])\nValueError: bytes must be in range(0, 256)\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/MimeUtilityTestCase.py\", line 32, in testdecodeUtf8Base64Encoded_test0_decomposed\n    self.__assertEncoded(\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/MimeUtilityTestCase.py\", line 47, in __assertEncoded\n    decoded = MimeUtility.decodeText(encoded)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 77, in decodeText\n    decoded_word = MimeUtility.__decodeWord(word)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 154, in __decodeWord\n    raise ValueError(f\"Invalid RFC 2047 encoding: {str(e)}\")\nValueError: Invalid RFC 2047 encoding: bytes must be in range(0, 256)",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "158-208:decodeWord"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.Base64Decoder",
+                                    "class": "Base64Decoder",
+                                    "method": "138-181:decode"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.MimeUtilityTestCase",
+                                    "class": "MimeUtilityTestCase",
+                                    "method": "60-62:decodeUtf8Base64Encoded_test0_decomposed"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.MimeUtilityTestCase",
+                                    "class": "MimeUtilityTestCase",
+                                    "method": "43-45:assertEncoded"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/Base64DecoderTestCase.py::Base64DecoderTestCase::testnonASCIIcharacter_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/Base64DecoderTestCase.py\", line 18, in testnonASCIIcharacter_test0_decomposed\n    self.__assertEncoded(\"f\", \"Zg=\\u0100=\")\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/Base64DecoderTestCase.py\", line 83, in __assertEncoded\n    encodedData = encoded.encode(\n                  ^^^^^^^^^^^^^^^\nUnicodeEncodeError: 'latin-1' codec can't encode character '\\u0100' in position 3: ordinal not in range(256)",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.Base64Decoder",
+                                    "class": "Base64Decoder",
+                                    "method": "138-181:decode"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.Base64DecoderTestCase",
+                                    "class": "Base64DecoderTestCase",
+                                    "method": "176-179:nonASCIIcharacter_test0_decomposed"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.Base64DecoderTestCase",
+                                    "class": "Base64DecoderTestCase",
+                                    "method": "82-91:assertEncoded"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/Base64DecoderTestCase.py::Base64DecoderTestCase::testdecodeTrailingJunk_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.Base64Decoder",
+                                    "class": "Base64Decoder",
+                                    "method": "138-181:decode"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.Base64DecoderTestCase",
+                                    "class": "Base64DecoderTestCase",
+                                    "method": "136-138:decodeTrailingJunk_test0_decomposed"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.Base64DecoderTestCase",
+                                    "class": "Base64DecoderTestCase",
+                                    "method": "82-91:assertEncoded"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/Base64DecoderTestCase.py::Base64DecoderTestCase::testnonBase64Bytes_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.Base64Decoder",
+                                    "class": "Base64Decoder",
+                                    "method": "138-181:decode"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.Base64DecoderTestCase",
+                                    "class": "Base64DecoderTestCase",
+                                    "method": "125-127:nonBase64Bytes_test0_decomposed"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.Base64DecoderTestCase",
+                                    "class": "Base64DecoderTestCase",
+                                    "method": "82-91:assertEncoded"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/Base64DecoderTestCase.py::Base64DecoderTestCase::testdecodeWithInnerPad_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.Base64Decoder",
+                                    "class": "Base64Decoder",
+                                    "method": "138-181:decode"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.Base64DecoderTestCase",
+                                    "class": "Base64DecoderTestCase",
+                                    "method": "120-122:decodeWithInnerPad_test0_decomposed"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.Base64DecoderTestCase",
+                                    "class": "Base64DecoderTestCase",
+                                    "method": "82-91:assertEncoded"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/Base64DecoderTestCase.py::Base64DecoderTestCase::testrfc4648Section10Decode_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.Base64Decoder",
+                                    "class": "Base64Decoder",
+                                    "method": "138-181:decode"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.Base64DecoderTestCase",
+                                    "class": "Base64DecoderTestCase",
+                                    "method": "109-117:rfc4648Section10Decode_test0_decomposed"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.Base64DecoderTestCase",
+                                    "class": "Base64DecoderTestCase",
+                                    "method": "82-91:assertEncoded"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/Base64DecoderTestCase.py::Base64DecoderTestCase::testbadLength_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.Base64Decoder",
+                                    "class": "Base64Decoder",
+                                    "method": "138-181:decode"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.Base64DecoderTestCase",
+                                    "class": "Base64DecoderTestCase",
+                                    "method": "171-173:badLength_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/Base64DecoderTestCase.py::Base64DecoderTestCase::testbadPaddingLeading2_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.Base64Decoder",
+                                    "class": "Base64Decoder",
+                                    "method": "138-181:decode"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.Base64DecoderTestCase",
+                                    "class": "Base64DecoderTestCase",
+                                    "method": "166-168:badPaddingLeading2_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/Base64DecoderTestCase.py::Base64DecoderTestCase::testbadPaddingLeading1_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.Base64Decoder",
+                                    "class": "Base64Decoder",
+                                    "method": "138-181:decode"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.Base64DecoderTestCase",
+                                    "class": "Base64DecoderTestCase",
+                                    "method": "161-163:badPaddingLeading1_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/Base64DecoderTestCase.py::Base64DecoderTestCase::testbadPadding_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.Base64Decoder",
+                                    "class": "Base64Decoder",
+                                    "method": "138-181:decode"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.Base64DecoderTestCase",
+                                    "class": "Base64DecoderTestCase",
+                                    "method": "156-158:badPadding_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/Base64DecoderTestCase.py::Base64DecoderTestCase::testdecodeTrailing3_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.Base64Decoder",
+                                    "class": "Base64Decoder",
+                                    "method": "138-181:decode"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.Base64DecoderTestCase",
+                                    "class": "Base64DecoderTestCase",
+                                    "method": "151-153:decodeTrailing3_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/Base64DecoderTestCase.py::Base64DecoderTestCase::testdecodeTrailing2_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.Base64Decoder",
+                                    "class": "Base64Decoder",
+                                    "method": "138-181:decode"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.Base64DecoderTestCase",
+                                    "class": "Base64DecoderTestCase",
+                                    "method": "146-148:decodeTrailing2_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/Base64DecoderTestCase.py::Base64DecoderTestCase::testdecodeTrailing1_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.Base64Decoder",
+                                    "class": "Base64Decoder",
+                                    "method": "138-181:decode"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.Base64DecoderTestCase",
+                                    "class": "Base64DecoderTestCase",
+                                    "method": "141-143:decodeTrailing1_test0_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 53.544517517089844,
+                    "generation_timestamp": "2024-11-26T17:10:10.576297",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": 1,
+                        "test_execution": -4
+                    }
+                },
+                "127-127:Base64Decoder": {
+                    "start": 127,
+                    "end": 127,
+                    "body": [
+                        "    private Base64Decoder() {}\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "Base64Decoder()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self) -> None:",
+                        "        raise NotImplementedError(\"This class cannot be instantiated\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 25.812277793884277,
+                    "generation_timestamp": "2024-11-26T15:23:37.613240",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "114-114:DECODING_TABLE": {
+                    "start": 114,
+                    "end": 114,
+                    "body": [
+                        "    private static final byte[] DECODING_TABLE = new byte[Byte.MAX_VALUE - Byte.MIN_VALUE + 1];\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __DECODING_TABLE: typing.List[int] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __DECODING_TABLE: typing.List[int] = [0] * (127 - (-128) + 1)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 6.967450857162476,
+                    "generation_timestamp": "2024-11-26T14:53:22.162526",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "108-108:PADDING": {
+                    "start": 108,
+                    "end": 108,
+                    "body": [
+                        "    private static final byte PADDING = (byte) '=';\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte",
+                            "byte"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __PADDING: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __PADDING: int = ord('=')"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 6.9829792976379395,
+                    "generation_timestamp": "2024-11-26T14:53:29.174707",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "40-105:ENCODING_TABLE": {
+                    "start": 40,
+                    "end": 105,
+                    "body": [
+                        "    private static final byte[] ENCODING_TABLE = {\n",
+                        "        (byte) 'A',\n",
+                        "        (byte) 'B',\n",
+                        "        (byte) 'C',\n",
+                        "        (byte) 'D',\n",
+                        "        (byte) 'E',\n",
+                        "        (byte) 'F',\n",
+                        "        (byte) 'G',\n",
+                        "        (byte) 'H',\n",
+                        "        (byte) 'I',\n",
+                        "        (byte) 'J',\n",
+                        "        (byte) 'K',\n",
+                        "        (byte) 'L',\n",
+                        "        (byte) 'M',\n",
+                        "        (byte) 'N',\n",
+                        "        (byte) 'O',\n",
+                        "        (byte) 'P',\n",
+                        "        (byte) 'Q',\n",
+                        "        (byte) 'R',\n",
+                        "        (byte) 'S',\n",
+                        "        (byte) 'T',\n",
+                        "        (byte) 'U',\n",
+                        "        (byte) 'V',\n",
+                        "        (byte) 'W',\n",
+                        "        (byte) 'X',\n",
+                        "        (byte) 'Y',\n",
+                        "        (byte) 'Z',\n",
+                        "        (byte) 'a',\n",
+                        "        (byte) 'b',\n",
+                        "        (byte) 'c',\n",
+                        "        (byte) 'd',\n",
+                        "        (byte) 'e',\n",
+                        "        (byte) 'f',\n",
+                        "        (byte) 'g',\n",
+                        "        (byte) 'h',\n",
+                        "        (byte) 'i',\n",
+                        "        (byte) 'j',\n",
+                        "        (byte) 'k',\n",
+                        "        (byte) 'l',\n",
+                        "        (byte) 'm',\n",
+                        "        (byte) 'n',\n",
+                        "        (byte) 'o',\n",
+                        "        (byte) 'p',\n",
+                        "        (byte) 'q',\n",
+                        "        (byte) 'r',\n",
+                        "        (byte) 's',\n",
+                        "        (byte) 't',\n",
+                        "        (byte) 'u',\n",
+                        "        (byte) 'v',\n",
+                        "        (byte) 'w',\n",
+                        "        (byte) 'x',\n",
+                        "        (byte) 'y',\n",
+                        "        (byte) 'z',\n",
+                        "        (byte) '0',\n",
+                        "        (byte) '1',\n",
+                        "        (byte) '2',\n",
+                        "        (byte) '3',\n",
+                        "        (byte) '4',\n",
+                        "        (byte) '5',\n",
+                        "        (byte) '6',\n",
+                        "        (byte) '7',\n",
+                        "        (byte) '8',\n",
+                        "        (byte) '9',\n",
+                        "        (byte) '+',\n",
+                        "        (byte) '/'\n",
+                        "    };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ENCODING_TABLE: typing.List[int] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ENCODING_TABLE: typing.List[int] = [",
+                        "        ord('A'), ord('B'), ord('C'), ord('D'), ord('E'), ord('F'), ord('G'), ord('H'),",
+                        "        ord('I'), ord('J'), ord('K'), ord('L'), ord('M'), ord('N'), ord('O'), ord('P'),",
+                        "        ord('Q'), ord('R'), ord('S'), ord('T'), ord('U'), ord('V'), ord('W'), ord('X'),",
+                        "        ord('Y'), ord('Z'), ord('a'), ord('b'), ord('c'), ord('d'), ord('e'), ord('f'),",
+                        "        ord('g'), ord('h'), ord('i'), ord('j'), ord('k'), ord('l'), ord('m'), ord('n'),",
+                        "        ord('o'), ord('p'), ord('q'), ord('r'), ord('s'), ord('t'), ord('u'), ord('v'),",
+                        "        ord('w'), ord('x'), ord('y'), ord('z'), ord('0'), ord('1'), ord('2'), ord('3'),",
+                        "        ord('4'), ord('5'), ord('6'), ord('7'), ord('8'), ord('9'), ord('+'), ord('/')",
+                        "    ]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 8.803406238555908,
+                    "generation_timestamp": "2024-11-26T14:53:38.013431",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "37-37:INPUT_BYTES_PER_CHUNK": {
+                    "start": 37,
+                    "end": 37,
+                    "body": [
+                        "    private static final int INPUT_BYTES_PER_CHUNK = 4;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __INPUT_BYTES_PER_CHUNK: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __INPUT_BYTES_PER_CHUNK: int = 4"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 7.021258115768433,
+                    "generation_timestamp": "2024-11-26T14:53:45.076603",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "34-34:MASK_BYTE_UNSIGNED": {
+                    "start": 34,
+                    "end": 34,
+                    "body": [
+                        "    private static final int MASK_BYTE_UNSIGNED = 0xFF;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __MASK_BYTE_UNSIGNED: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __MASK_BYTE_UNSIGNED: int = 0xFF"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 6.701811790466309,
+                    "generation_timestamp": "2024-11-26T14:53:51.824979",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "31-31:PAD_BYTE": {
+                    "start": 31,
+                    "end": 31,
+                    "body": [
+                        "    private static final int PAD_BYTE = -2; // must be outside range 0-63\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __PAD_BYTE: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __PAD_BYTE: int = -2"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 6.844009160995483,
+                    "generation_timestamp": "2024-11-26T14:53:58.716709",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "28-28:INVALID_BYTE": {
+                    "start": 28,
+                    "end": 28,
+                    "body": [
+                        "    private static final int INVALID_BYTE = -1; // must be outside range 0-63\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __INVALID_BYTE: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __INVALID_BYTE: int = -1  # must be outside range 0-63"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 6.820349931716919,
+                    "generation_timestamp": "2024-11-26T14:54:05.583351",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "static_initializers": {
+                "116-124:run_static_init": {
+                    "start": 116,
+                    "end": 124,
+                    "body": [
+                        "    static {\n",
+                        "        for (int i = 0; i < DECODING_TABLE.length; i++) {\n",
+                        "            DECODING_TABLE[i] = INVALID_BYTE;\n",
+                        "        }\n",
+                        "        for (int i = 0; i < ENCODING_TABLE.length; i++) {\n",
+                        "            DECODING_TABLE[ENCODING_TABLE[i]] = (byte) i;\n",
+                        "        }\n",
+                        "        DECODING_TABLE[PADDING] = PAD_BYTE;\n",
+                        "    }\n"
+                    ],
+                    "partial_translation": [],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def run_static_init():",
+                        "        # Initialize the DECODING_TABLE with INVALID_BYTE",
+                        "        for i in range(len(Base64Decoder.__DECODING_TABLE)):",
+                        "            Base64Decoder.__DECODING_TABLE[i] = Base64Decoder.__INVALID_BYTE",
+                        "",
+                        "        # Map ENCODING_TABLE values to their indices in DECODING_TABLE",
+                        "        for i, value in enumerate(Base64Decoder.__ENCODING_TABLE):",
+                        "            Base64Decoder.__DECODING_TABLE[value] = i",
+                        "",
+                        "        # Set the PADDING character in DECODING_TABLE to PAD_BYTE",
+                        "        Base64Decoder.__DECODING_TABLE[Base64Decoder.__PADDING] = Base64Decoder.__PAD_BYTE"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 9.480279922485352,
+                    "generation_timestamp": "2024-11-26T14:54:15.110375",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class Base64Decoder:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "from io import StringIO",
+        "import io",
+        "from io import BytesIO",
+        "import typing\nfrom typing import *"
+    ]
+}

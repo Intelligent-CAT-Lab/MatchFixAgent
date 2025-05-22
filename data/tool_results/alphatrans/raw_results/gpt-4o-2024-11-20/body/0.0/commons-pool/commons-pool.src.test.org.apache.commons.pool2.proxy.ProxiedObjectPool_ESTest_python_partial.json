@@ -1,0 +1,1806 @@
+{
+    "path": "java_projects/cleaned_final_projects_evosuite/commons-pool/src/test/java/org/apache/commons/pool2/proxy/ProxiedObjectPool_ESTest.java",
+    "imports": {
+        "28-28:import Array": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.lang.reflect.Array;\n"
+            ]
+        },
+        "34-34:import EvoRunnerParameters": {
+            "start": 34,
+            "end": 34,
+            "body": [
+                "import org.evosuite.runtime.EvoRunnerParameters;\n"
+            ]
+        },
+        "36-36:import RunWith": {
+            "start": 36,
+            "end": 36,
+            "body": [
+                "import org.junit.runner.RunWith;\n"
+            ]
+        },
+        "33-33:import EvoRunner": {
+            "start": 33,
+            "end": 33,
+            "body": [
+                "import org.evosuite.runtime.EvoRunner;\n"
+            ]
+        },
+        "24-24:import Test": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "29-29:import ObjectPool": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import org.apache.commons.pool2.ObjectPool;\n"
+            ]
+        },
+        "32-32:import ProxySource": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import org.apache.commons.pool2.proxy.ProxySource;\n"
+            ]
+        },
+        "30-30:import JdkProxySource": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import org.apache.commons.pool2.proxy.JdkProxySource;\n"
+            ]
+        },
+        "31-31:import ProxiedObjectPool": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import org.apache.commons.pool2.proxy.ProxiedObjectPool;\n"
+            ]
+        },
+        "35-35:import ViolatedAssumptionAnswer": {
+            "start": 35,
+            "end": 35,
+            "body": [
+                "import org.evosuite.runtime.ViolatedAssumptionAnswer;\n"
+            ]
+        },
+        "27-27:import static EvoAssertions.*": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import static org.evosuite.runtime.EvoAssertions.*;\n"
+            ]
+        },
+        "26-26:import static Mockito.*": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import static org.evosuite.shaded.org.mockito.Mockito.*;\n"
+            ]
+        },
+        "25-25:import static Assert.*": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import static org.junit.Assert.*;\n"
+            ]
+        }
+    },
+    "classes": {
+        "ProxiedObjectPool_ESTest": {
+            "start": 39,
+            "end": 39,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "341-350:test22": {
+                    "start": 341,
+                    "end": 350,
+                    "body": [
+                        "  public void test22()  throws Throwable  {\n",
+                        "      ClassLoader classLoader0 = ClassLoader.getSystemClassLoader();\n",
+                        "      Class<Object>[] classArray0 = (Class<Object>[]) Array.newInstance(Class.class, 0);\n",
+                        "      JdkProxySource<Object> jdkProxySource0 = new JdkProxySource<Object>(classLoader0, classArray0);\n",
+                        "      ObjectPool<Object> objectPool0 = (ObjectPool<Object>) mock(ObjectPool.class, new ViolatedAssumptionAnswer());\n",
+                        "      doReturn((String) null).when(objectPool0).toString();\n",
+                        "      ProxiedObjectPool<Object> proxiedObjectPool0 = new ProxiedObjectPool<Object>(objectPool0, jdkProxySource0);\n",
+                        "      String string0 = proxiedObjectPool0.toString();\n",
+                        "      assertNotNull(string0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test22()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test22(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test22(self) -> None:",
+                        "        ",
+                        "        classLoader0 = ClassLoader.getSystemClassLoader()",
+                        "        classArray0 = [None] * 0",
+                        "        jdkProxySource0 = JdkProxySource(classLoader0, classArray0)",
+                        "        objectPool0 = mock(ObjectPool)",
+                        "        doReturn(None).when(objectPool0).toString()",
+                        "        proxiedObjectPool0 = ProxiedObjectPool(objectPool0, jdkProxySource0)",
+                        "        string0 = proxiedObjectPool0.toString()",
+                        "        self.assertIsNotNone(string0)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 16.456205129623413,
+                    "generation_timestamp": "2024-09-09T13:25:57.070803",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "325-338:test21": {
+                    "start": 325,
+                    "end": 338,
+                    "body": [
+                        "  public void test21()  throws Throwable  {\n",
+                        "      ProxiedObjectPool<Object> proxiedObjectPool0 = new ProxiedObjectPool<Object>((ObjectPool<Object>) null, (ProxySource<Object>) null);\n",
+                        "      // Undeclared exception!\n",
+                        "      try { \n",
+                        "        proxiedObjectPool0.getNumIdle();\n",
+                        "        fail(\"Expecting exception: NullPointerException\");\n",
+                        "      \n",
+                        "      } catch(NullPointerException e) {\n",
+                        "         //\n",
+                        "         // no message in exception (getMessage() returned null)\n",
+                        "         //\n",
+                        "         verifyException(\"org.apache.commons.pool2.proxy.ProxiedObjectPool\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test21()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test21(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test21(self) -> None:",
+                        "        ",
+                        "        proxiedObjectPool0 = ProxiedObjectPool(None, None)",
+                        "        ",
+                        "        with pytest.raises(RuntimeError) as e:",
+                        "            proxiedObjectPool0.getNumIdle()",
+                        "        ",
+                        "        assert str(e.value) == \"Expecting exception: RuntimeError\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 11.644794702529907,
+                    "generation_timestamp": "2024-09-09T13:26:08.739471",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "313-322:test20": {
+                    "start": 313,
+                    "end": 322,
+                    "body": [
+                        "  public void test20()  throws Throwable  {\n",
+                        "      ClassLoader classLoader0 = ClassLoader.getSystemClassLoader();\n",
+                        "      Class<Object>[] classArray0 = (Class<Object>[]) Array.newInstance(Class.class, 0);\n",
+                        "      JdkProxySource<Object> jdkProxySource0 = new JdkProxySource<Object>(classLoader0, classArray0);\n",
+                        "      ObjectPool<Object> objectPool0 = (ObjectPool<Object>) mock(ObjectPool.class, new ViolatedAssumptionAnswer());\n",
+                        "      doReturn((Object) null).when(objectPool0).borrowObject();\n",
+                        "      ProxiedObjectPool<Object> proxiedObjectPool0 = new ProxiedObjectPool<Object>(objectPool0, jdkProxySource0);\n",
+                        "      Object object0 = proxiedObjectPool0.borrowObject();\n",
+                        "      proxiedObjectPool0.invalidateObject0(object0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test20()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test20(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "non-parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 21.61494278907776,
+                    "generation_timestamp": "2024-09-09T13:26:30.376914",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "303-310:test19": {
+                    "start": 303,
+                    "end": 310,
+                    "body": [
+                        "  public void test19()  throws Throwable  {\n",
+                        "      ObjectPool<Integer> objectPool0 = (ObjectPool<Integer>) mock(ObjectPool.class, new ViolatedAssumptionAnswer());\n",
+                        "      ClassLoader classLoader0 = ClassLoader.getSystemClassLoader();\n",
+                        "      Class<Object>[] classArray0 = (Class<Object>[]) Array.newInstance(Class.class, 0);\n",
+                        "      JdkProxySource<Integer> jdkProxySource0 = new JdkProxySource<Integer>(classLoader0, classArray0);\n",
+                        "      ProxiedObjectPool<Integer> proxiedObjectPool0 = new ProxiedObjectPool<Integer>(objectPool0, jdkProxySource0);\n",
+                        "      proxiedObjectPool0.clear();\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test19()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test19(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test19(self) -> None:",
+                        "        ",
+                        "        # Mocking ObjectPool",
+                        "        objectPool0 = unittest.mock.Mock(spec=ObjectPool)",
+                        "        objectPool0.clear = unittest.mock.Mock()",
+                        "",
+                        "        # Getting System ClassLoader",
+                        "        classLoader0 = ClassLoader.getSystemClassLoader()",
+                        "",
+                        "        # Creating an empty Class array",
+                        "        classArray0 = [None] * 0",
+                        "",
+                        "        # Creating JdkProxySource",
+                        "        jdkProxySource0 = JdkProxySource(classLoader0, classArray0)",
+                        "",
+                        "        # Creating ProxiedObjectPool",
+                        "        proxiedObjectPool0 = ProxiedObjectPool(objectPool0, jdkProxySource0)",
+                        "",
+                        "        # Calling clear method",
+                        "        proxiedObjectPool0.clear()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 16.429319381713867,
+                    "generation_timestamp": "2024-09-09T13:26:46.829086",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "287-300:test18": {
+                    "start": 287,
+                    "end": 300,
+                    "body": [
+                        "  public void test18()  throws Throwable  {\n",
+                        "      ProxiedObjectPool<Integer> proxiedObjectPool0 = new ProxiedObjectPool<Integer>((ObjectPool<Integer>) null, (ProxySource<Integer>) null);\n",
+                        "      // Undeclared exception!\n",
+                        "      try { \n",
+                        "        proxiedObjectPool0.close();\n",
+                        "        fail(\"Expecting exception: NullPointerException\");\n",
+                        "      \n",
+                        "      } catch(NullPointerException e) {\n",
+                        "         //\n",
+                        "         // no message in exception (getMessage() returned null)\n",
+                        "         //\n",
+                        "         verifyException(\"org.apache.commons.pool2.proxy.ProxiedObjectPool\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test18()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test18(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test18(self) -> None:",
+                        "        ",
+                        "        proxiedObjectPool0 = ProxiedObjectPool(None, None)",
+                        "        ",
+                        "        with pytest.raises(RuntimeError) as e:",
+                        "            proxiedObjectPool0.close()",
+                        "        ",
+                        "        assert str(e.value) == \"Expecting exception: RuntimeError\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 9.23682451248169,
+                    "generation_timestamp": "2024-09-09T13:26:56.091111",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "275-284:test17": {
+                    "start": 275,
+                    "end": 284,
+                    "body": [
+                        "  public void test17()  throws Throwable  {\n",
+                        "      ClassLoader classLoader0 = ClassLoader.getSystemClassLoader();\n",
+                        "      Class<Object>[] classArray0 = (Class<Object>[]) Array.newInstance(Class.class, 0);\n",
+                        "      JdkProxySource<Object> jdkProxySource0 = new JdkProxySource<Object>(classLoader0, classArray0);\n",
+                        "      ObjectPool<Object> objectPool0 = (ObjectPool<Object>) mock(ObjectPool.class, new ViolatedAssumptionAnswer());\n",
+                        "      doReturn((Object) null).when(objectPool0).borrowObject();\n",
+                        "      ProxiedObjectPool<Object> proxiedObjectPool0 = new ProxiedObjectPool<Object>(objectPool0, jdkProxySource0);\n",
+                        "      Object object0 = proxiedObjectPool0.borrowObject();\n",
+                        "      proxiedObjectPool0.returnObject(object0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test17()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test17(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "non-parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 22.614565134048462,
+                    "generation_timestamp": "2024-09-09T13:27:18.730417",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "263-272:test16": {
+                    "start": 263,
+                    "end": 272,
+                    "body": [
+                        "  public void test16()  throws Throwable  {\n",
+                        "      ClassLoader classLoader0 = ClassLoader.getPlatformClassLoader();\n",
+                        "      Class<Object>[] classArray0 = (Class<Object>[]) Array.newInstance(Class.class, 1);\n",
+                        "      JdkProxySource<Object> jdkProxySource0 = new JdkProxySource<Object>(classLoader0, classArray0);\n",
+                        "      ObjectPool<Object> objectPool0 = (ObjectPool<Object>) mock(ObjectPool.class, new ViolatedAssumptionAnswer());\n",
+                        "      doReturn(0).when(objectPool0).getNumActive();\n",
+                        "      ProxiedObjectPool<Object> proxiedObjectPool0 = new ProxiedObjectPool<Object>(objectPool0, jdkProxySource0);\n",
+                        "      int int0 = proxiedObjectPool0.getNumActive();\n",
+                        "      assertEquals(0, int0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test16()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test16(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test16(self) -> None:",
+                        "        ",
+                        "        classLoader0 = ClassLoader.getPlatformClassLoader()",
+                        "        classArray0 = [Class] * 1",
+                        "        jdkProxySource0 = JdkProxySource(classLoader0, classArray0)",
+                        "        objectPool0 = mock(ObjectPool, ViolatedAssumptionAnswer())",
+                        "        objectPool0.getNumActive = MagicMock(return_value=0)",
+                        "        proxiedObjectPool0 = ProxiedObjectPool(objectPool0, jdkProxySource0)",
+                        "        int0 = proxiedObjectPool0.getNumActive()",
+                        "        self.assertEqual(0, int0)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 7.54416298866272,
+                    "generation_timestamp": "2024-09-09T13:27:26.297120",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "253-260:test15": {
+                    "start": 253,
+                    "end": 260,
+                    "body": [
+                        "  public void test15()  throws Throwable  {\n",
+                        "      ClassLoader classLoader0 = ClassLoader.getSystemClassLoader();\n",
+                        "      Class<Object>[] classArray0 = (Class<Object>[]) Array.newInstance(Class.class, 0);\n",
+                        "      JdkProxySource<Object> jdkProxySource0 = new JdkProxySource<Object>(classLoader0, classArray0);\n",
+                        "      ObjectPool<Object> objectPool0 = (ObjectPool<Object>) mock(ObjectPool.class, new ViolatedAssumptionAnswer());\n",
+                        "      ProxiedObjectPool<Object> proxiedObjectPool0 = new ProxiedObjectPool<Object>(objectPool0, jdkProxySource0);\n",
+                        "      proxiedObjectPool0.addObject();\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test15()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test15(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test15(self) -> None:",
+                        "        ",
+                        "        classLoader0 = JdkProxySource.getSystemClassLoader()",
+                        "        classArray0 = [None] * 0",
+                        "        jdkProxySource0 = JdkProxySource(classLoader0, classArray0)",
+                        "        objectPool0 = mock(ObjectPool, ViolatedAssumptionAnswer())",
+                        "        proxiedObjectPool0 = ProxiedObjectPool(objectPool0, jdkProxySource0)",
+                        "        proxiedObjectPool0.addObject()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 8.672070026397705,
+                    "generation_timestamp": "2024-09-09T13:27:34.994637",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "238-250:test14": {
+                    "start": 238,
+                    "end": 250,
+                    "body": [
+                        "  public void test14()  throws Throwable  {\n",
+                        "      ProxiedObjectPool<Object> proxiedObjectPool0 = new ProxiedObjectPool<Object>((ObjectPool<Object>) null, (ProxySource<Object>) null);\n",
+                        "      try { \n",
+                        "        proxiedObjectPool0.addObject();\n",
+                        "        fail(\"Expecting exception: NullPointerException\");\n",
+                        "      \n",
+                        "      } catch(NullPointerException e) {\n",
+                        "         //\n",
+                        "         // no message in exception (getMessage() returned null)\n",
+                        "         //\n",
+                        "         verifyException(\"org.apache.commons.pool2.proxy.ProxiedObjectPool\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test14()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test14(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test14(self) -> None:",
+                        "        ",
+                        "        proxiedObjectPool0 = ProxiedObjectPool(None, None)",
+                        "        ",
+                        "        with pytest.raises(RuntimeError) as e:",
+                        "            proxiedObjectPool0.addObject()",
+                        "        ",
+                        "        assert str(e.value) == \"Expecting exception: RuntimeError\"",
+                        "        verifyException(\"org.apache.commons.pool2.proxy.ProxiedObjectPool\", e)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 10.554917097091675,
+                    "generation_timestamp": "2024-09-09T13:27:45.573659",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "216-235:test13": {
+                    "start": 216,
+                    "end": 235,
+                    "body": [
+                        "  public void test13()  throws Throwable  {\n",
+                        "      ObjectPool<Object> objectPool0 = (ObjectPool<Object>) mock(ObjectPool.class, new ViolatedAssumptionAnswer());\n",
+                        "      doReturn((Object) null).when(objectPool0).borrowObject();\n",
+                        "      ClassLoader classLoader0 = ClassLoader.getPlatformClassLoader();\n",
+                        "      Class<Object>[] classArray0 = (Class<Object>[]) Array.newInstance(Class.class, 1);\n",
+                        "      Class<Object> class0 = Object.class;\n",
+                        "      classArray0[0] = class0;\n",
+                        "      JdkProxySource<Object> jdkProxySource0 = new JdkProxySource<Object>(classLoader0, classArray0);\n",
+                        "      ProxiedObjectPool<Object> proxiedObjectPool0 = new ProxiedObjectPool<Object>(objectPool0, jdkProxySource0);\n",
+                        "      try { \n",
+                        "        proxiedObjectPool0.borrowObject();\n",
+                        "        fail(\"Expecting exception: IllegalArgumentException\");\n",
+                        "      \n",
+                        "      } catch(IllegalArgumentException e) {\n",
+                        "         //\n",
+                        "         // java.lang.Object is not an interface\n",
+                        "         //\n",
+                        "         verifyException(\"java.lang.reflect.Proxy$ProxyBuilder\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test13()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test13(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test13(self) -> None:",
+                        "        ",
+                        "        # Mock ObjectPool",
+                        "        objectPool0 = unittest.mock.Mock(spec=ObjectPool)",
+                        "        objectPool0.borrowObject.return_value = None",
+                        "",
+                        "        # Create JdkProxySource",
+                        "        classLoader0 = ClassLoader.getPlatformClassLoader()",
+                        "        classArray0 = [Object]",
+                        "        jdkProxySource0 = JdkProxySource(classLoader0, classArray0)",
+                        "",
+                        "        # Create ProxiedObjectPool",
+                        "        proxiedObjectPool0 = ProxiedObjectPool(objectPool0, jdkProxySource0)",
+                        "",
+                        "        # Test borrowObject",
+                        "        with pytest.raises(ValueError) as e:",
+                        "            proxiedObjectPool0.borrowObject()",
+                        "",
+                        "        # Verify exception",
+                        "        assert \"java.lang.reflect.Proxy$ProxyBuilder\" in str(e.value)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 13.300554513931274,
+                    "generation_timestamp": "2024-09-09T13:27:58.899818",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "201-213:test12": {
+                    "start": 201,
+                    "end": 213,
+                    "body": [
+                        "  public void test12()  throws Throwable  {\n",
+                        "      ProxiedObjectPool<Integer> proxiedObjectPool0 = new ProxiedObjectPool<Integer>((ObjectPool<Integer>) null, (ProxySource<Integer>) null);\n",
+                        "      try { \n",
+                        "        proxiedObjectPool0.borrowObject();\n",
+                        "        fail(\"Expecting exception: NullPointerException\");\n",
+                        "      \n",
+                        "      } catch(NullPointerException e) {\n",
+                        "         //\n",
+                        "         // no message in exception (getMessage() returned null)\n",
+                        "         //\n",
+                        "         verifyException(\"org.apache.commons.pool2.proxy.ProxiedObjectPool\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test12()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test12(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test12(self) -> None:",
+                        "        ",
+                        "        proxiedObjectPool0 = ProxiedObjectPool(None, None)",
+                        "        ",
+                        "        with pytest.raises(RuntimeError) as e:",
+                        "            proxiedObjectPool0.borrowObject()",
+                        "        ",
+                        "        assert str(e.value) == \"Expecting exception: RuntimeError\"",
+                        "        verifyException(\"org.apache.commons.pool2.proxy.ProxiedObjectPool\", e)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 9.21955132484436,
+                    "generation_timestamp": "2024-09-09T13:28:08.145072",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "186-198:test11": {
+                    "start": 186,
+                    "end": 198,
+                    "body": [
+                        "  public void test11()  throws Throwable  {\n",
+                        "      ProxiedObjectPool<Object> proxiedObjectPool0 = new ProxiedObjectPool<Object>((ObjectPool<Object>) null, (ProxySource<Object>) null);\n",
+                        "      try { \n",
+                        "        proxiedObjectPool0.clear();\n",
+                        "        fail(\"Expecting exception: NullPointerException\");\n",
+                        "      \n",
+                        "      } catch(NullPointerException e) {\n",
+                        "         //\n",
+                        "         // no message in exception (getMessage() returned null)\n",
+                        "         //\n",
+                        "         verifyException(\"org.apache.commons.pool2.proxy.ProxiedObjectPool\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test11()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test11(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test11(self) -> None:",
+                        "        ",
+                        "        proxiedObjectPool0 = ProxiedObjectPool(None, None)",
+                        "        ",
+                        "        with pytest.raises(RuntimeError) as e:",
+                        "            proxiedObjectPool0.clear()",
+                        "        ",
+                        "        assert str(e.value) == \"Expecting exception: RuntimeError\"",
+                        "        verifyException(\"org.apache.commons.pool2.proxy.ProxiedObjectPool\", e)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 10.725586652755737,
+                    "generation_timestamp": "2024-09-09T13:28:18.890659",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "170-183:test10": {
+                    "start": 170,
+                    "end": 183,
+                    "body": [
+                        "  public void test10()  throws Throwable  {\n",
+                        "      ProxiedObjectPool<Object> proxiedObjectPool0 = new ProxiedObjectPool<Object>((ObjectPool<Object>) null, (ProxySource<Object>) null);\n",
+                        "      // Undeclared exception!\n",
+                        "      try { \n",
+                        "        proxiedObjectPool0.getNumActive();\n",
+                        "        fail(\"Expecting exception: NullPointerException\");\n",
+                        "      \n",
+                        "      } catch(NullPointerException e) {\n",
+                        "         //\n",
+                        "         // no message in exception (getMessage() returned null)\n",
+                        "         //\n",
+                        "         verifyException(\"org.apache.commons.pool2.proxy.ProxiedObjectPool\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test10()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test10(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test10(self) -> None:",
+                        "        ",
+                        "        proxiedObjectPool0 = ProxiedObjectPool(None, None)",
+                        "        ",
+                        "        with pytest.raises(RuntimeError) as e:",
+                        "            proxiedObjectPool0.getNumActive()",
+                        "        ",
+                        "        assert str(e.value) == \"Expecting exception: RuntimeError\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 10.819801330566406,
+                    "generation_timestamp": "2024-09-09T13:28:29.733400",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "152-167:test09": {
+                    "start": 152,
+                    "end": 167,
+                    "body": [
+                        "  public void test09()  throws Throwable  {\n",
+                        "      ClassLoader classLoader0 = ClassLoader.getPlatformClassLoader();\n",
+                        "      Class<Integer>[] classArray0 = (Class<Integer>[]) Array.newInstance(Class.class, 0);\n",
+                        "      JdkProxySource<Object> jdkProxySource0 = new JdkProxySource<Object>(classLoader0, classArray0);\n",
+                        "      ProxiedObjectPool<Object> proxiedObjectPool0 = new ProxiedObjectPool<Object>((ObjectPool<Object>) null, jdkProxySource0);\n",
+                        "      try { \n",
+                        "        proxiedObjectPool0.invalidateObject0(jdkProxySource0);\n",
+                        "        fail(\"Expecting exception: IllegalArgumentException\");\n",
+                        "      \n",
+                        "      } catch(IllegalArgumentException e) {\n",
+                        "         //\n",
+                        "         // not a proxy instance\n",
+                        "         //\n",
+                        "         verifyException(\"java.lang.reflect.Proxy\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test09()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test09(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test09(self) -> None:",
+                        "        ",
+                        "        classLoader0 = JdkProxySource.__classLoader",
+                        "        classArray0 = [None] * 0",
+                        "        jdkProxySource0 = JdkProxySource(classLoader0, classArray0)",
+                        "        proxiedObjectPool0 = ProxiedObjectPool(None, jdkProxySource0)",
+                        "        ",
+                        "        try:",
+                        "            proxiedObjectPool0.invalidateObject0(jdkProxySource0)",
+                        "            self.fail(\"Expecting exception: ValueError\")",
+                        "",
+                        "        except ValueError as e:",
+                        "            # not a proxy instance",
+                        "            self.verifyException(\"java.lang.reflect.Proxy\", e)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 11.4419846534729,
+                    "generation_timestamp": "2024-09-09T13:28:41.198210",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "137-149:test08": {
+                    "start": 137,
+                    "end": 149,
+                    "body": [
+                        "  public void test08()  throws Throwable  {\n",
+                        "      ProxiedObjectPool<Object> proxiedObjectPool0 = new ProxiedObjectPool<Object>((ObjectPool<Object>) null, (ProxySource<Object>) null);\n",
+                        "      try { \n",
+                        "        proxiedObjectPool0.invalidateObject0((Object) null);\n",
+                        "        fail(\"Expecting exception: NullPointerException\");\n",
+                        "      \n",
+                        "      } catch(NullPointerException e) {\n",
+                        "         //\n",
+                        "         // no message in exception (getMessage() returned null)\n",
+                        "         //\n",
+                        "         verifyException(\"org.apache.commons.pool2.proxy.ProxiedObjectPool\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test08()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test08(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test08(self) -> None:",
+                        "        ",
+                        "        proxiedObjectPool0 = ProxiedObjectPool(None, None)",
+                        "        ",
+                        "        with pytest.raises(RuntimeError) as e:",
+                        "            proxiedObjectPool0.invalidateObject0(None)",
+                        "        ",
+                        "        assert str(e.value) == \"Expecting exception: RuntimeError\"",
+                        "        verifyException(\"org.apache.commons.pool2.proxy.ProxiedObjectPool\", e)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 7.895309686660767,
+                    "generation_timestamp": "2024-09-09T13:28:49.114374",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "118-134:test07": {
+                    "start": 118,
+                    "end": 134,
+                    "body": [
+                        "  public void test07()  throws Throwable  {\n",
+                        "      ClassLoader classLoader0 = ClassLoader.getSystemClassLoader();\n",
+                        "      Class<Object>[] classArray0 = (Class<Object>[]) Array.newInstance(Class.class, 0);\n",
+                        "      JdkProxySource<Object> jdkProxySource0 = new JdkProxySource<Object>(classLoader0, classArray0);\n",
+                        "      ProxiedObjectPool<Object> proxiedObjectPool0 = new ProxiedObjectPool<Object>((ObjectPool<Object>) null, jdkProxySource0);\n",
+                        "      Object object0 = new Object();\n",
+                        "      try { \n",
+                        "        proxiedObjectPool0.returnObject(object0);\n",
+                        "        fail(\"Expecting exception: IllegalArgumentException\");\n",
+                        "      \n",
+                        "      } catch(IllegalArgumentException e) {\n",
+                        "         //\n",
+                        "         // not a proxy instance\n",
+                        "         //\n",
+                        "         verifyException(\"java.lang.reflect.Proxy\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test07()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test07(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test07(self) -> None:",
+                        "        ",
+                        "        classLoader0 = JdkProxySource.__classLoader",
+                        "        classArray0 = [None] * 0",
+                        "        jdkProxySource0 = JdkProxySource(classLoader0, classArray0)",
+                        "        proxiedObjectPool0 = ProxiedObjectPool(None, jdkProxySource0)",
+                        "        object0 = object()",
+                        "        ",
+                        "        try:",
+                        "            proxiedObjectPool0.returnObject(object0)",
+                        "            pytest.fail(\"Expecting exception: ValueError\")",
+                        "        ",
+                        "        except ValueError as e:",
+                        "            # not a proxy instance",
+                        "            self.verifyException(\"java.lang.reflect.Proxy\", e)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 14.592546463012695,
+                    "generation_timestamp": "2024-09-09T13:29:03.729063",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "103-115:test06": {
+                    "start": 103,
+                    "end": 115,
+                    "body": [
+                        "  public void test06()  throws Throwable  {\n",
+                        "      ProxiedObjectPool<Object> proxiedObjectPool0 = new ProxiedObjectPool<Object>((ObjectPool<Object>) null, (ProxySource<Object>) null);\n",
+                        "      try { \n",
+                        "        proxiedObjectPool0.returnObject((Object) null);\n",
+                        "        fail(\"Expecting exception: NullPointerException\");\n",
+                        "      \n",
+                        "      } catch(NullPointerException e) {\n",
+                        "         //\n",
+                        "         // no message in exception (getMessage() returned null)\n",
+                        "         //\n",
+                        "         verifyException(\"org.apache.commons.pool2.proxy.ProxiedObjectPool\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test06()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test06(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test06(self) -> None:",
+                        "        ",
+                        "        proxiedObjectPool0 = ProxiedObjectPool(None, None)",
+                        "        ",
+                        "        with pytest.raises(RuntimeError) as e:",
+                        "            proxiedObjectPool0.returnObject(None)",
+                        "        ",
+                        "        assert str(e.value) == \"Expecting exception: RuntimeError\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 5.391566514968872,
+                    "generation_timestamp": "2024-09-09T13:29:09.144883",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "94-100:test05": {
+                    "start": 94,
+                    "end": 100,
+                    "body": [
+                        "  public void test05()  throws Throwable  {\n",
+                        "      ObjectPool<Integer> objectPool0 = (ObjectPool<Integer>) mock(ObjectPool.class, new ViolatedAssumptionAnswer());\n",
+                        "      doReturn((-3983)).when(objectPool0).getNumActive();\n",
+                        "      ProxiedObjectPool<Integer> proxiedObjectPool0 = new ProxiedObjectPool<Integer>(objectPool0, (ProxySource<Integer>) null);\n",
+                        "      int int0 = proxiedObjectPool0.getNumActive();\n",
+                        "      assertEquals((-3983), int0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test05()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test05(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test05(self) -> None:",
+                        "        ",
+                        "        # Create a mock object for ObjectPool",
+                        "        objectPool0 = mock(ObjectPool, ViolatedAssumptionAnswer)",
+                        "        ",
+                        "        # Set the return value for getNumActive method",
+                        "        when(objectPool0).getNumActive().thenReturn(-3983)",
+                        "        ",
+                        "        # Create a ProxiedObjectPool object",
+                        "        proxiedObjectPool0 = ProxiedObjectPool(objectPool0, None)",
+                        "        ",
+                        "        # Call the getNumActive method",
+                        "        int0 = proxiedObjectPool0.getNumActive()",
+                        "        ",
+                        "        # Assert the result",
+                        "        self.assertEqual(-3983, int0)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 28.47772192955017,
+                    "generation_timestamp": "2024-09-09T13:29:37.645534",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "82-91:test04": {
+                    "start": 82,
+                    "end": 91,
+                    "body": [
+                        "  public void test04()  throws Throwable  {\n",
+                        "      ObjectPool<Object> objectPool0 = (ObjectPool<Object>) mock(ObjectPool.class, new ViolatedAssumptionAnswer());\n",
+                        "      doReturn(83).when(objectPool0).getNumActive();\n",
+                        "      ClassLoader classLoader0 = ClassLoader.getSystemClassLoader();\n",
+                        "      Class<Object>[] classArray0 = (Class<Object>[]) Array.newInstance(Class.class, 0);\n",
+                        "      JdkProxySource<Object> jdkProxySource0 = new JdkProxySource<Object>(classLoader0, classArray0);\n",
+                        "      ProxiedObjectPool<Object> proxiedObjectPool0 = new ProxiedObjectPool<Object>(objectPool0, jdkProxySource0);\n",
+                        "      int int0 = proxiedObjectPool0.getNumActive();\n",
+                        "      assertEquals(83, int0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test04()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test04(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test04(self) -> None:",
+                        "        ",
+                        "        # Mock ObjectPool",
+                        "        objectPool0 = unittest.mock.Mock(spec=ObjectPool)",
+                        "        objectPool0.getNumActive.return_value = 83",
+                        "",
+                        "        # Create JdkProxySource",
+                        "        classLoader0 = ClassLoader.getSystemClassLoader()",
+                        "        classArray0 = Array.newInstance(Class, 0)",
+                        "        jdkProxySource0 = JdkProxySource(classLoader0, classArray0)",
+                        "",
+                        "        # Create ProxiedObjectPool",
+                        "        proxiedObjectPool0 = ProxiedObjectPool(objectPool0, jdkProxySource0)",
+                        "",
+                        "        # Call getNumActive",
+                        "        int0 = proxiedObjectPool0.getNumActive()",
+                        "",
+                        "        # Assert the result",
+                        "        self.assertEqual(83, int0)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 21.10195827484131,
+                    "generation_timestamp": "2024-09-09T13:29:58.773016",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "70-79:test03": {
+                    "start": 70,
+                    "end": 79,
+                    "body": [
+                        "  public void test03()  throws Throwable  {\n",
+                        "      ClassLoader classLoader0 = ClassLoader.getPlatformClassLoader();\n",
+                        "      Class<Object>[] classArray0 = (Class<Object>[]) Array.newInstance(Class.class, 1);\n",
+                        "      JdkProxySource<Object> jdkProxySource0 = new JdkProxySource<Object>(classLoader0, classArray0);\n",
+                        "      ObjectPool<Object> objectPool0 = (ObjectPool<Object>) mock(ObjectPool.class, new ViolatedAssumptionAnswer());\n",
+                        "      doReturn((-1984)).when(objectPool0).getNumIdle();\n",
+                        "      ProxiedObjectPool<Object> proxiedObjectPool0 = new ProxiedObjectPool<Object>(objectPool0, jdkProxySource0);\n",
+                        "      int int0 = proxiedObjectPool0.getNumIdle();\n",
+                        "      assertEquals((-1984), int0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test03()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test03(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test03(self) -> None:",
+                        "        ",
+                        "        classLoader0 = ClassLoader.getPlatformClassLoader()",
+                        "        classArray0 = [Class] * 1",
+                        "        jdkProxySource0 = JdkProxySource(classLoader0, classArray0)",
+                        "        objectPool0 = mock(ObjectPool, ViolatedAssumptionAnswer())",
+                        "        objectPool0.getNumIdle = MagicMock(return_value=-1984)",
+                        "        proxiedObjectPool0 = ProxiedObjectPool(objectPool0, jdkProxySource0)",
+                        "        int0 = proxiedObjectPool0.getNumIdle()",
+                        "        self.assertEqual(-1984, int0)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 14.910309076309204,
+                    "generation_timestamp": "2024-09-09T13:30:13.707870",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "61-67:test02": {
+                    "start": 61,
+                    "end": 67,
+                    "body": [
+                        "  public void test02()  throws Throwable  {\n",
+                        "      ObjectPool<Integer> objectPool0 = (ObjectPool<Integer>) mock(ObjectPool.class, new ViolatedAssumptionAnswer());\n",
+                        "      doReturn(2266).when(objectPool0).getNumIdle();\n",
+                        "      ProxiedObjectPool<Integer> proxiedObjectPool0 = new ProxiedObjectPool<Integer>(objectPool0, (ProxySource<Integer>) null);\n",
+                        "      int int0 = proxiedObjectPool0.getNumIdle();\n",
+                        "      assertEquals(2266, int0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test02()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test02(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test02(self) -> None:",
+                        "        ",
+                        "        # Create a mock object for ObjectPool",
+                        "        objectPool0 = mock(ObjectPool, ViolatedAssumptionAnswer)",
+                        "        ",
+                        "        # Set up the behavior of the mock object",
+                        "        when(objectPool0).getNumIdle().thenReturn(2266)",
+                        "        ",
+                        "        # Create a ProxiedObjectPool object",
+                        "        proxiedObjectPool0 = ProxiedObjectPool(objectPool0, None)",
+                        "        ",
+                        "        # Call the method to be tested",
+                        "        int0 = proxiedObjectPool0.getNumIdle()",
+                        "        ",
+                        "        # Check the result",
+                        "        self.assertEqual(2266, int0)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 17.423821926116943,
+                    "generation_timestamp": "2024-09-09T13:30:31.159006",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "52-58:test01": {
+                    "start": 52,
+                    "end": 58,
+                    "body": [
+                        "  public void test01()  throws Throwable  {\n",
+                        "      ObjectPool<Integer> objectPool0 = (ObjectPool<Integer>) mock(ObjectPool.class, new ViolatedAssumptionAnswer());\n",
+                        "      doReturn(0).when(objectPool0).getNumIdle();\n",
+                        "      ProxiedObjectPool<Integer> proxiedObjectPool0 = new ProxiedObjectPool<Integer>(objectPool0, (ProxySource<Integer>) null);\n",
+                        "      int int0 = proxiedObjectPool0.getNumIdle();\n",
+                        "      assertEquals(0, int0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test01()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test01(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test01(self) -> None:",
+                        "        ",
+                        "        # Create a mock object for ObjectPool",
+                        "        objectPool0 = mock(ObjectPool, ViolatedAssumptionAnswer)",
+                        "        ",
+                        "        # Set up the behavior of the mock object",
+                        "        when(objectPool0).getNumIdle().thenReturn(0)",
+                        "        ",
+                        "        # Create a ProxiedObjectPool object",
+                        "        proxiedObjectPool0 = ProxiedObjectPool(objectPool0, None)",
+                        "        ",
+                        "        # Call the method to be tested",
+                        "        int0 = proxiedObjectPool0.getNumIdle()",
+                        "        ",
+                        "        # Check the result",
+                        "        self.assertEqual(0, int0)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 15.060768127441406,
+                    "generation_timestamp": "2024-09-09T13:30:46.251145",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "42-49:test00": {
+                    "start": 42,
+                    "end": 49,
+                    "body": [
+                        "  public void test00()  throws Throwable  {\n",
+                        "      ObjectPool<Object> objectPool0 = (ObjectPool<Object>) mock(ObjectPool.class, new ViolatedAssumptionAnswer());\n",
+                        "      ClassLoader classLoader0 = ClassLoader.getSystemClassLoader();\n",
+                        "      Class<Object>[] classArray0 = (Class<Object>[]) Array.newInstance(Class.class, 1);\n",
+                        "      JdkProxySource<Object> jdkProxySource0 = new JdkProxySource<Object>(classLoader0, classArray0);\n",
+                        "      ProxiedObjectPool<Object> proxiedObjectPool0 = new ProxiedObjectPool<Object>(objectPool0, jdkProxySource0);\n",
+                        "      proxiedObjectPool0.close();\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test00()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test00(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test00(self) -> None:",
+                        "        ",
+                        "        # Mocking ObjectPool",
+                        "        objectPool0 = unittest.mock.Mock(spec=ObjectPool)",
+                        "        objectPool0.close = unittest.mock.Mock()",
+                        "",
+                        "        # Getting System ClassLoader",
+                        "        classLoader0 = ClassLoader.getSystemClassLoader()",
+                        "",
+                        "        # Creating an array of Classes",
+                        "        classArray0 = [Class for _ in range(1)]",
+                        "",
+                        "        # Creating JdkProxySource",
+                        "        jdkProxySource0 = JdkProxySource(classLoader0, classArray0)",
+                        "",
+                        "        # Creating ProxiedObjectPool",
+                        "        proxiedObjectPool0 = ProxiedObjectPool(objectPool0, jdkProxySource0)",
+                        "",
+                        "        # Calling close method",
+                        "        proxiedObjectPool0.close()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 17.208794355392456,
+                    "generation_timestamp": "2024-09-09T13:31:03.486298",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class ProxiedObjectPool_ESTest(unittest.TestCase):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import unittest",
+        "from src.main.org.apache.commons.pool2.ObjectPool import *",
+        "from src.main.org.apache.commons.pool2.proxy.JdkProxySource import *",
+        "from src.main.org.apache.commons.pool2.proxy.ProxiedObjectPool import *",
+        "# from src.test.org.apache.commons.pool2.proxy.ProxiedObjectPool_ESTest_scaffolding import *",
+        "from src.main.org.apache.commons.pool2.proxy.ProxySource import *",
+        "# from src.main.org.evosuite.runtime.EvoAssertions import *",
+        "# from src.main.org.evosuite.runtime.EvoRunnerParameters import *",
+        "# from src.main.org.evosuite.runtime.ViolatedAssumptionAnswer import *",
+        "# from src.main.org.evosuite.shaded.org.mockito.Mockito import *",
+        "# from src.main.org.evosuite.shaded.org.mockito.stubbing.Answer import *",
+        "# from src.main.org.evosuite.shaded.org.mockito.stubbing.Stubber import *"
+    ]
+}

@@ -1,0 +1,1050 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-exec/src/test/java/org/apache/commons/exec/TutorialTest.java",
+    "imports": {
+        "21-21:import IOException": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "20-20:import File": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.io.File;\n"
+            ]
+        },
+        "24-24:import Map": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.util.Map;\n"
+            ]
+        },
+        "22-22:import Duration": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.time.Duration;\n"
+            ]
+        },
+        "23-23:import HashMap": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.HashMap;\n"
+            ]
+        },
+        "27-27:import Test": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.junit.jupiter.api.Test;\n"
+            ]
+        },
+        "26-26:import static Assertions.fail": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.fail;\n"
+            ]
+        }
+    },
+    "classes": {
+        "PrintResultHandler": {
+            "start": 39,
+            "end": 39,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "TutorialTest",
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "DefaultExecuteResultHandler"
+            ],
+            "methods": {
+                "62-69:onProcessFailed": {
+                    "start": 62,
+                    "end": 69,
+                    "body": [
+                        "        public void onProcessFailed(final ExecuteException e) {\n",
+                        "            super.onProcessFailed(e);\n",
+                        "            if (watchdog != null && watchdog.killedProcess()) {\n",
+                        "                System.err.println(\"[resultHandler] The print process timed out\");\n",
+                        "            } else {\n",
+                        "                System.err.println(\"[resultHandler] The print process failed to do : \" + e.getMessage());\n",
+                        "            }\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "onProcessFailed(ExecuteException)",
+                    "parameters": [
+                        "e"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecuteResultHandler",
+                            "DefaultExecuteResultHandler",
+                            "97-101:onProcessFailed"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "241-243:killedProcess"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Throwable",
+                            "getMessage()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def onProcessFailed(self, e: ExecuteException) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def onProcessFailed(self, e: ExecuteException) -> None:",
+                        "        super().onProcessFailed(e)",
+                        "        if self.__watchdog is not None and self.__watchdog.killedProcess():",
+                        "            print(\"[resultHandler] The print process timed out\", file=sys.stderr)",
+                        "        else:",
+                        "            print(f\"[resultHandler] The print process failed to do : {e.getMessage()}\", file=sys.stderr)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 18.10754919052124,
+                    "generation_timestamp": "2024-11-27T14:12:46.053434",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "56-59:onProcessComplete": {
+                    "start": 56,
+                    "end": 59,
+                    "body": [
+                        "        public void onProcessComplete(final int exitValue) {\n",
+                        "            super.onProcessComplete(exitValue);\n",
+                        "            System.out.println(\"[resultHandler] The document was successfully printed ...\");\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "onProcessComplete(int)",
+                    "parameters": [
+                        "exitValue"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecuteResultHandler",
+                            "DefaultExecuteResultHandler",
+                            "87-91:onProcessComplete"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def onProcessComplete(self, exitValue: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def onProcessComplete(self, exitValue: int) -> None:",
+                        "        super().onProcessComplete(exitValue)",
+                        "        print(\"[resultHandler] The document was successfully printed ...\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 15.873132705688477,
+                    "generation_timestamp": "2024-11-27T14:13:17.085335",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "47-53:PrintResultHandler": {
+                    "start": 47,
+                    "end": 53,
+                    "body": [
+                        "        public PrintResultHandler(int constructorId, final int exitValue, final ExecuteWatchdog watchdog) {\n",
+                        "            if (constructorId == 1) {\n",
+                        "                this.watchdog = watchdog;\n",
+                        "            } else {\n",
+                        "                super.onProcessComplete(exitValue);\n",
+                        "            }\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "PrintResultHandler(int, int, ExecuteWatchdog)",
+                    "parameters": [
+                        "constructorId",
+                        "exitValue",
+                        "watchdog"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecuteResultHandler",
+                            "DefaultExecuteResultHandler",
+                            "87-91:onProcessComplete"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, constructorId: int, exitValue: int, watchdog: ExecuteWatchdog) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, constructorId: int, exitValue: int, watchdog: ExecuteWatchdog) -> None:",
+                        "        if constructorId == 1:",
+                        "            self.__watchdog = watchdog",
+                        "        else:",
+                        "            super().onProcessComplete(exitValue)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 15.060197591781616,
+                    "generation_timestamp": "2024-11-27T14:13:01.159374",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "41-41:watchdog": {
+                    "start": 41,
+                    "end": 41,
+                    "body": [
+                        "        private ExecuteWatchdog watchdog;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "ExecuteWatchdog",
+                            "ExecuteWatchdog"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __watchdog: ExecuteWatchdog = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __watchdog: ExecuteWatchdog = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-11-26T18:58:42.396754",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class PrintResultHandler(DefaultExecuteResultHandler):\n\n"
+        },
+        "TutorialTest": {
+            "start": 37,
+            "end": 37,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "PrintResultHandler"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "165-183:testTutorialExample_test2_decomposed": {
+                    "start": 165,
+                    "end": 183,
+                    "body": [
+                        "    public void testTutorialExample_test2_decomposed() throws Exception {\n",
+                        "        final Duration printJobTimeout = Duration.ofSeconds(15);\n",
+                        "        final boolean printInBackground = false;\n",
+                        "        final File pdfFile = new File(\"/Documents and Settings/foo.pdf\");\n",
+                        "        PrintResultHandler printResult;\n",
+                        "        try {\n",
+                        "            // printing takes around 10 seconds\n",
+                        "            System.out.println(\"[main] Preparing print job ...\");\n",
+                        "            printResult = print(pdfFile, printJobTimeout, printInBackground);\n",
+                        "            System.out.println(\"[main] Successfully sent the print job ...\");\n",
+                        "        } catch (final Exception e) {\n",
+                        "            e.printStackTrace();\n",
+                        "            fail(\"[main] Printing of the following document failed : \" + pdfFile.getAbsolutePath());\n",
+                        "            throw e;\n",
+                        "        }\n",
+                        "        System.out.println(\"[main] Test is exiting but waiting for the print job to finish...\");\n",
+                        "        printResult.waitFor0();\n",
+                        "        System.out.println(\"[main] The print job has finished ...\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testTutorialExample_test2_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "ofSeconds(long)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "File(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "commons-exec.src.test.org.apache.commons.exec.TutorialTest",
+                            "TutorialTest",
+                            "87-124:print"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Throwable",
+                            "printStackTrace()"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "fail(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "getAbsolutePath()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecuteResultHandler",
+                            "DefaultExecuteResultHandler",
+                            "110-114:waitFor0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testTutorialExample_test2_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testTutorialExample_test2_decomposed(self) -> None:",
+                        "        print_job_timeout = datetime.timedelta(seconds=15)",
+                        "        print_in_background = False",
+                        "        pdf_file = pathlib.Path(\"/Documents and Settings/foo.pdf\")",
+                        "        print_result = None",
+                        "",
+                        "        try:",
+                        "            # Printing takes around 10 seconds",
+                        "            print(\"[main] Preparing print job ...\")",
+                        "            print_result = self.print_(pdf_file, print_job_timeout, print_in_background)",
+                        "            print(\"[main] Successfully sent the print job ...\")",
+                        "        except Exception as e:",
+                        "            print(e)",
+                        "            pytest.fail(f\"[main] Printing of the following document failed: {pdf_file.absolute()}\")",
+                        "            raise e",
+                        "",
+                        "        print(\"[main] Test is exiting but waiting for the print job to finish...\")",
+                        "        print_result.waitFor0()",
+                        "        print(\"[main] The print job has finished ...\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 2.076331853866577,
+                    "generation_timestamp": "2024-11-27T14:21:40.891975",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "145-162:testTutorialExample_test1_decomposed": {
+                    "start": 145,
+                    "end": 162,
+                    "body": [
+                        "    public void testTutorialExample_test1_decomposed() throws Exception {\n",
+                        "        final Duration printJobTimeout = Duration.ofSeconds(15);\n",
+                        "        final boolean printInBackground = false;\n",
+                        "        final File pdfFile = new File(\"/Documents and Settings/foo.pdf\");\n",
+                        "        PrintResultHandler printResult;\n",
+                        "        try {\n",
+                        "            // printing takes around 10 seconds\n",
+                        "            System.out.println(\"[main] Preparing print job ...\");\n",
+                        "            printResult = print(pdfFile, printJobTimeout, printInBackground);\n",
+                        "            System.out.println(\"[main] Successfully sent the print job ...\");\n",
+                        "        } catch (final Exception e) {\n",
+                        "            e.printStackTrace();\n",
+                        "            fail(\"[main] Printing of the following document failed : \" + pdfFile.getAbsolutePath());\n",
+                        "            throw e;\n",
+                        "        }\n",
+                        "        System.out.println(\"[main] Test is exiting but waiting for the print job to finish...\");\n",
+                        "        printResult.waitFor0();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testTutorialExample_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "ofSeconds(long)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "File(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "commons-exec.src.test.org.apache.commons.exec.TutorialTest",
+                            "TutorialTest",
+                            "87-124:print"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Throwable",
+                            "printStackTrace()"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "fail(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "getAbsolutePath()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecuteResultHandler",
+                            "DefaultExecuteResultHandler",
+                            "110-114:waitFor0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testTutorialExample_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testTutorialExample_test1_decomposed(self) -> None:",
+                        "        print_job_timeout = datetime.timedelta(seconds=15)",
+                        "        print_in_background = False",
+                        "        pdf_file = pathlib.Path(\"/Documents and Settings/foo.pdf\")",
+                        "        try:",
+                        "            # Printing takes around 10 seconds",
+                        "            print(\"[main] Preparing print job ...\")",
+                        "            print_result = self.print_(pdf_file, print_job_timeout, print_in_background)",
+                        "            print(\"[main] Successfully sent the print job ...\")",
+                        "        except Exception as e:",
+                        "            print(e)",
+                        "            pytest.fail(f\"[main] Printing of the following document failed: {pdf_file.absolute()}\")",
+                        "            raise e",
+                        "        print(\"[main] Test is exiting but waiting for the print job to finish...\")",
+                        "        print_result.waitFor0()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 4.209234237670898,
+                    "generation_timestamp": "2024-11-27T14:21:45.181190",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "127-142:testTutorialExample_test0_decomposed": {
+                    "start": 127,
+                    "end": 142,
+                    "body": [
+                        "    public void testTutorialExample_test0_decomposed() throws Exception {\n",
+                        "        final Duration printJobTimeout = Duration.ofSeconds(15);\n",
+                        "        final boolean printInBackground = false;\n",
+                        "        final File pdfFile = new File(\"/Documents and Settings/foo.pdf\");\n",
+                        "        PrintResultHandler printResult;\n",
+                        "        try {\n",
+                        "            // printing takes around 10 seconds\n",
+                        "            System.out.println(\"[main] Preparing print job ...\");\n",
+                        "            printResult = print(pdfFile, printJobTimeout, printInBackground);\n",
+                        "            System.out.println(\"[main] Successfully sent the print job ...\");\n",
+                        "        } catch (final Exception e) {\n",
+                        "            e.printStackTrace();\n",
+                        "            fail(\"[main] Printing of the following document failed : \" + pdfFile.getAbsolutePath());\n",
+                        "            throw e;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testTutorialExample_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "ofSeconds(long)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "File(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "commons-exec.src.test.org.apache.commons.exec.TutorialTest",
+                            "TutorialTest",
+                            "87-124:print"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Throwable",
+                            "printStackTrace()"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "fail(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "getAbsolutePath()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testTutorialExample_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testTutorialExample_test0_decomposed(self) -> None:",
+                        "        print_job_timeout = datetime.timedelta(seconds=15)",
+                        "        print_in_background = False",
+                        "        pdf_file = pathlib.Path(\"/Documents and Settings/foo.pdf\")",
+                        "        ",
+                        "        try:",
+                        "            # Printing takes around 10 seconds",
+                        "            print(\"[main] Preparing print job ...\")",
+                        "            print_result = self.print_(pdf_file, print_job_timeout, print_in_background)",
+                        "            print(\"[main] Successfully sent the print job ...\")",
+                        "        except Exception as e:",
+                        "            print(e)",
+                        "            pytest.fail(f\"[main] Printing of the following document failed: {pdf_file.absolute()}\")",
+                        "            raise"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 3.838066577911377,
+                    "generation_timestamp": "2024-11-27T14:21:49.183829",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "87-124:print": {
+                    "start": 87,
+                    "end": 124,
+                    "body": [
+                        "    public PrintResultHandler print(final File file, final Duration printJobTimeout, final boolean printInBackground) throws IOException {\n",
+                        "\n",
+                        "        int exitValue;\n",
+                        "        ExecuteWatchdog watchdog = null;\n",
+                        "        PrintResultHandler resultHandler;\n",
+                        "\n",
+                        "        // build up the command line to using a 'java.io.File'\n",
+                        "        final Map<String, File> map = new HashMap<>();\n",
+                        "        map.put(\"file\", file);\n",
+                        "        final CommandLine commandLine = new CommandLine(1, null, acroRd32Script, null);\n",
+                        "        commandLine.addArgument0(\"/p\");\n",
+                        "        commandLine.addArgument0(\"/h\");\n",
+                        "        commandLine.addArgument0(\"${file}\");\n",
+                        "        commandLine.setSubstitutionMap(map);\n",
+                        "\n",
+                        "        // create the executor and consider the exitValue '1' as success\n",
+                        "        final Executor executor = DefaultExecutor.builder().get();\n",
+                        "        executor.setExitValue(1);\n",
+                        "\n",
+                        "        // create a watchdog if requested\n",
+                        "        if (printJobTimeout.toMillis() > 0) {\n",
+                        "            watchdog = ExecuteWatchdog.builder().setTimeout(printJobTimeout).get();\n",
+                        "            executor.setWatchdog(watchdog);\n",
+                        "        }\n",
+                        "\n",
+                        "        // pass a \"ExecuteResultHandler\" when doing background printing\n",
+                        "        if (printInBackground) {\n",
+                        "            System.out.println(\"[print] Executing non-blocking print job  ...\");\n",
+                        "            resultHandler = new PrintResultHandler(1, 0, watchdog);\n",
+                        "            executor.execute1(commandLine, resultHandler);\n",
+                        "        } else {\n",
+                        "            System.out.println(\"[print] Executing blocking print job  ...\");\n",
+                        "            exitValue = executor.execute0(commandLine);\n",
+                        "            resultHandler = new PrintResultHandler(0, exitValue, null);\n",
+                        "        }\n",
+                        "\n",
+                        "        return resultHandler;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "PrintResultHandler",
+                            "PrintResultHandler"
+                        ]
+                    ],
+                    "signature": "print(File, Duration, boolean)",
+                    "parameters": [
+                        "file",
+                        "printJobTimeout",
+                        "printInBackground"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "HashMap<String,File>()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/exec/DefaultExecutor$Builder",
+                            "get()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "131-133:builder"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "put(java.lang.String,java.io.File)"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "239-241:addArgument0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "386-388:setSubstitutionMap"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "137-137:setExitValue"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "toMillis()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "Builder",
+                            "70-72:get"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "Builder",
+                            "91-94:setTimeout"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "110-112:builder"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "174-174:setWatchdog"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "commons-exec.src.test.org.apache.commons.exec.TutorialTest",
+                            "PrintResultHandler",
+                            "47-53:PrintResultHandler"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "70-70:execute1"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "60-60:execute0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def print_(self, file: pathlib.Path, printJobTimeout: datetime.timedelta, printInBackground: bool) -> PrintResultHandler:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def print_(self, file: pathlib.Path, printJobTimeout: datetime.timedelta, printInBackground: bool) -> PrintResultHandler:",
+                        "        exit_value: int",
+                        "        watchdog: ExecuteWatchdog | None = None",
+                        "        result_handler: PrintResultHandler",
+                        "",
+                        "        # Build up the command line using a 'pathlib.Path'",
+                        "        substitution_map: dict[str, pathlib.Path] = {\"file\": file}",
+                        "        command_line = CommandLine(1, executable=self.__acroRd32Script)",
+                        "        command_line.addArgument0(\"/p\")",
+                        "        command_line.addArgument0(\"/h\")",
+                        "        command_line.addArgument0(\"${file}\")",
+                        "        command_line.setSubstitutionMap(substitution_map)",
+                        "",
+                        "        # Create the executor and consider the exit value '1' as success",
+                        "        executor = DefaultExecutor.builder().get()",
+                        "        executor.setExitValue(1)",
+                        "",
+                        "        # Create a watchdog if requested",
+                        "        if printJobTimeout.total_seconds() > 0:",
+                        "            watchdog = ExecuteWatchdog.builder().setTimeout(printJobTimeout).get()",
+                        "            executor.setWatchdog(watchdog)",
+                        "",
+                        "        # Pass an \"ExecuteResultHandler\" when doing background printing",
+                        "        if printInBackground:",
+                        "            print(\"[print] Executing non-blocking print job  ...\")",
+                        "            result_handler = PrintResultHandler(1, 0, watchdog)",
+                        "            executor.execute1(command_line, result_handler)",
+                        "        else:",
+                        "            print(\"[print] Executing blocking print job  ...\")",
+                        "            exit_value = executor.execute0(command_line)",
+                        "            result_handler = PrintResultHandler(0, exit_value, None)",
+                        "",
+                        "        return result_handler"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 75.93900990486145,
+                    "generation_timestamp": "2024-11-27T14:11:43.209095",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 1
+                    }
+                }
+            },
+            "fields": {
+                "76-76:acroRd32Script": {
+                    "start": 76,
+                    "end": 76,
+                    "body": [
+                        "    private final File acroRd32Script = TestUtil.resolveScriptForOS(testDir + \"/acrord32\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "File",
+                            "java.io.File"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __acroRd32Script: pathlib.Path = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __acroRd32Script: pathlib.Path = TestUtil.resolveScriptForOS(str(__testDir / \"acrord32\"))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "failed",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 18.34468650817871,
+                    "generation_timestamp": "2024-11-26T18:59:00.785830",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 1,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "73-73:testDir": {
+                    "start": 73,
+                    "end": 73,
+                    "body": [
+                        "    private final File testDir = new File(\"src/test/scripts\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "File",
+                            "java.io.File"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __testDir: pathlib.Path = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __testDir: pathlib.Path = pathlib.Path(\"src/test/scripts\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 8.932361841201782,
+                    "generation_timestamp": "2024-11-26T18:59:09.768070",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class TutorialTest(unittest.TestCase):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import pathlib",
+        "import io",
+        "import datetime",
+        "import os",
+        "import unittest",
+        "from src.main.org.apache.commons.exec.CommandLine import *",
+        "from src.main.org.apache.commons.exec.DefaultExecutor import *",
+        "from src.main.org.apache.commons.exec.ExecuteResultHandler import *",
+        "from src.main.org.apache.commons.exec.ExecuteWatchdog import *",
+        "from src.main.org.apache.commons.exec.Executor import *",
+        "from src.test.org.apache.commons.exec.TestUtil import *",
+        "from src.main.org.apache.commons.exec.DefaultExecuteResultHandler import *",
+        "from src.main.org.apache.commons.exec.ExecuteException import *"
+    ]
+}

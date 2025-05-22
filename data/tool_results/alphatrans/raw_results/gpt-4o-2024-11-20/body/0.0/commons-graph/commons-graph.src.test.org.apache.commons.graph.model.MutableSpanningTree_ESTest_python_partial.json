@@ -1,0 +1,702 @@
+{
+    "path": "java_projects/cleaned_final_projects_evosuite/commons-graph/src/test/java/org/apache/commons/graph/model/MutableSpanningTree_ESTest.java",
+    "imports": {
+        "17-17:import EvoRunnerParameters": {
+            "start": 17,
+            "end": 17,
+            "body": [
+                "import org.evosuite.runtime.EvoRunnerParameters;\n"
+            ]
+        },
+        "19-19:import RunWith": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import org.junit.runner.RunWith;\n"
+            ]
+        },
+        "16-16:import EvoRunner": {
+            "start": 16,
+            "end": 16,
+            "body": [
+                "import org.evosuite.runtime.EvoRunner;\n"
+            ]
+        },
+        "8-8:import Test": {
+            "start": 8,
+            "end": 8,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "12-12:import Mapper": {
+            "start": 12,
+            "end": 12,
+            "body": [
+                "import org.apache.commons.graph.Mapper;\n"
+            ]
+        },
+        "14-14:import Monoid": {
+            "start": 14,
+            "end": 14,
+            "body": [
+                "import org.apache.commons.graph.weight.Monoid;\n"
+            ]
+        },
+        "13-13:import MutableSpanningTree": {
+            "start": 13,
+            "end": 13,
+            "body": [
+                "import org.apache.commons.graph.model.MutableSpanningTree;\n"
+            ]
+        },
+        "15-15:import IntegerWeightBaseOperations": {
+            "start": 15,
+            "end": 15,
+            "body": [
+                "import org.apache.commons.graph.weight.primitive.IntegerWeightBaseOperations;\n"
+            ]
+        },
+        "18-18:import ViolatedAssumptionAnswer": {
+            "start": 18,
+            "end": 18,
+            "body": [
+                "import org.evosuite.runtime.ViolatedAssumptionAnswer;\n"
+            ]
+        },
+        "11-11:import static EvoAssertions.*": {
+            "start": 11,
+            "end": 11,
+            "body": [
+                "import static org.evosuite.runtime.EvoAssertions.*;\n"
+            ]
+        },
+        "10-10:import static Mockito.*": {
+            "start": 10,
+            "end": 10,
+            "body": [
+                "import static org.evosuite.shaded.org.mockito.Mockito.*;\n"
+            ]
+        },
+        "9-9:import static Assert.*": {
+            "start": 9,
+            "end": 9,
+            "body": [
+                "import static org.junit.Assert.*;\n"
+            ]
+        }
+    },
+    "classes": {
+        "MutableSpanningTree_ESTest": {
+            "start": 22,
+            "end": 22,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "110-127:test6": {
+                    "start": 110,
+                    "end": 127,
+                    "body": [
+                        "  public void test6()  throws Throwable  {\n",
+                        "      IntegerWeightBaseOperations integerWeightBaseOperations0 = new IntegerWeightBaseOperations();\n",
+                        "      Mapper<Integer, Integer> mapper0 = (Mapper<Integer, Integer>) mock(Mapper.class, new ViolatedAssumptionAnswer());\n",
+                        "      doReturn((Object) null).when(mapper0).map(anyInt());\n",
+                        "      MutableSpanningTree<Integer, Integer, Integer> mutableSpanningTree0 = new MutableSpanningTree<Integer, Integer, Integer>(integerWeightBaseOperations0, mapper0);\n",
+                        "      Integer integer0 = new Integer(0);\n",
+                        "      // Undeclared exception!\n",
+                        "      try { \n",
+                        "        mutableSpanningTree0.decorateRemoveEdge(integer0);\n",
+                        "        fail(\"Expecting exception: NullPointerException\");\n",
+                        "      \n",
+                        "      } catch(NullPointerException e) {\n",
+                        "         //\n",
+                        "         // no message in exception (getMessage() returned null)\n",
+                        "         //\n",
+                        "         verifyException(\"org.apache.commons.graph.weight.primitive.IntegerWeightBaseOperations\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test6()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.IntegerWeightBaseOperations",
+                            "IntegerWeightBaseOperations",
+                            "IntegerWeightBaseOperations"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test6(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test6(self) -> None:",
+                        "        ",
+                        "        integerWeightBaseOperations0 = IntegerWeightBaseOperations()",
+                        "        mapper0 = mock(Mapper, ViolatedAssumptionAnswer())",
+                        "        doReturn(None).when(mapper0).map(any_int())",
+                        "        mutableSpanningTree0 = MutableSpanningTree(integerWeightBaseOperations0, mapper0)",
+                        "        integer0 = Integer(0)",
+                        "        ",
+                        "        with pytest.raises(RuntimeError) as e:",
+                        "            mutableSpanningTree0.decorateRemoveEdge(integer0)",
+                        "        ",
+                        "        verifyException(\"org.apache.commons.graph.weight.primitive.IntegerWeightBaseOperations\", e)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 9.801520586013794,
+                    "generation_timestamp": "2024-09-09T12:19:54.036699",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "95-107:test5": {
+                    "start": 95,
+                    "end": 107,
+                    "body": [
+                        "  public void test5()  throws Throwable  {\n",
+                        "      MutableSpanningTree<Integer, Integer, Integer> mutableSpanningTree0 = null;\n",
+                        "      try {\n",
+                        "        mutableSpanningTree0 = new MutableSpanningTree<Integer, Integer, Integer>((Monoid<Integer>) null, (Mapper<Integer, Integer>) null);\n",
+                        "        fail(\"Expecting exception: NullPointerException\");\n",
+                        "      \n",
+                        "      } catch(NullPointerException e) {\n",
+                        "         //\n",
+                        "         // no message in exception (getMessage() returned null)\n",
+                        "         //\n",
+                        "         verifyException(\"org.apache.commons.graph.model.MutableSpanningTree\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test5()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test5(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test5(self) -> None:",
+                        "        ",
+                        "        mutableSpanningTree0 = None",
+                        "        try:",
+                        "            mutableSpanningTree0 = MutableSpanningTree(None, None)",
+                        "            pytest.fail(\"Expecting exception: RuntimeError\")",
+                        "",
+                        "        except RuntimeError as e:",
+                        "            verifyException(\"org.apache.commons.graph.model.MutableSpanningTree\", e)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 12.02333927154541,
+                    "generation_timestamp": "2024-09-09T12:20:06.077239",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "82-92:test4": {
+                    "start": 82,
+                    "end": 92,
+                    "body": [
+                        "  public void test4()  throws Throwable  {\n",
+                        "      IntegerWeightBaseOperations integerWeightBaseOperations0 = new IntegerWeightBaseOperations();\n",
+                        "      Mapper<Integer, Integer> mapper0 = (Mapper<Integer, Integer>) mock(Mapper.class, new ViolatedAssumptionAnswer());\n",
+                        "      doReturn((Object) null).when(mapper0).map(anyInt());\n",
+                        "      MutableSpanningTree<Integer, Integer, Integer> mutableSpanningTree0 = new MutableSpanningTree<Integer, Integer, Integer>(integerWeightBaseOperations0, mapper0);\n",
+                        "      Integer integer0 = new Integer(0);\n",
+                        "      mutableSpanningTree0.addVertex(integer0);\n",
+                        "      mutableSpanningTree0.decorateAddEdge(integer0, integer0, integer0);\n",
+                        "      Integer integer1 = mutableSpanningTree0.getWeight();\n",
+                        "      assertNull(integer1);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test4()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.IntegerWeightBaseOperations",
+                            "IntegerWeightBaseOperations",
+                            "IntegerWeightBaseOperations"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test4(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test4(self) -> None:",
+                        "        ",
+                        "        # Create instances of the required classes",
+                        "        integerWeightBaseOperations0 = IntegerWeightBaseOperations()",
+                        "        mapper0 = mock(Mapper, ViolatedAssumptionAnswer())",
+                        "",
+                        "        # Configure the mock object",
+                        "        doReturn(None).when(mapper0).map(any_int())",
+                        "",
+                        "        # Create an instance of MutableSpanningTree",
+                        "        mutableSpanningTree0 = MutableSpanningTree(integerWeightBaseOperations0, mapper0)",
+                        "",
+                        "        # Create some integers",
+                        "        integer0 = Integer(0)",
+                        "",
+                        "        # Add a vertex to the MutableSpanningTree",
+                        "        mutableSpanningTree0.addVertex(integer0)",
+                        "",
+                        "        # Add an edge to the MutableSpanningTree",
+                        "        mutableSpanningTree0.decorateAddEdge(integer0, integer0, integer0)",
+                        "",
+                        "        # Get the weight of the MutableSpanningTree",
+                        "        integer1 = mutableSpanningTree0.getWeight()",
+                        "",
+                        "        # Assert that the weight is None",
+                        "        self.assertIsNone(integer1)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 27.305440664291382,
+                    "generation_timestamp": "2024-09-09T12:20:33.399547",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "71-79:test3": {
+                    "start": 71,
+                    "end": 79,
+                    "body": [
+                        "  public void test3()  throws Throwable  {\n",
+                        "      IntegerWeightBaseOperations integerWeightBaseOperations0 = new IntegerWeightBaseOperations();\n",
+                        "      Integer integer0 = new Integer(0);\n",
+                        "      Mapper<Integer, Integer> mapper0 = (Mapper<Integer, Integer>) mock(Mapper.class, new ViolatedAssumptionAnswer());\n",
+                        "      doReturn(integer0).when(mapper0).map(anyInt());\n",
+                        "      MutableSpanningTree<Integer, Integer, Integer> mutableSpanningTree0 = new MutableSpanningTree<Integer, Integer, Integer>(integerWeightBaseOperations0, mapper0);\n",
+                        "      mutableSpanningTree0.decorateRemoveEdge(integer0);\n",
+                        "      assertEquals(0, mutableSpanningTree0.getSize());\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test3()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.IntegerWeightBaseOperations",
+                            "IntegerWeightBaseOperations",
+                            "IntegerWeightBaseOperations"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test3(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test3(self) -> None:",
+                        "        ",
+                        "        # Create mock objects",
+                        "        integerWeightBaseOperations0 = IntegerWeightBaseOperations()",
+                        "        integer0 = Integer(0)",
+                        "        mapper0 = Mock(Mapper)",
+                        "        mapper0.map.return_value = integer0",
+                        "",
+                        "        # Create MutableSpanningTree object",
+                        "        mutableSpanningTree0 = MutableSpanningTree(integerWeightBaseOperations0, mapper0)",
+                        "",
+                        "        # Call the method to be tested",
+                        "        mutableSpanningTree0.decorateRemoveEdge(integer0)",
+                        "",
+                        "        # Assert the expected result",
+                        "        self.assertEqual(0, mutableSpanningTree0.getSize())"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 10.004809856414795,
+                    "generation_timestamp": "2024-09-09T12:20:43.422126",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "51-68:test2": {
+                    "start": 51,
+                    "end": 68,
+                    "body": [
+                        "  public void test2()  throws Throwable  {\n",
+                        "      IntegerWeightBaseOperations integerWeightBaseOperations0 = new IntegerWeightBaseOperations();\n",
+                        "      Integer integer0 = new Integer(0);\n",
+                        "      Mapper<Integer, Integer> mapper0 = (Mapper<Integer, Integer>) mock(Mapper.class, new ViolatedAssumptionAnswer());\n",
+                        "      MutableSpanningTree<Integer, Integer, Integer> mutableSpanningTree0 = new MutableSpanningTree<Integer, Integer, Integer>(integerWeightBaseOperations0, mapper0);\n",
+                        "      Integer integer1 = integerWeightBaseOperations0.append(integer0, integer0);\n",
+                        "      // Undeclared exception!\n",
+                        "      try { \n",
+                        "        mutableSpanningTree0.decorateAddEdge(integer1, integer0, integer0);\n",
+                        "        fail(\"Expecting exception: NullPointerException\");\n",
+                        "      \n",
+                        "      } catch(NullPointerException e) {\n",
+                        "         //\n",
+                        "         // no message in exception (getMessage() returned null)\n",
+                        "         //\n",
+                        "         verifyException(\"org.apache.commons.graph.model.BaseMutableGraph\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test2()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.IntegerWeightBaseOperations",
+                            "IntegerWeightBaseOperations",
+                            "IntegerWeightBaseOperations"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.IntegerWeightBaseOperations",
+                            "IntegerWeightBaseOperations",
+                            "33-38:append"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test2(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test2(self) -> None:",
+                        "        ",
+                        "        integerWeightBaseOperations0 = IntegerWeightBaseOperations()",
+                        "        integer0 = Integer(0)",
+                        "        mapper0 = mock(Mapper, new_callable=ViolatedAssumptionAnswer)",
+                        "        mutableSpanningTree0 = MutableSpanningTree(integerWeightBaseOperations0, mapper0)",
+                        "        integer1 = integerWeightBaseOperations0.append(integer0, integer0)",
+                        "        ",
+                        "        with pytest.raises(RuntimeError):",
+                        "            mutableSpanningTree0.decorateAddEdge(integer1, integer0, integer0)",
+                        "            verifyException(\"org.apache.commons.graph.model.BaseMutableGraph\", RuntimeError)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 60.342583894729614,
+                    "generation_timestamp": "2024-09-09T12:21:43.782641",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "38-48:test1": {
+                    "start": 38,
+                    "end": 48,
+                    "body": [
+                        "  public void test1()  throws Throwable  {\n",
+                        "      IntegerWeightBaseOperations integerWeightBaseOperations0 = new IntegerWeightBaseOperations();\n",
+                        "      Integer integer0 = new Integer(0);\n",
+                        "      Integer integer1 = new Integer(0);\n",
+                        "      Mapper<Integer, Integer> mapper0 = (Mapper<Integer, Integer>) mock(Mapper.class, new ViolatedAssumptionAnswer());\n",
+                        "      doReturn(integer0).when(mapper0).map(anyInt());\n",
+                        "      MutableSpanningTree<Integer, Integer, Integer> mutableSpanningTree0 = new MutableSpanningTree<Integer, Integer, Integer>(integerWeightBaseOperations0, mapper0);\n",
+                        "      mutableSpanningTree0.addVertex(integer1);\n",
+                        "      mutableSpanningTree0.decorateAddEdge(integer1, integer0, integer0);\n",
+                        "      assertTrue(integer0.equals((Object)integer1));\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test1()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.IntegerWeightBaseOperations",
+                            "IntegerWeightBaseOperations",
+                            "IntegerWeightBaseOperations"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test1(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test1(self) -> None:",
+                        "        ",
+                        "        integerWeightBaseOperations0 = IntegerWeightBaseOperations()",
+                        "        integer0 = Integer(0)",
+                        "        integer1 = Integer(0)",
+                        "        mapper0 = mock(Mapper, ViolatedAssumptionAnswer())",
+                        "        when(mapper0).map(any_int()).thenReturn(integer0)",
+                        "        mutableSpanningTree0 = MutableSpanningTree(integerWeightBaseOperations0, mapper0)",
+                        "        mutableSpanningTree0.addVertex(integer1)",
+                        "        mutableSpanningTree0.decorateAddEdge(integer1, integer0, integer0)",
+                        "        self.assertTrue(integer0.equals(integer1))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 9.228627920150757,
+                    "generation_timestamp": "2024-09-09T12:21:53.029587",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "25-35:test0": {
+                    "start": 25,
+                    "end": 35,
+                    "body": [
+                        "  public void test0()  throws Throwable  {\n",
+                        "      IntegerWeightBaseOperations integerWeightBaseOperations0 = new IntegerWeightBaseOperations();\n",
+                        "      Integer integer0 = new Integer(0);\n",
+                        "      Integer integer1 = new Integer(0);\n",
+                        "      Mapper<Integer, Integer> mapper0 = (Mapper<Integer, Integer>) mock(Mapper.class, new ViolatedAssumptionAnswer());\n",
+                        "      doReturn(integer0).when(mapper0).map(anyInt());\n",
+                        "      MutableSpanningTree<Integer, Integer, Integer> mutableSpanningTree0 = new MutableSpanningTree<Integer, Integer, Integer>(integerWeightBaseOperations0, mapper0);\n",
+                        "      mutableSpanningTree0.addVertex(integer0);\n",
+                        "      mutableSpanningTree0.decorateAddEdge(integer0, integer0, integer1);\n",
+                        "      assertEquals(1, mutableSpanningTree0.getOrder());\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.IntegerWeightBaseOperations",
+                            "IntegerWeightBaseOperations",
+                            "IntegerWeightBaseOperations"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test0(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test0(self) -> None:",
+                        "        ",
+                        "        integerWeightBaseOperations0 = IntegerWeightBaseOperations()",
+                        "        integer0 = Integer(0)",
+                        "        integer1 = Integer(0)",
+                        "        mapper0 = mock(Mapper, ViolatedAssumptionAnswer())",
+                        "        mapper0.map.return_value = integer0",
+                        "        mutableSpanningTree0 = MutableSpanningTree(integerWeightBaseOperations0, mapper0)",
+                        "        mutableSpanningTree0.addVertex(integer0)",
+                        "        mutableSpanningTree0.decorateAddEdge(integer0, integer0, integer1)",
+                        "        self.assertEqual(1, mutableSpanningTree0.getOrder())"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 19.753963470458984,
+                    "generation_timestamp": "2024-09-09T12:22:12.804240",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class MutableSpanningTree_ESTest(unittest.TestCase):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import unittest",
+        "from src.main.org.apache.commons.graph.Mapper import *",
+        "from src.main.org.apache.commons.graph.model.MutableSpanningTree import *",
+        "# from src.test.org.apache.commons.graph.model.MutableSpanningTree_ESTest_scaffolding import *",
+        "from src.main.org.apache.commons.graph.weight.Monoid import *",
+        "from src.main.org.apache.commons.graph.weight.primitive.IntegerWeightBaseOperations import *",
+        "# from src.main.org.evosuite.runtime.EvoAssertions import *",
+        "# from src.main.org.evosuite.runtime.EvoRunnerParameters import *",
+        "# from src.main.org.evosuite.runtime.ViolatedAssumptionAnswer import *",
+        "# from src.main.org.evosuite.shaded.org.mockito.Mockito import *",
+        "# from src.main.org.evosuite.shaded.org.mockito.stubbing.Answer import *",
+        "# from src.main.org.evosuite.shaded.org.mockito.stubbing.Stubber import *"
+    ]
+}

@@ -1,0 +1,3152 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-codec/src/test/java/org/apache/commons/codec/binary/Base64InputStreamTest.java",
+    "imports": {
+        "29-29:import BufferedReader": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import java.io.BufferedReader;\n"
+            ]
+        },
+        "31-31:import IOException": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "30-30:import ByteArrayInputStream": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import java.io.ByteArrayInputStream;\n"
+            ]
+        },
+        "32-32:import InputStream": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import java.io.InputStream;\n"
+            ]
+        },
+        "33-33:import InputStreamReader": {
+            "start": 33,
+            "end": 33,
+            "body": [
+                "import java.io.InputStreamReader;\n"
+            ]
+        },
+        "27-27:import Test": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "25-25:import static Assert.fail": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import static org.junit.Assert.fail;\n"
+            ]
+        },
+        "21-21:import static Assert.assertEquals": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import static org.junit.Assert.assertEquals;\n"
+            ]
+        },
+        "20-20:import static Assert.assertArrayEquals": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static org.junit.Assert.assertArrayEquals;\n"
+            ]
+        },
+        "22-22:import static Assert.assertFalse": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.junit.Assert.assertFalse;\n"
+            ]
+        },
+        "24-24:import static Assert.assertTrue": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import static org.junit.Assert.assertTrue;\n"
+            ]
+        },
+        "23-23:import static Assert.assertNotNull": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import static org.junit.Assert.assertNotNull;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Base64InputStreamTest": {
+            "start": 38,
+            "end": 38,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "579-585:testSkipWrongArgument_test1_decomposed": {
+                    "start": 579,
+                    "end": 585,
+                    "body": [
+                        "    public void testSkipWrongArgument_test1_decomposed() throws Throwable {\n",
+                        "        final InputStream ins =\n",
+                        "                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));\n",
+                        "        try (final BaseNCodecInputStream b64stream = Base64InputStream.Base64InputStream0(ins)) {\n",
+                        "            b64stream.skip(-10);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = IllegalArgumentException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSkipWrongArgument_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayInputStream",
+                            "ByteArrayInputStream(byte[])"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "141-143:getBytesIso8859_1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64InputStream",
+                            "Base64InputStream",
+                            "68-70:Base64InputStream0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecInputStream",
+                            "BaseNCodecInputStream",
+                            "202-220:skip"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testSkipWrongArgument_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testSkipWrongArgument_test1_decomposed(self) -> None:",
+                        "        ins = io.BytesIO(StringUtils.getBytesIso8859_1(self.__ENCODED_B64))",
+                        "        with Base64InputStream.Base64InputStream0(ins) as b64stream:",
+                        "            with self.assertRaises(ValueError) as context:",
+                        "                b64stream.skip(-10)",
+                        "            self.assertEqual(str(context.exception), \"Negative skip length: -10\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 1.212214708328247,
+                    "generation_timestamp": "2024-11-29T10:06:34.292636",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": 1,
+                        "test_execution": 1
+                    }
+                },
+                "573-576:testSkipWrongArgument_test0_decomposed": {
+                    "start": 573,
+                    "end": 576,
+                    "body": [
+                        "    public void testSkipWrongArgument_test0_decomposed() throws Throwable {\n",
+                        "        final InputStream ins =\n",
+                        "                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSkipWrongArgument_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayInputStream",
+                            "ByteArrayInputStream(byte[])"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "141-143:getBytesIso8859_1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testSkipWrongArgument_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testSkipWrongArgument_test0_decomposed(self) -> None:",
+                        "        ins = io.BytesIO(StringUtils.getBytesIso8859_1(self.__ENCODED_B64))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": {
+                        "commons-codec/src/test/org/apache/commons/codec/binary/Base64InputStreamTest.py::Base64InputStreamTest::testSkipWrongArgument_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                                    "class": "Context",
+                                    "method": "99-99:Context"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "141-143:getBytesIso8859_1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "119-124:getBytes"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.binary.Base64InputStreamTest",
+                                    "class": "Base64InputStreamTest",
+                                    "method": "573-576:testSkipWrongArgument_test0_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 2.047651767730713,
+                    "generation_timestamp": "2024-11-28T03:07:32.507845",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "562-570:testSkipToEnd_test1_decomposed": {
+                    "start": 562,
+                    "end": 570,
+                    "body": [
+                        "    public void testSkipToEnd_test1_decomposed() throws Throwable {\n",
+                        "        final InputStream ins =\n",
+                        "                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));\n",
+                        "        try (final BaseNCodecInputStream b64stream = Base64InputStream.Base64InputStream0(ins)) {\n",
+                        "            assertEquals(6, b64stream.skip(6));\n",
+                        "            assertEquals(-1, b64stream.read0());\n",
+                        "            assertEquals(-1, b64stream.read0());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSkipToEnd_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayInputStream",
+                            "ByteArrayInputStream(byte[])"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "141-143:getBytesIso8859_1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64InputStream",
+                            "Base64InputStream",
+                            "68-70:Base64InputStream0"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertEquals(long,long)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecInputStream",
+                            "BaseNCodecInputStream",
+                            "202-220:skip"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecInputStream",
+                            "BaseNCodecInputStream",
+                            "109-119:read0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testSkipToEnd_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testSkipToEnd_test1_decomposed(self) -> None:",
+                        "        ins = io.BytesIO(StringUtils.getBytesIso8859_1(self.__ENCODED_B64))",
+                        "        with Base64InputStream.Base64InputStream0(ins) as b64stream:",
+                        "            self.assertEqual(6, b64stream.skip(6), \"Failed to skip 6 bytes\")",
+                        "            self.assertEqual(-1, b64stream.read0(), \"Expected end of stream (-1) after skipping\")",
+                        "            self.assertEqual(-1, b64stream.read0(), \"Expected end of stream (-1) on subsequent read\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 3.2470905780792236,
+                    "generation_timestamp": "2024-11-29T10:06:37.597877",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": 1,
+                        "test_execution": 1
+                    }
+                },
+                "556-559:testSkipToEnd_test0_decomposed": {
+                    "start": 556,
+                    "end": 559,
+                    "body": [
+                        "    public void testSkipToEnd_test0_decomposed() throws Throwable {\n",
+                        "        final InputStream ins =\n",
+                        "                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSkipToEnd_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayInputStream",
+                            "ByteArrayInputStream(byte[])"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "141-143:getBytesIso8859_1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testSkipToEnd_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testSkipToEnd_test0_decomposed(self) -> None:",
+                        "        ins = io.BytesIO(StringUtils.getBytesIso8859_1(self.__ENCODED_B64))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": {
+                        "commons-codec/src/test/org/apache/commons/codec/binary/Base64InputStreamTest.py::Base64InputStreamTest::testSkipToEnd_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                                    "class": "Context",
+                                    "method": "99-99:Context"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "141-143:getBytesIso8859_1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "119-124:getBytes"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.binary.Base64InputStreamTest",
+                                    "class": "Base64InputStreamTest",
+                                    "method": "556-559:testSkipToEnd_test0_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 1.783489465713501,
+                    "generation_timestamp": "2024-11-28T03:07:34.333994",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "545-553:testSkipPastEnd_test1_decomposed": {
+                    "start": 545,
+                    "end": 553,
+                    "body": [
+                        "    public void testSkipPastEnd_test1_decomposed() throws Throwable {\n",
+                        "        final InputStream ins =\n",
+                        "                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));\n",
+                        "        try (final BaseNCodecInputStream b64stream = Base64InputStream.Base64InputStream0(ins)) {\n",
+                        "            assertEquals(6, b64stream.skip(10));\n",
+                        "            assertEquals(-1, b64stream.read0());\n",
+                        "            assertEquals(-1, b64stream.read0());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSkipPastEnd_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayInputStream",
+                            "ByteArrayInputStream(byte[])"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "141-143:getBytesIso8859_1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64InputStream",
+                            "Base64InputStream",
+                            "68-70:Base64InputStream0"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertEquals(long,long)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecInputStream",
+                            "BaseNCodecInputStream",
+                            "202-220:skip"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecInputStream",
+                            "BaseNCodecInputStream",
+                            "109-119:read0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testSkipPastEnd_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testSkipPastEnd_test1_decomposed(self) -> None:",
+                        "        ins = io.BytesIO(StringUtils.getBytesIso8859_1(self.__ENCODED_B64))",
+                        "        with Base64InputStream.Base64InputStream0(ins) as b64stream:",
+                        "            self.assertEqual(6, b64stream.skip(10), \"Expected to skip 6 bytes\")",
+                        "            self.assertEqual(-1, b64stream.read0(), \"Expected EOF (-1) after skipping past end\")",
+                        "            self.assertEqual(-1, b64stream.read0(), \"Expected EOF (-1) on subsequent read\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 2.3088226318359375,
+                    "generation_timestamp": "2024-11-29T10:06:39.955007",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": 1,
+                        "test_execution": 1
+                    }
+                },
+                "539-542:testSkipPastEnd_test0_decomposed": {
+                    "start": 539,
+                    "end": 542,
+                    "body": [
+                        "    public void testSkipPastEnd_test0_decomposed() throws Throwable {\n",
+                        "        final InputStream ins =\n",
+                        "                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSkipPastEnd_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayInputStream",
+                            "ByteArrayInputStream(byte[])"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "141-143:getBytesIso8859_1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testSkipPastEnd_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testSkipPastEnd_test0_decomposed(self) -> None:",
+                        "        ins = io.BytesIO(StringUtils.getBytesIso8859_1(self.__ENCODED_B64))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": {
+                        "commons-codec/src/test/org/apache/commons/codec/binary/Base64InputStreamTest.py::Base64InputStreamTest::testSkipPastEnd_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                                    "class": "Context",
+                                    "method": "99-99:Context"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "141-143:getBytesIso8859_1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "119-124:getBytes"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.binary.Base64InputStreamTest",
+                                    "class": "Base64InputStreamTest",
+                                    "method": "539-542:testSkipPastEnd_test0_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 1.714240550994873,
+                    "generation_timestamp": "2024-11-28T03:07:36.113370",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "525-536:testSkipNone_test1_decomposed": {
+                    "start": 525,
+                    "end": 536,
+                    "body": [
+                        "    public void testSkipNone_test1_decomposed() throws Throwable {\n",
+                        "        final InputStream ins =\n",
+                        "                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));\n",
+                        "        try (final BaseNCodecInputStream b64stream = Base64InputStream.Base64InputStream0(ins)) {\n",
+                        "            final byte[] actualBytes = new byte[6];\n",
+                        "            assertEquals(0, b64stream.skip(0));\n",
+                        "            b64stream.read1(actualBytes, 0, actualBytes.length);\n",
+                        "            assertArrayEquals(\n",
+                        "                    actualBytes, new byte[] {0, 0, 0, (byte) 255, (byte) 255, (byte) 255});\n",
+                        "            assertEquals(-1, b64stream.read0());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSkipNone_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayInputStream",
+                            "ByteArrayInputStream(byte[])"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "141-143:getBytesIso8859_1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64InputStream",
+                            "Base64InputStream",
+                            "68-70:Base64InputStream0"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertEquals(long,long)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecInputStream",
+                            "BaseNCodecInputStream",
+                            "202-220:skip"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecInputStream",
+                            "BaseNCodecInputStream",
+                            "133-178:read1"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertArrayEquals(byte[],byte[])"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecInputStream",
+                            "BaseNCodecInputStream",
+                            "109-119:read0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testSkipNone_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testSkipNone_test1_decomposed(self) -> None:",
+                        "        ins = io.BytesIO(StringUtils.getBytesIso8859_1(self.__ENCODED_B64))",
+                        "        with Base64InputStream.Base64InputStream0(ins) as b64stream:",
+                        "            actual_bytes = bytearray(6)",
+                        "            self.assertEqual(0, b64stream.skip(0))",
+                        "            b64stream.read1(actual_bytes, 0, len(actual_bytes))",
+                        "            self.assertListEqual(",
+                        "                list(actual_bytes), [0, 0, 0, 255, 255, 255]",
+                        "            )",
+                        "            self.assertEqual(-1, b64stream.read0())"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 2.3539137840270996,
+                    "generation_timestamp": "2024-11-29T10:06:42.358310",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": 1,
+                        "test_execution": 1
+                    }
+                },
+                "519-522:testSkipNone_test0_decomposed": {
+                    "start": 519,
+                    "end": 522,
+                    "body": [
+                        "    public void testSkipNone_test0_decomposed() throws Throwable {\n",
+                        "        final InputStream ins =\n",
+                        "                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSkipNone_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayInputStream",
+                            "ByteArrayInputStream(byte[])"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "141-143:getBytesIso8859_1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testSkipNone_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testSkipNone_test0_decomposed(self) -> None:",
+                        "        ins = io.BytesIO(StringUtils.getBytesIso8859_1(self.__ENCODED_B64))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": {
+                        "commons-codec/src/test/org/apache/commons/codec/binary/Base64InputStreamTest.py::Base64InputStreamTest::testSkipNone_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                                    "class": "Context",
+                                    "method": "99-99:Context"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "141-143:getBytesIso8859_1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "119-124:getBytes"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.binary.Base64InputStreamTest",
+                                    "class": "Base64InputStreamTest",
+                                    "method": "519-522:testSkipNone_test0_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 2.235488176345825,
+                    "generation_timestamp": "2024-11-28T03:07:38.386539",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "508-516:testSkipBig_test1_decomposed": {
+                    "start": 508,
+                    "end": 516,
+                    "body": [
+                        "    public void testSkipBig_test1_decomposed() throws Throwable {\n",
+                        "        final InputStream ins =\n",
+                        "                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));\n",
+                        "        try (final BaseNCodecInputStream b64stream = Base64InputStream.Base64InputStream0(ins)) {\n",
+                        "            assertEquals(6, b64stream.skip(Integer.MAX_VALUE));\n",
+                        "            assertEquals(-1, b64stream.read0());\n",
+                        "            assertEquals(-1, b64stream.read0());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSkipBig_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayInputStream",
+                            "ByteArrayInputStream(byte[])"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "141-143:getBytesIso8859_1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64InputStream",
+                            "Base64InputStream",
+                            "68-70:Base64InputStream0"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertEquals(long,long)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecInputStream",
+                            "BaseNCodecInputStream",
+                            "202-220:skip"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecInputStream",
+                            "BaseNCodecInputStream",
+                            "109-119:read0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testSkipBig_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testSkipBig_test1_decomposed(self) -> None:",
+                        "        ins = io.BytesIO(StringUtils.getBytesIso8859_1(self.__ENCODED_B64))",
+                        "        with Base64InputStream.Base64InputStream0(ins) as b64stream:",
+                        "            self.assertEqual(6, b64stream.skip(2147483647), \"Expected to skip 6 bytes\")",
+                        "            self.assertEqual(-1, b64stream.read0(), \"Expected end of stream (-1) after skipping\")",
+                        "            self.assertEqual(-1, b64stream.read0(), \"Expected end of stream (-1) on subsequent read\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 2.1162242889404297,
+                    "generation_timestamp": "2024-11-29T10:06:44.530773",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": 1,
+                        "test_execution": 1
+                    }
+                },
+                "502-505:testSkipBig_test0_decomposed": {
+                    "start": 502,
+                    "end": 505,
+                    "body": [
+                        "    public void testSkipBig_test0_decomposed() throws Throwable {\n",
+                        "        final InputStream ins =\n",
+                        "                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSkipBig_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayInputStream",
+                            "ByteArrayInputStream(byte[])"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "141-143:getBytesIso8859_1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testSkipBig_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testSkipBig_test0_decomposed(self) -> None:",
+                        "        ins = io.BytesIO(StringUtils.getBytesIso8859_1(self.__ENCODED_B64))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": {
+                        "commons-codec/src/test/org/apache/commons/codec/binary/Base64InputStreamTest.py::Base64InputStreamTest::testSkipBig_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                                    "class": "Context",
+                                    "method": "99-99:Context"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "141-143:getBytesIso8859_1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "119-124:getBytes"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.binary.Base64InputStreamTest",
+                                    "class": "Base64InputStreamTest",
+                                    "method": "502-505:testSkipBig_test0_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 2.1118805408477783,
+                    "generation_timestamp": "2024-11-28T03:07:40.556406",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "460-499:testReadOutOfBounds_test1_decomposed": {
+                    "start": 460,
+                    "end": 499,
+                    "body": [
+                        "    public void testReadOutOfBounds_test1_decomposed() throws Exception {\n",
+                        "        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "        final byte[] buf = new byte[1024];\n",
+                        "        final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);\n",
+                        "        try (final BaseNCodecInputStream in =\n",
+                        "                Base64InputStream.Base64InputStream2(bin, true, 4, new byte[] {0, 0, 0})) {\n",
+                        "\n",
+                        "            try {\n",
+                        "                in.read1(buf, -1, 0);\n",
+                        "                fail(\n",
+                        "                        \"Expected Base64InputStream.read(buf, -1, 0) to throw\"\n",
+                        "                                + \" IndexOutOfBoundsException\");\n",
+                        "            } catch (final IndexOutOfBoundsException e) {\n",
+                        "            }\n",
+                        "\n",
+                        "            try {\n",
+                        "                in.read1(buf, 0, -1);\n",
+                        "                fail(\n",
+                        "                        \"Expected Base64InputStream.read(buf, 0, -1) to throw\"\n",
+                        "                                + \" IndexOutOfBoundsException\");\n",
+                        "            } catch (final IndexOutOfBoundsException e) {\n",
+                        "            }\n",
+                        "\n",
+                        "            try {\n",
+                        "                in.read1(buf, buf.length + 1, 0);\n",
+                        "                fail(\n",
+                        "                        \"Base64InputStream.read(buf, buf.length + 1, 0) throws\"\n",
+                        "                                + \" IndexOutOfBoundsException\");\n",
+                        "            } catch (final IndexOutOfBoundsException e) {\n",
+                        "            }\n",
+                        "\n",
+                        "            try {\n",
+                        "                in.read1(buf, buf.length - 1, 2);\n",
+                        "                fail(\n",
+                        "                        \"Base64InputStream.read(buf, buf.length - 1, 2) throws\"\n",
+                        "                                + \" IndexOutOfBoundsException\");\n",
+                        "            } catch (final IndexOutOfBoundsException e) {\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testReadOutOfBounds_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayInputStream",
+                            "ByteArrayInputStream(byte[])"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64InputStream",
+                            "Base64InputStream",
+                            "97-103:Base64InputStream2"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecInputStream",
+                            "BaseNCodecInputStream",
+                            "133-178:read1"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "fail(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testReadOutOfBounds_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testReadOutOfBounds_test1_decomposed(self) -> None:",
+                        "        decoded = StringUtils.getBytesUtf8(self.__STRING_FIXTURE)",
+                        "        buf = [0] * 1024",
+                        "        bin_ = io.BytesIO(bytes(decoded))",
+                        "        with Base64InputStream.Base64InputStream2(bin_, True, 4, [0, 0, 0]) as in_:",
+                        "",
+                        "            with self.assertRaises(IndexError, msg=\"offset or len_ cannot be negative\"):",
+                        "                in_.read1(buf, -1, 0)",
+                        "",
+                        "            with self.assertRaises(IndexError, msg=\"offset or len_ cannot be negative\"):",
+                        "                in_.read1(buf, 0, -1)",
+                        "",
+                        "            with self.assertRaises(IndexError, msg=\"offset + len_ exceeds array length\"):",
+                        "                in_.read1(buf, len(buf) + 1, 0)",
+                        "",
+                        "            with self.assertRaises(IndexError, msg=\"offset + len_ exceeds array length\"):",
+                        "                in_.read1(buf, len(buf) - 1, 2)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 2.3680388927459717,
+                    "generation_timestamp": "2024-11-29T09:57:41.524409",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": 1,
+                        "test_execution": 1
+                    }
+                },
+                "455-457:testReadOutOfBounds_test0_decomposed": {
+                    "start": 455,
+                    "end": 457,
+                    "body": [
+                        "    public void testReadOutOfBounds_test0_decomposed() throws Exception {\n",
+                        "        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testReadOutOfBounds_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testReadOutOfBounds_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testReadOutOfBounds_test0_decomposed(self) -> None:",
+                        "        decoded: List[int] = StringUtils.getBytesUtf8(self.__STRING_FIXTURE)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 1.8701441287994385,
+                    "generation_timestamp": "2024-12-01T11:12:38.325750",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "443-452:testReadNull_test1_decomposed": {
+                    "start": 443,
+                    "end": 452,
+                    "body": [
+                        "    public void testReadNull_test1_decomposed() throws Exception {\n",
+                        "        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "        final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);\n",
+                        "        try (final BaseNCodecInputStream in =\n",
+                        "                Base64InputStream.Base64InputStream2(bin, true, 4, new byte[] {0, 0, 0})) {\n",
+                        "            in.read1(null, 0, 0);\n",
+                        "            fail(\"Base64InputStream.read(null, 0, 0) to throw a NullPointerException\");\n",
+                        "        } catch (final NullPointerException e) {\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testReadNull_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayInputStream",
+                            "ByteArrayInputStream(byte[])"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64InputStream",
+                            "Base64InputStream",
+                            "97-103:Base64InputStream2"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecInputStream",
+                            "BaseNCodecInputStream",
+                            "133-178:read1"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "fail(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testReadNull_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testReadNull_test1_decomposed(self) -> None:",
+                        "        decoded = StringUtils.getBytesUtf8(self.__STRING_FIXTURE)",
+                        "        bin_stream = io.BytesIO(bytearray(decoded))",
+                        "        with pytest.raises(ValueError, match=\"array cannot be None\"):",
+                        "            with Base64InputStream.Base64InputStream2(bin_stream, True, 4, [0, 0, 0]) as in_stream:",
+                        "                in_stream.read1(None, 0, 0)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 1.6023690700531006,
+                    "generation_timestamp": "2024-11-29T09:57:43.171306",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": 1,
+                        "test_execution": 1
+                    }
+                },
+                "438-440:testReadNull_test0_decomposed": {
+                    "start": 438,
+                    "end": 440,
+                    "body": [
+                        "    public void testReadNull_test0_decomposed() throws Exception {\n",
+                        "        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testReadNull_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testReadNull_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testReadNull_test0_decomposed(self) -> None:",
+                        "        decoded: List[int] = StringUtils.getBytesUtf8(self.__STRING_FIXTURE)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0.6533050537109375,
+                    "generation_timestamp": "2024-12-01T11:12:39.054913",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "425-435:testRead0_test1_decomposed": {
+                    "start": 425,
+                    "end": 435,
+                    "body": [
+                        "    public void testRead0_test1_decomposed() throws Exception {\n",
+                        "        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "        final byte[] buf = new byte[1024];\n",
+                        "        int bytesRead = 0;\n",
+                        "        final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);\n",
+                        "        try (final BaseNCodecInputStream in =\n",
+                        "                Base64InputStream.Base64InputStream2(bin, true, 4, new byte[] {0, 0, 0})) {\n",
+                        "            bytesRead = in.read1(buf, 0, 0);\n",
+                        "            assertEquals(\"Base64InputStream.read(buf, 0, 0) returns 0\", 0, bytesRead);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testRead0_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayInputStream",
+                            "ByteArrayInputStream(byte[])"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64InputStream",
+                            "Base64InputStream",
+                            "97-103:Base64InputStream2"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecInputStream",
+                            "BaseNCodecInputStream",
+                            "133-178:read1"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertEquals(java.lang.String,long,long)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testRead0_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testRead0_test1_decomposed(self) -> None:",
+                        "        decoded = StringUtils.getBytesUtf8(self.__STRING_FIXTURE)",
+                        "        buf = bytearray(1024)",
+                        "        bytes_read = 0",
+                        "        bin_ = io.BytesIO(bytearray(decoded))",
+                        "        ",
+                        "        with Base64InputStream.Base64InputStream2(bin_, True, 4, [0, 0, 0]) as in_:",
+                        "            bytes_read = in_.read1(buf, 0, 0)",
+                        "            self.assertEqual(0, bytes_read, \"Base64InputStream.read(buf, 0, 0) returns 0\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 1.6751165390014648,
+                    "generation_timestamp": "2024-11-29T09:57:44.890857",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": 1,
+                        "test_execution": 1
+                    }
+                },
+                "420-422:testRead0_test0_decomposed": {
+                    "start": 420,
+                    "end": 422,
+                    "body": [
+                        "    public void testRead0_test0_decomposed() throws Exception {\n",
+                        "        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testRead0_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testRead0_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testRead0_test0_decomposed(self) -> None:",
+                        "        decoded: List[int] = StringUtils.getBytesUtf8(self.__STRING_FIXTURE)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0.5864717960357666,
+                    "generation_timestamp": "2024-12-01T11:12:39.718942",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "410-417:testMarkSupported_test1_decomposed": {
+                    "start": 410,
+                    "end": 417,
+                    "body": [
+                        "    public void testMarkSupported_test1_decomposed() throws Exception {\n",
+                        "        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "        final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);\n",
+                        "        try (final BaseNCodecInputStream in =\n",
+                        "                Base64InputStream.Base64InputStream2(bin, true, 4, new byte[] {0, 0, 0})) {\n",
+                        "            assertFalse(\"Base64InputStream.markSupported() is false\", in.markSupported());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testMarkSupported_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayInputStream",
+                            "ByteArrayInputStream(byte[])"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64InputStream",
+                            "Base64InputStream",
+                            "97-103:Base64InputStream2"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertFalse(java.lang.String,boolean)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecInputStream",
+                            "BaseNCodecInputStream",
+                            "99-101:markSupported"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testMarkSupported_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testMarkSupported_test1_decomposed(self) -> None:",
+                        "        decoded = StringUtils.getBytesUtf8(self.__STRING_FIXTURE)",
+                        "        bin = io.BytesIO(bytearray(decoded))",
+                        "        with Base64InputStream.Base64InputStream2(bin, True, 4, [0, 0, 0]) as in_:",
+                        "            self.assertFalse(in_.markSupported(), \"Base64InputStream.markSupported() is false\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 1.2140593528747559,
+                    "generation_timestamp": "2024-11-29T09:57:46.149144",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": 1,
+                        "test_execution": 1
+                    }
+                },
+                "405-407:testMarkSupported_test0_decomposed": {
+                    "start": 405,
+                    "end": 407,
+                    "body": [
+                        "    public void testMarkSupported_test0_decomposed() throws Exception {\n",
+                        "        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testMarkSupported_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testMarkSupported_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testMarkSupported_test0_decomposed(self) -> None:",
+                        "        decoded: List[int] = StringUtils.getBytesUtf8(self.__STRING_FIXTURE)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 2.1374523639678955,
+                    "generation_timestamp": "2024-12-01T11:12:41.934871",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "400-402:testBase64EmptyInputStreamPemChuckSize_test0_decomposed": {
+                    "start": 400,
+                    "end": 402,
+                    "body": [
+                        "    public void testBase64EmptyInputStreamPemChuckSize_test0_decomposed() throws Exception {\n",
+                        "        testBase64EmptyInputStream(BaseNCodec.PEM_CHUNK_SIZE);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64EmptyInputStreamPemChuckSize_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base64InputStreamTest",
+                            "Base64InputStreamTest",
+                            "113-118:testBase64EmptyInputStream"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testBase64EmptyInputStreamPemChuckSize_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testBase64EmptyInputStreamPemChuckSize_test0_decomposed(self) -> None:",
+                        "        self.__testBase64EmptyInputStream(BaseNCodec.PEM_CHUNK_SIZE)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0.6471536159515381,
+                    "generation_timestamp": "2024-11-30T13:36:10.589527",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": 1,
+                        "test_execution": 1
+                    }
+                },
+                "395-397:testBase64EmptyInputStreamMimeChuckSize_test0_decomposed": {
+                    "start": 395,
+                    "end": 397,
+                    "body": [
+                        "    public void testBase64EmptyInputStreamMimeChuckSize_test0_decomposed() throws Exception {\n",
+                        "        testBase64EmptyInputStream(BaseNCodec.MIME_CHUNK_SIZE);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64EmptyInputStreamMimeChuckSize_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base64InputStreamTest",
+                            "Base64InputStreamTest",
+                            "113-118:testBase64EmptyInputStream"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testBase64EmptyInputStreamMimeChuckSize_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testBase64EmptyInputStreamMimeChuckSize_test0_decomposed(self) -> None:",
+                        "        self.__testBase64EmptyInputStream(BaseNCodec.MIME_CHUNK_SIZE)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0.5945913791656494,
+                    "generation_timestamp": "2024-11-30T13:36:11.238712",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": 1,
+                        "test_execution": 1
+                    }
+                },
+                "381-392:testAvailable_test1_decomposed": {
+                    "start": 381,
+                    "end": 392,
+                    "body": [
+                        "    public void testAvailable_test1_decomposed() throws Throwable {\n",
+                        "        final InputStream ins =\n",
+                        "                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));\n",
+                        "        try (final BaseNCodecInputStream b64stream = Base64InputStream.Base64InputStream0(ins)) {\n",
+                        "            assertEquals(1, b64stream.available());\n",
+                        "            assertEquals(6, b64stream.skip(10));\n",
+                        "            assertEquals(0, b64stream.available());\n",
+                        "            assertEquals(-1, b64stream.read0());\n",
+                        "            assertEquals(-1, b64stream.read0());\n",
+                        "            assertEquals(0, b64stream.available());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testAvailable_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayInputStream",
+                            "ByteArrayInputStream(byte[])"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "141-143:getBytesIso8859_1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64InputStream",
+                            "Base64InputStream",
+                            "68-70:Base64InputStream0"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertEquals(long,long)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecInputStream",
+                            "BaseNCodecInputStream",
+                            "61-64:available"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecInputStream",
+                            "BaseNCodecInputStream",
+                            "202-220:skip"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecInputStream",
+                            "BaseNCodecInputStream",
+                            "109-119:read0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testAvailable_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testAvailable_test1_decomposed(self) -> None:",
+                        "        ins = io.BytesIO(StringUtils.getBytesIso8859_1(self.__ENCODED_B64))",
+                        "        with Base64InputStream.Base64InputStream0(ins) as b64stream:",
+                        "            self.assertEqual(1, b64stream.available(), \"Initial available bytes should be 1\")",
+                        "            self.assertEqual(6, b64stream.skip(10), \"Skipped bytes should be 6\")",
+                        "            self.assertEqual(0, b64stream.available(), \"Available bytes after skip should be 0\")",
+                        "            self.assertEqual(-1, b64stream.read0(), \"Read should return -1 when no more data is available\")",
+                        "            self.assertEqual(-1, b64stream.read0(), \"Read should return -1 when no more data is available\")",
+                        "            self.assertEqual(0, b64stream.available(), \"Available bytes should remain 0 after reading\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 2.8745839595794678,
+                    "generation_timestamp": "2024-11-29T10:06:47.460156",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": 1,
+                        "test_execution": 1
+                    }
+                },
+                "375-378:testAvailable_test0_decomposed": {
+                    "start": 375,
+                    "end": 378,
+                    "body": [
+                        "    public void testAvailable_test0_decomposed() throws Throwable {\n",
+                        "        final InputStream ins =\n",
+                        "                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testAvailable_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayInputStream",
+                            "ByteArrayInputStream(byte[])"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "141-143:getBytesIso8859_1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testAvailable_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testAvailable_test0_decomposed(self) -> None:",
+                        "        ins = io.BytesIO(StringUtils.getBytesIso8859_1(self.__ENCODED_B64))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": {
+                        "commons-codec/src/test/org/apache/commons/codec/binary/Base64InputStreamTest.py::Base64InputStreamTest::testAvailable_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                                    "class": "Context",
+                                    "method": "99-99:Context"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "141-143:getBytesIso8859_1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "119-124:getBytes"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.binary.Base64InputStreamTest",
+                                    "class": "Base64InputStreamTest",
+                                    "method": "375-378:testAvailable_test0_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 1.8808419704437256,
+                    "generation_timestamp": "2024-11-28T03:07:42.489582",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "362-372:testInputStreamReader_test2_decomposed": {
+                    "start": 362,
+                    "end": 372,
+                    "body": [
+                        "    public void testInputStreamReader_test2_decomposed() throws Exception {\n",
+                        "        final byte[] codec101 =\n",
+                        "                StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3);\n",
+                        "        final ByteArrayInputStream bais = new ByteArrayInputStream(codec101);\n",
+                        "        final BaseNCodecInputStream in = Base64InputStream.Base64InputStream0(bais);\n",
+                        "        final InputStreamReader isr = new InputStreamReader(in);\n",
+                        "        try (final BufferedReader br = new BufferedReader(isr)) {\n",
+                        "            final String line = br.readLine();\n",
+                        "            assertNotNull(\"Codec101:  InputStreamReader works!\", line);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testInputStreamReader_test2_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayInputStream",
+                            "ByteArrayInputStream(byte[])"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64InputStream",
+                            "Base64InputStream",
+                            "68-70:Base64InputStream0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/InputStreamReader",
+                            "InputStreamReader(java.io.InputStream)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/BufferedReader",
+                            "BufferedReader(java.io.Reader)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/BufferedReader",
+                            "readLine()"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertNotNull(java.lang.String,java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testInputStreamReader_test2_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testInputStreamReader_test2_decomposed(self) -> None:",
+                        "        codec101 = StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3)",
+                        "        bais = io.BytesIO(bytes(codec101))",
+                        "        in_ = Base64InputStream.Base64InputStream0(bais)",
+                        "        isr = io.TextIOWrapper(in_, encoding='utf-8')",
+                        "        with io.BufferedReader(isr) as br:",
+                        "            line = br.readline()",
+                        "            self.assertIsNotNone(line, \"Codec101: InputStreamReader works!\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 4.932616949081421,
+                    "generation_timestamp": "2024-11-29T10:02:13.843411",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "354-359:testInputStreamReader_test1_decomposed": {
+                    "start": 354,
+                    "end": 359,
+                    "body": [
+                        "    public void testInputStreamReader_test1_decomposed() throws Exception {\n",
+                        "        final byte[] codec101 =\n",
+                        "                StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3);\n",
+                        "        final ByteArrayInputStream bais = new ByteArrayInputStream(codec101);\n",
+                        "        final BaseNCodecInputStream in = Base64InputStream.Base64InputStream0(bais);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testInputStreamReader_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayInputStream",
+                            "ByteArrayInputStream(byte[])"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64InputStream",
+                            "Base64InputStream",
+                            "68-70:Base64InputStream0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testInputStreamReader_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testInputStreamReader_test1_decomposed(self) -> None:",
+                        "        codec101 = StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3)",
+                        "        bais = io.BytesIO(bytes(codec101))",
+                        "        in_ = Base64InputStream.Base64InputStream0(bais)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0.9316010475158691,
+                    "generation_timestamp": "2024-11-29T10:06:48.438210",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": 1,
+                        "test_execution": 1
+                    }
+                },
+                "348-351:testInputStreamReader_test0_decomposed": {
+                    "start": 348,
+                    "end": 351,
+                    "body": [
+                        "    public void testInputStreamReader_test0_decomposed() throws Exception {\n",
+                        "        final byte[] codec101 =\n",
+                        "                StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testInputStreamReader_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testInputStreamReader_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testInputStreamReader_test0_decomposed(self) -> None:",
+                        "        codec101 = StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0.7008273601531982,
+                    "generation_timestamp": "2024-12-01T11:12:42.740642",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "333-345:testCodec101_test1_decomposed": {
+                    "start": 333,
+                    "end": 345,
+                    "body": [
+                        "    public void testCodec101_test1_decomposed() throws Exception {\n",
+                        "        final byte[] codec101 =\n",
+                        "                StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3);\n",
+                        "        final ByteArrayInputStream bais = new ByteArrayInputStream(codec101);\n",
+                        "        try (final BaseNCodecInputStream in = Base64InputStream.Base64InputStream0(bais)) {\n",
+                        "            final byte[] result = new byte[8192];\n",
+                        "            int c = in.read(result);\n",
+                        "            assertTrue(\"Codec101: First read successful [c=\" + c + \"]\", c > 0);\n",
+                        "\n",
+                        "            c = in.read(result);\n",
+                        "            assertTrue(\"Codec101: Second read should report end-of-stream [c=\" + c + \"]\", c < 0);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCodec101_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayInputStream",
+                            "ByteArrayInputStream(byte[])"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64InputStream",
+                            "Base64InputStream",
+                            "68-70:Base64InputStream0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/FilterInputStream",
+                            "read(byte[])"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertTrue(java.lang.String,boolean)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testCodec101_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testCodec101_test1_decomposed(self) -> None:",
+                        "        codec101 = StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3)",
+                        "        bais = io.BytesIO(bytes(codec101))",
+                        "        with Base64InputStream.Base64InputStream0(bais) as in_:",
+                        "            result = bytearray(8192)",
+                        "            c = in_.readinto(result)",
+                        "            self.assertTrue(c > 0, f\"Codec101: First read successful [c={c}]\")",
+                        "",
+                        "            c = in_.readinto(result)",
+                        "            self.assertTrue(c < 0, f\"Codec101: Second read should report end-of-stream [c={c}]\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 2.5475828647613525,
+                    "generation_timestamp": "2024-11-29T10:06:51.039412",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": 1,
+                        "test_execution": 1
+                    }
+                },
+                "327-330:testCodec101_test0_decomposed": {
+                    "start": 327,
+                    "end": 330,
+                    "body": [
+                        "    public void testCodec101_test0_decomposed() throws Exception {\n",
+                        "        final byte[] codec101 =\n",
+                        "                StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCodec101_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testCodec101_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testCodec101_test0_decomposed(self) -> None:",
+                        "        codec101 = StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 2.3559648990631104,
+                    "generation_timestamp": "2024-12-01T11:12:45.166362",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "316-324:testCodec105_test0_decomposed": {
+                    "start": 316,
+                    "end": 324,
+                    "body": [
+                        "    public void testCodec105_test0_decomposed() throws IOException {\n",
+                        "        try (final BaseNCodecInputStream in =\n",
+                        "                Base64InputStream.Base64InputStream2(\n",
+                        "                        new Codec105ErrorInputStream(), true, 0, null)) {\n",
+                        "            for (int i = 0; i < 5; i++) {\n",
+                        "                in.read0();\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCodec105_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64InputStream",
+                            "Base64InputStream",
+                            "97-103:Base64InputStream2"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Codec105ErrorInputStream",
+                            "Codec105ErrorInputStream",
+                            "Codec105ErrorInputStream"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecInputStream",
+                            "BaseNCodecInputStream",
+                            "109-119:read0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testCodec105_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testCodec105_test0_decomposed(self) -> None:",
+                        "        with Base64InputStream.Base64InputStream2(",
+                        "            Codec105ErrorInputStream(), True, 0, None",
+                        "        ) as in_:",
+                        "            for _ in range(5):",
+                        "                in_.read0()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0.8720250129699707,
+                    "generation_timestamp": "2024-11-29T09:57:39.097752",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": 1,
+                        "test_execution": 1
+                    }
+                },
+                "194-238:testByteByByte": {
+                    "start": 194,
+                    "end": 238,
+                    "body": [
+                        "    private void testByteByByte(\n",
+                        "            final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] separator)\n",
+                        "            throws Exception {\n",
+                        "\n",
+                        "        InputStream in;\n",
+                        "        in =\n",
+                        "                Base64InputStream.Base64InputStream2(\n",
+                        "                        new ByteArrayInputStream(decoded), true, chunkSize, separator);\n",
+                        "        byte[] output = new byte[encoded.length];\n",
+                        "        for (int i = 0; i < output.length; i++) {\n",
+                        "            output[i] = (byte) in.read();\n",
+                        "        }\n",
+                        "\n",
+                        "        assertEquals(\"EOF\", -1, in.read());\n",
+                        "        assertEquals(\"Still EOF\", -1, in.read());\n",
+                        "        assertArrayEquals(\"Streaming base64 encode\", encoded, output);\n",
+                        "\n",
+                        "        in.close();\n",
+                        "        in = Base64InputStream.Base64InputStream0(new ByteArrayInputStream(encoded));\n",
+                        "        output = new byte[decoded.length];\n",
+                        "        for (int i = 0; i < output.length; i++) {\n",
+                        "            output[i] = (byte) in.read();\n",
+                        "        }\n",
+                        "\n",
+                        "        assertEquals(\"EOF\", -1, in.read());\n",
+                        "        assertEquals(\"Still EOF\", -1, in.read());\n",
+                        "        assertArrayEquals(\"Streaming base64 decode\", decoded, output);\n",
+                        "\n",
+                        "        in.close();\n",
+                        "\n",
+                        "        in = new ByteArrayInputStream(decoded);\n",
+                        "        for (int i = 0; i < 10; i++) {\n",
+                        "            in = Base64InputStream.Base64InputStream2(in, true, chunkSize, separator);\n",
+                        "            in = Base64InputStream.Base64InputStream1(in, false);\n",
+                        "        }\n",
+                        "        output = new byte[decoded.length];\n",
+                        "        for (int i = 0; i < output.length; i++) {\n",
+                        "            output[i] = (byte) in.read();\n",
+                        "        }\n",
+                        "\n",
+                        "        assertEquals(\"EOF\", -1, in.read());\n",
+                        "        assertEquals(\"Still EOF\", -1, in.read());\n",
+                        "        assertArrayEquals(\"Streaming base64 wrap-wrap-wrap!\", decoded, output);\n",
+                        "        in.close();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testByteByByte(byte[], byte[], int, byte[])",
+                    "parameters": [
+                        "encoded",
+                        "decoded",
+                        "chunkSize",
+                        "separator"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64InputStream",
+                            "Base64InputStream",
+                            "97-103:Base64InputStream2"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayInputStream",
+                            "ByteArrayInputStream(byte[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/InputStream",
+                            "read()"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertEquals(java.lang.String,long,long)"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertArrayEquals(java.lang.String,byte[],byte[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/InputStream",
+                            "close()"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64InputStream",
+                            "Base64InputStream",
+                            "68-70:Base64InputStream0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64InputStream",
+                            "Base64InputStream",
+                            "79-82:Base64InputStream1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __testByteByByte(self, encoded: typing.List[int], decoded: typing.List[int], chunkSize: int, separator: typing.List[int]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __testByteByByte(self, encoded: typing.List[int], decoded: typing.List[int], chunkSize: int, separator: typing.List[int]) -> None:",
+                        "        # First test: Streaming base64 encode",
+                        "        in_stream = Base64InputStream.Base64InputStream2(",
+                        "            io.BytesIO(decoded), True, chunkSize, separator",
+                        "        )",
+                        "        output = bytearray(len(encoded))",
+                        "        for i in range(len(output)):",
+                        "            output[i] = in_stream.read(1)[0]",
+                        "",
+                        "        self.assertEqual(-1, in_stream.read(1), \"EOF\")",
+                        "        self.assertEqual(-1, in_stream.read(1), \"Still EOF\")",
+                        "        self.assertEqual(encoded, list(output), \"Streaming base64 encode\")",
+                        "",
+                        "        in_stream.close()",
+                        "",
+                        "        # Second test: Streaming base64 decode",
+                        "        in_stream = Base64InputStream.Base64InputStream0(io.BytesIO(encoded))",
+                        "        output = bytearray(len(decoded))",
+                        "        for i in range(len(output)):",
+                        "            output[i] = in_stream.read(1)[0]",
+                        "",
+                        "        self.assertEqual(-1, in_stream.read(1), \"EOF\")",
+                        "        self.assertEqual(-1, in_stream.read(1), \"Still EOF\")",
+                        "        self.assertEqual(decoded, list(output), \"Streaming base64 decode\")",
+                        "",
+                        "        in_stream.close()",
+                        "",
+                        "        # Third test: Wrap-wrap-wrap",
+                        "        in_stream = io.BytesIO(decoded)",
+                        "        for _ in range(10):",
+                        "            in_stream = Base64InputStream.Base64InputStream2(",
+                        "                in_stream, True, chunkSize, separator",
+                        "            )",
+                        "            in_stream = Base64InputStream.Base64InputStream1(in_stream, False)",
+                        "",
+                        "        output = bytearray(len(decoded))",
+                        "        for i in range(len(output)):",
+                        "            output[i] = in_stream.read(1)[0]",
+                        "",
+                        "        self.assertEqual(-1, in_stream.read(1), \"EOF\")",
+                        "        self.assertEqual(-1, in_stream.read(1), \"Still EOF\")",
+                        "        self.assertEqual(decoded, list(output), \"Streaming base64 wrap-wrap-wrap!\")",
+                        "",
+                        "        in_stream.close()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 34.41438698768616,
+                    "generation_timestamp": "2024-11-30T13:37:19.929373",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "145-179:testByChunk": {
+                    "start": 145,
+                    "end": 179,
+                    "body": [
+                        "    private void testByChunk(\n",
+                        "            final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] separator)\n",
+                        "            throws Exception {\n",
+                        "\n",
+                        "        InputStream in;\n",
+                        "        in =\n",
+                        "                Base64InputStream.Base64InputStream2(\n",
+                        "                        new ByteArrayInputStream(decoded), true, chunkSize, separator);\n",
+                        "        byte[] output = BaseNTestData.streamToBytes0(in);\n",
+                        "\n",
+                        "        assertEquals(\"EOF\", -1, in.read());\n",
+                        "        assertEquals(\"Still EOF\", -1, in.read());\n",
+                        "        assertArrayEquals(\"Streaming base64 encode\", encoded, output);\n",
+                        "\n",
+                        "        in.close();\n",
+                        "\n",
+                        "        in = Base64InputStream.Base64InputStream0(new ByteArrayInputStream(encoded));\n",
+                        "        output = BaseNTestData.streamToBytes0(in);\n",
+                        "\n",
+                        "        assertEquals(\"EOF\", -1, in.read());\n",
+                        "        assertEquals(\"Still EOF\", -1, in.read());\n",
+                        "        assertArrayEquals(\"Streaming base64 decode\", decoded, output);\n",
+                        "\n",
+                        "        in = new ByteArrayInputStream(decoded);\n",
+                        "        for (int i = 0; i < 10; i++) {\n",
+                        "            in = Base64InputStream.Base64InputStream2(in, true, chunkSize, separator);\n",
+                        "            in = Base64InputStream.Base64InputStream1(in, false);\n",
+                        "        }\n",
+                        "        output = BaseNTestData.streamToBytes0(in);\n",
+                        "\n",
+                        "        assertEquals(\"EOF\", -1, in.read());\n",
+                        "        assertEquals(\"Still EOF\", -1, in.read());\n",
+                        "        assertArrayEquals(\"Streaming base64 wrap-wrap-wrap!\", decoded, output);\n",
+                        "        in.close();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testByChunk(byte[], byte[], int, byte[])",
+                    "parameters": [
+                        "encoded",
+                        "decoded",
+                        "chunkSize",
+                        "separator"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.BaseNTestData",
+                            "BaseNTestData",
+                            "95-103:streamToBytes0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64InputStream",
+                            "Base64InputStream",
+                            "97-103:Base64InputStream2"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayInputStream",
+                            "ByteArrayInputStream(byte[])"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertEquals(java.lang.String,long,long)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/InputStream",
+                            "read()"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertArrayEquals(java.lang.String,byte[],byte[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/InputStream",
+                            "close()"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64InputStream",
+                            "Base64InputStream",
+                            "68-70:Base64InputStream0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64InputStream",
+                            "Base64InputStream",
+                            "79-82:Base64InputStream1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __testByChunk(self, encoded: typing.List[int], decoded: typing.List[int], chunkSize: int, separator: typing.List[int]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __testByChunk(self, encoded: typing.List[int], decoded: typing.List[int], chunkSize: int, separator: typing.List[int]) -> None:",
+                        "        # Create an input stream for encoding",
+                        "        in_stream = Base64InputStream.Base64InputStream2(",
+                        "            io.BytesIO(bytearray(decoded)), True, chunkSize, separator",
+                        "        )",
+                        "        output = BaseNTestData.streamToBytes0(in_stream)",
+                        "",
+                        "        # Assert EOF after reading",
+                        "        self.assertEqual(-1, in_stream.read(), \"EOF\")",
+                        "        self.assertEqual(-1, in_stream.read(), \"Still EOF\")",
+                        "        self.assertListEqual(encoded, output, \"Streaming base64 encode\")",
+                        "",
+                        "        in_stream.close()",
+                        "",
+                        "        # Create an input stream for decoding",
+                        "        in_stream = Base64InputStream.Base64InputStream0(io.BytesIO(bytearray(encoded)))",
+                        "        output = BaseNTestData.streamToBytes0(in_stream)",
+                        "",
+                        "        # Assert EOF after reading",
+                        "        self.assertEqual(-1, in_stream.read(), \"EOF\")",
+                        "        self.assertEqual(-1, in_stream.read(), \"Still EOF\")",
+                        "        self.assertListEqual(decoded, output, \"Streaming base64 decode\")",
+                        "",
+                        "        # Wrap the input stream multiple times",
+                        "        in_stream = io.BytesIO(bytearray(decoded))",
+                        "        for _ in range(10):",
+                        "            in_stream = Base64InputStream.Base64InputStream2(",
+                        "                in_stream, True, chunkSize, separator",
+                        "            )",
+                        "            in_stream = Base64InputStream.Base64InputStream1(in_stream, False)",
+                        "",
+                        "        output = BaseNTestData.streamToBytes0(in_stream)",
+                        "",
+                        "        # Assert EOF after reading",
+                        "        self.assertEqual(-1, in_stream.read(), \"EOF\")",
+                        "        self.assertEqual(-1, in_stream.read(), \"Still EOF\")",
+                        "        self.assertListEqual(decoded, output, \"Streaming base64 wrap-wrap-wrap!\")",
+                        "",
+                        "        in_stream.close()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 32.61451745033264,
+                    "generation_timestamp": "2024-11-30T13:36:44.676483",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "113-118:testBase64EmptyInputStream": {
+                    "start": 113,
+                    "end": 118,
+                    "body": [
+                        "    private void testBase64EmptyInputStream(final int chuckSize) throws Exception {\n",
+                        "        final byte[] emptyEncoded = {};\n",
+                        "        final byte[] emptyDecoded = {};\n",
+                        "        testByteByByte(emptyEncoded, emptyDecoded, chuckSize, CRLF);\n",
+                        "        testByChunk(emptyEncoded, emptyDecoded, chuckSize, CRLF);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64EmptyInputStream(int)",
+                    "parameters": [
+                        "chuckSize"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base64InputStreamTest",
+                            "Base64InputStreamTest",
+                            "194-238:testByteByByte"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base64InputStreamTest",
+                            "Base64InputStreamTest",
+                            "145-179:testByChunk"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __testBase64EmptyInputStream(self, chuckSize: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __testBase64EmptyInputStream(self, chuckSize: int) -> None:",
+                        "        emptyEncoded: typing.List[int] = []",
+                        "        emptyDecoded: typing.List[int] = []",
+                        "        self.__testByteByByte(emptyEncoded, emptyDecoded, chuckSize, self.__CRLF)",
+                        "        self.__testByChunk(emptyEncoded, emptyDecoded, chuckSize, self.__CRLF)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 145.4498689174652,
+                    "generation_timestamp": "2024-11-30T13:34:44.090835",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 1
+                    }
+                }
+            },
+            "fields": {
+                "47-47:STRING_FIXTURE": {
+                    "start": 47,
+                    "end": 47,
+                    "body": [
+                        "    private static final String STRING_FIXTURE = \"Hello World\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __STRING_FIXTURE: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __STRING_FIXTURE: str = \"Hello World\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 29.474304676055908,
+                    "generation_timestamp": "2024-11-27T11:35:55.333451",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "45-45:LF": {
+                    "start": 45,
+                    "end": 45,
+                    "body": [
+                        "    private static final byte[] LF = {(byte) '\\n'};\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __LF: typing.List[int] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __LF: typing.List[int] = [10]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 29.17253065109253,
+                    "generation_timestamp": "2024-11-27T11:36:24.544850",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "43-43:CRLF": {
+                    "start": 43,
+                    "end": 43,
+                    "body": [
+                        "    private static final byte[] CRLF = {(byte) '\\r', (byte) '\\n'};\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __CRLF: typing.List[int] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __CRLF: typing.List[int] = [13, 10]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 29.249340295791626,
+                    "generation_timestamp": "2024-11-27T11:36:53.860234",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "41-41:ENCODED_B64": {
+                    "start": 41,
+                    "end": 41,
+                    "body": [
+                        "    private static final String ENCODED_B64 = \"AAAA////\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ENCODED_B64: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ENCODED_B64: str = \"AAAA////\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 30.386927366256714,
+                    "generation_timestamp": "2024-11-27T11:37:24.301938",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class Base64InputStreamTest(unittest.TestCase):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os",
+        "import unittest",
+        "from src.main.org.apache.commons.codec.binary.Base64InputStream import *",
+        "from src.test.org.apache.commons.codec.binary.Base64TestData import *",
+        "from src.main.org.apache.commons.codec.binary.BaseNCodec import *",
+        "from src.main.org.apache.commons.codec.binary.BaseNCodecInputStream import *",
+        "from src.test.org.apache.commons.codec.binary.BaseNTestData import *",
+        "from src.test.org.apache.commons.codec.binary.Codec105ErrorInputStream import *",
+        "from src.main.org.apache.commons.codec.binary.StringUtils import *"
+    ]
+}

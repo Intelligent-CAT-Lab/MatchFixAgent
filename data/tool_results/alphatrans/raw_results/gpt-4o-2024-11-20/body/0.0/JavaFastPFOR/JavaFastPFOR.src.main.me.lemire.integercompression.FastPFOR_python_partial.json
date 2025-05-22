@@ -1,0 +1,1774 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/main/java/me/lemire/integercompression/FastPFOR.java",
+    "imports": {
+        "9-9:import ByteBuffer": {
+            "start": 9,
+            "end": 9,
+            "body": [
+                "import java.nio.ByteBuffer;\n"
+            ]
+        },
+        "10-10:import ByteOrder": {
+            "start": 10,
+            "end": 10,
+            "body": [
+                "import java.nio.ByteOrder;\n"
+            ]
+        },
+        "11-11:import Arrays": {
+            "start": 11,
+            "end": 11,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        }
+    },
+    "classes": {
+        "FastPFOR": {
+            "start": 41,
+            "end": 41,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "IntegerCODEC",
+                "SkippableIntegerCODEC"
+            ],
+            "extends": [],
+            "methods": {
+                "341-343:toString": {
+                    "start": 341,
+                    "end": 343,
+                    "body": [
+                        "        public String toString() {\n",
+                        "                return this.getClass().getSimpleName();\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getSimpleName()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "getClass()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "        return self.__class__.__name__"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 126.99224543571472,
+                    "generation_timestamp": "2024-11-27T11:53:45.878015",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "332-339:uncompress0": {
+                    "start": 332,
+                    "end": 339,
+                    "body": [
+                        "        public void uncompress0(int[] in, IntWrapper inpos, int inlength, int[] out,\n",
+                        "                                IntWrapper outpos) {\n",
+                        "            if (inlength == 0)\n",
+                        "                return;\n",
+                        "            final int outlength = in[inpos.get()];\n",
+                        "            inpos.increment();\n",
+                        "            headlessUncompress(in, inpos, inlength, out, outpos, outlength);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "uncompress0(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "69-71:increment"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR",
+                            "FastPFOR",
+                            "234-243:headlessUncompress"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def uncompress0(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def uncompress0(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:",
+                        "        if inlength == 0:",
+                        "            return",
+                        "        outlength = in_[inpos.get()]",
+                        "        inpos.increment()",
+                        "        self.headlessUncompress(in_, inpos, inlength, out, outpos, outlength)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 108.43241763114929,
+                    "generation_timestamp": "2024-11-29T05:57:11.602305",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "321-329:compress0": {
+                    "start": 321,
+                    "end": 329,
+                    "body": [
+                        "        public void compress0(int[] in, IntWrapper inpos, int inlength, int[] out,\n",
+                        "                              IntWrapper outpos) {\n",
+                        "            inlength = Util.greatestMultiple(inlength,  BLOCK_SIZE);\n",
+                        "            if (inlength == 0)\n",
+                        "                    return;\n",
+                        "            out[outpos.get()] = inlength;\n",
+                        "            outpos.increment();\n",
+                        "            headlessCompress(in, inpos, inlength, out, outpos);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "compress0(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "207-209:greatestMultiple"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "69-71:increment"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR",
+                            "FastPFOR",
+                            "104-117:headlessCompress"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def compress0(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def compress0(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:",
+                        "        inlength = Util.greatestMultiple(inlength, self.BLOCK_SIZE)",
+                        "        if inlength == 0:",
+                        "            return",
+                        "        out[outpos.get()] = inlength",
+                        "        outpos.increment()",
+                        "        self.headlessCompress(in_, inpos, inlength, out, outpos)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 118.63168621063232,
+                    "generation_timestamp": "2024-11-29T05:59:10.287546",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "234-243:headlessUncompress": {
+                    "start": 234,
+                    "end": 243,
+                    "body": [
+                        "        public void headlessUncompress(int[] in, IntWrapper inpos, int inlength,\n",
+                        "                int[] out, IntWrapper outpos, int mynvalue) {\n",
+                        "                mynvalue = Util.greatestMultiple(mynvalue, BLOCK_SIZE);\n",
+                        "                int finalout = outpos.get() + mynvalue;\n",
+                        "                while (outpos.get() != finalout) {\n",
+                        "                        int thissize = Math.min(pageSize,\n",
+                        "                                finalout - outpos.get());\n",
+                        "                        decodePage(in, inpos, out, outpos, thissize);\n",
+                        "                }\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "headlessUncompress(int[], IntWrapper, int, int[], IntWrapper, int)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos",
+                        "mynvalue"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "207-209:greatestMultiple"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Math",
+                            "min(int,int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR",
+                            "FastPFOR",
+                            "245-319:decodePage"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def headlessUncompress(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper, mynvalue: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def headlessUncompress(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper, mynvalue: int) -> None:",
+                        "        mynvalue = Util.greatestMultiple(mynvalue, self.BLOCK_SIZE)",
+                        "        finalout = outpos.get() + mynvalue",
+                        "        while outpos.get() != finalout:",
+                        "            thissize = min(self.pageSize, finalout - outpos.get())",
+                        "            self.__decodePage(in_, inpos, out, outpos, thissize)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 140.4589114189148,
+                    "generation_timestamp": "2024-11-29T02:30:06.260207",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "104-117:headlessCompress": {
+                    "start": 104,
+                    "end": 117,
+                    "body": [
+                        "        public void headlessCompress(int[] in, IntWrapper inpos, int inlength,\n",
+                        "                int[] out, IntWrapper outpos) {\n",
+                        "                inlength = Util.greatestMultiple(inlength, BLOCK_SIZE);\n",
+                        "                // Allocate memory for working area.\n",
+                        "\n",
+                        "                final int finalinpos = inpos.get() + inlength;\n",
+                        "                while (inpos.get() != finalinpos) {\n",
+                        "                        int thissize = Math.min(pageSize,\n",
+                        "                                finalinpos - inpos.get());\n",
+                        "                        encodePage(in, inpos, thissize, out, outpos);\n",
+                        "                }\n",
+                        "\n",
+                        "\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "headlessCompress(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "207-209:greatestMultiple"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Math",
+                            "min(int,int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR",
+                            "FastPFOR",
+                            "148-224:encodePage"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def headlessCompress(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def headlessCompress(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:",
+                        "        inlength = Util.greatestMultiple(inlength, self.BLOCK_SIZE)",
+                        "        # Allocate memory for working area.",
+                        "",
+                        "        finalinpos = inpos.get() + inlength",
+                        "        while inpos.get() != finalinpos:",
+                        "            thissize = min(self.pageSize, finalinpos - inpos.get())",
+                        "            self.__encodePage(in_, inpos, thissize, out, outpos)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 132.01325678825378,
+                    "generation_timestamp": "2024-11-29T02:32:18.323164",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "352-354:makeBuffer": {
+                    "start": 352,
+                    "end": 354,
+                    "body": [
+                        "        protected ByteBuffer makeBuffer(int sizeInBytes) {\n",
+                        "            return ByteBuffer.allocateDirect(sizeInBytes);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "ByteBuffer",
+                            "java.nio.ByteBuffer"
+                        ]
+                    ],
+                    "signature": "makeBuffer(int)",
+                    "parameters": [
+                        "sizeInBytes"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "allocateDirect(int)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _makeBuffer(self, sizeInBytes: int) -> typing.Union[bytearray, memoryview]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    return memoryview(bytearray(sizeInBytes))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "non-parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 77.28563332557678,
+                    "generation_timestamp": "2024-11-27T11:55:03.218421",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 3,
+                        "field_exercise": 3,
+                        "graal": 3,
+                        "test_execution": 3
+                    },
+                    "final_budget": {
+                        "syntactic": 3,
+                        "field_exercise": 1,
+                        "graal": 3,
+                        "test_execution": 3
+                    }
+                },
+                "90-92:FastPFOR1": {
+                    "start": 90,
+                    "end": 92,
+                    "body": [
+                        "        public static FastPFOR FastPFOR1() {\n",
+                        "                return new FastPFOR( DEFAULT_PAGE_SIZE);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "FastPFOR",
+                            "FastPFOR"
+                        ]
+                    ],
+                    "signature": "FastPFOR1()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR",
+                            "FastPFOR",
+                            "81-89:FastPFOR"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def FastPFOR1() -> FastPFOR:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def FastPFOR1() -> FastPFOR:",
+                        "        return FastPFOR(FastPFOR.DEFAULT_PAGE_SIZE)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "error",
+                        "message": "Unsupported operation encountered: [JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x362e1181>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x72dc0d72>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x1161786f>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x2c673dec>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x1b27c0d5>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0xec28717>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x4c48ccc4>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x631c244c>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x5ecc8114>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x6a4484e6>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x674db438>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x6086ba82>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x74f1c9b9>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x61dc8a64>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x704d4991>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x10dad714>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x64f514d2>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x75564919>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x1bfbbef5>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x4ca3923>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x30e67f98>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x15c8bb25>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x1b438ec>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x5c7712f0>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x658ec00c>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x79f6e671>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x65a03e98>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x15652e7e>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x1785e670>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x16ec7988>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x661409ed>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x11757914>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x3dee7142>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x4a7c88f2>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x12e75177>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x4276bd6>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x7b8058e0>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x58cce034>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x32f7b6a2>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x4a2eb2e>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x507eda0c>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x425979db>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x6820dd90>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x14fd1bc>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x456454e0>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x1e22a602>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x6b57ac6a>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x7382ec67>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x32def41f>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x9aa9e4a>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x36fd028d>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x1c833e78>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x7c45bd55>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x1d9dc280>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x115e7c5e>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x1d9f9c9d>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0xb6352a5>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x4aa136ff>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x75084fe4>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x82076de>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x2347ca7a>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x6371c6ee>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x69d2cffb>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x77c0457f>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x1ca0f80>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x35d472c1>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x52b23f41>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x4518ba8c>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x3b4675d3>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0xa674645>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x939f06>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x44a03de5>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x317e9159>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x5fbda121>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x22a52fa8>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x274029ca>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x7625ce5a>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x155770e0>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x67e28dad>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x5ac4f417>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x7e798721>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x13695bca>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x578ce232>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x51ce29c9>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x4faf4191>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x51421b7d>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x66c16751>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x1f22d7e4>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x2a37e02b>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0xf9c0e80>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x131c01d>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x26c6e9d6>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x54704b46>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x284c84de>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x3977c325>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x5e0a1954>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x632e3100>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x71567e73>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x6216b817>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x6b423394>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x1d645bb2>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x520ddd29>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x7bf4fa70>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x445b7f80>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x1bfdd7a4>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x2b12488>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x7f0f104b>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x6da3dcc3>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x67c15a48>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x791930f8>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x459c0f38>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x16494888>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x2595ecb2>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x598c23ad>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x1d3bf23a>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x605d942c>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x768f12db>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x48f1968e>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x36840e6c>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0xeebbe46>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x7ba5e21c>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x1d8ecabb>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x1235aa76>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x52d710e2>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x7f4bbb1c>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x4cc7f8d9>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x3354dd3>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x33aa9e40>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x43d5258c>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x278b0a4d>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x1b0b843b>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x2d3b13b8>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x4036d9cd>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x6dd3a1a1>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x2cb6bc65>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0xa200a54>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x62931c28>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x3cbc1752>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x63796a19>"
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 432.20205640792847,
+                    "generation_timestamp": "2024-11-27T12:06:09.402316",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 3,
+                        "field_exercise": 3,
+                        "graal": 3,
+                        "test_execution": 3
+                    },
+                    "final_budget": {
+                        "syntactic": 3,
+                        "field_exercise": 3,
+                        "graal": 3,
+                        "test_execution": 1
+                    }
+                },
+                "81-89:FastPFOR": {
+                    "start": 81,
+                    "end": 89,
+                    "body": [
+                        "        public FastPFOR(int pagesize) {\n",
+                        "            pageSize = pagesize;\n",
+                        "            // Initiate arrrays.\n",
+                        "            byteContainer = makeBuffer(3 * pageSize\n",
+                        "                    / BLOCK_SIZE + pageSize);\n",
+                        "            byteContainer.order(ByteOrder.LITTLE_ENDIAN);\n",
+                        "            for (int k = 1; k < dataTobePacked.length; ++k)\n",
+                        "                dataTobePacked[k] = new int[pageSize / 32 * 4]; // heuristic\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "FastPFOR(int)",
+                    "parameters": [
+                        "pagesize"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR",
+                            "FastPFOR",
+                            "352-354:makeBuffer"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "order(java.nio.ByteOrder)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, pagesize: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, pagesize: int) -> None:",
+                        "        self.pageSize = pagesize",
+                        "        # Initialize byteContainer",
+                        "        self.byteContainer = memoryview(bytearray(3 * self.pageSize // self.BLOCK_SIZE + self.pageSize))",
+                        "        # Initialize dataTobePacked",
+                        "        self.dataTobePacked = [[] for _ in range(33)]",
+                        "        for k in range(1, len(self.dataTobePacked)):",
+                        "            self.dataTobePacked[k] = [0] * (self.pageSize // 32 * 4)  # heuristic"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "failure",
+                        "message": "me.lemire.integercompression.BasicTest.testUnsortedExample_test15_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test16_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test28_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test16_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test17_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.checkDeltaZigzagVB_test0_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test29_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test17_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test18_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.checkDeltaZigzagVB_test1_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.verifyWithoutMask_test0_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.checkDeltaZigzagPacking_test0_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test18_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test19_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.checkDeltaZigzagVB_test2_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.basictest_test0_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.checkDeltaZigzagPacking_test1_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test19_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.checkDeltaZigzagVB_test3_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.checkXorBinaryPacking1_test0_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.checkDeltaZigzagPacking_test2_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.fastPforTest_test0_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.checkXorBinaryPacking1_test1_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.checkDeltaZigzagPacking_test3_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.fastPforTest_test1_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.fastPfor128Test_test0_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.checkDeltaZigzagPacking_test4_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.fastPforTest_test2_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.fastPfor128Test_test1_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.checkDeltaZigzagPacking_test5_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.fastPforTest_test3_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.fastPfor128Test_test2_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.checkDeltaZigzagPacking_test6_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.fastPfor128Test_test3_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.checkDeltaZigzagPacking_test7_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test0_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test1_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.spuriousouttest_test10_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test2_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.spuriousouttest_test11_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test3_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test0_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test4_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test1_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test5_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test2_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.varyingLengthTest_test0_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test6_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.saulTest_test0_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test3_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test7_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test40_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test4_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test8_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.spuriousouttest_test0_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test41_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.checkXorBinaryPacking3_test0_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test5_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test9_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.spuriousouttest_test1_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test42_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.checkXorBinaryPacking3_test1_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test6_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test30_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.varyingLengthTest2_test0_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.spuriousouttest_test2_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test43_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.checkXorBinaryPacking3_test2_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test7_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test31_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test20_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.checkXorBinaryPacking_test0_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.verifyBitPacking_test0_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.spuriousouttest_test3_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test44_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test8_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test32_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test20_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test21_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.checkXorBinaryPacking_test1_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.spuriousouttest_test4_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test9_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test33_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test21_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test22_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.spuriousouttest_test5_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test10_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test34_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test22_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test23_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test10_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.spuriousouttest_test6_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test11_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test35_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test23_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test24_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test11_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.spuriousouttest_test7_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test12_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.verifyWithExceptions_test0_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test36_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test24_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test25_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.checkXorBinaryPacking2_test0_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test12_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.spuriousouttest_test8_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test13_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test37_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test25_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test26_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.checkXorBinaryPacking2_test1_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test13_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.spuriousouttest_test9_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test14_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test38_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test26_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test14_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.zeroinzerouttest_test15_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test39_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test27_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.ExampleTest.unsortedExample_test6_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.ExampleTest.unsortedExample_test7_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.ExampleTest.unsortedExample_test0_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.ExampleTest.unsortedExample_test1_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.ExampleTest.unsortedExample_test2_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.ExampleTest.unsortedExample_test3_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.ExampleTest.unsortedExample_test4_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.ExampleTest.unsortedExample_test5_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.AdhocTest.biggerCompressedArray2_test3_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.AdhocTest.biggerCompressedArray0_test2_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.AdhocTest.biggerCompressedArray0_test3_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.AdhocTest.biggerCompressedArray2_test2_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.SkippableBasicTest.varyingLengthTest_test0_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.SkippableBasicTest.varyingLengthTest2_test0_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.SkippableBasicTest.consistentTest_test0_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.ResourcedTest.IntCompressorTest_test3_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.ResourcedTest.IntCompressorTest_test0_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.ResourcedTest.IntCompressorTest_test1_decomposed: java.lang.ArrayStoreException\nme.lemire.integercompression.ResourcedTest.IntCompressorTest_test2_decomposed: java.lang.ArrayStoreException"
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 233.7879650592804,
+                    "generation_timestamp": "2024-11-27T11:58:57.082764",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 1,
+                        "test_execution": 2
+                    }
+                },
+                "245-319:decodePage": {
+                    "start": 245,
+                    "end": 319,
+                    "body": [
+                        "        private void decodePage(int[] in, IntWrapper inpos, int[] out,\n",
+                        "                IntWrapper outpos, int thissize) {\n",
+                        "                final int initpos = inpos.get();\n",
+                        "                final int wheremeta = in[inpos.get()];\n",
+                        "                inpos.increment();\n",
+                        "                int inexcept = initpos + wheremeta;\n",
+                        "                final int bytesize = in[inexcept++];\n",
+                        "                byteContainer.clear();\n",
+                        "                byteContainer.asIntBuffer().put(in, inexcept, (bytesize + 3) / 4);\n",
+                        "                inexcept += (bytesize + 3)/ 4;\n",
+                        "\n",
+                        "                final int bitmap = in[inexcept++];\n",
+                        "                for (int k = 2; k <= 32; ++k) {\n",
+                        "                        if ((bitmap & (1 << (k - 1))) != 0) {\n",
+                        "                                int size = in[inexcept++];\n",
+                        "                                int roundedup = Util\n",
+                        "                                .greatestMultiple(size + 31, 32);\n",
+                        "                                if (dataTobePacked[k].length < roundedup)\n",
+                        "                                        dataTobePacked[k] = new int[roundedup];\n",
+                        "                                if(inexcept + roundedup/32*k <= in.length) {\n",
+                        "                                    int j = 0;\n",
+                        "                                    for (; j < size; j += 32) {\n",
+                        "                                        BitPacking.fastunpack(in, inexcept,\n",
+                        "                                                dataTobePacked[k], j, k);\n",
+                        "                                        inexcept += k;\n",
+                        "                                    }\n",
+                        "                                    int overflow = j - size;\n",
+                        "                                    inexcept -= overflow * k / 32;\n",
+                        "                                } else {\n",
+                        "                                    int j = 0;\n",
+                        "                                    int[] buf = new int[roundedup/32*k];\n",
+                        "                                    int initinexcept = inexcept;\n",
+                        "                                    System.arraycopy(in, inexcept, buf, 0, in.length - inexcept);\n",
+                        "                                    for (; j < size; j += 32) {\n",
+                        "                                        BitPacking.fastunpack(buf, inexcept-initinexcept,\n",
+                        "                                                dataTobePacked[k], j, k);\n",
+                        "                                        inexcept += k;\n",
+                        "                                    }\n",
+                        "                                    int overflow = j - size;\n",
+                        "                                    inexcept -= overflow * k / 32;\n",
+                        "                                }\n",
+                        "                        }\n",
+                        "                }\n",
+                        "                Arrays.fill(dataPointers, 0);\n",
+                        "                int tmpoutpos = outpos.get();\n",
+                        "                int tmpinpos = inpos.get();\n",
+                        "\n",
+                        "                for (int run = 0, run_end = thissize / BLOCK_SIZE; run < run_end; ++run, tmpoutpos += BLOCK_SIZE) {\n",
+                        "                        final int b = byteContainer.get();\n",
+                        "                        final int cexcept = byteContainer.get() & 0xFF;\n",
+                        "                        for (int k = 0; k < BLOCK_SIZE; k += 32) {\n",
+                        "                                BitPacking.fastunpack(in, tmpinpos, out,\n",
+                        "                                        tmpoutpos + k, b);\n",
+                        "                                tmpinpos += b;\n",
+                        "                        }\n",
+                        "                        if (cexcept > 0) {\n",
+                        "                            final int maxbits = byteContainer.get();\n",
+                        "                            final int index = maxbits - b;\n",
+                        "                            if(index == 1) {\n",
+                        "                                for (int k = 0; k < cexcept; ++k) {\n",
+                        "                                    final int pos = byteContainer.get() &0xFF;\n",
+                        "                                    out[pos + tmpoutpos] |= 1 << b;\n",
+                        "                                }\n",
+                        "                            } else {\n",
+                        "                                for (int k = 0; k < cexcept; ++k) {\n",
+                        "                                    final int pos = byteContainer.get() &0xFF;\n",
+                        "                                    final int exceptvalue = dataTobePacked[index][dataPointers[index]++];\n",
+                        "                                    out[pos + tmpoutpos] |= exceptvalue << b;\n",
+                        "                                }\n",
+                        "                            }\n",
+                        "                        }\n",
+                        "                }\n",
+                        "                outpos.set(tmpoutpos);\n",
+                        "                inpos.set(inexcept);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "decodePage(int[], IntWrapper, int[], IntWrapper, int)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "out",
+                        "outpos",
+                        "thissize"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "69-71:increment"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "clear()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/IntBuffer",
+                            "put(int[],int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "asIntBuffer()"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "207-209:greatestMultiple"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BitPacking",
+                            "BitPacking",
+                            "3021-3127:fastunpack"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "arraycopy(java.lang.Object,int,java.lang.Object,int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "fill(int[],int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "get()"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __decodePage(self, in_: typing.List[int], inpos: IntWrapper, out: typing.List[int], outpos: IntWrapper, thissize: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __decodePage(self, in_: typing.List[int], inpos: IntWrapper, out: typing.List[int], outpos: IntWrapper, thissize: int) -> None:",
+                        "        initpos = inpos.get()",
+                        "        wheremeta = in_[inpos.get()]",
+                        "        inpos.increment()",
+                        "        inexcept = initpos + wheremeta",
+                        "        bytesize = in_[inexcept]",
+                        "        inexcept += 1",
+                        "        self.byteContainer.clear()",
+                        "        self.byteContainer[:(bytesize + 3) // 4 * 4] = in_[inexcept:inexcept + (bytesize + 3) // 4]",
+                        "        inexcept += (bytesize + 3) // 4",
+                        "",
+                        "        bitmap = in_[inexcept]",
+                        "        inexcept += 1",
+                        "        for k in range(2, 33):",
+                        "            if (bitmap & (1 << (k - 1))) != 0:",
+                        "                size = in_[inexcept]",
+                        "                inexcept += 1",
+                        "                roundedup = Util.greatestMultiple(size + 31, 32)",
+                        "                if len(self.dataTobePacked[k]) < roundedup:",
+                        "                    self.dataTobePacked[k] = [0] * roundedup",
+                        "                if inexcept + roundedup // 32 * k <= len(in_):",
+                        "                    j = 0",
+                        "                    while j < size:",
+                        "                        BitPacking.fastunpack(in_, inexcept, self.dataTobePacked[k], j, k)",
+                        "                        inexcept += k",
+                        "                        j += 32",
+                        "                    overflow = j - size",
+                        "                    inexcept -= overflow * k // 32",
+                        "                else:",
+                        "                    j = 0",
+                        "                    buf = [0] * (roundedup // 32 * k)",
+                        "                    initinexcept = inexcept",
+                        "                    buf[:len(in_) - inexcept] = in_[inexcept:]",
+                        "                    while j < size:",
+                        "                        BitPacking.fastunpack(buf, inexcept - initinexcept, self.dataTobePacked[k], j, k)",
+                        "                        inexcept += k",
+                        "                        j += 32",
+                        "                    overflow = j - size",
+                        "                    inexcept -= overflow * k // 32",
+                        "",
+                        "        self.dataPointers = [0] * 33",
+                        "        tmpoutpos = outpos.get()",
+                        "        tmpinpos = inpos.get()",
+                        "",
+                        "        for run in range(thissize // self.BLOCK_SIZE):",
+                        "            b = self.byteContainer[0]",
+                        "            self.byteContainer = self.byteContainer[1:]",
+                        "            cexcept = self.byteContainer[0] & 0xFF",
+                        "            self.byteContainer = self.byteContainer[1:]",
+                        "            for k in range(0, self.BLOCK_SIZE, 32):",
+                        "                BitPacking.fastunpack(in_, tmpinpos, out, tmpoutpos + k, b)",
+                        "                tmpinpos += b",
+                        "            if cexcept > 0:",
+                        "                maxbits = self.byteContainer[0]",
+                        "                self.byteContainer = self.byteContainer[1:]",
+                        "                index = maxbits - b",
+                        "                if index == 1:",
+                        "                    for k in range(cexcept):",
+                        "                        pos = self.byteContainer[0] & 0xFF",
+                        "                        self.byteContainer = self.byteContainer[1:]",
+                        "                        out[pos + tmpoutpos] |= 1 << b",
+                        "                else:",
+                        "                    for k in range(cexcept):",
+                        "                        pos = self.byteContainer[0] & 0xFF",
+                        "                        self.byteContainer = self.byteContainer[1:]",
+                        "                        exceptvalue = self.dataTobePacked[index][self.dataPointers[index]]",
+                        "                        self.dataPointers[index] += 1",
+                        "                        out[pos + tmpoutpos] |= exceptvalue << b",
+                        "",
+                        "            tmpoutpos += self.BLOCK_SIZE",
+                        "",
+                        "        outpos.set_(tmpoutpos)",
+                        "        inpos.set_(inexcept)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 186.74609327316284,
+                    "generation_timestamp": "2024-11-28T23:19:50.179532",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "148-224:encodePage": {
+                    "start": 148,
+                    "end": 224,
+                    "body": [
+                        "        private void encodePage(int[] in, IntWrapper inpos, int thissize,\n",
+                        "                int[] out, IntWrapper outpos) {\n",
+                        "                final int headerpos = outpos.get();\n",
+                        "                outpos.increment();\n",
+                        "                int tmpoutpos = outpos.get();\n",
+                        "\n",
+                        "                // Clear working area.\n",
+                        "                Arrays.fill(dataPointers, 0);\n",
+                        "                byteContainer.clear();\n",
+                        "\n",
+                        "                int tmpinpos = inpos.get();\n",
+                        "                for (final int finalinpos = tmpinpos + thissize - BLOCK_SIZE; tmpinpos <= finalinpos; tmpinpos += BLOCK_SIZE) {\n",
+                        "                    getBestBFromData(in, tmpinpos);\n",
+                        "                        final int tmpbestb = bestbbestcexceptmaxb[0];\n",
+                        "                        byteContainer.put((byte)bestbbestcexceptmaxb[0]);\n",
+                        "                        byteContainer.put((byte)bestbbestcexceptmaxb[1]);\n",
+                        "                        if (bestbbestcexceptmaxb[1] > 0) {\n",
+                        "                                byteContainer.put((byte)bestbbestcexceptmaxb[2]);\n",
+                        "                                final int index = bestbbestcexceptmaxb[2]\n",
+                        "                                        - bestbbestcexceptmaxb[0];\n",
+                        "                                if (dataPointers[index]\n",
+                        "                                        + bestbbestcexceptmaxb[1] >= dataTobePacked[index].length) {\n",
+                        "                                        int newsize = 2 * (dataPointers[index] + bestbbestcexceptmaxb[1]);\n",
+                        "                                        // make sure it is a multiple of 32\n",
+                        "                                        newsize = Util\n",
+                        "                                                .greatestMultiple(newsize + 31, 32);\n",
+                        "                                        dataTobePacked[index] = Arrays.copyOf(\n",
+                        "                                                dataTobePacked[index], newsize);\n",
+                        "                                }\n",
+                        "                                for (int k = 0; k < BLOCK_SIZE; ++k) {\n",
+                        "                                        if ((in[k + tmpinpos] >>> bestbbestcexceptmaxb[0]) != 0) {\n",
+                        "                                                // we have an exception\n",
+                        "                                                byteContainer.put((byte) k);\n",
+                        "                                                dataTobePacked[index][dataPointers[index]++] = in[k\n",
+                        "                                                        + tmpinpos] >>> tmpbestb;\n",
+                        "                                        }\n",
+                        "                                }\n",
+                        "\n",
+                        "                        }\n",
+                        "                        for (int k = 0; k < BLOCK_SIZE; k += 32) {\n",
+                        "                                BitPacking.fastpack(in, tmpinpos + k, out,\n",
+                        "                                        tmpoutpos, tmpbestb);\n",
+                        "                                tmpoutpos += tmpbestb;\n",
+                        "                        }\n",
+                        "                }\n",
+                        "                inpos.set(tmpinpos);\n",
+                        "                out[headerpos] = tmpoutpos - headerpos;\n",
+                        "                final int bytesize = byteContainer.position();\n",
+                        "                while ((byteContainer.position() & 3) != 0)\n",
+                        "                        byteContainer.put((byte) 0);\n",
+                        "                out[tmpoutpos++] = bytesize;\n",
+                        "                final int howmanyints = byteContainer.position() / 4;\n",
+                        "                byteContainer.flip();\n",
+                        "                byteContainer.asIntBuffer().get(out, tmpoutpos, howmanyints);\n",
+                        "                tmpoutpos += howmanyints;\n",
+                        "                int bitmap = 0;\n",
+                        "                for (int k = 2; k <= 32; ++k) {\n",
+                        "                        if (dataPointers[k] != 0)\n",
+                        "                                bitmap |= (1 << (k - 1));\n",
+                        "                }\n",
+                        "                out[tmpoutpos++] = bitmap;\n",
+                        "\n",
+                        "                for (int k = 2; k <= 32; ++k) {\n",
+                        "                        if (dataPointers[k] != 0) {\n",
+                        "                                out[tmpoutpos++] = dataPointers[k];// size\n",
+                        "                                int j = 0;\n",
+                        "                                for (; j < dataPointers[k]; j += 32) {\n",
+                        "                                        BitPacking.fastpack(dataTobePacked[k],\n",
+                        "                                                j, out, tmpoutpos, k);\n",
+                        "                                        tmpoutpos += k;\n",
+                        "                                }\n",
+                        "                                int overflow = j - dataPointers[k];\n",
+                        "                                tmpoutpos -= overflow * k / 32;\n",
+                        "                        }\n",
+                        "                }\n",
+                        "                outpos.set(tmpoutpos);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "encodePage(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "thissize",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/Buffer",
+                            "position()"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "69-71:increment"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "fill(int[],int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "clear()"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR",
+                            "FastPFOR",
+                            "119-146:getBestBFromData"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "put(byte)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "207-209:greatestMultiple"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "copyOf(int[],int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BitPacking",
+                            "BitPacking",
+                            "42-148:fastpack"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "flip()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/IntBuffer",
+                            "get(int[],int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "asIntBuffer()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __encodePage(self, in_: typing.List[int], inpos: IntWrapper, thissize: int, out: typing.List[int], outpos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __encodePage(self, in_: typing.List[int], inpos: IntWrapper, thissize: int, out: typing.List[int], outpos: IntWrapper) -> None:",
+                        "        headerpos = outpos.get()",
+                        "        outpos.increment()",
+                        "        tmpoutpos = outpos.get()",
+                        "",
+                        "        # Clear working area",
+                        "        self.dataPointers = [0] * len(self.dataPointers)",
+                        "        self.byteContainer = bytearray()",
+                        "",
+                        "        tmpinpos = inpos.get()",
+                        "        finalinpos = tmpinpos + thissize - self.BLOCK_SIZE",
+                        "",
+                        "        while tmpinpos <= finalinpos:",
+                        "            self.__getBestBFromData(in_, tmpinpos)",
+                        "            tmpbestb = self.bestbbestcexceptmaxb[0]",
+                        "            self.byteContainer.append(self.bestbbestcexceptmaxb[0])",
+                        "            self.byteContainer.append(self.bestbbestcexceptmaxb[1])",
+                        "",
+                        "            if self.bestbbestcexceptmaxb[1] > 0:",
+                        "                self.byteContainer.append(self.bestbbestcexceptmaxb[2])",
+                        "                index = self.bestbbestcexceptmaxb[2] - self.bestbbestcexceptmaxb[0]",
+                        "",
+                        "                if self.dataPointers[index] + self.bestbbestcexceptmaxb[1] >= len(self.dataTobePacked[index]):",
+                        "                    newsize = 2 * (self.dataPointers[index] + self.bestbbestcexceptmaxb[1])",
+                        "                    newsize = Util.greatestMultiple(newsize + 31, 32)",
+                        "                    self.dataTobePacked[index] = self.dataTobePacked[index][:newsize]",
+                        "",
+                        "                for k in range(self.BLOCK_SIZE):",
+                        "                    if (in_[k + tmpinpos] >> self.bestbbestcexceptmaxb[0]) != 0:",
+                        "                        self.byteContainer.append(k)",
+                        "                        self.dataTobePacked[index][self.dataPointers[index]] = in_[k + tmpinpos] >> tmpbestb",
+                        "                        self.dataPointers[index] += 1",
+                        "",
+                        "            for k in range(0, self.BLOCK_SIZE, 32):",
+                        "                BitPacking.fastpack(in_, tmpinpos + k, out, tmpoutpos, tmpbestb)",
+                        "                tmpoutpos += tmpbestb",
+                        "",
+                        "            tmpinpos += self.BLOCK_SIZE",
+                        "",
+                        "        inpos.set_(tmpinpos)",
+                        "        out[headerpos] = tmpoutpos - headerpos",
+                        "        bytesize = len(self.byteContainer)",
+                        "",
+                        "        while len(self.byteContainer) % 4 != 0:",
+                        "            self.byteContainer.append(0)",
+                        "",
+                        "        out[tmpoutpos] = bytesize",
+                        "        tmpoutpos += 1",
+                        "",
+                        "        howmanyints = len(self.byteContainer) // 4",
+                        "        int_buffer = memoryview(self.byteContainer).cast('I')",
+                        "        out[tmpoutpos:tmpoutpos + howmanyints] = int_buffer[:howmanyints]",
+                        "        tmpoutpos += howmanyints",
+                        "",
+                        "        bitmap = 0",
+                        "        for k in range(2, 33):",
+                        "            if self.dataPointers[k] != 0:",
+                        "                bitmap |= (1 << (k - 1))",
+                        "",
+                        "        out[tmpoutpos] = bitmap",
+                        "        tmpoutpos += 1",
+                        "",
+                        "        for k in range(2, 33):",
+                        "            if self.dataPointers[k] != 0:",
+                        "                out[tmpoutpos] = self.dataPointers[k]",
+                        "                tmpoutpos += 1",
+                        "                j = 0",
+                        "                while j < self.dataPointers[k]:",
+                        "                    BitPacking.fastpack(self.dataTobePacked[k], j, out, tmpoutpos, k)",
+                        "                    tmpoutpos += k",
+                        "                    j += 32",
+                        "",
+                        "                overflow = j - self.dataPointers[k]",
+                        "                tmpoutpos -= overflow * k // 32",
+                        "",
+                        "        outpos.set_(tmpoutpos)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 174.52894616127014,
+                    "generation_timestamp": "2024-11-28T23:22:44.807487",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "119-146:getBestBFromData": {
+                    "start": 119,
+                    "end": 146,
+                    "body": [
+                        "        private void getBestBFromData(int[] in, int pos) {\n",
+                        "                Arrays.fill(freqs, 0);\n",
+                        "                for (int k = pos, k_end = pos + BLOCK_SIZE; k < k_end; ++k) {\n",
+                        "                        freqs[Util.bits(in[k])]++;\n",
+                        "                }\n",
+                        "                bestbbestcexceptmaxb[0] = 32;\n",
+                        "                while (freqs[bestbbestcexceptmaxb[0]] == 0)\n",
+                        "                        bestbbestcexceptmaxb[0]--;\n",
+                        "                bestbbestcexceptmaxb[2] = bestbbestcexceptmaxb[0];\n",
+                        "                int bestcost = bestbbestcexceptmaxb[0] * BLOCK_SIZE;\n",
+                        "                int cexcept = 0;\n",
+                        "                bestbbestcexceptmaxb[1] = cexcept;\n",
+                        "                for (int b = bestbbestcexceptmaxb[0] - 1; b >= 0; --b) {\n",
+                        "                        cexcept += freqs[b + 1];\n",
+                        "                        if (cexcept == BLOCK_SIZE)\n",
+                        "                                break;\n",
+                        "                        // the extra 8 is the cost of storing maxbits\n",
+                        "                        int thiscost = cexcept * OVERHEAD_OF_EACH_EXCEPT\n",
+                        "                                + cexcept * (bestbbestcexceptmaxb[2] - b) + b\n",
+                        "                                * BLOCK_SIZE + 8;\n",
+                        "                        if(bestbbestcexceptmaxb[2] - b == 1) thiscost -= cexcept;\n",
+                        "                        if (thiscost < bestcost) {\n",
+                        "                                bestcost = thiscost;\n",
+                        "                                bestbbestcexceptmaxb[0] = b;\n",
+                        "                                bestbbestcexceptmaxb[1] = cexcept;\n",
+                        "                        }\n",
+                        "                }\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "getBestBFromData(int[], int)",
+                    "parameters": [
+                        "in",
+                        "pos"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "fill(int[],int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "109-111:bits"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __getBestBFromData(self, in_: typing.List[int], pos: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __getBestBFromData(self, in_: typing.List[int], pos: int) -> None:",
+                        "        # Reset the frequency array",
+                        "        self.freqs = [0] * 33",
+                        "        ",
+                        "        # Calculate the frequency of bit lengths",
+                        "        for k in range(pos, pos + self.BLOCK_SIZE):",
+                        "            self.freqs[Util.bits(in_[k])] += 1",
+                        "        ",
+                        "        # Initialize bestbbestcexceptmaxb[0] to 32",
+                        "        self.bestbbestcexceptmaxb[0] = 32",
+                        "        ",
+                        "        # Find the largest bit length with a non-zero frequency",
+                        "        while self.freqs[self.bestbbestcexceptmaxb[0]] == 0:",
+                        "            self.bestbbestcexceptmaxb[0] -= 1",
+                        "        ",
+                        "        # Set initial values for bestbbestcexceptmaxb[2] and bestcost",
+                        "        self.bestbbestcexceptmaxb[2] = self.bestbbestcexceptmaxb[0]",
+                        "        bestcost = self.bestbbestcexceptmaxb[0] * self.BLOCK_SIZE",
+                        "        cexcept = 0",
+                        "        self.bestbbestcexceptmaxb[1] = cexcept",
+                        "        ",
+                        "        # Iterate over possible bit lengths",
+                        "        for b in range(self.bestbbestcexceptmaxb[0] - 1, -1, -1):",
+                        "            cexcept += self.freqs[b + 1]",
+                        "            if cexcept == self.BLOCK_SIZE:",
+                        "                break",
+                        "            ",
+                        "            # Calculate the cost for the current bit length",
+                        "            thiscost = (",
+                        "                cexcept * self.OVERHEAD_OF_EACH_EXCEPT +",
+                        "                cexcept * (self.bestbbestcexceptmaxb[2] - b) +",
+                        "                b * self.BLOCK_SIZE + 8",
+                        "            )",
+                        "            ",
+                        "            # Adjust cost if the difference in bit lengths is 1",
+                        "            if self.bestbbestcexceptmaxb[2] - b == 1:",
+                        "                thiscost -= cexcept",
+                        "            ",
+                        "            # Update the best cost and corresponding values",
+                        "            if thiscost < bestcost:",
+                        "                bestcost = thiscost",
+                        "                self.bestbbestcexceptmaxb[0] = b",
+                        "                self.bestbbestcexceptmaxb[1] = cexcept"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 152.92724514007568,
+                    "generation_timestamp": "2024-11-27T20:40:57.835127",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "59-59:bestbbestcexceptmaxb": {
+                    "start": 59,
+                    "end": 59,
+                    "body": [
+                        "        final int[] bestbbestcexceptmaxb = new int[3];\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    bestbbestcexceptmaxb: typing.List[int] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    bestbbestcexceptmaxb: typing.List[int] = [0, 0, 0]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 16.410709619522095,
+                    "generation_timestamp": "2024-11-27T11:12:05.901542",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "58-58:freqs": {
+                    "start": 58,
+                    "end": 58,
+                    "body": [
+                        "        final int[] freqs = new int[33];\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    freqs: typing.List[int] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    freqs: typing.List[int] = [0] * 33"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 16.77972960472107,
+                    "generation_timestamp": "2024-11-27T11:12:22.738954",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "57-57:dataPointers": {
+                    "start": 57,
+                    "end": 57,
+                    "body": [
+                        "        final int[] dataPointers = new int[33];\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    dataPointers: typing.List[int] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    dataPointers: typing.List[int] = [0] * 33"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 16.02112054824829,
+                    "generation_timestamp": "2024-11-27T11:12:38.802399",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "54-54:byteContainer": {
+                    "start": 54,
+                    "end": 54,
+                    "body": [
+                        "        final ByteBuffer byteContainer;\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "ByteBuffer",
+                            "java.nio.ByteBuffer"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    byteContainer: typing.Union[bytearray, memoryview] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    byteContainer: typing.Union[bytearray, memoryview] = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-11-27T11:12:38.812843",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "53-53:dataTobePacked": {
+                    "start": 53,
+                    "end": 53,
+                    "body": [
+                        "        final int[][] dataTobePacked = new int[33][];\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "int[][]",
+                            "int[][]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    dataTobePacked: typing.List[typing.List[int]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    dataTobePacked: typing.List[typing.List[int]] = [[] for _ in range(33)]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 15.547935485839844,
+                    "generation_timestamp": "2024-11-27T11:12:54.391800",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "52-52:pageSize": {
+                    "start": 52,
+                    "end": 52,
+                    "body": [
+                        "        final int pageSize;\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    pageSize: int = 0",
+                        ""
+                    ],
+                    "translation": [
+                        "    pageSize: int = 0",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-11-27T11:12:54.413954",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "50-50:BLOCK_SIZE": {
+                    "start": 50,
+                    "end": 50,
+                    "body": [
+                        "        public final static int BLOCK_SIZE = 256;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    BLOCK_SIZE: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    BLOCK_SIZE: int = 256"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 15.587961912155151,
+                    "generation_timestamp": "2024-11-27T11:13:10.038886",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "46-46:DEFAULT_PAGE_SIZE": {
+                    "start": 46,
+                    "end": 46,
+                    "body": [
+                        "        public final static int DEFAULT_PAGE_SIZE = 65536;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    DEFAULT_PAGE_SIZE: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    DEFAULT_PAGE_SIZE: int = 65536"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 16.26731586456299,
+                    "generation_timestamp": "2024-11-27T11:13:26.361774",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "42-42:OVERHEAD_OF_EACH_EXCEPT": {
+                    "start": 42,
+                    "end": 42,
+                    "body": [
+                        "        final static int OVERHEAD_OF_EACH_EXCEPT = 8;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    OVERHEAD_OF_EACH_EXCEPT: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    OVERHEAD_OF_EACH_EXCEPT: int = 8"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 15.502094030380249,
+                    "generation_timestamp": "2024-11-27T11:13:41.915293",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class FastPFOR(IntegerCODEC, SkippableIntegerCODEC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os",
+        "from src.main.me.lemire.integercompression.BitPacking import *",
+        "from src.main.me.lemire.integercompression.IntWrapper import *",
+        "from src.main.me.lemire.integercompression.IntegerCODEC import *",
+        "from src.main.me.lemire.integercompression.SkippableIntegerCODEC import *",
+        "from src.main.me.lemire.integercompression.Util import *"
+    ]
+}

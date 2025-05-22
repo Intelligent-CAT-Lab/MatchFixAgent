@@ -1,0 +1,1303 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/main/java/me/lemire/integercompression/differential/IntegratedVariableByte.java",
+    "imports": {
+        "11-11:import IntBuffer": {
+            "start": 11,
+            "end": 11,
+            "body": [
+                "import java.nio.IntBuffer;\n"
+            ]
+        },
+        "9-9:import ByteBuffer": {
+            "start": 9,
+            "end": 9,
+            "body": [
+                "import java.nio.ByteBuffer;\n"
+            ]
+        },
+        "10-10:import ByteOrder": {
+            "start": 10,
+            "end": 10,
+            "body": [
+                "import java.nio.ByteOrder;\n"
+            ]
+        },
+        "13-13:import IntWrapper": {
+            "start": 13,
+            "end": 13,
+            "body": [
+                "import me.lemire.integercompression.IntWrapper;\n"
+            ]
+        }
+    },
+    "classes": {
+        "IntegratedVariableByte": {
+            "start": 24,
+            "end": 25,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "IntegratedByteIntegerCODEC",
+                "IntegratedIntegerCODEC",
+                "SkippableIntegratedIntegerCODEC"
+            ],
+            "extends": [],
+            "methods": {
+                "228-258:headlessUncompress": {
+                    "start": 228,
+                    "end": 258,
+                    "body": [
+                        "    public void headlessUncompress(int[] in, IntWrapper inpos, int inlength,\n",
+                        "            int[] out, IntWrapper outpos, int num, IntWrapper initvalue) {\n",
+                        "        int s = 0;\n",
+                        "        int val = 0;\n",
+                        "\n",
+                        "        int p = inpos.get();\n",
+                        "        int initoffset = initvalue.get();\n",
+                        "        int tmpoutpos = outpos.get();\n",
+                        "        int finaloutpos = num + tmpoutpos;\n",
+                        "        for (int v = 0, shift = 0; tmpoutpos < finaloutpos;) {\n",
+                        "\n",
+                        "            val = in[p];\n",
+                        "            int c = (byte) (val >>> s);\n",
+                        "            s += 8;\n",
+                        "            p += s>>5;\n",
+                        "            s = s & 31;\n",
+                        "            v += ((c & 127) << shift);\n",
+                        "\n",
+                        "            if ((c & 128) == 128) {\n",
+                        "\n",
+                        "                out[tmpoutpos++] = (initoffset = initoffset + v);\n",
+                        "                v = 0;\n",
+                        "                shift = 0;\n",
+                        "            } else\n",
+                        "                shift += 7;\n",
+                        "        }\n",
+                        "        initvalue.set(out[tmpoutpos-1]);\n",
+                        "        outpos.set(tmpoutpos);\n",
+                        "\n",
+                        "        inpos.set(p + (s!=0 ? 1 : 0));        \n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "headlessUncompress(int[], IntWrapper, int, int[], IntWrapper, int, IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos",
+                        "num",
+                        "initvalue"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def headlessUncompress(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper, num: int, initvalue: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def headlessUncompress(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper, num: int, initvalue: IntWrapper) -> None:",
+                        "        s = 0",
+                        "        val = 0",
+                        "",
+                        "        p = inpos.get()",
+                        "        initoffset = initvalue.get()",
+                        "        tmpoutpos = outpos.get()",
+                        "        finaloutpos = num + tmpoutpos",
+                        "",
+                        "        v = 0",
+                        "        shift = 0",
+                        "",
+                        "        while tmpoutpos < finaloutpos:",
+                        "            val = in_[p]",
+                        "            c = (val >> s) & 0xFF  # Extract the byte at position `s`",
+                        "            s += 8",
+                        "            p += s >> 5  # Move to the next integer if `s` exceeds 31 bits",
+                        "            s = s & 31  # Keep `s` within the range [0, 31]",
+                        "            v += ((c & 127) << shift)  # Add the 7 least significant bits of `c` shifted by `shift`",
+                        "",
+                        "            if (c & 128) == 128:  # Check if the most significant bit of `c` is set",
+                        "                out[tmpoutpos] = initoffset + v",
+                        "                initoffset = out[tmpoutpos]",
+                        "                tmpoutpos += 1",
+                        "                v = 0",
+                        "                shift = 0",
+                        "            else:",
+                        "                shift += 7",
+                        "",
+                        "        initvalue.set_(out[tmpoutpos - 1])",
+                        "        outpos.set_(tmpoutpos)",
+                        "",
+                        "        inpos.set_(p + (1 if s != 0 else 0))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 133.24323272705078,
+                    "generation_timestamp": "2024-11-29T00:07:13.443161",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "184-225:headlessCompress": {
+                    "start": 184,
+                    "end": 225,
+                    "body": [
+                        "    public void headlessCompress(int[] in, IntWrapper inpos, int inlength,\n",
+                        "            int[] out, IntWrapper outpos, IntWrapper initvalue) {\n",
+                        "        if (inlength == 0)\n",
+                        "            return;\n",
+                        "        int initoffset = initvalue.get();\n",
+                        "        initvalue.set(in[inpos.get()+inlength -1]);\n",
+                        "        ByteBuffer buf = makeBuffer(inlength * 8);\n",
+                        "        buf.order(ByteOrder.LITTLE_ENDIAN);\n",
+                        "        for (int k = inpos.get(); k < inpos.get() + inlength; ++k) {\n",
+                        "            final long val = (in[k] - initoffset) & 0xFFFFFFFFL;  // To be consistent with unsigned integers in C/C++\n",
+                        "            initoffset = in[k];\n",
+                        "            if (val < (1 << 7)) {\n",
+                        "                buf.put((byte) (val | (1 << 7)));\n",
+                        "            } else if (val < (1 << 14)) {\n",
+                        "                buf.put((byte) extract7bits(0, val));\n",
+                        "                buf.put((byte) (extract7bitsmaskless(1, (val)) | (1 << 7)));\n",
+                        "            } else if (val < (1 << 21)) {\n",
+                        "                buf.put((byte) extract7bits(0, val));\n",
+                        "                buf.put((byte) extract7bits(1, val));\n",
+                        "                buf.put((byte) (extract7bitsmaskless(2, (val)) | (1 << 7)));\n",
+                        "            } else if (val < (1 << 28)) {\n",
+                        "                buf.put((byte) extract7bits(0, val));\n",
+                        "                buf.put((byte) extract7bits(1, val));\n",
+                        "                buf.put((byte) extract7bits(2, val));\n",
+                        "                buf.put((byte) (extract7bitsmaskless(3, (val)) | (1 << 7)));\n",
+                        "            } else {\n",
+                        "                buf.put((byte) extract7bits(0, val));\n",
+                        "                buf.put((byte) extract7bits(1, val));\n",
+                        "                buf.put((byte) extract7bits(2, val));\n",
+                        "                buf.put((byte) extract7bits(3, val));\n",
+                        "                buf.put((byte) (extract7bitsmaskless(4, (val)) | (1 << 7)));\n",
+                        "            }\n",
+                        "        }\n",
+                        "        while (buf.position() % 4 != 0)\n",
+                        "            buf.put((byte) 0);\n",
+                        "        final int length = buf.position();\n",
+                        "        buf.flip();\n",
+                        "        IntBuffer ibuf = buf.asIntBuffer();\n",
+                        "        ibuf.get(out, outpos.get(), length / 4);\n",
+                        "        outpos.add(length / 4);\n",
+                        "        inpos.add(inlength);        \n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "headlessCompress(int[], IntWrapper, int, int[], IntWrapper, IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos",
+                        "initvalue"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedVariableByte",
+                            "IntegratedVariableByte",
+                            "267-269:makeBuffer"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/Buffer",
+                            "position()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "asIntBuffer()"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "order(java.nio.ByteOrder)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "put(byte)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedVariableByte",
+                            "IntegratedVariableByte",
+                            "27-29:extract7bits"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedVariableByte",
+                            "IntegratedVariableByte",
+                            "31-33:extract7bitsmaskless"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "flip()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/IntBuffer",
+                            "get(int[],int,int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def headlessCompress(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper, initvalue: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def headlessCompress(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper, initvalue: IntWrapper) -> None:",
+                        "        if inlength == 0:",
+                        "            return",
+                        "        ",
+                        "        initoffset = initvalue.get()",
+                        "        initvalue.set_(in_[inpos.get() + inlength - 1])",
+                        "        ",
+                        "        buf = bytearray(inlength * 8)",
+                        "        position = 0  # Tracks the current position in the buffer",
+                        "        ",
+                        "        for k in range(inpos.get(), inpos.get() + inlength):",
+                        "            val = (in_[k] - initoffset) & 0xFFFFFFFF  # Simulate unsigned 32-bit integer",
+                        "            initoffset = in_[k]",
+                        "            ",
+                        "            if val < (1 << 7):",
+                        "                buf[position] = (val | (1 << 7)) & 0xFF",
+                        "                position += 1",
+                        "            elif val < (1 << 14):",
+                        "                buf[position] = self.__extract7bits(0, val)",
+                        "                buf[position + 1] = (self.__extract7bitsmaskless(1, val) | (1 << 7)) & 0xFF",
+                        "                position += 2",
+                        "            elif val < (1 << 21):",
+                        "                buf[position] = self.__extract7bits(0, val)",
+                        "                buf[position + 1] = self.__extract7bits(1, val)",
+                        "                buf[position + 2] = (self.__extract7bitsmaskless(2, val) | (1 << 7)) & 0xFF",
+                        "                position += 3",
+                        "            elif val < (1 << 28):",
+                        "                buf[position] = self.__extract7bits(0, val)",
+                        "                buf[position + 1] = self.__extract7bits(1, val)",
+                        "                buf[position + 2] = self.__extract7bits(2, val)",
+                        "                buf[position + 3] = (self.__extract7bitsmaskless(3, val) | (1 << 7)) & 0xFF",
+                        "                position += 4",
+                        "            else:",
+                        "                buf[position] = self.__extract7bits(0, val)",
+                        "                buf[position + 1] = self.__extract7bits(1, val)",
+                        "                buf[position + 2] = self.__extract7bits(2, val)",
+                        "                buf[position + 3] = self.__extract7bits(3, val)",
+                        "                buf[position + 4] = (self.__extract7bitsmaskless(4, val) | (1 << 7)) & 0xFF",
+                        "                position += 5",
+                        "        ",
+                        "        # Pad the buffer to align to 4 bytes",
+                        "        while position % 4 != 0:",
+                        "            buf[position] = 0",
+                        "            position += 1",
+                        "        ",
+                        "        # Convert the buffer to integers and store in the output array",
+                        "        length = position",
+                        "        for i in range(0, length, 4):",
+                        "            out[outpos.get()] = int.from_bytes(buf[i:i+4], byteorder='little', signed=False)",
+                        "            outpos.add(1)",
+                        "        ",
+                        "        inpos.add(inlength)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 167.94091510772705,
+                    "generation_timestamp": "2024-11-29T03:22:06.901017",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "179-181:toString": {
+                    "start": 179,
+                    "end": 181,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        return this.getClass().getSimpleName();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getSimpleName()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "getClass()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "        return self.__class__.__name__"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 94.46708059310913,
+                    "generation_timestamp": "2024-11-27T14:11:37.201620",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "144-176:uncompress1": {
+                    "start": 144,
+                    "end": 176,
+                    "body": [
+                        "    public void uncompress1(byte[] in, IntWrapper inpos, int inlength,\n",
+                        "                            int[] out, IntWrapper outpos) {\n",
+                        "        int p = inpos.get();\n",
+                        "        int initoffset = 0;\n",
+                        "        int finalp = inpos.get() + inlength;\n",
+                        "        int tmpoutpos = outpos.get();\n",
+                        "        for (int v = 0;p < finalp; out[tmpoutpos++] = (initoffset = initoffset + v)) {\n",
+                        "            v = in[p] & 0x7F;\n",
+                        "            if (in[p] < 0 ) {\n",
+                        "                p+= 1;\n",
+                        "                continue;\n",
+                        "            }\n",
+                        "            v = ((in[p+1] & 0x7F)<<7) | v; \n",
+                        "            if (in[p+1] < 0) {\n",
+                        "                p+= 2;\n",
+                        "                continue;\n",
+                        "            }\n",
+                        "            v = ((in[p+2] & 0x7F)<<14) | v;\n",
+                        "            if (in[p+2] < 0) {\n",
+                        "                p+= 3;\n",
+                        "                continue;\n",
+                        "            }\n",
+                        "            v = ((in[p+3] & 0x7F)<<21) | v;\n",
+                        "            if (in[p+3] < 0) {\n",
+                        "                p+= 4;\n",
+                        "                continue;\n",
+                        "            }\n",
+                        "            v = ((in[p+4] & 0x7F)<<28) | v;\n",
+                        "            p+= 5;                \n",
+                        "        }\n",
+                        "        outpos.set(tmpoutpos);\n",
+                        "        inpos.add(p);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "uncompress1(byte[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def uncompress1(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def uncompress1(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:",
+                        "        p = inpos.get()",
+                        "        initoffset = 0",
+                        "        finalp = inpos.get() + inlength",
+                        "        tmpoutpos = outpos.get()",
+                        "        ",
+                        "        while p < finalp:",
+                        "            v = in_[p] & 0x7F",
+                        "            if in_[p] < 0:",
+                        "                p += 1",
+                        "                out[tmpoutpos] = initoffset + v",
+                        "                initoffset = out[tmpoutpos]",
+                        "                tmpoutpos += 1",
+                        "                continue",
+                        "            ",
+                        "            v = ((in_[p + 1] & 0x7F) << 7) | v",
+                        "            if in_[p + 1] < 0:",
+                        "                p += 2",
+                        "                out[tmpoutpos] = initoffset + v",
+                        "                initoffset = out[tmpoutpos]",
+                        "                tmpoutpos += 1",
+                        "                continue",
+                        "            ",
+                        "            v = ((in_[p + 2] & 0x7F) << 14) | v",
+                        "            if in_[p + 2] < 0:",
+                        "                p += 3",
+                        "                out[tmpoutpos] = initoffset + v",
+                        "                initoffset = out[tmpoutpos]",
+                        "                tmpoutpos += 1",
+                        "                continue",
+                        "            ",
+                        "            v = ((in_[p + 3] & 0x7F) << 21) | v",
+                        "            if in_[p + 3] < 0:",
+                        "                p += 4",
+                        "                out[tmpoutpos] = initoffset + v",
+                        "                initoffset = out[tmpoutpos]",
+                        "                tmpoutpos += 1",
+                        "                continue",
+                        "            ",
+                        "            v = ((in_[p + 4] & 0x7F) << 28) | v",
+                        "            p += 5",
+                        "            out[tmpoutpos] = initoffset + v",
+                        "            initoffset = out[tmpoutpos]",
+                        "            tmpoutpos += 1",
+                        "        ",
+                        "        outpos.set_(tmpoutpos)",
+                        "        inpos.add(p)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 93.58667397499084,
+                    "generation_timestamp": "2024-11-29T03:23:40.554351",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "115-141:uncompress0": {
+                    "start": 115,
+                    "end": 141,
+                    "body": [
+                        "    public void uncompress0(int[] in, IntWrapper inpos, int inlength,\n",
+                        "                            int[] out, IntWrapper outpos) {\n",
+                        "        int s = 0;\n",
+                        "        int val = 0;\n",
+                        "        int p = inpos.get();\n",
+                        "        int finalp = inpos.get() + inlength;\n",
+                        "        int tmpoutpos = outpos.get();                \n",
+                        "        int initoffset = 0;\n",
+                        "        for (int v = 0, shift =0; p < finalp;) {\n",
+                        "            val = in[p];\n",
+                        "            int c = (byte) (val >>> s);\n",
+                        "            s += 8;\n",
+                        "            p += s>>5;\n",
+                        "            s = s & 31;\n",
+                        "            v += ((c & 127) << shift);\n",
+                        "            if ((c & 128) == 128) {\n",
+                        "                out[tmpoutpos] = v + initoffset;\n",
+                        "                initoffset = out[tmpoutpos];\n",
+                        "                tmpoutpos++;\n",
+                        "                v = 0;\n",
+                        "                shift = 0;\n",
+                        "            } else \n",
+                        "                shift +=7;\n",
+                        "        }\n",
+                        "        outpos.set(tmpoutpos);\n",
+                        "        inpos.add(inlength);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "uncompress0(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def uncompress0(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def uncompress0(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:",
+                        "        s = 0",
+                        "        val = 0",
+                        "        p = inpos.get()",
+                        "        finalp = inpos.get() + inlength",
+                        "        tmpoutpos = outpos.get()",
+                        "        initoffset = 0",
+                        "",
+                        "        v = 0",
+                        "        shift = 0",
+                        "        while p < finalp:",
+                        "            val = in_[p]",
+                        "            c = (val >> s) & 0xFF  # Extract the byte at position `s`",
+                        "            s += 8",
+                        "            p += s >> 5",
+                        "            s = s & 31",
+                        "            v += ((c & 127) << shift)",
+                        "            if (c & 128) == 128:  # Check if the most significant bit is set",
+                        "                out[tmpoutpos] = v + initoffset",
+                        "                initoffset = out[tmpoutpos]",
+                        "                tmpoutpos += 1",
+                        "                v = 0",
+                        "                shift = 0",
+                        "            else:",
+                        "                shift += 7",
+                        "",
+                        "        outpos.set_(tmpoutpos)",
+                        "        inpos.add(inlength)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 404.6851170063019,
+                    "generation_timestamp": "2024-11-29T03:30:25.322634",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "79-112:compress1": {
+                    "start": 79,
+                    "end": 112,
+                    "body": [
+                        "    public void compress1(int[] in, IntWrapper inpos, int inlength,\n",
+                        "                          byte[] out, IntWrapper outpos) {\n",
+                        "        if (inlength == 0)\n",
+                        "            return;\n",
+                        "        int initoffset = 0;\n",
+                        "        int outpostmp = outpos.get();\n",
+                        "        for (int k = inpos.get(); k < inpos.get() + inlength; ++k) {\n",
+                        "            final long val = (in[k] - initoffset) & 0xFFFFFFFFL;  // To be consistent with unsigned integers in C/C++\n",
+                        "            initoffset = in[k];\n",
+                        "            if (val < (1 << 7)) {\n",
+                        "                out[outpostmp++] = (byte)(val | (1 << 7));\n",
+                        "            } else if (val < (1 << 14)) {\n",
+                        "                out[outpostmp++] = (byte)extract7bits(0, val);\n",
+                        "                out[outpostmp++] = (byte)(extract7bitsmaskless(1, (val)) | (1 << 7));\n",
+                        "            } else if (val < (1 << 21)) {\n",
+                        "                out[outpostmp++] = (byte)extract7bits(0, val);\n",
+                        "                out[outpostmp++] = (byte)extract7bits(1, val);\n",
+                        "                out[outpostmp++] = (byte)(extract7bitsmaskless(2, (val)) | (1 << 7));\n",
+                        "            } else if (val < (1 << 28)) {\n",
+                        "                out[outpostmp++] = (byte)extract7bits(0, val);\n",
+                        "                out[outpostmp++] = (byte)extract7bits(1, val);\n",
+                        "                out[outpostmp++] = (byte)extract7bits(2, val);\n",
+                        "                out[outpostmp++] = (byte)(extract7bitsmaskless(3, (val)) | (1 << 7));\n",
+                        "            } else {\n",
+                        "                out[outpostmp++] = (byte)extract7bits(0, val);\n",
+                        "                out[outpostmp++] = (byte)extract7bits(1, val);\n",
+                        "                out[outpostmp++] = (byte)extract7bits(2, val);\n",
+                        "                out[outpostmp++] = (byte)extract7bits(3, val);\n",
+                        "                out[outpostmp++] = (byte)(extract7bitsmaskless(4, (val)) | (1 << 7));\n",
+                        "            }\n",
+                        "        }\n",
+                        "        outpos.set(outpostmp);\n",
+                        "        inpos.add(inlength);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "compress1(int[], IntWrapper, int, byte[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedVariableByte",
+                            "IntegratedVariableByte",
+                            "27-29:extract7bits"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedVariableByte",
+                            "IntegratedVariableByte",
+                            "31-33:extract7bitsmaskless"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def compress1(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def compress1(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:",
+                        "        if inlength == 0:",
+                        "            return",
+                        "        initoffset = 0",
+                        "        outpostmp = outpos.get()",
+                        "        for k in range(inpos.get(), inpos.get() + inlength):",
+                        "            val = (in_[k] - initoffset) & 0xFFFFFFFF  # To be consistent with unsigned integers in C/C++",
+                        "            initoffset = in_[k]",
+                        "            if val < (1 << 7):",
+                        "                out[outpostmp] = (val | (1 << 7)) & 0xFF",
+                        "                outpostmp += 1",
+                        "            elif val < (1 << 14):",
+                        "                out[outpostmp] = self.__extract7bits(0, val) & 0xFF",
+                        "                outpostmp += 1",
+                        "                out[outpostmp] = (self.__extract7bitsmaskless(1, val) | (1 << 7)) & 0xFF",
+                        "                outpostmp += 1",
+                        "            elif val < (1 << 21):",
+                        "                out[outpostmp] = self.__extract7bits(0, val) & 0xFF",
+                        "                outpostmp += 1",
+                        "                out[outpostmp] = self.__extract7bits(1, val) & 0xFF",
+                        "                outpostmp += 1",
+                        "                out[outpostmp] = (self.__extract7bitsmaskless(2, val) | (1 << 7)) & 0xFF",
+                        "                outpostmp += 1",
+                        "            elif val < (1 << 28):",
+                        "                out[outpostmp] = self.__extract7bits(0, val) & 0xFF",
+                        "                outpostmp += 1",
+                        "                out[outpostmp] = self.__extract7bits(1, val) & 0xFF",
+                        "                outpostmp += 1",
+                        "                out[outpostmp] = self.__extract7bits(2, val) & 0xFF",
+                        "                outpostmp += 1",
+                        "                out[outpostmp] = (self.__extract7bitsmaskless(3, val) | (1 << 7)) & 0xFF",
+                        "                outpostmp += 1",
+                        "            else:",
+                        "                out[outpostmp] = self.__extract7bits(0, val) & 0xFF",
+                        "                outpostmp += 1",
+                        "                out[outpostmp] = self.__extract7bits(1, val) & 0xFF",
+                        "                outpostmp += 1",
+                        "                out[outpostmp] = self.__extract7bits(2, val) & 0xFF",
+                        "                outpostmp += 1",
+                        "                out[outpostmp] = self.__extract7bits(3, val) & 0xFF",
+                        "                outpostmp += 1",
+                        "                out[outpostmp] = (self.__extract7bitsmaskless(4, val) | (1 << 7)) & 0xFF",
+                        "                outpostmp += 1",
+                        "        outpos.set_(outpostmp)",
+                        "        inpos.add(inlength)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 93.03893160820007,
+                    "generation_timestamp": "2024-11-29T03:31:58.446167",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "36-76:compress0": {
+                    "start": 36,
+                    "end": 76,
+                    "body": [
+                        "    public void compress0(int[] in, IntWrapper inpos, int inlength,\n",
+                        "                          int[] out, IntWrapper outpos) {\n",
+                        "        if (inlength == 0)\n",
+                        "            return;\n",
+                        "        int initoffset = 0;\n",
+                        "        ByteBuffer buf = makeBuffer(inlength * 8);\n",
+                        "        buf.order(ByteOrder.LITTLE_ENDIAN);\n",
+                        "        for (int k = inpos.get(); k < inpos.get() + inlength; ++k) {\n",
+                        "            final long val = (in[k] - initoffset) & 0xFFFFFFFFL; // To be consistent with unsigned integers in C/C++\n",
+                        "            initoffset = in[k];\n",
+                        "            if (val < (1 << 7)) {\n",
+                        "                buf.put((byte)(val | (1 << 7)));\n",
+                        "            } else if (val < (1 << 14)) {\n",
+                        "                buf.put((byte)extract7bits(0, val));\n",
+                        "                buf.put((byte)(extract7bitsmaskless(1, (val)) | (1 << 7)));\n",
+                        "            } else if (val < (1 << 21)) {\n",
+                        "                buf.put((byte)extract7bits(0, val));\n",
+                        "                buf.put((byte)extract7bits(1, val));\n",
+                        "                buf.put((byte)(extract7bitsmaskless(2, (val)) | (1 << 7)));\n",
+                        "            } else if (val < (1 << 28)) {\n",
+                        "                buf.put((byte)extract7bits(0, val));\n",
+                        "                buf.put((byte)extract7bits(1, val));\n",
+                        "                buf.put((byte)extract7bits(2, val));\n",
+                        "                buf.put((byte)(extract7bitsmaskless(3, (val)) | (1 << 7)));\n",
+                        "            } else {\n",
+                        "                buf.put((byte)extract7bits(0, val));\n",
+                        "                buf.put((byte)extract7bits(1, val));\n",
+                        "                buf.put((byte)extract7bits(2, val));\n",
+                        "                buf.put((byte)extract7bits(3, val));\n",
+                        "                buf.put((byte)(extract7bitsmaskless(4, (val)) | (1 << 7)));\n",
+                        "            }\n",
+                        "        }\n",
+                        "        while (buf.position() % 4 != 0)\n",
+                        "            buf.put((byte) 0);\n",
+                        "        final int length = buf.position();\n",
+                        "        buf.flip();\n",
+                        "        IntBuffer ibuf = buf.asIntBuffer();\n",
+                        "        ibuf.get(out, outpos.get(), length / 4);\n",
+                        "        outpos.add(length / 4);\n",
+                        "        inpos.add(inlength);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "compress0(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedVariableByte",
+                            "IntegratedVariableByte",
+                            "267-269:makeBuffer"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/Buffer",
+                            "position()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "asIntBuffer()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "order(java.nio.ByteOrder)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "put(byte)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedVariableByte",
+                            "IntegratedVariableByte",
+                            "27-29:extract7bits"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedVariableByte",
+                            "IntegratedVariableByte",
+                            "31-33:extract7bitsmaskless"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "flip()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/IntBuffer",
+                            "get(int[],int,int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def compress0(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def compress0(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:",
+                        "        if inlength == 0:",
+                        "            return",
+                        "        initoffset = 0",
+                        "        buf = bytearray(inlength * 8)",
+                        "        position = 0  # To simulate ByteBuffer's position",
+                        "",
+                        "        for k in range(inpos.get(), inpos.get() + inlength):",
+                        "            val = (in_[k] - initoffset) & 0xFFFFFFFF  # Simulate unsigned int behavior",
+                        "            initoffset = in_[k]",
+                        "",
+                        "            if val < (1 << 7):",
+                        "                buf[position] = (val | (1 << 7)) & 0xFF",
+                        "                position += 1",
+                        "            elif val < (1 << 14):",
+                        "                buf[position] = self.__extract7bits(0, val) & 0xFF",
+                        "                position += 1",
+                        "                buf[position] = (self.__extract7bitsmaskless(1, val) | (1 << 7)) & 0xFF",
+                        "                position += 1",
+                        "            elif val < (1 << 21):",
+                        "                buf[position] = self.__extract7bits(0, val) & 0xFF",
+                        "                position += 1",
+                        "                buf[position] = self.__extract7bits(1, val) & 0xFF",
+                        "                position += 1",
+                        "                buf[position] = (self.__extract7bitsmaskless(2, val) | (1 << 7)) & 0xFF",
+                        "                position += 1",
+                        "            elif val < (1 << 28):",
+                        "                buf[position] = self.__extract7bits(0, val) & 0xFF",
+                        "                position += 1",
+                        "                buf[position] = self.__extract7bits(1, val) & 0xFF",
+                        "                position += 1",
+                        "                buf[position] = self.__extract7bits(2, val) & 0xFF",
+                        "                position += 1",
+                        "                buf[position] = (self.__extract7bitsmaskless(3, val) | (1 << 7)) & 0xFF",
+                        "                position += 1",
+                        "            else:",
+                        "                buf[position] = self.__extract7bits(0, val) & 0xFF",
+                        "                position += 1",
+                        "                buf[position] = self.__extract7bits(1, val) & 0xFF",
+                        "                position += 1",
+                        "                buf[position] = self.__extract7bits(2, val) & 0xFF",
+                        "                position += 1",
+                        "                buf[position] = self.__extract7bits(3, val) & 0xFF",
+                        "                position += 1",
+                        "                buf[position] = (self.__extract7bitsmaskless(4, val) | (1 << 7)) & 0xFF",
+                        "                position += 1",
+                        "",
+                        "        # Align to 4 bytes",
+                        "        while position % 4 != 0:",
+                        "            buf[position] = 0",
+                        "            position += 1",
+                        "",
+                        "        length = position",
+                        "        int_buf = [int.from_bytes(buf[i:i + 4], byteorder='little') for i in range(0, length, 4)]",
+                        "        out[outpos.get():outpos.get() + len(int_buf)] = int_buf",
+                        "        outpos.add(len(int_buf))",
+                        "        inpos.add(inlength)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 684.4806056022644,
+                    "generation_timestamp": "2024-11-29T03:43:23.023024",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "267-269:makeBuffer": {
+                    "start": 267,
+                    "end": 269,
+                    "body": [
+                        "    protected ByteBuffer makeBuffer(int sizeInBytes) {\n",
+                        "        return ByteBuffer.allocateDirect(sizeInBytes);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "ByteBuffer",
+                            "java.nio.ByteBuffer"
+                        ]
+                    ],
+                    "signature": "makeBuffer(int)",
+                    "parameters": [
+                        "sizeInBytes"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "allocateDirect(int)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _makeBuffer(self, sizeInBytes: int) -> typing.Union[bytearray, memoryview]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    return bytearray(sizeInBytes)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "non-parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 137.0984218120575,
+                    "generation_timestamp": "2024-11-27T14:13:54.357299",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 1,
+                        "graal": 1,
+                        "test_execution": 2
+                    }
+                },
+                "31-33:extract7bitsmaskless": {
+                    "start": 31,
+                    "end": 33,
+                    "body": [
+                        "    private static  byte extract7bitsmaskless(int i, long val) {\n",
+                        "        return (byte)((val >> (7 * i)));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "byte",
+                            "byte"
+                        ]
+                    ],
+                    "signature": "extract7bitsmaskless(int, long)",
+                    "parameters": [
+                        "i",
+                        "val"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __extract7bitsmaskless(i: int, val: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __extract7bitsmaskless(i: int, val: int) -> int:",
+                        "        return (val >> (7 * i)) & 0xFF"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 75.46906089782715,
+                    "generation_timestamp": "2024-11-27T14:15:09.933630",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "27-29:extract7bits": {
+                    "start": 27,
+                    "end": 29,
+                    "body": [
+                        "    private static byte extract7bits(int i, long val) {\n",
+                        "        return (byte)((val >> (7 * i)) & ((1 << 7) - 1));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "byte",
+                            "byte"
+                        ]
+                    ],
+                    "signature": "extract7bits(int, long)",
+                    "parameters": [
+                        "i",
+                        "val"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __extract7bits(i: int, val: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __extract7bits(i: int, val: int) -> int:",
+                        "        return (val >> (7 * i)) & ((1 << 7) - 1)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 80.60456895828247,
+                    "generation_timestamp": "2024-11-27T14:16:30.611849",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class IntegratedVariableByte(IntegratedByteIntegerCODEC, IntegratedIntegerCODEC, SkippableIntegratedIntegerCODEC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os",
+        "from src.main.me.lemire.integercompression.IntWrapper import *",
+        "from src.main.me.lemire.integercompression.differential.IntegratedByteIntegerCODEC import *",
+        "from src.main.me.lemire.integercompression.differential.IntegratedIntegerCODEC import *",
+        "from src.main.me.lemire.integercompression.differential.SkippableIntegratedIntegerCODEC import *"
+    ]
+}

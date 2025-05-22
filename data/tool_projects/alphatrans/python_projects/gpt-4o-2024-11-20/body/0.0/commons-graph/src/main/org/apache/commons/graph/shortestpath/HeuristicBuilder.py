@@ -1,0 +1,15 @@
+from __future__ import annotations
+import re
+from abc import ABC
+import pathlib
+import io
+import typing
+from typing import *
+from src.main.org.apache.commons.graph.WeightedPath import *
+from src.main.org.apache.commons.graph.shortestpath.Heuristic import *
+
+
+class HeuristicBuilder(ABC):
+
+    def withHeuristic(self, heuristic: H) -> WeightedPath[V, WE, W]:
+        pass

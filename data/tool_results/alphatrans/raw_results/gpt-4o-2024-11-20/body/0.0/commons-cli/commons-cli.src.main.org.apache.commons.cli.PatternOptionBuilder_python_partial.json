@@ -1,0 +1,2451 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-cli/src/main/java/org/apache/commons/cli/PatternOptionBuilder.java",
+    "imports": {
+        "20-20:import File": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.io.File;\n"
+            ]
+        },
+        "22-22:import URL": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.net.URL;\n"
+            ]
+        },
+        "21-21:import FileInputStream": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.io.FileInputStream;\n"
+            ]
+        },
+        "23-23:import Date": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.Date;\n"
+            ]
+        }
+    },
+    "classes": {
+        "PatternOptionBuilder": {
+            "start": 70,
+            "end": 70,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "146-191:parsePattern": {
+                    "start": 146,
+                    "end": 191,
+                    "body": [
+                        "    public static Options parsePattern(final String pattern) {\n",
+                        "        char opt = ' ';\n",
+                        "        boolean required = false;\n",
+                        "        Class<?> type = null;\n",
+                        "\n",
+                        "        final Options options = new Options();\n",
+                        "\n",
+                        "        for (int i = 0; i < pattern.length(); i++) {\n",
+                        "            final char ch = pattern.charAt(i);\n",
+                        "\n",
+                        "            if (!isValueCode(ch)) {\n",
+                        "                if (opt != ' ') {\n",
+                        "                    final Option option =\n",
+                        "                            Option.builder1(String.valueOf(opt))\n",
+                        "                                    .hasArg1(type != null)\n",
+                        "                                    .required1(required)\n",
+                        "                                    .type(type)\n",
+                        "                                    .build();\n",
+                        "\n",
+                        "                    options.addOption0(option);\n",
+                        "                    required = false;\n",
+                        "                    type = null;\n",
+                        "                    opt = ' ';\n",
+                        "                }\n",
+                        "\n",
+                        "                opt = ch;\n",
+                        "            } else if (ch == '!') {\n",
+                        "                required = true;\n",
+                        "            } else {\n",
+                        "                type = (Class<?>) getValueClass(ch);\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        if (opt != ' ') {\n",
+                        "            final Option option =\n",
+                        "                    Option.builder1(String.valueOf(opt))\n",
+                        "                            .hasArg1(type != null)\n",
+                        "                            .required1(required)\n",
+                        "                            .type(type)\n",
+                        "                            .build();\n",
+                        "\n",
+                        "            options.addOption0(option);\n",
+                        "        }\n",
+                        "\n",
+                        "        return options;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "Options",
+                            "Options"
+                        ]
+                    ],
+                    "signature": "parsePattern(String)",
+                    "parameters": [
+                        "pattern"
+                    ],
+                    "calls": [
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "Options"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "charAt(int)"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                            "PatternOptionBuilder",
+                            "135-138:isValueCode"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Builder",
+                            "110-115:build"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Builder",
+                            "231-234:type"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Builder",
+                            "220-223:required1"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Builder",
+                            "143-146:hasArg1"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "297-299:builder1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "valueOf(char)"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "62-79:addOption0"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                            "PatternOptionBuilder",
+                            "104-127:getValueClass"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def parsePattern(pattern: str) -> Options:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def parsePattern(pattern: str) -> Options:",
+                        "        opt = ' '",
+                        "        required = False",
+                        "        type_ = None",
+                        "",
+                        "        options = Options()",
+                        "",
+                        "        for i in range(len(pattern)):",
+                        "            ch = pattern[i]",
+                        "",
+                        "            if not PatternOptionBuilder.isValueCode(ch):",
+                        "                if opt != ' ':",
+                        "                    option = Builder.builder1(str(opt)) \\",
+                        "                                    .hasArg1(type_ is not None) \\",
+                        "                                    .required1(required) \\",
+                        "                                    .type_(type_) \\",
+                        "                                    .build()",
+                        "",
+                        "                    options.addOption0(option)",
+                        "                    required = False",
+                        "                    type_ = None",
+                        "                    opt = ' '",
+                        "",
+                        "                opt = ch",
+                        "            elif ch == '!':",
+                        "                required = True",
+                        "            else:",
+                        "                type_ = PatternOptionBuilder.getValueClass(ch)",
+                        "",
+                        "        if opt != ' ':",
+                        "            option = Builder.builder1(str(opt)) \\",
+                        "                            .hasArg1(type_ is not None) \\",
+                        "                            .required1(required) \\",
+                        "                            .type_(type_) \\",
+                        "                            .build()",
+                        "",
+                        "            options.addOption0(option)",
+                        "",
+                        "        return options"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "error",
+                        "message": "Unsupported operation encountered: [valueToObject] Unhandled Python object type: <src.main.org.apache.commons.cli.Options.Options object at 0x50a48de0>\n[valueToObject] Unhandled Python object type: <src.main.org.apache.commons.cli.Options.Options object at 0x7292470c>"
+                    },
+                    "test_execution": {
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testURLPattern_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "701-703:testURLPattern_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testUntypedPattern_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "620-622:testUntypedPattern_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testSimplePattern_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "268-270:testSimplePattern_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testRequiredOption_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "244-246:testRequiredOption_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testObjectPattern_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "196-198:testObjectPattern_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testNumberPattern_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "164-166:testNumberPattern_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testExistingFilePatternFileNotExist_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "138-140:testExistingFilePatternFileNotExist_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testExistingFilePattern_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "85-87:testExistingFilePattern_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testEmptyPattern_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "74-76:testEmptyPattern_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testClassPattern_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "41-43:testClassPattern_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testURLPattern_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py\", line 32, in testURLPattern_test1_decomposed\n    options = PatternOptionBuilder.parsePattern(\"u/v/\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py\", line 43, in parsePattern\n    Builder.builder1(str(opt))\n    ^^^^^^^^^^^^^^^^\nAttributeError: type object 'Builder' has no attribute 'builder1'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "706-709:testURLPattern_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testUntypedPattern_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py\", line 71, in testUntypedPattern_test1_decomposed\n    options = PatternOptionBuilder.parsePattern(\"abc\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py\", line 43, in parsePattern\n    Builder.builder1(str(opt))\n    ^^^^^^^^^^^^^^^^\nAttributeError: type object 'Builder' has no attribute 'builder1'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "625-628:testUntypedPattern_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testSimplePattern_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py\", line 156, in testSimplePattern_test1_decomposed\n    options = PatternOptionBuilder.parsePattern(\"a:b@cde>f+n%t/m*z#\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py\", line 43, in parsePattern\n    Builder.builder1(str(opt))\n    ^^^^^^^^^^^^^^^^\nAttributeError: type object 'Builder' has no attribute 'builder1'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "273-295:testSimplePattern_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testRequiredOption_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py\", line 193, in testRequiredOption_test1_decomposed\n    options = PatternOptionBuilder.parsePattern(\"!n%m%\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py\", line 43, in parsePattern\n    Builder.builder1(str(opt))\n    ^^^^^^^^^^^^^^^^\nAttributeError: type object 'Builder' has no attribute 'builder1'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "249-252:testRequiredOption_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testObjectPattern_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py\", line 220, in testObjectPattern_test1_decomposed\n    options = PatternOptionBuilder.parsePattern(\"o@i@n@\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py\", line 43, in parsePattern\n    Builder.builder1(str(opt))\n    ^^^^^^^^^^^^^^^^\nAttributeError: type object 'Builder' has no attribute 'builder1'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "201-204:testObjectPattern_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testNumberPattern_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py\", line 237, in testNumberPattern_test1_decomposed\n    options = PatternOptionBuilder.parsePattern(\"n%d%x%\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py\", line 43, in parsePattern\n    Builder.builder1(str(opt))\n    ^^^^^^^^^^^^^^^^\nAttributeError: type object 'Builder' has no attribute 'builder1'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "169-172:testNumberPattern_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testExistingFilePatternFileNotExist_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py\", line 254, in testExistingFilePatternFileNotExist_test1_decomposed\n    options = PatternOptionBuilder.parsePattern(\"f<\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py\", line 63, in parsePattern\n    Builder.builder1(str(opt))\n    ^^^^^^^^^^^^^^^^\nAttributeError: type object 'Builder' has no attribute 'builder1'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "143-146:testExistingFilePatternFileNotExist_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testExistingFilePattern_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py\", line 278, in testExistingFilePattern_test1_decomposed\n    options = PatternOptionBuilder.parsePattern(\"g<\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py\", line 63, in parsePattern\n    Builder.builder1(str(opt))\n    ^^^^^^^^^^^^^^^^\nAttributeError: type object 'Builder' has no attribute 'builder1'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "90-93:testExistingFilePattern_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testClassPattern_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py\", line 304, in testClassPattern_test1_decomposed\n    options = PatternOptionBuilder.parsePattern(\"c+d+\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py\", line 43, in parsePattern\n    Builder.builder1(str(opt))\n    ^^^^^^^^^^^^^^^^\nAttributeError: type object 'Builder' has no attribute 'builder1'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "46-49:testClassPattern_test1_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 1442.986533164978,
+                    "generation_timestamp": "2024-11-26T18:52:15.576567",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 1
+                    }
+                },
+                "135-138:isValueCode": {
+                    "start": 135,
+                    "end": 138,
+                    "body": [
+                        "    public static boolean isValueCode(final char ch) {\n",
+                        "        return ch == '@' || ch == ':' || ch == '%' || ch == '+' || ch == '#' || ch == '<'\n",
+                        "                || ch == '>' || ch == '*' || ch == '/' || ch == '!';\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValueCode(char)",
+                    "parameters": [
+                        "ch"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def isValueCode(ch: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def isValueCode(ch: str) -> bool:",
+                        "        return ch in {'@', ':', '%', '+', '#', '<', '>', '*', '/', '!'}"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": {
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testURLPattern_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "701-703:testURLPattern_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testUntypedPattern_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "620-622:testUntypedPattern_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testSimplePattern_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "268-270:testSimplePattern_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testRequiredOption_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "244-246:testRequiredOption_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testObjectPattern_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "196-198:testObjectPattern_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testNumberPattern_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "164-166:testNumberPattern_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testExistingFilePatternFileNotExist_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "138-140:testExistingFilePatternFileNotExist_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testExistingFilePattern_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "85-87:testExistingFilePattern_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testClassPattern_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "41-43:testClassPattern_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testURLPattern_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py\", line 32, in testURLPattern_test1_decomposed\n    options = PatternOptionBuilder.parsePattern(\"u/v/\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py\", line 43, in parsePattern\n    Builder.builder1(str(opt))\n    ^^^^^^^^^^^^^^^^\nAttributeError: type object 'Builder' has no attribute 'builder1'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "706-709:testURLPattern_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testUntypedPattern_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py\", line 71, in testUntypedPattern_test1_decomposed\n    options = PatternOptionBuilder.parsePattern(\"abc\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py\", line 43, in parsePattern\n    Builder.builder1(str(opt))\n    ^^^^^^^^^^^^^^^^\nAttributeError: type object 'Builder' has no attribute 'builder1'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "625-628:testUntypedPattern_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testSimplePattern_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py\", line 156, in testSimplePattern_test1_decomposed\n    options = PatternOptionBuilder.parsePattern(\"a:b@cde>f+n%t/m*z#\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py\", line 43, in parsePattern\n    Builder.builder1(str(opt))\n    ^^^^^^^^^^^^^^^^\nAttributeError: type object 'Builder' has no attribute 'builder1'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "273-295:testSimplePattern_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testRequiredOption_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py\", line 193, in testRequiredOption_test1_decomposed\n    options = PatternOptionBuilder.parsePattern(\"!n%m%\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py\", line 43, in parsePattern\n    Builder.builder1(str(opt))\n    ^^^^^^^^^^^^^^^^\nAttributeError: type object 'Builder' has no attribute 'builder1'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "249-252:testRequiredOption_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testObjectPattern_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py\", line 220, in testObjectPattern_test1_decomposed\n    options = PatternOptionBuilder.parsePattern(\"o@i@n@\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py\", line 43, in parsePattern\n    Builder.builder1(str(opt))\n    ^^^^^^^^^^^^^^^^\nAttributeError: type object 'Builder' has no attribute 'builder1'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "201-204:testObjectPattern_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testNumberPattern_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py\", line 237, in testNumberPattern_test1_decomposed\n    options = PatternOptionBuilder.parsePattern(\"n%d%x%\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py\", line 43, in parsePattern\n    Builder.builder1(str(opt))\n    ^^^^^^^^^^^^^^^^\nAttributeError: type object 'Builder' has no attribute 'builder1'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "169-172:testNumberPattern_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testExistingFilePatternFileNotExist_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py\", line 254, in testExistingFilePatternFileNotExist_test1_decomposed\n    options = PatternOptionBuilder.parsePattern(\"f<\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py\", line 63, in parsePattern\n    Builder.builder1(str(opt))\n    ^^^^^^^^^^^^^^^^\nAttributeError: type object 'Builder' has no attribute 'builder1'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "143-146:testExistingFilePatternFileNotExist_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testExistingFilePattern_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py\", line 278, in testExistingFilePattern_test1_decomposed\n    options = PatternOptionBuilder.parsePattern(\"g<\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py\", line 63, in parsePattern\n    Builder.builder1(str(opt))\n    ^^^^^^^^^^^^^^^^\nAttributeError: type object 'Builder' has no attribute 'builder1'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "90-93:testExistingFilePattern_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testClassPattern_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py\", line 304, in testClassPattern_test1_decomposed\n    options = PatternOptionBuilder.parsePattern(\"c+d+\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py\", line 43, in parsePattern\n    Builder.builder1(str(opt))\n    ^^^^^^^^^^^^^^^^\nAttributeError: type object 'Builder' has no attribute 'builder1'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "46-49:testClassPattern_test1_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 36.49145221710205,
+                    "generation_timestamp": "2024-11-26T14:19:05.193224",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "104-127:getValueClass": {
+                    "start": 104,
+                    "end": 127,
+                    "body": [
+                        "    public static Object getValueClass(final char ch) {\n",
+                        "        switch (ch) {\n",
+                        "            case '@':\n",
+                        "                return PatternOptionBuilder.OBJECT_VALUE;\n",
+                        "            case ':':\n",
+                        "                return PatternOptionBuilder.STRING_VALUE;\n",
+                        "            case '%':\n",
+                        "                return PatternOptionBuilder.NUMBER_VALUE;\n",
+                        "            case '+':\n",
+                        "                return PatternOptionBuilder.CLASS_VALUE;\n",
+                        "            case '#':\n",
+                        "                return PatternOptionBuilder.DATE_VALUE;\n",
+                        "            case '<':\n",
+                        "                return PatternOptionBuilder.EXISTING_FILE_VALUE;\n",
+                        "            case '>':\n",
+                        "                return PatternOptionBuilder.FILE_VALUE;\n",
+                        "            case '*':\n",
+                        "                return PatternOptionBuilder.FILES_VALUE;\n",
+                        "            case '/':\n",
+                        "                return PatternOptionBuilder.URL_VALUE;\n",
+                        "        }\n",
+                        "\n",
+                        "        return null;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "getValueClass(char)",
+                    "parameters": [
+                        "ch"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def getValueClass(ch: str) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getValueClass(ch: str) -> typing.Any:",
+                        "        match ch:",
+                        "            case '@':",
+                        "                return PatternOptionBuilder.OBJECT_VALUE",
+                        "            case ':':",
+                        "                return PatternOptionBuilder.STRING_VALUE",
+                        "            case '%':",
+                        "                return PatternOptionBuilder.NUMBER_VALUE",
+                        "            case '+':",
+                        "                return PatternOptionBuilder.CLASS_VALUE",
+                        "            case '#':",
+                        "                return PatternOptionBuilder.DATE_VALUE",
+                        "            case '<':",
+                        "                return PatternOptionBuilder.EXISTING_FILE_VALUE",
+                        "            case '>':",
+                        "                return PatternOptionBuilder.FILE_VALUE",
+                        "            case '*':",
+                        "                return PatternOptionBuilder.FILES_VALUE",
+                        "            case '/':",
+                        "                return PatternOptionBuilder.URL_VALUE",
+                        "        return None"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": {
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testURLPattern_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "701-703:testURLPattern_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testSimplePattern_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "268-270:testSimplePattern_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testRequiredOption_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "244-246:testRequiredOption_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testObjectPattern_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "196-198:testObjectPattern_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testNumberPattern_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "164-166:testNumberPattern_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testExistingFilePatternFileNotExist_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "138-140:testExistingFilePatternFileNotExist_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testExistingFilePattern_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "85-87:testExistingFilePattern_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testClassPattern_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "41-43:testClassPattern_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testURLPattern_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py\", line 32, in testURLPattern_test1_decomposed\n    options = PatternOptionBuilder.parsePattern(\"u/v/\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py\", line 43, in parsePattern\n    Builder.builder1(str(opt))\n    ^^^^^^^^^^^^^^^^\nAttributeError: type object 'Builder' has no attribute 'builder1'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "706-709:testURLPattern_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testSimplePattern_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py\", line 156, in testSimplePattern_test1_decomposed\n    options = PatternOptionBuilder.parsePattern(\"a:b@cde>f+n%t/m*z#\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py\", line 43, in parsePattern\n    Builder.builder1(str(opt))\n    ^^^^^^^^^^^^^^^^\nAttributeError: type object 'Builder' has no attribute 'builder1'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "273-295:testSimplePattern_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testRequiredOption_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py\", line 193, in testRequiredOption_test1_decomposed\n    options = PatternOptionBuilder.parsePattern(\"!n%m%\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py\", line 43, in parsePattern\n    Builder.builder1(str(opt))\n    ^^^^^^^^^^^^^^^^\nAttributeError: type object 'Builder' has no attribute 'builder1'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "249-252:testRequiredOption_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testObjectPattern_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py\", line 220, in testObjectPattern_test1_decomposed\n    options = PatternOptionBuilder.parsePattern(\"o@i@n@\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py\", line 43, in parsePattern\n    Builder.builder1(str(opt))\n    ^^^^^^^^^^^^^^^^\nAttributeError: type object 'Builder' has no attribute 'builder1'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "201-204:testObjectPattern_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testNumberPattern_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py\", line 237, in testNumberPattern_test1_decomposed\n    options = PatternOptionBuilder.parsePattern(\"n%d%x%\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py\", line 43, in parsePattern\n    Builder.builder1(str(opt))\n    ^^^^^^^^^^^^^^^^\nAttributeError: type object 'Builder' has no attribute 'builder1'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "169-172:testNumberPattern_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testExistingFilePatternFileNotExist_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py\", line 254, in testExistingFilePatternFileNotExist_test1_decomposed\n    options = PatternOptionBuilder.parsePattern(\"f<\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py\", line 63, in parsePattern\n    Builder.builder1(str(opt))\n    ^^^^^^^^^^^^^^^^\nAttributeError: type object 'Builder' has no attribute 'builder1'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "143-146:testExistingFilePatternFileNotExist_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testExistingFilePattern_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py\", line 278, in testExistingFilePattern_test1_decomposed\n    options = PatternOptionBuilder.parsePattern(\"g<\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py\", line 63, in parsePattern\n    Builder.builder1(str(opt))\n    ^^^^^^^^^^^^^^^^\nAttributeError: type object 'Builder' has no attribute 'builder1'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "90-93:testExistingFilePattern_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py::PatternOptionBuilderTest::testClassPattern_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/test/org/apache/commons/cli/PatternOptionBuilderTest.py\", line 304, in testClassPattern_test1_decomposed\n    options = PatternOptionBuilder.parsePattern(\"c+d+\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py\", line 43, in parsePattern\n    Builder.builder1(str(opt))\n    ^^^^^^^^^^^^^^^^\nAttributeError: type object 'Builder' has no attribute 'builder1'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "146-191:parsePattern"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "135-138:isValueCode"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                                    "class": "PatternOptionBuilder",
+                                    "method": "104-127:getValueClass"
+                                },
+                                {
+                                    "file": "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "83-83:CommandLine"
+                                },
+                                {
+                                    "file": "commons-cli.src.test.org.apache.commons.cli.PatternOptionBuilderTest",
+                                    "class": "PatternOptionBuilderTest",
+                                    "method": "46-49:testClassPattern_test1_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 38.533687591552734,
+                    "generation_timestamp": "2024-11-26T14:19:43.911380",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "96-96:URL_VALUE": {
+                    "start": 96,
+                    "end": 96,
+                    "body": [
+                        "    public static final Class<URL> URL_VALUE = URL.class;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "Class<URL>",
+                            "java.lang.Class<URL>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    URL_VALUE: typing.Type[typing.Union[urllib.parse.ParseResult, urllib.parse.SplitResult, urllib.parse.DefragResult, str]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    URL_VALUE: typing.Type[urllib.parse.ParseResult] = urllib.parse.ParseResult"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 9.79551100730896,
+                    "generation_timestamp": "2024-11-26T13:54:01.490416",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "93-93:FILES_VALUE": {
+                    "start": 93,
+                    "end": 93,
+                    "body": [
+                        "    public static final Class<File[]> FILES_VALUE = File[].class;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "Class<File[]>",
+                            "java.lang.Class<File[]>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    FILES_VALUE: typing.Type[typing.List[pathlib.Path]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    FILES_VALUE: typing.Type[typing.List[pathlib.Path]] = list[pathlib.Path]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 9.615460395812988,
+                    "generation_timestamp": "2024-11-26T13:54:11.133437",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "90-90:FILE_VALUE": {
+                    "start": 90,
+                    "end": 90,
+                    "body": [
+                        "    public static final Class<File> FILE_VALUE = File.class;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "Class<File>",
+                            "java.lang.Class<File>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    FILE_VALUE: typing.Type[pathlib.Path] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    FILE_VALUE: typing.Type[pathlib.Path] = pathlib.Path"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 9.50869870185852,
+                    "generation_timestamp": "2024-11-26T13:54:20.689391",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "87-87:EXISTING_FILE_VALUE": {
+                    "start": 87,
+                    "end": 87,
+                    "body": [
+                        "    public static final Class<FileInputStream> EXISTING_FILE_VALUE = FileInputStream.class;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "Class<FileInputStream>",
+                            "java.lang.Class<FileInputStream>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    EXISTING_FILE_VALUE: typing.Type[typing.Union[io.FileIO, io.BufferedReader, io.TextIOWrapper]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    EXISTING_FILE_VALUE: typing.Type[io.FileIO] = io.FileIO"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 9.559404611587524,
+                    "generation_timestamp": "2024-11-26T13:54:30.275841",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "84-84:CLASS_VALUE": {
+                    "start": 84,
+                    "end": 84,
+                    "body": [
+                        "    public static final Class<?> CLASS_VALUE = Class.class;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "Class<?>",
+                            "java.lang.Class<?>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    CLASS_VALUE: typing.Type[typing.Any] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    CLASS_VALUE: typing.Type[typing.Any] = type"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 9.592121839523315,
+                    "generation_timestamp": "2024-11-26T13:54:39.895408",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "81-81:DATE_VALUE": {
+                    "start": 81,
+                    "end": 81,
+                    "body": [
+                        "    public static final Class<Date> DATE_VALUE = Date.class;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "Class<Date>",
+                            "java.lang.Class<Date>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    DATE_VALUE: typing.Type[typing.Union[datetime.date, datetime.datetime]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    DATE_VALUE: typing.Type[typing.Union[datetime.date, datetime.datetime]] = datetime.date"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 9.598639488220215,
+                    "generation_timestamp": "2024-11-26T13:54:49.521513",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "78-78:NUMBER_VALUE": {
+                    "start": 78,
+                    "end": 78,
+                    "body": [
+                        "    public static final Class<Number> NUMBER_VALUE = Number.class;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "Class<Number>",
+                            "java.lang.Class<Number>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    NUMBER_VALUE: typing.Type[typing.Union[int, float, numbers.Number]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    NUMBER_VALUE: typing.Type[typing.Union[int, float, numbers.Number]] = numbers.Number"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 9.728402376174927,
+                    "generation_timestamp": "2024-11-26T13:54:59.277340",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "75-75:OBJECT_VALUE": {
+                    "start": 75,
+                    "end": 75,
+                    "body": [
+                        "    public static final Class<Object> OBJECT_VALUE = Object.class;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "Class<Object>",
+                            "java.lang.Class<Object>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    OBJECT_VALUE: typing.Type[typing.Any] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    OBJECT_VALUE: typing.Type[typing.Any] = object"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 10.073383092880249,
+                    "generation_timestamp": "2024-11-26T13:55:09.389442",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "72-72:STRING_VALUE": {
+                    "start": 72,
+                    "end": 72,
+                    "body": [
+                        "    public static final Class<String> STRING_VALUE = String.class;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "Class<String>",
+                            "java.lang.Class<String>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    STRING_VALUE: typing.Type[str] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    STRING_VALUE: typing.Type[str] = str"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 9.761060237884521,
+                    "generation_timestamp": "2024-11-26T13:55:19.178135",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class PatternOptionBuilder:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import pathlib",
+        "import io",
+        "import numbers",
+        "import typing\nfrom typing import *",
+        "import datetime",
+        "import urllib",
+        "from src.main.org.apache.commons.cli.Option import *",
+        "from src.main.org.apache.commons.cli.Options import *"
+    ]
+}

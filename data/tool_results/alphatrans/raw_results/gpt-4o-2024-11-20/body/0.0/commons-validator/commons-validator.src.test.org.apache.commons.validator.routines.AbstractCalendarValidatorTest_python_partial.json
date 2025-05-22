@@ -1,0 +1,1648 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/test/java/org/apache/commons/validator/routines/AbstractCalendarValidatorTest.java",
+    "imports": {
+        "21-21:import ByteArrayInputStream": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.io.ByteArrayInputStream;\n"
+            ]
+        },
+        "22-22:import ByteArrayOutputStream": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.io.ByteArrayOutputStream;\n"
+            ]
+        },
+        "23-23:import ObjectInputStream": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.io.ObjectInputStream;\n"
+            ]
+        },
+        "24-24:import ObjectOutputStream": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.io.ObjectOutputStream;\n"
+            ]
+        },
+        "27-27:import Locale": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.util.Locale;\n"
+            ]
+        },
+        "26-26:import Date": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.util.Date;\n"
+            ]
+        },
+        "28-28:import TimeZone": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.util.TimeZone;\n"
+            ]
+        },
+        "25-25:import Calendar": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.util.Calendar;\n"
+            ]
+        },
+        "19-19:import TestCase": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import junit.framework.TestCase;\n"
+            ]
+        }
+    },
+    "classes": {
+        "AbstractCalendarValidatorTest": {
+            "start": 35,
+            "end": 35,
+            "is_abstract": true,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "unittest.TestCase"
+            ],
+            "methods": {
+                "156-159:tearDown": {
+                    "start": 156,
+                    "end": 159,
+                    "body": [
+                        "    protected void tearDown() throws Exception {\n",
+                        "        super.tearDown();\n",
+                        "        validator = null;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "tearDown()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "TestCase",
+                            "tearDown()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def tearDown(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def tearDown(self) -> None:",
+                        "        super().tearDown()",
+                        "        self._validator = None"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 23.51921534538269,
+                    "generation_timestamp": "2024-11-29T08:02:27.278613",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "146-148:setUp": {
+                    "start": 146,
+                    "end": 148,
+                    "body": [
+                        "    protected void setUp() throws Exception {\n",
+                        "        super.setUp();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setUp()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "TestCase",
+                            "setUp()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def setUp(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def setUp(self) -> None:",
+                        "        super().setUp()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 20.8432400226593,
+                    "generation_timestamp": "2024-11-29T08:02:03.536006",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "276-279:createDate": {
+                    "start": 276,
+                    "end": 279,
+                    "body": [
+                        "    protected static Date createDate(TimeZone zone, int date, int time) {\n",
+                        "        Calendar calendar = createCalendar(zone, date, time);\n",
+                        "        return calendar.getTime();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "Date",
+                            "java.util.Date"
+                        ]
+                    ],
+                    "signature": "createDate(TimeZone, int, int)",
+                    "parameters": [
+                        "zone",
+                        "date",
+                        "time"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.test.org.apache.commons.validator.routines.AbstractCalendarValidatorTest",
+                            "AbstractCalendarValidatorTest",
+                            "250-266:createCalendar"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Calendar",
+                            "getTime()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def _createDate(zone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone], date: int, time: int) -> typing.Union[datetime.datetime, datetime.date]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def _createDate(zone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone], date: int, time: int) -> typing.Union[datetime.datetime, datetime.date]:",
+                        "        calendar = AbstractCalendarValidatorTest._createCalendar(zone, date, time)",
+                        "        return calendar.date()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 198.6783092021942,
+                    "generation_timestamp": "2024-11-29T08:00:57.251366",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 1
+                    }
+                },
+                "250-266:createCalendar": {
+                    "start": 250,
+                    "end": 266,
+                    "body": [
+                        "    protected static Calendar createCalendar(TimeZone zone, int date, int time) {\n",
+                        "        Calendar calendar = zone == null ? Calendar.getInstance() : Calendar.getInstance(zone);\n",
+                        "        int year = ((date / 10000) * 10000);\n",
+                        "        int mth = ((date / 100) * 100) - year;\n",
+                        "        int day = date - (year + mth);\n",
+                        "        int hour = ((time / 10000) * 10000);\n",
+                        "        int min = ((time / 100) * 100) - hour;\n",
+                        "        int sec = time - (hour + min);\n",
+                        "        calendar.set(Calendar.YEAR, (year / 10000));\n",
+                        "        calendar.set(Calendar.MONTH, ((mth / 100) - 1));\n",
+                        "        calendar.set(Calendar.DATE, day);\n",
+                        "        calendar.set(Calendar.HOUR_OF_DAY, (hour / 10000));\n",
+                        "        calendar.set(Calendar.MINUTE, (min / 100));\n",
+                        "        calendar.set(Calendar.SECOND, sec);\n",
+                        "        calendar.set(Calendar.MILLISECOND, 0);\n",
+                        "        return calendar;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "Calendar",
+                            "java.util.Calendar"
+                        ]
+                    ],
+                    "signature": "createCalendar(TimeZone, int, int)",
+                    "parameters": [
+                        "zone",
+                        "date",
+                        "time"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Calendar",
+                            "getInstance()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Calendar",
+                            "getInstance(java.util.TimeZone)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Calendar",
+                            "set(int,int)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def _createCalendar(zone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone], date: int, time: int) -> typing.Union[datetime.datetime, datetime.date, datetime.time, datetime.timedelta, datetime.timezone]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "non-parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 4.414934873580933,
+                    "generation_timestamp": "2024-11-29T08:01:42.407372",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "219-240:testSerialization": {
+                    "start": 219,
+                    "end": 240,
+                    "body": [
+                        "    public void testSerialization() {\n",
+                        "        ByteArrayOutputStream baos = new ByteArrayOutputStream();\n",
+                        "        try {\n",
+                        "            ObjectOutputStream oos = new ObjectOutputStream(baos);\n",
+                        "            oos.writeObject(validator);\n",
+                        "            oos.flush();\n",
+                        "            oos.close();\n",
+                        "        } catch (Exception e) {\n",
+                        "            fail(validator.getClass().getName() + \" error during serialization: \" + e);\n",
+                        "        }\n",
+                        "\n",
+                        "        Object result = null;\n",
+                        "        try {\n",
+                        "            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());\n",
+                        "            ObjectInputStream ois = new ObjectInputStream(bais);\n",
+                        "            result = ois.readObject();\n",
+                        "            bais.close();\n",
+                        "        } catch (Exception e) {\n",
+                        "            fail(validator.getClass().getName() + \" error during deserialization: \" + e);\n",
+                        "        }\n",
+                        "        assertNotNull(result);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSerialization()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "ByteArrayOutputStream()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ObjectOutputStream",
+                            "ObjectOutputStream(java.io.OutputStream)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ObjectOutputStream",
+                            "writeObject(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ObjectOutputStream",
+                            "flush()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ObjectOutputStream",
+                            "close()"
+                        ],
+                        [
+                            "library",
+                            "TestCase",
+                            "fail(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getName()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "getClass()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayInputStream",
+                            "ByteArrayInputStream(byte[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "toByteArray()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ObjectInputStream",
+                            "ObjectInputStream(java.io.InputStream)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ObjectInputStream",
+                            "readObject()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayInputStream",
+                            "close()"
+                        ],
+                        [
+                            "library",
+                            "TestCase",
+                            "assertNotNull(java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testSerialization(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testSerialization(self) -> None:",
+                        "        baos = io.BytesIO()",
+                        "        try:",
+                        "            # Serialize the validator object",
+                        "            oos = io.BufferedWriter(baos)",
+                        "            import pickle",
+                        "            pickle.dump(self._validator, baos)",
+                        "            baos.flush()",
+                        "            baos.close()",
+                        "        except Exception as e:",
+                        "            pytest.fail(f\"{self._validator.__class__.__name__} error during serialization: {e}\")",
+                        "",
+                        "        result = None",
+                        "        try:",
+                        "            # Deserialize the validator object",
+                        "            bais = io.BytesIO(baos.getvalue())",
+                        "            result = pickle.load(bais)",
+                        "            bais.close()",
+                        "        except Exception as e:",
+                        "            pytest.fail(f\"{self._validator.__class__.__name__} error during deserialization: {e}\")",
+                        "",
+                        "        self.assertIsNotNone(result)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 27.977261066436768,
+                    "generation_timestamp": "2024-11-29T07:57:38.185966",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "210-216:testFormat": {
+                    "start": 210,
+                    "end": 216,
+                    "body": [
+                        "    public void testFormat() {\n",
+                        "\n",
+                        "        Object test = validator.parse(\"2005-11-28\", \"yyyy-MM-dd\", null, null);\n",
+                        "        assertNotNull(\"Test Date \", test);\n",
+                        "        assertEquals(\"Format pattern\", \"28.11.05\", validator.format1(test, \"dd.MM.yy\"));\n",
+                        "        assertEquals(\"Format locale\", \"11/28/05\", validator.format2(test, Locale.US));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testFormat()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "167-178:parse"
+                        ],
+                        [
+                            "library",
+                            "TestCase",
+                            "assertNotNull(java.lang.String,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "TestCase",
+                            "assertEquals(java.lang.String,java.lang.String,java.lang.String)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractFormatValidator",
+                            "AbstractFormatValidator",
+                            "121-123:format1"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractFormatValidator",
+                            "AbstractFormatValidator",
+                            "132-134:format2"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testFormat(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testFormat(self) -> None:",
+                        "        test = self._validator._parse(\"2005-11-28\", \"yyyy-MM-dd\", None, None)",
+                        "        self.assertIsNotNone(test, \"Test Date \")",
+                        "        self.assertEqual(\"28.11.05\", self._validator.format1(test, \"dd.MM.yy\"), \"Format pattern\")",
+                        "        self.assertEqual(\"11/28/05\", self._validator.format2(test, locale=Locale.US), \"Format locale\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 25.13911724090576,
+                    "generation_timestamp": "2024-11-29T07:02:27.204389",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "200-207:testLocaleInvalid": {
+                    "start": 200,
+                    "end": 207,
+                    "body": [
+                        "    public void testLocaleInvalid() {\n",
+                        "        for (int i = 0; i < localeInvalid.length; i++) {\n",
+                        "            String text = i + \" value=[\" + localeInvalid[i] + \"] passed \";\n",
+                        "            Object date = validator.parse(localeInvalid[i], null, Locale.US, null);\n",
+                        "            assertNull(\"validateObj() \" + text + date, date);\n",
+                        "            assertFalse(\"isValid() \" + text, validator.isValid2(localeInvalid[i], Locale.US));\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testLocaleInvalid()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "167-178:parse"
+                        ],
+                        [
+                            "library",
+                            "TestCase",
+                            "assertNull(java.lang.String,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "TestCase",
+                            "assertFalse(java.lang.String,boolean)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractFormatValidator",
+                            "AbstractFormatValidator",
+                            "90-92:isValid2"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testLocaleInvalid(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testLocaleInvalid(self) -> None:",
+                        "        for i, invalid_date in enumerate(self._localeInvalid):",
+                        "            text = f\"{i} value=[{invalid_date}] passed \"",
+                        "            date = self._validator.parse(invalid_date, None, locale=Locale.US, timeZone=None)",
+                        "            self.assertIsNone(date, f\"validateObj() {text}{date}\")",
+                        "            self.assertFalse(self._validator.isValid2(invalid_date, Locale.US), f\"isValid() {text}\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 24.77933120727539,
+                    "generation_timestamp": "2024-11-29T07:02:01.848937",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "186-197:testLocaleValid": {
+                    "start": 186,
+                    "end": 197,
+                    "body": [
+                        "    public void testLocaleValid() {\n",
+                        "        for (int i = 0; i < localeValid.length; i++) {\n",
+                        "            String text = i + \" value=[\" + localeValid[i] + \"] failed \";\n",
+                        "            Object date = validator.parse(localeValid[i], null, Locale.US, null);\n",
+                        "            assertNotNull(\"validateObj() \" + text + date, date);\n",
+                        "            assertTrue(\"isValid() \" + text, validator.isValid2(localeValid[i], Locale.US));\n",
+                        "            if (date instanceof Calendar) {\n",
+                        "                date = ((Calendar) date).getTime();\n",
+                        "            }\n",
+                        "            assertEquals(\"compare \" + text, patternExpect[i], date);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testLocaleValid()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "167-178:parse"
+                        ],
+                        [
+                            "library",
+                            "TestCase",
+                            "assertNotNull(java.lang.String,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "TestCase",
+                            "assertTrue(java.lang.String,boolean)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractFormatValidator",
+                            "AbstractFormatValidator",
+                            "90-92:isValid2"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Calendar",
+                            "getTime()"
+                        ],
+                        [
+                            "library",
+                            "TestCase",
+                            "assertEquals(java.lang.String,java.lang.Object,java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testLocaleValid(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testLocaleValid(self) -> None:",
+                        "        for i, locale_value in enumerate(self._localeValid):",
+                        "            text = f\"{i} value=[{locale_value}] failed \"",
+                        "            date = self._validator.parse(locale_value, None, locale=Locale.US, timeZone=None)",
+                        "            ",
+                        "            # Assert that the parsed date is not None",
+                        "            self.assertIsNotNone(date, f\"validateObj() {text}{date}\")",
+                        "            ",
+                        "            # Assert that the value is valid according to the validator",
+                        "            self.assertTrue(self._validator.isValid2(locale_value, Locale.US), f\"isValid() {text}\")",
+                        "            ",
+                        "            # If the parsed date is a Calendar instance, convert it to a datetime object",
+                        "            if isinstance(date, Calendar):",
+                        "                date = date.getTime()",
+                        "            ",
+                        "            # Assert that the parsed date matches the expected pattern",
+                        "            self.assertEqual(self._patternExpect[i], date, f\"compare {text}\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 22.70020031929016,
+                    "generation_timestamp": "2024-11-29T07:01:36.824220",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "176-183:testPatternInvalid": {
+                    "start": 176,
+                    "end": 183,
+                    "body": [
+                        "    public void testPatternInvalid() {\n",
+                        "        for (int i = 0; i < patternInvalid.length; i++) {\n",
+                        "            String text = i + \" value=[\" + patternInvalid[i] + \"] passed \";\n",
+                        "            Object date = validator.parse(patternInvalid[i], \"yy-MM-dd\", null, null);\n",
+                        "            assertNull(\"validateObj() \" + text + date, date);\n",
+                        "            assertFalse(\"isValid() \" + text, validator.isValid1(patternInvalid[i], \"yy-MM-dd\"));\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPatternInvalid()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "167-178:parse"
+                        ],
+                        [
+                            "library",
+                            "TestCase",
+                            "assertNull(java.lang.String,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "TestCase",
+                            "assertFalse(java.lang.String,boolean)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractFormatValidator",
+                            "AbstractFormatValidator",
+                            "79-81:isValid1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testPatternInvalid(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testPatternInvalid(self) -> None:",
+                        "        for i, pattern in enumerate(self._patternInvalid):",
+                        "            text = f\"{i} value=[{pattern}] passed \"",
+                        "            date = self._validator._parse(pattern, \"yy-MM-dd\", None, None)",
+                        "            self.assertIsNone(date, f\"validateObj() {text}{date}\")",
+                        "            self.assertFalse(self._validator.isValid1(pattern, \"yy-MM-dd\"), f\"isValid() {text}\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 24.18725085258484,
+                    "generation_timestamp": "2024-11-29T07:01:13.880670",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "162-173:testPatternValid": {
+                    "start": 162,
+                    "end": 173,
+                    "body": [
+                        "    public void testPatternValid() {\n",
+                        "        for (int i = 0; i < patternValid.length; i++) {\n",
+                        "            String text = i + \" value=[\" + patternValid[i] + \"] failed \";\n",
+                        "            Object date = validator.parse(patternValid[i], \"yy-MM-dd\", null, null);\n",
+                        "            assertNotNull(\"validateObj() \" + text + date, date);\n",
+                        "            assertTrue(\"isValid() \" + text, validator.isValid1(patternValid[i], \"yy-MM-dd\"));\n",
+                        "            if (date instanceof Calendar) {\n",
+                        "                date = ((Calendar) date).getTime();\n",
+                        "            }\n",
+                        "            assertEquals(\"compare \" + text, patternExpect[i], date);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPatternValid()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "167-178:parse"
+                        ],
+                        [
+                            "library",
+                            "TestCase",
+                            "assertNotNull(java.lang.String,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "TestCase",
+                            "assertTrue(java.lang.String,boolean)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractFormatValidator",
+                            "AbstractFormatValidator",
+                            "79-81:isValid1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Calendar",
+                            "getTime()"
+                        ],
+                        [
+                            "library",
+                            "TestCase",
+                            "assertEquals(java.lang.String,java.lang.Object,java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testPatternValid(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testPatternValid(self) -> None:",
+                        "        for i, pattern in enumerate(self._patternValid):",
+                        "            text = f\"{i} value=[{pattern}] failed \"",
+                        "            date = self._validator._parse(pattern, \"yy-MM-dd\", None, None)",
+                        "            self.assertIsNotNone(date, f\"validateObj() {text}{date}\")",
+                        "            self.assertTrue(self._validator.isValid1(pattern, \"yy-MM-dd\"), f\"isValid() {text}\")",
+                        "            if isinstance(date, datetime.datetime):",
+                        "                date = date.date()  # Convert datetime to date if necessary",
+                        "            self.assertEqual(self._patternExpect[i], date, f\"compare {text}\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 28.457337856292725,
+                    "generation_timestamp": "2024-11-29T07:00:49.428195",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "136-138:AbstractCalendarValidatorTest": {
+                    "start": 136,
+                    "end": 138,
+                    "body": [
+                        "    public AbstractCalendarValidatorTest(String name) {\n",
+                        "        super(name);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "AbstractCalendarValidatorTest(String)",
+                    "parameters": [
+                        "name"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "TestCase",
+                            "TestCase(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, name: str) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, name: str) -> None:",
+                        "        super().__init__(name)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 23.77754855155945,
+                    "generation_timestamp": "2024-11-29T07:57:09.937455",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "104-129:localeInvalid": {
+                    "start": 104,
+                    "end": 129,
+                    "body": [
+                        "    protected String[] localeInvalid =\n",
+                        "            new String[] {\n",
+                        "                \"01/00/2005\" // zero month\n",
+                        "                ,\n",
+                        "                \"00/01/2005\" // zero day\n",
+                        "                ,\n",
+                        "                \"13/01/2005\" // month invalid\n",
+                        "                ,\n",
+                        "                \"04/31/2005\" // invalid day\n",
+                        "                ,\n",
+                        "                \"03/32/2005\" // invalid day\n",
+                        "                ,\n",
+                        "                \"02/29/2005\" // invalid leap\n",
+                        "                ,\n",
+                        "                \"01/01/200X\" // invalid char\n",
+                        "                ,\n",
+                        "                \"01/0X/2005\" // invalid char\n",
+                        "                ,\n",
+                        "                \"0X/01/2005\" // invalid char\n",
+                        "                ,\n",
+                        "                \"01-01-2005\" // invalid pattern\n",
+                        "                ,\n",
+                        "                \"01/2005\" // invalid pattern\n",
+                        "                ,\n",
+                        "                \"01//2005\"\n",
+                        "            }; // invalid pattern\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _localeInvalid: typing.List[typing.List[str]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    _localeInvalid: typing.List[str] = [",
+                        "        \"01/00/2005\",  # zero month",
+                        "        \"00/01/2005\",  # zero day",
+                        "        \"13/01/2005\",  # month invalid",
+                        "        \"04/31/2005\",  # invalid day",
+                        "        \"03/32/2005\",  # invalid day",
+                        "        \"02/29/2005\",  # invalid leap",
+                        "        \"01/01/200X\",  # invalid char",
+                        "        \"01/0X/2005\",  # invalid char",
+                        "        \"0X/01/2005\",  # invalid char",
+                        "        \"01-01-2005\",  # invalid pattern",
+                        "        \"01/2005\",     # invalid pattern",
+                        "        \"01//2005\"     # invalid pattern",
+                        "    ]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 25.68185782432556,
+                    "generation_timestamp": "2024-11-27T11:18:44.116511",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "76-103:patternInvalid": {
+                    "start": 76,
+                    "end": 103,
+                    "body": [
+                        "    protected String[] patternInvalid =\n",
+                        "            new String[] {\n",
+                        "                \"2005-00-01\" // zero month\n",
+                        "                ,\n",
+                        "                \"2005-01-00\" // zero day\n",
+                        "                ,\n",
+                        "                \"2005-13-03\" // month invalid\n",
+                        "                ,\n",
+                        "                \"2005-04-31\" // invalid day\n",
+                        "                ,\n",
+                        "                \"2005-03-32\" // invalid day\n",
+                        "                ,\n",
+                        "                \"2005-02-29\" // invalid leap\n",
+                        "                ,\n",
+                        "                \"200X-01-01\" // invalid char\n",
+                        "                ,\n",
+                        "                \"2005-0X-01\" // invalid char\n",
+                        "                ,\n",
+                        "                \"2005-01-0X\" // invalid char\n",
+                        "                ,\n",
+                        "                \"01/01/2005\" // invalid pattern\n",
+                        "                ,\n",
+                        "                \"2005-01\" // invalid pattern\n",
+                        "                ,\n",
+                        "                \"2005--01\" // invalid pattern\n",
+                        "                ,\n",
+                        "                \"2005-01-\"\n",
+                        "            }; // invalid pattern\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _patternInvalid: typing.List[typing.List[str]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    _patternInvalid: List[str] = [",
+                        "        \"2005-00-01\",  # zero month",
+                        "        \"2005-01-00\",  # zero day",
+                        "        \"2005-13-03\",  # month invalid",
+                        "        \"2005-04-31\",  # invalid day",
+                        "        \"2005-03-32\",  # invalid day",
+                        "        \"2005-02-29\",  # invalid leap",
+                        "        \"200X-01-01\",  # invalid char",
+                        "        \"2005-0X-01\",  # invalid char",
+                        "        \"2005-01-0X\",  # invalid char",
+                        "        \"01/01/2005\",  # invalid pattern",
+                        "        \"2005-01\",     # invalid pattern",
+                        "        \"2005--01\",    # invalid pattern",
+                        "        \"2005-01-\"     # invalid pattern",
+                        "    ]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 26.465115547180176,
+                    "generation_timestamp": "2024-11-27T11:19:10.612006",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "66-75:patternExpect": {
+                    "start": 66,
+                    "end": 75,
+                    "body": [
+                        "    protected Date[] patternExpect =\n",
+                        "            new Date[] {\n",
+                        "                createDate(null, 20050101, 0),\n",
+                        "                createDate(null, 20051231, 0),\n",
+                        "                createDate(null, 20040229, 0),\n",
+                        "                createDate(null, 20050430, 0),\n",
+                        "                createDate(null, 20051231, 0),\n",
+                        "                createDate(null, 20050101, 0),\n",
+                        "                createDate(null, 20050101, 0)\n",
+                        "            };\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "Date[]",
+                            "java.util.Date[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _patternExpect: typing.List[typing.Union[datetime.date, datetime.datetime]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    _patternExpect: typing.List[typing.Union[datetime.date, datetime.datetime]] = [",
+                        "        AbstractCalendarValidatorTest._createDate(None, 20050101, 0),",
+                        "        AbstractCalendarValidatorTest._createDate(None, 20051231, 0),",
+                        "        AbstractCalendarValidatorTest._createDate(None, 20040229, 0),",
+                        "        AbstractCalendarValidatorTest._createDate(None, 20050430, 0),",
+                        "        AbstractCalendarValidatorTest._createDate(None, 20051231, 0),",
+                        "        AbstractCalendarValidatorTest._createDate(None, 20050101, 0),",
+                        "        AbstractCalendarValidatorTest._createDate(None, 20050101, 0)",
+                        "    ]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 26.21919560432434,
+                    "generation_timestamp": "2024-11-27T11:19:36.874472",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "55-65:localeValid": {
+                    "start": 55,
+                    "end": 65,
+                    "body": [
+                        "    protected String[] localeValid =\n",
+                        "            new String[] {\n",
+                        "                \"01/01/2005\",\n",
+                        "                \"12/31/2005\",\n",
+                        "                \"02/29/2004\" // valid leap\n",
+                        "                ,\n",
+                        "                \"04/30/2005\",\n",
+                        "                \"12/31/05\",\n",
+                        "                \"1/1/2005\",\n",
+                        "                \"1/1/05\"\n",
+                        "            };\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _localeValid: typing.List[typing.List[str]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    _localeValid: typing.List[str] = [",
+                        "        \"01/01/2005\",",
+                        "        \"12/31/2005\",",
+                        "        \"02/29/2004\",  # valid leap",
+                        "        \"04/30/2005\",",
+                        "        \"12/31/05\",",
+                        "        \"1/1/2005\",",
+                        "        \"1/1/05\"",
+                        "    ]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 24.153011798858643,
+                    "generation_timestamp": "2024-11-27T11:20:01.074855",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "44-54:patternValid": {
+                    "start": 44,
+                    "end": 54,
+                    "body": [
+                        "    protected String[] patternValid =\n",
+                        "            new String[] {\n",
+                        "                \"2005-01-01\",\n",
+                        "                \"2005-12-31\",\n",
+                        "                \"2004-02-29\" // valid leap\n",
+                        "                ,\n",
+                        "                \"2005-04-30\",\n",
+                        "                \"05-12-31\",\n",
+                        "                \"2005-1-1\",\n",
+                        "                \"05-1-1\"\n",
+                        "            };\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _patternValid: typing.List[typing.List[str]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    _patternValid: typing.List[str] = [",
+                        "        \"2005-01-01\",",
+                        "        \"2005-12-31\",",
+                        "        \"2004-02-29\",  # valid leap",
+                        "        \"2005-04-30\",",
+                        "        \"05-12-31\",",
+                        "        \"2005-1-1\",",
+                        "        \"05-1-1\"",
+                        "    ]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 26.07739782333374,
+                    "generation_timestamp": "2024-11-27T11:20:27.206762",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "42-42:UTC": {
+                    "start": 42,
+                    "end": 42,
+                    "body": [
+                        "    protected static final TimeZone UTC = TimeZone.getTimeZone(\"UTC\"); // + 2 hours\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "TimeZone",
+                            "java.util.TimeZone"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _UTC: typing.Union[zoneinfo.ZoneInfo, datetime.timezone] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    _UTC: typing.Union[zoneinfo.ZoneInfo, datetime.timezone] = zoneinfo.ZoneInfo(\"UTC\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 28.15560269355774,
+                    "generation_timestamp": "2024-11-27T11:20:55.408048",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "41-41:EET": {
+                    "start": 41,
+                    "end": 41,
+                    "body": [
+                        "    protected static final TimeZone EET = TimeZone.getTimeZone(\"EET\"); // + 2 hours\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "TimeZone",
+                            "java.util.TimeZone"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _EET: typing.Union[zoneinfo.ZoneInfo, datetime.timezone] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    _EET: typing.Union[zoneinfo.ZoneInfo, datetime.timezone] = zoneinfo.ZoneInfo(\"EET\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 29.38626480102539,
+                    "generation_timestamp": "2024-11-27T11:21:24.842254",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "40-40:EST": {
+                    "start": 40,
+                    "end": 40,
+                    "body": [
+                        "    protected static final TimeZone EST = TimeZone.getTimeZone(\"EST\"); // - 5 hours\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "TimeZone",
+                            "java.util.TimeZone"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _EST: typing.Union[zoneinfo.ZoneInfo, datetime.timezone] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    _EST: typing.Union[zoneinfo.ZoneInfo, datetime.timezone] = zoneinfo.ZoneInfo(\"EST\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 25.897300004959106,
+                    "generation_timestamp": "2024-11-27T11:21:50.783309",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "39-39:GMT": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "    protected static final TimeZone GMT = TimeZone.getTimeZone(\"GMT\"); // 0 offset\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "TimeZone",
+                            "java.util.TimeZone"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _GMT: typing.Union[zoneinfo.ZoneInfo, datetime.timezone] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    _GMT: typing.Union[zoneinfo.ZoneInfo, datetime.timezone] = zoneinfo.ZoneInfo(\"GMT\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 25.803420782089233,
+                    "generation_timestamp": "2024-11-27T11:22:16.620479",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "37-37:validator": {
+                    "start": 37,
+                    "end": 37,
+                    "body": [
+                        "    protected AbstractCalendarValidator validator;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "AbstractCalendarValidator",
+                            "AbstractCalendarValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _validator: AbstractCalendarValidator = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    _validator: AbstractCalendarValidator = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-11-27T11:22:16.636874",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class AbstractCalendarValidatorTest(unittest.TestCase, ABC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "from abc import ABC",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import datetime",
+        "import unittest",
+        "import zoneinfo",
+        "from src.main.org.apache.commons.validator.routines.AbstractCalendarValidator import *"
+    ]
+}

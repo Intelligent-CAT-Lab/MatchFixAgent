@@ -1,0 +1,117 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-codec/src/main/java/org/apache/commons/codec/Resources.java",
+    "imports": {
+        "20-20:import InputStream": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.io.InputStream;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Resources": {
+            "start": 27,
+            "end": 27,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "35-41:getInputStream": {
+                    "start": 35,
+                    "end": 41,
+                    "body": [
+                        "    public static InputStream getInputStream(final String name) {\n",
+                        "        final InputStream inputStream = Resources.class.getClassLoader().getResourceAsStream(name);\n",
+                        "        if (inputStream == null) {\n",
+                        "            throw new IllegalArgumentException(\"Unable to resolve required resource: \" + name);\n",
+                        "        }\n",
+                        "        return inputStream;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "InputStream",
+                            "java.io.InputStream"
+                        ]
+                    ],
+                    "signature": "getInputStream(String)",
+                    "parameters": [
+                        "name"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/ClassLoader",
+                            "getResourceAsStream(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getClassLoader()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def getInputStream(name: str) -> typing.Union[io.BytesIO, io.StringIO, io.BufferedReader]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInputStream(name: str) -> typing.Union[io.BytesIO, io.StringIO, io.BufferedReader]:",
+                        "        input_stream = Resources.__class__.__module__.get_resource_stream(name)",
+                        "        if input_stream is None:",
+                        "            raise ValueError(f\"Unable to resolve required resource: {name}\")",
+                        "        return input_stream"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 183.1146309375763,
+                    "generation_timestamp": "2024-11-28T14:44:17.339197",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class Resources:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "from io import StringIO",
+        "import io",
+        "from io import BytesIO",
+        "import typing\nfrom typing import *"
+    ]
+}

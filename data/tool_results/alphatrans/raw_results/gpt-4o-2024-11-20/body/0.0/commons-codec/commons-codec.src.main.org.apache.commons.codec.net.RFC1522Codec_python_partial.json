@@ -1,0 +1,2744 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-codec/src/main/java/org/apache/commons/codec/net/RFC1522Codec.java",
+    "imports": {
+        "25-25:import Charset": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.nio.charset.Charset;\n"
+            ]
+        },
+        "24-24:import UnsupportedEncodingException": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.io.UnsupportedEncodingException;\n"
+            ]
+        },
+        "20-20:import DecoderException": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.apache.commons.codec.DecoderException;\n"
+            ]
+        },
+        "21-21:import EncoderException": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import org.apache.commons.codec.EncoderException;\n"
+            ]
+        },
+        "22-22:import StringUtils": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import org.apache.commons.codec.binary.StringUtils;\n"
+            ]
+        }
+    },
+    "classes": {
+        "RFC1522Codec": {
+            "start": 40,
+            "end": 40,
+            "is_abstract": true,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "120-153:decodeText": {
+                    "start": 120,
+                    "end": 153,
+                    "body": [
+                        "    protected String decodeText(final String text)\n",
+                        "            throws DecoderException, UnsupportedEncodingException {\n",
+                        "        if (text == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "        if (!text.startsWith(PREFIX) || !text.endsWith(POSTFIX)) {\n",
+                        "            throw new DecoderException(\"RFC 1522 violation: malformed encoded content\", null);\n",
+                        "        }\n",
+                        "        final int terminator = text.length() - 2;\n",
+                        "        int from = 2;\n",
+                        "        int to = text.indexOf(SEP, from);\n",
+                        "        if (to == terminator) {\n",
+                        "            throw new DecoderException(\"RFC 1522 violation: charset token not found\", null);\n",
+                        "        }\n",
+                        "        final String charset = text.substring(from, to);\n",
+                        "        if (charset.equals(\"\")) {\n",
+                        "            throw new DecoderException(\"RFC 1522 violation: charset not specified\", null);\n",
+                        "        }\n",
+                        "        from = to + 1;\n",
+                        "        to = text.indexOf(SEP, from);\n",
+                        "        if (to == terminator) {\n",
+                        "            throw new DecoderException(\"RFC 1522 violation: encoding token not found\", null);\n",
+                        "        }\n",
+                        "        final String encoding = text.substring(from, to);\n",
+                        "        if (!getEncoding().equalsIgnoreCase(encoding)) {\n",
+                        "            throw new DecoderException(\n",
+                        "                    \"This codec cannot decode \" + encoding + \" encoded content\", null);\n",
+                        "        }\n",
+                        "        from = to + 1;\n",
+                        "        to = text.indexOf(SEP, from);\n",
+                        "        byte[] data = StringUtils.getBytesUsAscii(text.substring(from, to));\n",
+                        "        data = doDecoding(data);\n",
+                        "        return new String(data, charset);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "decodeText(String)",
+                    "parameters": [
+                        "text"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "indexOf(int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "186-188:getBytesUsAscii"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "startsWith(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "endsWith(java.lang.String)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.DecoderException",
+                            "DecoderException",
+                            "63-65:DecoderException"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "equalsIgnoreCase(java.lang.String)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                            "RFC1522Codec",
+                            "160-160:getEncoding"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                            "RFC1522Codec",
+                            "180-180:doDecoding"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "String(byte[],java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _decodeText(self, text: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _decodeText(self, text: str) -> str:",
+                        "        if text is None:",
+                        "            return None",
+                        "        if not text.startswith(self._PREFIX) or not text.endswith(self._POSTFIX):",
+                        "            raise DecoderException(\"RFC 1522 violation: malformed encoded content\", None)",
+                        "        ",
+                        "        terminator = len(text) - 2",
+                        "        from_idx = 2",
+                        "        to_idx = text.find(self._SEP, from_idx)",
+                        "        if to_idx == terminator:",
+                        "            raise DecoderException(\"RFC 1522 violation: charset token not found\", None)",
+                        "        ",
+                        "        charset = text[from_idx:to_idx]",
+                        "        if charset == \"\":",
+                        "            raise DecoderException(\"RFC 1522 violation: charset not specified\", None)",
+                        "        ",
+                        "        from_idx = to_idx + 1",
+                        "        to_idx = text.find(self._SEP, from_idx)",
+                        "        if to_idx == terminator:",
+                        "            raise DecoderException(\"RFC 1522 violation: encoding token not found\", None)",
+                        "        ",
+                        "        encoding = text[from_idx:to_idx]",
+                        "        if not self._getEncoding().lower() == encoding.lower():",
+                        "            raise DecoderException(f\"This codec cannot decode {encoding} encoded content\", None)",
+                        "        ",
+                        "        from_idx = to_idx + 1",
+                        "        to_idx = text.find(self._SEP, from_idx)",
+                        "        data = StringUtils.getBytesUsAscii(text[from_idx:to_idx])",
+                        "        data = self._doDecoding(data)",
+                        "        return str(bytearray(data), charset)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "error",
+                        "message": "Unsupported operation encountered: [ExceptionHandler] Unhandled exception type: AttributeError\n[ExceptionHandler] Unhandled exception type: AttributeError\n[ExceptionHandler] Unhandled exception type: AttributeError\n[ExceptionHandler] Unhandled exception type: AttributeError\n[ExceptionHandler] Unhandled exception type: AttributeError\n[ExceptionHandler] Unhandled exception type: AttributeError\n[ExceptionHandler] Unhandled exception type: AttributeError\n[ExceptionHandler] Unhandled exception type: AttributeError\n[ExceptionHandler] Unhandled exception type: AttributeError\n[ExceptionHandler] Unhandled exception type: AttributeError\n[ExceptionHandler] Unhandled exception type: AttributeError\n[ExceptionHandler] Unhandled exception type: AttributeError\n[ExceptionHandler] Unhandled exception type: AttributeError\n[ExceptionHandler] Unhandled exception type: AttributeError\n[ExceptionHandler] Unhandled exception type: AttributeError\n[ExceptionHandler] Unhandled exception type: AttributeError\n[ExceptionHandler] Unhandled exception type: AttributeError\n[ExceptionHandler] Unhandled exception type: AttributeError\n[ExceptionHandler] Unhandled exception type: AttributeError\n[ExceptionHandler] Unhandled exception type: AttributeError\n[ExceptionHandler] Unhandled exception type: AttributeError\n[ExceptionHandler] Unhandled exception type: AttributeError"
+                    },
+                    "test_execution": {
+                        "commons-codec/src/test/org/apache/commons/codec/net/RFC1522CodecTest.py::RFC1522CodecTest::testNullInput_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "120-153:decodeText"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.RFC1522CodecTest",
+                                    "class": "RFC1522CodecTest",
+                                    "method": "65-68:testNullInput_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/RFC1522CodecTest.py::RFC1522CodecTest::testNullInput_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "120-153:decodeText"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "99-105:encodeText1"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.RFC1522CodecTest",
+                                    "class": "RFC1522CodecTest",
+                                    "method": "71-75:testNullInput_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/BCodecTest.py::BCodecTest::testBase64ImpossibleSamplesStrict_test2_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/test/org/apache/commons/codec/net/BCodecTest.py\", line 58, in testBase64ImpossibleSamplesStrict_test2_decomposed\n    codec.decode0(s)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/BCodec.py\", line 56, in decode0\n    return self._decodeText(value)\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/RFC1522Codec.py\", line 51, in _decodeText\n    return str(bytearray(data), charset)\n               ^^^^^^^^^^^^^^^\nTypeError: cannot convert 'NoneType' object to bytearray",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.BCodec",
+                                    "class": "BCodec",
+                                    "method": "135-140:doDecoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.BCodec",
+                                    "class": "BCodec",
+                                    "method": "122-124:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.BCodec",
+                                    "class": "BCodec",
+                                    "method": "223-232:decode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.BCodec",
+                                    "class": "BCodec",
+                                    "method": "117-119:isStrictDecoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.BCodec",
+                                    "class": "BCodec",
+                                    "method": "88-91:BCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "120-153:decodeText"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.Base64",
+                                    "class": "Base64",
+                                    "method": "427-458:Base64"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                                    "class": "BaseNCodec",
+                                    "method": "401-411:decode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                                    "class": "BaseNCodec",
+                                    "method": "232-234:getChunkSeparator"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "186-188:getBytesUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "119-124:getBytes"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.BCodecTest",
+                                    "class": "BCodecTest",
+                                    "method": "349-359:testBase64ImpossibleSamplesStrict_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testEncodeDecodeBlanks_test5_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py\", line 124, in testEncodeDecodeBlanks_test5_decomposed\n    s = qcodec.decode0(encoded1)\n        ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 104, in decode0\n    return self._decodeText(str_)\n           ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/RFC1522Codec.py\", line 51, in _decodeText\n    return str(bytearray(data), charset)\n               ^^^^^^^^^^^^^^^\nTypeError: cannot convert 'NoneType' object to bytearray",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "165-189:doDecoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "149-162:doEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "363-365:setEncodeBlanks"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "336-338:getCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "267-276:decode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "246-251:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "202-208:encode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "119-121:QCodec2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "120-153:decodeText"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "67-80:encodeText0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "263-318:encodeQuotedPrintable2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "244-246:encodeQuotedPrintable1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "336-338:newStringUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "186-188:getBytesUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "277-279:newString0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "119-124:getBytes"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "371-383:testEncodeDecodeBlanks_test5_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testDecodeObjects_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "165-189:doDecoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "318-328:decode1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "267-276:decode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "119-121:QCodec2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "120-153:decodeText"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.Utils",
+                                    "class": "Utils",
+                                    "method": "42-49:digit16"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "331-354:decodeQuotedPrintable"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "186-188:getBytesUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "119-124:getBytes"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "287-291:testDecodeObjects_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testDecodeObjects_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "165-189:doDecoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "318-328:decode1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "267-276:decode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "119-121:QCodec2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "120-153:decodeText"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.Utils",
+                                    "class": "Utils",
+                                    "method": "42-49:digit16"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "331-354:decodeQuotedPrintable"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "186-188:getBytesUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "119-124:getBytes"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "294-300:testDecodeObjects_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testDecodeObjects_test3_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.DecoderException",
+                                    "class": "DecoderException",
+                                    "method": "63-65:DecoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "165-189:doDecoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "318-328:decode1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "267-276:decode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "119-121:QCodec2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "120-153:decodeText"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.Utils",
+                                    "class": "Utils",
+                                    "method": "42-49:digit16"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "331-354:decodeQuotedPrintable"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "186-188:getBytesUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "119-124:getBytes"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "303-316:testDecodeObjects_test3_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/RFC1522CodecTest.py::RFC1522CodecTest::testDecodeInvalid_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/test/org/apache/commons/codec/net/RFC1522CodecTest.py\", line 28, in testDecodeInvalid_test0_decomposed\n    self.__assertExpectedDecoderException(\"=?UTF-8??stuff?=\")\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/test/org/apache/commons/codec/net/RFC1522CodecTest.py\", line 49, in __assertExpectedDecoderException\n    testcodec._decodeText(s)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/RFC1522Codec.py\", line 42, in _decodeText\n    if not self._getEncoding().lower() == encoding.lower():\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'lower'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.DecoderException",
+                                    "class": "DecoderException",
+                                    "method": "63-65:DecoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "120-153:decodeText"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.RFC1522CodecTest",
+                                    "class": "RFC1522CodecTest",
+                                    "method": "78-91:testDecodeInvalid_test0_decomposed"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.RFC1522CodecTest",
+                                    "class": "RFC1522CodecTest",
+                                    "method": "50-57:assertExpectedDecoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.RFC1522CodecTest",
+                                    "class": "RFC1522TestCodec",
+                                    "method": "43-45:getEncoding"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testUTF8RoundTrip_test3_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "165-189:doDecoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "149-162:doEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "336-338:getCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "267-276:decode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "246-251:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "202-208:encode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "115-117:QCodec0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "120-153:decodeText"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "67-80:encodeText0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.Utils",
+                                    "class": "Utils",
+                                    "method": "57-59:hexDigit"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.Utils",
+                                    "class": "Utils",
+                                    "method": "42-49:digit16"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "331-354:decodeQuotedPrintable"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "263-318:encodeQuotedPrintable2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "244-246:encodeQuotedPrintable1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "180-188:encodeQuotedPrintable0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "336-338:newStringUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "186-188:getBytesUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "277-279:newString0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "119-124:getBytes"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "98-108:testUTF8RoundTrip_test3_decomposed"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "44-52:constructString"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testUTF8RoundTrip_test4_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "165-189:doDecoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "149-162:doEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "336-338:getCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "267-276:decode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "246-251:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "202-208:encode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "115-117:QCodec0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "120-153:decodeText"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "67-80:encodeText0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.Utils",
+                                    "class": "Utils",
+                                    "method": "57-59:hexDigit"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.Utils",
+                                    "class": "Utils",
+                                    "method": "42-49:digit16"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "331-354:decodeQuotedPrintable"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "263-318:encodeQuotedPrintable2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "244-246:encodeQuotedPrintable1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "180-188:encodeQuotedPrintable0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "336-338:newStringUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "186-188:getBytesUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "277-279:newString0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "119-124:getBytes"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "111-122:testUTF8RoundTrip_test4_decomposed"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "44-52:constructString"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testUTF8RoundTrip_test5_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "165-189:doDecoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "149-162:doEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "336-338:getCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "267-276:decode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "246-251:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "202-208:encode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "115-117:QCodec0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "120-153:decodeText"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "67-80:encodeText0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.Utils",
+                                    "class": "Utils",
+                                    "method": "57-59:hexDigit"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.Utils",
+                                    "class": "Utils",
+                                    "method": "42-49:digit16"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "331-354:decodeQuotedPrintable"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "263-318:encodeQuotedPrintable2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "244-246:encodeQuotedPrintable1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "180-188:encodeQuotedPrintable0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "336-338:newStringUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "186-188:getBytesUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "277-279:newString0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "119-124:getBytes"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "125-137:testUTF8RoundTrip_test5_decomposed"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "44-52:constructString"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 238.40748357772827,
+                    "generation_timestamp": "2024-11-28T05:42:20.997439",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 1
+                    }
+                },
+                "99-105:encodeText1": {
+                    "start": 99,
+                    "end": 105,
+                    "body": [
+                        "    protected String encodeText1(final String text, final String charsetName)\n",
+                        "            throws EncoderException, UnsupportedEncodingException {\n",
+                        "        if (text == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "        return this.encodeText0(text, Charset.forName(charsetName));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "encodeText1(String, String)",
+                    "parameters": [
+                        "text",
+                        "charsetName"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                            "RFC1522Codec",
+                            "67-80:encodeText0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/charset/Charset",
+                            "forName(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _encodeText1(self, text: str, charsetName: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _encodeText1(self, text: str, charsetName: str) -> str:",
+                        "        if text is None:",
+                        "            return None",
+                        "        return self._encodeText0(text, charsetName)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": {
+                        "commons-codec/src/test/org/apache/commons/codec/net/RFC1522CodecTest.py::RFC1522CodecTest::testNullInput_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "120-153:decodeText"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "99-105:encodeText1"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.RFC1522CodecTest",
+                                    "class": "RFC1522CodecTest",
+                                    "method": "71-75:testNullInput_test2_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 89.78156638145447,
+                    "generation_timestamp": "2024-11-28T04:41:35.702603",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "67-80:encodeText0": {
+                    "start": 67,
+                    "end": 80,
+                    "body": [
+                        "    protected String encodeText0(final String text, final Charset charset) throws EncoderException {\n",
+                        "        if (text == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "        final StringBuilder buffer = new StringBuilder();\n",
+                        "        buffer.append(PREFIX);\n",
+                        "        buffer.append(charset);\n",
+                        "        buffer.append(SEP);\n",
+                        "        buffer.append(this.getEncoding());\n",
+                        "        buffer.append(SEP);\n",
+                        "        buffer.append(StringUtils.newStringUsAscii(this.doEncoding(text.getBytes(charset))));\n",
+                        "        buffer.append(POSTFIX);\n",
+                        "        return buffer.toString();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "encodeText0(String, Charset)",
+                    "parameters": [
+                        "text",
+                        "charset"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(char)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                            "RFC1522Codec",
+                            "160-160:getEncoding"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "336-338:newStringUsAscii"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                            "RFC1522Codec",
+                            "170-170:doEncoding"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "getBytes(java.nio.charset.Charset)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _encodeText0(self, text: str, charset: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _encodeText0(self, text: str, charset: str) -> str:",
+                        "        if text is None:",
+                        "            return None",
+                        "        buffer = []",
+                        "        buffer.append(self._PREFIX)",
+                        "        buffer.append(charset)",
+                        "        buffer.append(self._SEP)",
+                        "        encoding = self._getEncoding()",
+                        "        if encoding is None:",
+                        "            raise EncoderException(\"Encoding cannot be None\")",
+                        "        buffer.append(encoding)",
+                        "        buffer.append(self._SEP)",
+                        "        try:",
+                        "            encoded_bytes = self._doEncoding(text.encode(charset))",
+                        "            if encoded_bytes is None:",
+                        "                raise EncoderException(\"Encoded bytes cannot be None\")",
+                        "            buffer.append(StringUtils.newStringUsAscii(encoded_bytes))",
+                        "        except Exception as e:",
+                        "            raise EncoderException(\"Encoding error occurred\") from e",
+                        "        buffer.append(self._POSTFIX)",
+                        "        return ''.join(buffer)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "failure",
+                        "message": "org.apache.commons.codec.net.BCodecTest.testUTF8RoundTrip_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.codec.net.BCodecTest.testUTF8RoundTrip_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.codec.net.BCodecTest.testUTF8RoundTrip_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.codec.net.BCodecTest.testUTF8RoundTrip_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.codec.net.BCodecTest.testEncodeObjects_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.codec.net.BCodecTest.testEncodeObjects_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.codec.net.BCodecTest.testBasicEncodeDecode_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.codec.net.BCodecTest.testEncodeObjects_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.codec.net.BCodecTest.testBasicEncodeDecode_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.codec.net.QCodecTest.testUTF8RoundTrip_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.codec.net.QCodecTest.testUTF8RoundTrip_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.codec.net.QCodecTest.testUTF8RoundTrip_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.codec.net.QCodecTest.testUTF8RoundTrip_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.codec.net.QCodecTest.testEncodeDecodeBlanks_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.codec.net.QCodecTest.testEncodeDecodeBlanks_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.codec.net.QCodecTest.testEncodeDecodeBlanks_test4_decomposed: java.lang.ClassCastException\norg.apache.commons.codec.net.QCodecTest.testEncodeDecodeBlanks_test5_decomposed: java.lang.ClassCastException\norg.apache.commons.codec.net.QCodecTest.testEncodeObjects_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.codec.net.QCodecTest.testEncodeDecodeBlanks_test6_decomposed: java.lang.ClassCastException\norg.apache.commons.codec.net.QCodecTest.testEncodeObjects_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.codec.net.QCodecTest.testUnsafeEncodeDecode_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.codec.net.QCodecTest.testBasicEncodeDecode_test1_decomposed: java.lang.ClassCastException\norg.apache.commons.codec.net.QCodecTest.testEncodeDecodeBlanks_test7_decomposed: java.lang.ClassCastException\norg.apache.commons.codec.net.QCodecTest.testEncodeObjects_test3_decomposed: java.lang.ClassCastException\norg.apache.commons.codec.net.QCodecTest.testUnsafeEncodeDecode_test2_decomposed: java.lang.ClassCastException\norg.apache.commons.codec.net.QCodecTest.testBasicEncodeDecode_test2_decomposed: java.lang.ClassCastException"
+                    },
+                    "test_execution": {
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testUnsafeEncodeDecode_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 108, in encode2\n    return self.encode0(sourceStr, self.getCharset())\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 119, in encode0\n    return self._encodeText0(sourceStr, sourceCharset)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/RFC1522Codec.py\", line 41, in _encodeText0\n    raise EncoderException(\"Encoded bytes cannot be None\", None)\nsrc.main.org.apache.commons.codec.EncoderException.EncoderException: ('Encoded bytes cannot be None', None)\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py\", line 203, in testUnsafeEncodeDecode_test1_decomposed\n    encoded = qcodec.encode2(plain)\n              ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 110, in encode2\n    raise EncoderException(\"Encoding error occurred\") from e\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: EncoderException.__init__() missing 1 required positional argument: 'cause'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                                    "class": "EncoderException",
+                                    "method": "62-64:EncoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "149-162:doEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "336-338:getCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "246-251:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "202-208:encode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "119-121:QCodec2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "67-80:encodeText0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "263-318:encodeQuotedPrintable2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "244-246:encodeQuotedPrintable1"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "166-170:testUnsafeEncodeDecode_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testBasicEncodeDecode_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 108, in encode2\n    return self.encode0(sourceStr, self.getCharset())\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 119, in encode0\n    return self._encodeText0(sourceStr, sourceCharset)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/RFC1522Codec.py\", line 41, in _encodeText0\n    raise EncoderException(\"Encoded bytes cannot be None\", None)\nsrc.main.org.apache.commons.codec.EncoderException.EncoderException: ('Encoded bytes cannot be None', None)\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py\", line 219, in testBasicEncodeDecode_test1_decomposed\n    encoded = qcodec.encode2(plain)\n              ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 110, in encode2\n    raise EncoderException(\"Encoding error occurred\") from e\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: EncoderException.__init__() missing 1 required positional argument: 'cause'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                                    "class": "EncoderException",
+                                    "method": "62-64:EncoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "149-162:doEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "336-338:getCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "246-251:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "202-208:encode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "119-121:QCodec2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "67-80:encodeText0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "263-318:encodeQuotedPrintable2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "244-246:encodeQuotedPrintable1"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "145-149:testBasicEncodeDecode_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testEncodeDecodeBlanks_test2_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 108, in encode2\n    return self.encode0(sourceStr, self.getCharset())\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 119, in encode0\n    return self._encodeText0(sourceStr, sourceCharset)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/RFC1522Codec.py\", line 41, in _encodeText0\n    raise EncoderException(\"Encoded bytes cannot be None\", None)\nsrc.main.org.apache.commons.codec.EncoderException.EncoderException: ('Encoded bytes cannot be None', None)\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py\", line 112, in testEncodeDecodeBlanks_test2_decomposed\n    s = qcodec.encode2(plain)\n        ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 110, in encode2\n    raise EncoderException(\"Encoding error occurred\") from e\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: EncoderException.__init__() missing 1 required positional argument: 'cause'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                                    "class": "EncoderException",
+                                    "method": "62-64:EncoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "149-162:doEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "363-365:setEncodeBlanks"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "336-338:getCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "246-251:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "202-208:encode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "119-121:QCodec2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "67-80:encodeText0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "263-318:encodeQuotedPrintable2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "244-246:encodeQuotedPrintable1"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "336-343:testEncodeDecodeBlanks_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testUnsafeEncodeDecode_test2_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py\", line 247, in testUnsafeEncodeDecode_test2_decomposed\n    self.assertEqual(\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 873, in assertEqual\n    assertion_func(first, second, msg=msg)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 1253, in assertMultiLineEqual\n    self.fail(self._formatMessage(msg, standardMsg))\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 703, in fail\n    raise self.failureException(msg)\nAssertionError: '=?UTF-8?Q?=3F=5F=3D=0D=0A?=' != '=?UTF-8?Q??='\n- =?UTF-8?Q?=3F=5F=3D=0D=0A?=\n+ =?UTF-8?Q??=\n : Unsafe chars Q encoding test",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "149-162:doEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "336-338:getCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "246-251:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "202-208:encode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "119-121:QCodec2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "67-80:encodeText0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "263-318:encodeQuotedPrintable2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "244-246:encodeQuotedPrintable1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "180-188:encodeQuotedPrintable0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "336-338:newStringUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "277-279:newString0"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "173-179:testUnsafeEncodeDecode_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testBasicEncodeDecode_test2_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py\", line 268, in testBasicEncodeDecode_test2_decomposed\n    self.assertEqual(\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 873, in assertEqual\n    assertion_func(first, second, msg=msg)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 1253, in assertMultiLineEqual\n    self.fail(self._formatMessage(msg, standardMsg))\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 703, in fail\n    raise self.failureException(msg)\nAssertionError: 'Basic Q encoding test' != '=?UTF-8?Q?=3D Hello there =3D=0D=0A?='\n- Basic Q encoding test\n+ =?UTF-8?Q?=3D Hello there =3D=0D=0A?=\n : =?UTF-8?Q? Hello there ?=",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "149-162:doEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "336-338:getCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "246-251:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "202-208:encode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "119-121:QCodec2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "67-80:encodeText0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "263-318:encodeQuotedPrintable2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "244-246:encodeQuotedPrintable1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "180-188:encodeQuotedPrintable0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "336-338:newStringUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "277-279:newString0"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "152-158:testBasicEncodeDecode_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testEncodeDecodeBlanks_test5_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py\", line 124, in testEncodeDecodeBlanks_test5_decomposed\n    s = qcodec.decode0(encoded1)\n        ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 104, in decode0\n    return self._decodeText(str_)\n           ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/RFC1522Codec.py\", line 51, in _decodeText\n    return str(bytearray(data), charset)\n               ^^^^^^^^^^^^^^^\nTypeError: cannot convert 'NoneType' object to bytearray",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "165-189:doDecoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "149-162:doEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "363-365:setEncodeBlanks"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "336-338:getCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "267-276:decode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "246-251:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "202-208:encode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "119-121:QCodec2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "120-153:decodeText"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "67-80:encodeText0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "263-318:encodeQuotedPrintable2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "244-246:encodeQuotedPrintable1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "336-338:newStringUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "186-188:getBytesUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "277-279:newString0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "119-124:getBytes"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "371-383:testEncodeDecodeBlanks_test5_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testEncodeObjects_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "149-162:doEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "336-338:getCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "292-302:encode3"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "246-251:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "202-208:encode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "119-121:QCodec2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "67-80:encodeText0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.Utils",
+                                    "class": "Utils",
+                                    "method": "57-59:hexDigit"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "263-318:encodeQuotedPrintable2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "244-246:encodeQuotedPrintable1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "180-188:encodeQuotedPrintable0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "336-338:newStringUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "277-279:newString0"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "245-249:testEncodeObjects_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testEncodeObjects_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "149-162:doEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "336-338:getCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "292-302:encode3"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "246-251:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "202-208:encode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "119-121:QCodec2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "67-80:encodeText0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.Utils",
+                                    "class": "Utils",
+                                    "method": "57-59:hexDigit"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "263-318:encodeQuotedPrintable2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "244-246:encodeQuotedPrintable1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "180-188:encodeQuotedPrintable0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "336-338:newStringUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "277-279:newString0"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "252-258:testEncodeObjects_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testEncodeObjects_test3_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                                    "class": "EncoderException",
+                                    "method": "62-64:EncoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "149-162:doEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "336-338:getCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "292-302:encode3"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "246-251:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "202-208:encode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "119-121:QCodec2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "67-80:encodeText0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.Utils",
+                                    "class": "Utils",
+                                    "method": "57-59:hexDigit"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "263-318:encodeQuotedPrintable2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "244-246:encodeQuotedPrintable1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "180-188:encodeQuotedPrintable0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "336-338:newStringUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "277-279:newString0"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "261-274:testEncodeObjects_test3_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testUTF8RoundTrip_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "149-162:doEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "336-338:getCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "246-251:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "202-208:encode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "115-117:QCodec0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "67-80:encodeText0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.Utils",
+                                    "class": "Utils",
+                                    "method": "57-59:hexDigit"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "263-318:encodeQuotedPrintable2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "244-246:encodeQuotedPrintable1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "180-188:encodeQuotedPrintable0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "336-338:newStringUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "277-279:newString0"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "86-95:testUTF8RoundTrip_test2_decomposed"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "44-52:constructString"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testUTF8RoundTrip_test3_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "165-189:doDecoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "149-162:doEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "336-338:getCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "267-276:decode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "246-251:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "202-208:encode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "115-117:QCodec0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "120-153:decodeText"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "67-80:encodeText0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.Utils",
+                                    "class": "Utils",
+                                    "method": "57-59:hexDigit"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.Utils",
+                                    "class": "Utils",
+                                    "method": "42-49:digit16"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "331-354:decodeQuotedPrintable"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "263-318:encodeQuotedPrintable2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "244-246:encodeQuotedPrintable1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "180-188:encodeQuotedPrintable0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "336-338:newStringUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "186-188:getBytesUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "277-279:newString0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "119-124:getBytes"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "98-108:testUTF8RoundTrip_test3_decomposed"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "44-52:constructString"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testUTF8RoundTrip_test4_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "165-189:doDecoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "149-162:doEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "336-338:getCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "267-276:decode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "246-251:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "202-208:encode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "115-117:QCodec0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "120-153:decodeText"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "67-80:encodeText0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.Utils",
+                                    "class": "Utils",
+                                    "method": "57-59:hexDigit"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.Utils",
+                                    "class": "Utils",
+                                    "method": "42-49:digit16"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "331-354:decodeQuotedPrintable"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "263-318:encodeQuotedPrintable2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "244-246:encodeQuotedPrintable1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "180-188:encodeQuotedPrintable0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "336-338:newStringUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "186-188:getBytesUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "277-279:newString0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "119-124:getBytes"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "111-122:testUTF8RoundTrip_test4_decomposed"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "44-52:constructString"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testUTF8RoundTrip_test5_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "165-189:doDecoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "149-162:doEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "336-338:getCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "267-276:decode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "246-251:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "202-208:encode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "115-117:QCodec0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "120-153:decodeText"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "67-80:encodeText0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.Utils",
+                                    "class": "Utils",
+                                    "method": "57-59:hexDigit"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.Utils",
+                                    "class": "Utils",
+                                    "method": "42-49:digit16"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "331-354:decodeQuotedPrintable"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "263-318:encodeQuotedPrintable2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "244-246:encodeQuotedPrintable1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "180-188:encodeQuotedPrintable0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "336-338:newStringUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "186-188:getBytesUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "277-279:newString0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "119-124:getBytes"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "125-137:testUTF8RoundTrip_test5_decomposed"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "44-52:constructString"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 179.11914610862732,
+                    "generation_timestamp": "2024-11-28T09:42:05.440805",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": 1,
+                        "test_execution": 1
+                    }
+                },
+                "180-180:doDecoding": {
+                    "start": 180,
+                    "end": 180,
+                    "body": [
+                        "    protected abstract byte[] doDecoding(byte[] bytes) throws DecoderException;\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "signature": "doDecoding(byte[])",
+                    "parameters": [
+                        "bytes"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _doDecoding(self, bytes_: typing.List[int]) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _doDecoding(self, bytes_: typing.List[int]) -> typing.List[int]:",
+                        "        raise DecoderException(\"This method must be implemented by a subclass\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 74.07740950584412,
+                    "generation_timestamp": "2024-11-28T04:31:30.281957",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "170-170:doEncoding": {
+                    "start": 170,
+                    "end": 170,
+                    "body": [
+                        "    protected abstract byte[] doEncoding(byte[] bytes) throws EncoderException;\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "signature": "doEncoding(byte[])",
+                    "parameters": [
+                        "bytes"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _doEncoding(self, bytes_: typing.List[int]) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _doEncoding(self, bytes_: typing.List[int]) -> typing.List[int]:",
+                        "        raise EncoderException(\"This method must be implemented by a subclass\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 69.78925085067749,
+                    "generation_timestamp": "2024-11-28T04:32:40.920424",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "160-160:getEncoding": {
+                    "start": 160,
+                    "end": 160,
+                    "body": [
+                        "    protected abstract String getEncoding();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getEncoding()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _getEncoding(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _getEncoding(self) -> str:",
+                        "        raise NotImplementedError(\"Subclasses must implement this method\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 72.24436378479004,
+                    "generation_timestamp": "2024-11-28T04:33:53.834116",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "49-49:PREFIX": {
+                    "start": 49,
+                    "end": 49,
+                    "body": [
+                        "    protected static final String PREFIX = \"=?\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _PREFIX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    _PREFIX: str = \"=?\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 38.17361831665039,
+                    "generation_timestamp": "2024-11-27T11:58:13.517858",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "46-46:POSTFIX": {
+                    "start": 46,
+                    "end": 46,
+                    "body": [
+                        "    protected static final String POSTFIX = \"?=\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _POSTFIX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    _POSTFIX: str = \"?=\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 47.6062126159668,
+                    "generation_timestamp": "2024-11-27T11:59:01.216231",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "43-43:SEP": {
+                    "start": 43,
+                    "end": 43,
+                    "body": [
+                        "    protected static final char SEP = '?';\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "char",
+                            "char"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _SEP: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    _SEP: str = '?'"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 41.164143562316895,
+                    "generation_timestamp": "2024-11-27T11:59:42.413035",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class RFC1522Codec(ABC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "from abc import ABC",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.codec.DecoderException import *",
+        "from src.main.org.apache.commons.codec.EncoderException import *",
+        "from src.main.org.apache.commons.codec.binary.StringUtils import *"
+    ]
+}

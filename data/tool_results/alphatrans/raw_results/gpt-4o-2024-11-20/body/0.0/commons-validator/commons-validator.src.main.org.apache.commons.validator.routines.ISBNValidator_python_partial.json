@@ -1,0 +1,1676 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/main/java/org/apache/commons/validator/routines/ISBNValidator.java",
+    "imports": {
+        "23-23:import Serializable": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.io.Serializable;\n"
+            ]
+        },
+        "19-19:import CheckDigitException": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import org.apache.commons.validator.routines.checkdigit.CheckDigitException;\n"
+            ]
+        },
+        "20-20:import EAN13CheckDigit": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.apache.commons.validator.routines.checkdigit.EAN13CheckDigit;\n"
+            ]
+        },
+        "21-21:import ISBN10CheckDigit": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import org.apache.commons.validator.routines.checkdigit.ISBN10CheckDigit;\n"
+            ]
+        }
+    },
+    "classes": {
+        "ISBNValidator": {
+            "start": 67,
+            "end": 67,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "242-263:convertToISBN13": {
+                    "start": 242,
+                    "end": 263,
+                    "body": [
+                        "    public String convertToISBN13(String isbn10) {\n",
+                        "\n",
+                        "        if (isbn10 == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "\n",
+                        "        String input = isbn10.trim();\n",
+                        "        if (input.length() != ISBN_10_LEN) {\n",
+                        "            throw new IllegalArgumentException(\n",
+                        "                    \"Invalid length \" + input.length() + \" for '\" + input + \"'\");\n",
+                        "        }\n",
+                        "\n",
+                        "        String isbn13 = \"978\" + input.substring(0, ISBN_10_LEN - 1);\n",
+                        "        try {\n",
+                        "            String checkDigit = isbn13Validator.getCheckDigit().calculate(isbn13);\n",
+                        "            isbn13 += checkDigit;\n",
+                        "            return isbn13;\n",
+                        "        } catch (CheckDigitException e) {\n",
+                        "            throw new IllegalArgumentException(\n",
+                        "                    \"Check digit error for '\" + input + \"' - \" + e.getMessage());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "convertToISBN13(String)",
+                    "parameters": [
+                        "isbn10"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "trim()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException(java.lang.String)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit",
+                            "CheckDigit",
+                            "55-55:calculate"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "182-184:getCheckDigit"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Throwable",
+                            "getMessage()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def convertToISBN13(self, isbn10: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def convertToISBN13(self, isbn10: str) -> str:",
+                        "        if isbn10 is None:",
+                        "            return None",
+                        "",
+                        "        input = isbn10.strip()",
+                        "        if len(input) != self.__ISBN_10_LEN:",
+                        "            raise ValueError(f\"Invalid length {len(input)} for '{input}'\")",
+                        "",
+                        "        isbn13 = \"978\" + input[:self.__ISBN_10_LEN - 1]",
+                        "        try:",
+                        "            check_digit = self.__isbn13Validator.getCheckDigit().calculate(isbn13)",
+                        "            isbn13 += check_digit",
+                        "            return isbn13",
+                        "        except CheckDigitException as e:",
+                        "            raise ValueError(f\"Check digit error for '{input}' - {str(e)}\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 131.46940398216248,
+                    "generation_timestamp": "2024-11-28T22:11:05.332342",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "229-232:validateISBN13": {
+                    "start": 229,
+                    "end": 232,
+                    "body": [
+                        "    public String validateISBN13(String code) {\n",
+                        "        Object result = isbn13Validator.validate(code);\n",
+                        "        return (result == null ? null : result.toString());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "validateISBN13(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "245-273:validate"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "toString()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def validateISBN13(self, code: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def validateISBN13(self, code: str) -> str:",
+                        "        result = self.__isbn13Validator.validate(code)",
+                        "        return None if result is None else str(result)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 107.86568236351013,
+                    "generation_timestamp": "2024-11-28T20:52:35.645686",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "215-218:validateISBN10": {
+                    "start": 215,
+                    "end": 218,
+                    "body": [
+                        "    public String validateISBN10(String code) {\n",
+                        "        Object result = isbn10Validator.validate(code);\n",
+                        "        return (result == null ? null : result.toString());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "validateISBN10(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "245-273:validate"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "toString()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def validateISBN10(self, code: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def validateISBN10(self, code: str) -> str:",
+                        "        result = self.__isbn10Validator.validate(code)",
+                        "        return None if result is None else str(result)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 107.15919208526611,
+                    "generation_timestamp": "2024-11-28T20:54:23.148985",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "195-204:validate": {
+                    "start": 195,
+                    "end": 204,
+                    "body": [
+                        "    public String validate(String code) {\n",
+                        "        String result = validateISBN13(code);\n",
+                        "        if (result == null) {\n",
+                        "            result = validateISBN10(code);\n",
+                        "            if (result != null && convert) {\n",
+                        "                result = convertToISBN13(result);\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return result;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "validate(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "229-232:validateISBN13"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "215-218:validateISBN10"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "242-263:convertToISBN13"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def validate(self, code: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def validate(self, code: str) -> str:",
+                        "        result = self.validateISBN13(code)",
+                        "        if result is None:",
+                        "            result = self.validateISBN10(code)",
+                        "            if result is not None and self.__convert:",
+                        "                result = self.convertToISBN13(result)",
+                        "        return result"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 111.8174901008606,
+                    "generation_timestamp": "2024-11-28T22:12:57.587919",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "180-182:isValidISBN13": {
+                    "start": 180,
+                    "end": 182,
+                    "body": [
+                        "    public boolean isValidISBN13(String code) {\n",
+                        "        return isbn13Validator.isValid(code);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValidISBN13(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "232-234:isValid"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def isValidISBN13(self, code: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def isValidISBN13(self, code: str) -> bool:",
+                        "        return self.__isbn13Validator.isValid(code)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 120.72884368896484,
+                    "generation_timestamp": "2024-11-28T21:01:46.603588",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "170-172:isValidISBN10": {
+                    "start": 170,
+                    "end": 172,
+                    "body": [
+                        "    public boolean isValidISBN10(String code) {\n",
+                        "        return isbn10Validator.isValid(code);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValidISBN10(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "232-234:isValid"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def isValidISBN10(self, code: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def isValidISBN10(self, code: str) -> bool:",
+                        "        return self.__isbn10Validator.isValid(code)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 121.49425458908081,
+                    "generation_timestamp": "2024-11-28T21:03:48.435032",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "160-162:isValid": {
+                    "start": 160,
+                    "end": 162,
+                    "body": [
+                        "    public boolean isValid(String code) {\n",
+                        "        return (isValidISBN13(code) || isValidISBN10(code));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValid(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "180-182:isValidISBN13"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "170-172:isValidISBN10"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def isValid(self, code: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def isValid(self, code: str) -> bool:",
+                        "        return self.isValidISBN13(code) or self.isValidISBN10(code)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 122.45869708061218,
+                    "generation_timestamp": "2024-11-28T21:05:51.303475",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "143-145:ISBNValidator1": {
+                    "start": 143,
+                    "end": 145,
+                    "body": [
+                        "    public static ISBNValidator ISBNValidator1() {\n",
+                        "        return new ISBNValidator(true);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "ISBNValidator",
+                            "ISBNValidator"
+                        ]
+                    ],
+                    "signature": "ISBNValidator1()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "139-141:ISBNValidator"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def ISBNValidator1() -> ISBNValidator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def ISBNValidator1() -> ISBNValidator:",
+                        "        return ISBNValidator(True)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": {
+                        "commons-validator/src/test/org/apache/commons/validator/ISBNValidatorTest.py::ISBNValidatorTest::testIsValid_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "121-123:CodeValidator4"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "87-109:CodeValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                                    "class": "ISBNValidator",
+                                    "method": "143-145:ISBNValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                                    "class": "ISBNValidator",
+                                    "method": "139-141:ISBNValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.RegexValidator",
+                                    "class": "RegexValidator",
+                                    "method": "98-100:RegexValidator3"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.RegexValidator",
+                                    "class": "RegexValidator",
+                                    "method": "94-96:RegexValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.RegexValidator",
+                                    "class": "RegexValidator",
+                                    "method": "75-88:RegexValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.EAN13CheckDigit",
+                                    "class": "EAN13CheckDigit",
+                                    "method": "50-52:EAN13CheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit",
+                                    "class": "ModulusCheckDigit",
+                                    "method": "46-48:ModulusCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ISBN10CheckDigit",
+                                    "class": "ISBN10CheckDigit",
+                                    "method": "53-55:ISBN10CheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.ISBNValidatorTest",
+                                    "class": "ISBNValidatorTest",
+                                    "method": "42-44:testIsValid_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/ISBNValidatorTest.py::ISBNValidatorTest::testIsValid_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/ISBNValidatorTest.py\", line 21, in testIsValid_test1_decomposed\n    validator = ISBNValidator()\n                ^^^^^^^^^^^^^^^\nTypeError: ISBNValidator.__init__() missing 1 required positional argument: 'convert'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "121-123:CodeValidator4"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "87-109:CodeValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                                    "class": "ISBNValidator",
+                                    "method": "143-145:ISBNValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                                    "class": "ISBNValidator",
+                                    "method": "139-141:ISBNValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.RegexValidator",
+                                    "class": "RegexValidator",
+                                    "method": "98-100:RegexValidator3"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.RegexValidator",
+                                    "class": "RegexValidator",
+                                    "method": "94-96:RegexValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.RegexValidator",
+                                    "class": "RegexValidator",
+                                    "method": "75-88:RegexValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.EAN13CheckDigit",
+                                    "class": "EAN13CheckDigit",
+                                    "method": "50-52:EAN13CheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit",
+                                    "class": "ModulusCheckDigit",
+                                    "method": "46-48:ModulusCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ISBN10CheckDigit",
+                                    "class": "ISBN10CheckDigit",
+                                    "method": "53-55:ISBN10CheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.ISBNValidatorTest",
+                                    "class": "ISBNValidatorTest",
+                                    "method": "47-64:testIsValid_test1_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 132.4719820022583,
+                    "generation_timestamp": "2024-11-28T06:48:57.413977",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "139-141:ISBNValidator": {
+                    "start": 139,
+                    "end": 141,
+                    "body": [
+                        "    public ISBNValidator(boolean convert) {\n",
+                        "        this.convert = convert;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "ISBNValidator(boolean)",
+                    "parameters": [
+                        "convert"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, convert: bool) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, convert: bool) -> None:",
+                        "        self.__convert = convert"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": {
+                        "commons-validator/src/test/org/apache/commons/validator/ISBNValidatorTest.py::ISBNValidatorTest::testIsValid_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "121-123:CodeValidator4"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "87-109:CodeValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                                    "class": "ISBNValidator",
+                                    "method": "143-145:ISBNValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                                    "class": "ISBNValidator",
+                                    "method": "139-141:ISBNValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.RegexValidator",
+                                    "class": "RegexValidator",
+                                    "method": "98-100:RegexValidator3"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.RegexValidator",
+                                    "class": "RegexValidator",
+                                    "method": "94-96:RegexValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.RegexValidator",
+                                    "class": "RegexValidator",
+                                    "method": "75-88:RegexValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.EAN13CheckDigit",
+                                    "class": "EAN13CheckDigit",
+                                    "method": "50-52:EAN13CheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit",
+                                    "class": "ModulusCheckDigit",
+                                    "method": "46-48:ModulusCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ISBN10CheckDigit",
+                                    "class": "ISBN10CheckDigit",
+                                    "method": "53-55:ISBN10CheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.ISBNValidatorTest",
+                                    "class": "ISBNValidatorTest",
+                                    "method": "42-44:testIsValid_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-validator/src/test/org/apache/commons/validator/ISBNValidatorTest.py::ISBNValidatorTest::testIsValid_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-validator/src/test/org/apache/commons/validator/ISBNValidatorTest.py\", line 21, in testIsValid_test1_decomposed\n    validator = ISBNValidator()\n                ^^^^^^^^^^^^^^^\nTypeError: ISBNValidator.__init__() missing 1 required positional argument: 'convert'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "121-123:CodeValidator4"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                                    "class": "CodeValidator",
+                                    "method": "87-109:CodeValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                                    "class": "ISBNValidator",
+                                    "method": "143-145:ISBNValidator1"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                                    "class": "ISBNValidator",
+                                    "method": "139-141:ISBNValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.RegexValidator",
+                                    "class": "RegexValidator",
+                                    "method": "98-100:RegexValidator3"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.RegexValidator",
+                                    "class": "RegexValidator",
+                                    "method": "94-96:RegexValidator2"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.RegexValidator",
+                                    "class": "RegexValidator",
+                                    "method": "75-88:RegexValidator"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.EAN13CheckDigit",
+                                    "class": "EAN13CheckDigit",
+                                    "method": "50-52:EAN13CheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit",
+                                    "class": "ModulusCheckDigit",
+                                    "method": "46-48:ModulusCheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ISBN10CheckDigit",
+                                    "class": "ISBN10CheckDigit",
+                                    "method": "53-55:ISBN10CheckDigit"
+                                },
+                                {
+                                    "file": "commons-validator.src.test.org.apache.commons.validator.ISBNValidatorTest",
+                                    "class": "ISBNValidatorTest",
+                                    "method": "47-64:testIsValid_test1_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 110.80308556556702,
+                    "generation_timestamp": "2024-11-28T06:46:44.624882",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "134-136:getInstance1": {
+                    "start": 134,
+                    "end": 136,
+                    "body": [
+                        "    public static ISBNValidator getInstance1(boolean convert) {\n",
+                        "        return (convert ? ISBN_VALIDATOR : ISBN_VALIDATOR_NO_CONVERT);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "ISBNValidator",
+                            "ISBNValidator"
+                        ]
+                    ],
+                    "signature": "getInstance1(boolean)",
+                    "parameters": [
+                        "convert"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def getInstance1(convert: bool) -> ISBNValidator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInstance1(convert: bool) -> ISBNValidator:",
+                        "        return ISBNValidator.__ISBN_VALIDATOR if convert else ISBNValidator.__ISBN_VALIDATOR_NO_CONVERT"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 108.66084575653076,
+                    "generation_timestamp": "2024-11-28T06:50:46.443368",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "122-124:getInstance0": {
+                    "start": 122,
+                    "end": 124,
+                    "body": [
+                        "    public static ISBNValidator getInstance0() {\n",
+                        "        return ISBN_VALIDATOR;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "ISBNValidator",
+                            "ISBNValidator"
+                        ]
+                    ],
+                    "signature": "getInstance0()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def getInstance0() -> ISBNValidator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInstance0() -> ISBNValidator:",
+                        "        return ISBNValidator.__ISBN_VALIDATOR"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "failure",
+                        "message": "org.apache.commons.validator.ISBNValidatorTest.testIsValid_test1_decomposed: AttributeError"
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 254.64291405677795,
+                    "generation_timestamp": "2024-11-28T06:55:01.413015",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 1,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "90-99:ISBN13_REGEX": {
+                    "start": 90,
+                    "end": 99,
+                    "body": [
+                        "    static final String ISBN13_REGEX =\n",
+                        "            \"^(978|979)(?:(\\\\d{10})|(?:\"\n",
+                        "                    + SEP\n",
+                        "                    + GROUP\n",
+                        "                    + SEP\n",
+                        "                    + PUBLISHER\n",
+                        "                    + SEP\n",
+                        "                    + TITLE\n",
+                        "                    + SEP\n",
+                        "                    + \"([0-9])))$\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    ISBN13_REGEX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    ISBN13_REGEX: str = r\"^(978|979)(?:(\\d{10})|(?:(?:\\-|\\s)(\\d{1,5})(?:\\-|\\s)(\\d{1,7})(?:\\-|\\s)(\\d{1,6})(?:\\-|\\s)([0-9])))$\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 26.60213613510132,
+                    "generation_timestamp": "2024-11-27T12:41:54.373851",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "82-83:ISBN10_REGEX": {
+                    "start": 82,
+                    "end": 83,
+                    "body": [
+                        "    static final String ISBN10_REGEX =\n",
+                        "            \"^(?:(\\\\d{9}[0-9X])|(?:\" + GROUP + SEP + PUBLISHER + SEP + TITLE + SEP + \"([0-9X])))$\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    ISBN10_REGEX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    ISBN10_REGEX: str = r\"^(?:(\\d{9}[0-9X])|(?:(\\d{1,5})(?:\\-|\\s)(\\d{1,7})(?:\\-|\\s)(\\d{1,6})(?:\\-|\\s)([0-9X])))$\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 23.7088360786438,
+                    "generation_timestamp": "2024-11-27T12:42:18.118167",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "115-115:convert": {
+                    "start": 115,
+                    "end": 115,
+                    "body": [
+                        "    private final boolean convert;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __convert: bool = False",
+                        ""
+                    ],
+                    "translation": [
+                        "    __convert: bool = False",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-11-27T12:42:18.125054",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "112-113:isbn13Validator": {
+                    "start": 112,
+                    "end": 113,
+                    "body": [
+                        "    private final CodeValidator isbn13Validator =\n",
+                        "            CodeValidator.CodeValidator4(ISBN13_REGEX, 13, EAN13CheckDigit.EAN13_CHECK_DIGIT);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "CodeValidator",
+                            "CodeValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __isbn13Validator: CodeValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __isbn13Validator: CodeValidator = CodeValidator.CodeValidator4(ISBN13_REGEX, 13, EAN13CheckDigit.EAN13_CHECK_DIGIT)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 24.364436149597168,
+                    "generation_timestamp": "2024-11-27T12:42:42.523113",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "108-109:isbn10Validator": {
+                    "start": 108,
+                    "end": 109,
+                    "body": [
+                        "    private final CodeValidator isbn10Validator =\n",
+                        "            CodeValidator.CodeValidator4(ISBN10_REGEX, 10, ISBN10CheckDigit.ISBN10_CHECK_DIGIT);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "CodeValidator",
+                            "CodeValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __isbn10Validator: CodeValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __isbn10Validator: CodeValidator = CodeValidator.CodeValidator4(ISBN10_REGEX, 10, ISBN10CheckDigit.ISBN10_CHECK_DIGIT)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 23.90438461303711,
+                    "generation_timestamp": "2024-11-27T12:43:06.478149",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "105-105:ISBN_VALIDATOR_NO_CONVERT": {
+                    "start": 105,
+                    "end": 105,
+                    "body": [
+                        "    private static final ISBNValidator ISBN_VALIDATOR_NO_CONVERT = new ISBNValidator(false);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "ISBNValidator",
+                            "ISBNValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ISBN_VALIDATOR_NO_CONVERT: ISBNValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ISBN_VALIDATOR_NO_CONVERT: ISBNValidator = ISBNValidator(False)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 23.589306831359863,
+                    "generation_timestamp": "2024-11-27T12:43:30.121852",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "102-102:ISBN_VALIDATOR": {
+                    "start": 102,
+                    "end": 102,
+                    "body": [
+                        "    private static final ISBNValidator ISBN_VALIDATOR = ISBNValidator.ISBNValidator1();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "ISBNValidator",
+                            "ISBNValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ISBN_VALIDATOR: ISBNValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ISBN_VALIDATOR: ISBNValidator = ISBNValidator.ISBNValidator1()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 27.013211250305176,
+                    "generation_timestamp": "2024-11-27T12:43:57.182113",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "76-76:TITLE": {
+                    "start": 76,
+                    "end": 76,
+                    "body": [
+                        "    private static final String TITLE = \"(\\\\d{1,6})\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __TITLE: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __TITLE: str = r\"(\\\\d{1,6})\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 21.760631799697876,
+                    "generation_timestamp": "2024-11-27T12:44:18.972121",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "75-75:PUBLISHER": {
+                    "start": 75,
+                    "end": 75,
+                    "body": [
+                        "    private static final String PUBLISHER = \"(\\\\d{1,7})\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __PUBLISHER: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __PUBLISHER: str = r\"(\\d{1,7})\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 23.38888669013977,
+                    "generation_timestamp": "2024-11-27T12:44:42.417371",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "74-74:GROUP": {
+                    "start": 74,
+                    "end": 74,
+                    "body": [
+                        "    private static final String GROUP = \"(\\\\d{1,5})\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __GROUP: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __GROUP: str = r\"(\\d{1,5})\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 23.610829830169678,
+                    "generation_timestamp": "2024-11-27T12:45:06.062837",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "73-73:SEP": {
+                    "start": 73,
+                    "end": 73,
+                    "body": [
+                        "    private static final String SEP = \"(?:\\\\-|\\\\s)\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __SEP: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __SEP: str = r\"(?:\\-|\\s)\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 23.154967784881592,
+                    "generation_timestamp": "2024-11-27T12:45:29.247327",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "71-71:serialVersionUID": {
+                    "start": 71,
+                    "end": 71,
+                    "body": [
+                        "    private static final long serialVersionUID = 4319515687976420405L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = 4319515687976420405"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 24.102935314178467,
+                    "generation_timestamp": "2024-11-27T12:45:53.382155",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "69-69:ISBN_10_LEN": {
+                    "start": 69,
+                    "end": 69,
+                    "body": [
+                        "    private static final int ISBN_10_LEN = 10;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ISBN_10_LEN: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ISBN_10_LEN: int = 10"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 23.998966217041016,
+                    "generation_timestamp": "2024-11-27T12:46:17.432202",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class ISBNValidator():\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "from src.main.org.apache.commons.validator.routines.CodeValidator import *",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigitException import *",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.EAN13CheckDigit import *",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.ISBN10CheckDigit import *"
+    ]
+}

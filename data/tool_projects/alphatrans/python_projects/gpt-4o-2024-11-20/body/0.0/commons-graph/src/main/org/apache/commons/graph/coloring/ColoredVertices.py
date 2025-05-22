@@ -1,0 +1,42 @@
+from __future__ import annotations
+import re
+import os
+import io
+import typing
+from typing import *
+from src.main.org.apache.commons.graph.utils.Assertions import *
+
+
+class ColoredVertices:
+
+    __usedColor: typing.List[typing.Any] = []
+
+    __coloredVertices: typing.Dict[typing.Any, typing.Any] = {}
+
+    def getRequiredColors(self) -> int:
+        return len(self.__usedColor)
+
+    def getColor(self, v: typing.Any) -> typing.Any:
+        v = Assertions.checkNotNull(
+            v, "Impossible to get the color for a null Vertex", []
+        )
+        return self.__coloredVertices.get(v)
+
+    def containsColoredVertex(self, vertex: typing.Any) -> bool:
+        return vertex in self.__coloredVertices
+
+    def removeColor(self, v: typing.Any) -> None:
+        color = self.__coloredVertices.pop(v, None)
+        if color in self.__usedColor:
+            self.__usedColor.remove(color)
+
+    def addColor(self, v: typing.Any, color: typing.Any) -> None:
+        self.__coloredVertices[v] = color
+        try:
+            idx = self.__usedColor.index(color)
+            self.__usedColor[idx] = color
+        except ValueError:
+            self.__usedColor.append(color)
+
+    def __init__(self) -> None:
+        pass

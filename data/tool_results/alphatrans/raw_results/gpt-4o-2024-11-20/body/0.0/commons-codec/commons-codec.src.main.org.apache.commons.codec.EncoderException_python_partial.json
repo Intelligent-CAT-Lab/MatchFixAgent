@@ -1,0 +1,1068 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-codec/src/main/java/org/apache/commons/codec/EncoderException.java",
+    "imports": {},
+    "classes": {
+        "EncoderException": {
+            "start": 25,
+            "end": 25,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "Exception"
+            ],
+            "methods": {
+                "62-64:EncoderException": {
+                    "start": 62,
+                    "end": 64,
+                    "body": [
+                        "    public EncoderException(final String message, final Throwable cause) {\n",
+                        "        super(message, cause);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "EncoderException(String, Throwable)",
+                    "parameters": [
+                        "message",
+                        "cause"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Exception",
+                            "Exception(java.lang.String,java.lang.Throwable)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, message: str, cause: BaseException) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, message: str, cause: BaseException) -> None:",
+                        "        super().__init__(message)",
+                        "        self.cause = cause"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "success",
+                        "message": ""
+                    },
+                    "test_execution": {
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testUnsafeEncodeDecode_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 108, in encode2\n    return self.encode0(sourceStr, self.getCharset())\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 119, in encode0\n    return self._encodeText0(sourceStr, sourceCharset)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/RFC1522Codec.py\", line 41, in _encodeText0\n    raise EncoderException(\"Encoded bytes cannot be None\", None)\nsrc.main.org.apache.commons.codec.EncoderException.EncoderException: ('Encoded bytes cannot be None', None)\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py\", line 203, in testUnsafeEncodeDecode_test1_decomposed\n    encoded = qcodec.encode2(plain)\n              ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 110, in encode2\n    raise EncoderException(\"Encoding error occurred\") from e\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: EncoderException.__init__() missing 1 required positional argument: 'cause'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                                    "class": "EncoderException",
+                                    "method": "62-64:EncoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "149-162:doEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "336-338:getCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "246-251:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "202-208:encode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "119-121:QCodec2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "67-80:encodeText0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "263-318:encodeQuotedPrintable2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "244-246:encodeQuotedPrintable1"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "166-170:testUnsafeEncodeDecode_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testBasicEncodeDecode_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 108, in encode2\n    return self.encode0(sourceStr, self.getCharset())\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 119, in encode0\n    return self._encodeText0(sourceStr, sourceCharset)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/RFC1522Codec.py\", line 41, in _encodeText0\n    raise EncoderException(\"Encoded bytes cannot be None\", None)\nsrc.main.org.apache.commons.codec.EncoderException.EncoderException: ('Encoded bytes cannot be None', None)\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py\", line 219, in testBasicEncodeDecode_test1_decomposed\n    encoded = qcodec.encode2(plain)\n              ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 110, in encode2\n    raise EncoderException(\"Encoding error occurred\") from e\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: EncoderException.__init__() missing 1 required positional argument: 'cause'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                                    "class": "EncoderException",
+                                    "method": "62-64:EncoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "149-162:doEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "336-338:getCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "246-251:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "202-208:encode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "119-121:QCodec2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "67-80:encodeText0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "263-318:encodeQuotedPrintable2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "244-246:encodeQuotedPrintable1"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "145-149:testBasicEncodeDecode_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testEncodeDecodeBlanks_test2_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 108, in encode2\n    return self.encode0(sourceStr, self.getCharset())\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 119, in encode0\n    return self._encodeText0(sourceStr, sourceCharset)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/RFC1522Codec.py\", line 41, in _encodeText0\n    raise EncoderException(\"Encoded bytes cannot be None\", None)\nsrc.main.org.apache.commons.codec.EncoderException.EncoderException: ('Encoded bytes cannot be None', None)\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py\", line 112, in testEncodeDecodeBlanks_test2_decomposed\n    s = qcodec.encode2(plain)\n        ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 110, in encode2\n    raise EncoderException(\"Encoding error occurred\") from e\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: EncoderException.__init__() missing 1 required positional argument: 'cause'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                                    "class": "EncoderException",
+                                    "method": "62-64:EncoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "149-162:doEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "363-365:setEncodeBlanks"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "336-338:getCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "246-251:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "202-208:encode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "119-121:QCodec2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "67-80:encodeText0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "263-318:encodeQuotedPrintable2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "244-246:encodeQuotedPrintable1"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "336-343:testEncodeDecodeBlanks_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testUnsafeEncodeDecode_test2_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 112, in encode2\n    return self.encode0(sourceStr, self.getCharset())\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 123, in encode0\n    return self._encodeText0(sourceStr, sourceCharset)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/RFC1522Codec.py\", line 72, in _encodeText0\n    raise EncoderException(\"Encoded bytes cannot be None\", None)\nsrc.main.org.apache.commons.codec.EncoderException.EncoderException: ('Encoded bytes cannot be None', None)\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py\", line 246, in testUnsafeEncodeDecode_test2_decomposed\n    encoded = qcodec.encode2(plain)\n              ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 114, in encode2\n    raise EncoderException(\"Encoding error occurred\") from e\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: EncoderException.__init__() missing 1 required positional argument: 'cause'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                                    "class": "EncoderException",
+                                    "method": "62-64:EncoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "149-162:doEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "336-338:getCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "246-251:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "202-208:encode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "119-121:QCodec2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "67-80:encodeText0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "263-318:encodeQuotedPrintable2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "244-246:encodeQuotedPrintable1"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "173-179:testUnsafeEncodeDecode_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testBasicEncodeDecode_test2_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 112, in encode2\n    return self.encode0(sourceStr, self.getCharset())\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 123, in encode0\n    return self._encodeText0(sourceStr, sourceCharset)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/RFC1522Codec.py\", line 72, in _encodeText0\n    raise EncoderException(\"Encoded bytes cannot be None\", None)\nsrc.main.org.apache.commons.codec.EncoderException.EncoderException: ('Encoded bytes cannot be None', None)\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py\", line 267, in testBasicEncodeDecode_test2_decomposed\n    encoded = qcodec.encode2(plain)\n              ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 114, in encode2\n    raise EncoderException(\"Encoding error occurred\") from e\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: EncoderException.__init__() missing 1 required positional argument: 'cause'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                                    "class": "EncoderException",
+                                    "method": "62-64:EncoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "149-162:doEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "336-338:getCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "246-251:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "202-208:encode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "119-121:QCodec2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "67-80:encodeText0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "263-318:encodeQuotedPrintable2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "244-246:encodeQuotedPrintable1"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "152-158:testBasicEncodeDecode_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testEncodeDecodeBlanks_test5_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 112, in encode2\n    return self.encode0(sourceStr, self.getCharset())\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 123, in encode0\n    return self._encodeText0(sourceStr, sourceCharset)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/RFC1522Codec.py\", line 72, in _encodeText0\n    raise EncoderException(\"Encoded bytes cannot be None\", None)\nsrc.main.org.apache.commons.codec.EncoderException.EncoderException: ('Encoded bytes cannot be None', None)\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py\", line 117, in testEncodeDecodeBlanks_test5_decomposed\n    s = qcodec.encode2(plain)\n        ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/QCodec.py\", line 114, in encode2\n    raise EncoderException(\"Encoding error occurred\") from e\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: EncoderException.__init__() missing 1 required positional argument: 'cause'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                                    "class": "EncoderException",
+                                    "method": "62-64:EncoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "149-162:doEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "363-365:setEncodeBlanks"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "336-338:getCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "246-251:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "202-208:encode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "119-121:QCodec2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "67-80:encodeText0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "263-318:encodeQuotedPrintable2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "244-246:encodeQuotedPrintable1"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "371-383:testEncodeDecodeBlanks_test5_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/EncoderExceptionTest.py::EncoderExceptionTest::testConstructorThrowable_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                                    "class": "EncoderException",
+                                    "method": "62-64:EncoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.EncoderExceptionTest",
+                                    "class": "EncoderExceptionTest",
+                                    "method": "69-71:testConstructorThrowable_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/EncoderExceptionTest.py::EncoderExceptionTest::testConstructorStringThrowable_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                                    "class": "EncoderException",
+                                    "method": "62-64:EncoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.EncoderExceptionTest",
+                                    "class": "EncoderExceptionTest",
+                                    "method": "57-59:testConstructorStringThrowable_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/EncoderExceptionTest.py::EncoderExceptionTest::testConstructorString_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                                    "class": "EncoderException",
+                                    "method": "62-64:EncoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.EncoderExceptionTest",
+                                    "class": "EncoderExceptionTest",
+                                    "method": "45-47:testConstructorString_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/EncoderExceptionTest.py::EncoderExceptionTest::testConstructor0_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                                    "class": "EncoderException",
+                                    "method": "62-64:EncoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.EncoderExceptionTest",
+                                    "class": "EncoderExceptionTest",
+                                    "method": "33-35:testConstructor0_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/EncoderExceptionTest.py::EncoderExceptionTest::testConstructorThrowable_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                                    "class": "EncoderException",
+                                    "method": "62-64:EncoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.EncoderExceptionTest",
+                                    "class": "EncoderExceptionTest",
+                                    "method": "74-77:testConstructorThrowable_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/EncoderExceptionTest.py::EncoderExceptionTest::testConstructorStringThrowable_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                                    "class": "EncoderException",
+                                    "method": "62-64:EncoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.EncoderExceptionTest",
+                                    "class": "EncoderExceptionTest",
+                                    "method": "62-66:testConstructorStringThrowable_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/EncoderExceptionTest.py::EncoderExceptionTest::testConstructorString_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                                    "class": "EncoderException",
+                                    "method": "62-64:EncoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.EncoderExceptionTest",
+                                    "class": "EncoderExceptionTest",
+                                    "method": "50-54:testConstructorString_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/EncoderExceptionTest.py::EncoderExceptionTest::testConstructor0_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                                    "class": "EncoderException",
+                                    "method": "62-64:EncoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.EncoderExceptionTest",
+                                    "class": "EncoderExceptionTest",
+                                    "method": "38-42:testConstructor0_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/EncoderExceptionTest.py::EncoderExceptionTest::testConstructorThrowable_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                                    "class": "EncoderException",
+                                    "method": "62-64:EncoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.EncoderExceptionTest",
+                                    "class": "EncoderExceptionTest",
+                                    "method": "80-84:testConstructorThrowable_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/PercentCodecTest.py::PercentCodecTest::testEncodeUnsupportedObject_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                                    "class": "EncoderException",
+                                    "method": "62-64:EncoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                                    "class": "PercentCodec",
+                                    "method": "246-255:encode1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                                    "class": "PercentCodec",
+                                    "method": "63-74:PercentCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.PercentCodec",
+                                    "class": "PercentCodec",
+                                    "method": "106-114:insertAlwaysEncodeChar"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.PercentCodecTest",
+                                    "class": "PercentCodecTest",
+                                    "method": "248-251:testEncodeUnsupportedObject_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/QCodecTest.py::QCodecTest::testEncodeObjects_test3_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                                    "class": "EncoderException",
+                                    "method": "62-64:EncoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "149-162:doEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "144-146:getEncoding"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "336-338:getCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "292-302:encode3"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "246-251:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "202-208:encode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "119-121:QCodec2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QCodec",
+                                    "class": "QCodec",
+                                    "method": "105-113:QCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                                    "class": "RFC1522Codec",
+                                    "method": "67-80:encodeText0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.Utils",
+                                    "class": "Utils",
+                                    "method": "57-59:hexDigit"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "263-318:encodeQuotedPrintable2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "244-246:encodeQuotedPrintable1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.QuotedPrintableCodec",
+                                    "class": "QuotedPrintableCodec",
+                                    "method": "180-188:encodeQuotedPrintable0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "336-338:newStringUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "277-279:newString0"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.QCodecTest",
+                                    "class": "QCodecTest",
+                                    "method": "261-274:testEncodeObjects_test3_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/binary/Base16Test.py::Base16Test::testObjectEncodeWithInvalidParameter_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                                    "class": "EncoderException",
+                                    "method": "62-64:EncoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                                    "class": "BaseNCodec",
+                                    "method": "507-512:encode3"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                                    "class": "BaseNCodec",
+                                    "method": "333-357:BaseNCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                                    "class": "Base16",
+                                    "method": "286-288:Base162"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                                    "class": "Base16",
+                                    "method": "282-284:Base161"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                                    "class": "Base16",
+                                    "method": "265-280:Base16"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.binary.Base16Test",
+                                    "class": "Base16Test",
+                                    "method": "1653-1660:testObjectEncodeWithInvalidParameter_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/URLCodecTest.py::URLCodecTest::testInvalidEncoding_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/URLCodec.py\", line 97, in encode1\n    return StringUtils.newStringUsAscii(self.encode0(str_.encode(charsetName)))\n                                                     ^^^^^^^^^^^^^^^^^^^^^^^^\nLookupError: unknown encoding: NONSENSE\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/URLCodec.py\", line 89, in encode2\n    return self.encode1(str_, self.getDefaultCharset())\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/URLCodec.py\", line 99, in encode1\n    raise ValueError(f\"Unknown encoding: {charsetName}\")\nValueError: Unknown encoding: NONSENSE\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/test/org/apache/commons/codec/net/URLCodecTest.py\", line 170, in testInvalidEncoding_test1_decomposed\n    url_codec.encode2(plain)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/URLCodec.py\", line 91, in encode2\n    raise EncoderException(e.args[0], e)\nsrc.main.org.apache.commons.codec.EncoderException.EncoderException: Unknown encoding: NONSENSE: builtins.ValueError",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                                    "class": "EncoderException",
+                                    "method": "62-64:EncoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                                    "class": "URLCodec",
+                                    "method": "360-362:getDefaultCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                                    "class": "URLCodec",
+                                    "method": "241-250:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                                    "class": "URLCodec",
+                                    "method": "219-225:encode1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                                    "class": "URLCodec",
+                                    "method": "88-90:URLCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.URLCodecTest",
+                                    "class": "URLCodecTest",
+                                    "method": "604-612:testInvalidEncoding_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/URLCodecTest.py::URLCodecTest::testDefaultEncoding_test3_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/URLCodec.py\", line 97, in encode1\n    return StringUtils.newStringUsAscii(self.encode0(str_.encode(charsetName)))\n                                                     ^^^^^^^^^^^^^^^^^^^^^^^^\nLookupError: unknown encoding: UnicodeBig\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/URLCodec.py\", line 89, in encode2\n    return self.encode1(str_, self.getDefaultCharset())\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/URLCodec.py\", line 99, in encode1\n    raise ValueError(f\"Unknown encoding: {charsetName}\")\nValueError: Unknown encoding: UnicodeBig\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/test/org/apache/commons/codec/net/URLCodecTest.py\", line 59, in testDefaultEncoding_test3_decomposed\n    url_codec.encode2(plain)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/URLCodec.py\", line 91, in encode2\n    raise EncoderException(e.args[0], e)\nsrc.main.org.apache.commons.codec.EncoderException.EncoderException: Unknown encoding: UnicodeBig: builtins.ValueError",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                                    "class": "EncoderException",
+                                    "method": "62-64:EncoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                                    "class": "URLCodec",
+                                    "method": "360-362:getDefaultCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                                    "class": "URLCodec",
+                                    "method": "241-250:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                                    "class": "URLCodec",
+                                    "method": "219-225:encode1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                                    "class": "URLCodec",
+                                    "method": "88-90:URLCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.URLCodecTest",
+                                    "class": "URLCodecTest",
+                                    "method": "766-772:testDefaultEncoding_test3_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/URLCodecTest.py::URLCodecTest::testInvalidEncoding_test3_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 57, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 623, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.11/unittest/case.py\", line 579, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/test/org/apache/commons/codec/net/URLCodecTest.py\", line 151, in testInvalidEncoding_test3_decomposed\n    urlCodec.decode2(plain)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/URLCodec.py\", line 76, in decode2\n    return self.decode1(str_, self.getDefaultCharset())\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/gpt-4o-2024-11-20/body/0.0/commons-codec/src/main/org/apache/commons/codec/net/URLCodec.py\", line 83, in decode1\n    return str(bytes(self.decode0(StringUtils.getBytesUsAscii(str_))), charsetName)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nLookupError: unknown encoding: NONSENSE",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                                    "class": "EncoderException",
+                                    "method": "62-64:EncoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                                    "class": "URLCodec",
+                                    "method": "360-362:getDefaultCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                                    "class": "URLCodec",
+                                    "method": "289-298:decode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                                    "class": "URLCodec",
+                                    "method": "267-273:decode1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                                    "class": "URLCodec",
+                                    "method": "241-250:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                                    "class": "URLCodec",
+                                    "method": "219-225:encode1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                                    "class": "URLCodec",
+                                    "method": "201-203:decode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                                    "class": "URLCodec",
+                                    "method": "148-170:decodeUrl"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                                    "class": "URLCodec",
+                                    "method": "88-90:URLCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "186-188:getBytesUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "119-124:getBytes"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.URLCodecTest",
+                                    "class": "URLCodecTest",
+                                    "method": "631-645:testInvalidEncoding_test3_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-codec/src/test/org/apache/commons/codec/net/URLCodecTest.py::URLCodecTest::testEncodeObjects_test7_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                                    "class": "EncoderException",
+                                    "method": "62-64:EncoderException"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                                    "class": "URLCodec",
+                                    "method": "360-362:getDefaultCharset"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                                    "class": "URLCodec",
+                                    "method": "313-325:encode3"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                                    "class": "URLCodec",
+                                    "method": "241-250:encode2"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                                    "class": "URLCodec",
+                                    "method": "219-225:encode1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                                    "class": "URLCodec",
+                                    "method": "184-186:encode0"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                                    "class": "URLCodec",
+                                    "method": "110-138:encodeUrl"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                                    "class": "URLCodec",
+                                    "method": "92-94:URLCodec1"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.URLCodec",
+                                    "class": "URLCodec",
+                                    "method": "88-90:URLCodec"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.net.Utils",
+                                    "class": "Utils",
+                                    "method": "57-59:hexDigit"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "336-338:newStringUsAscii"
+                                },
+                                {
+                                    "file": "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "277-279:newString0"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.URLCodecTest",
+                                    "class": "URLCodecTest",
+                                    "method": "578-596:testEncodeObjects_test7_decomposed"
+                                },
+                                {
+                                    "file": "commons-codec.src.test.org.apache.commons.codec.net.URLCodecTest",
+                                    "class": "URLCodecTest",
+                                    "method": "43-43:validateState"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 83.66244792938232,
+                    "generation_timestamp": "2024-12-01T00:32:58.061234",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": -3,
+                        "test_execution": -2
+                    },
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "33-33:serialVersionUID": {
+                    "start": 33,
+                    "end": 33,
+                    "body": [
+                        "    private static final long serialVersionUID = 1L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = 1"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 32.60985517501831,
+                    "generation_timestamp": "2024-11-27T12:04:59.499557",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class EncoderException(Exception):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io"
+    ]
+}

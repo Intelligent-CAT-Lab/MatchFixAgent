@@ -1,0 +1,973 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/test/java/me/lemire/longcompression/TestLongAs2IntsCodec.java",
+    "imports": {
+        "10-10:import LongStream": {
+            "start": 10,
+            "end": 10,
+            "body": [
+                "import java.util.stream.LongStream;\n"
+            ]
+        },
+        "13-13:import Test": {
+            "start": 13,
+            "end": 13,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "12-12:import Assert": {
+            "start": 12,
+            "end": 12,
+            "body": [
+                "import org.junit.Assert;\n"
+            ]
+        }
+    },
+    "classes": {
+        "TestLongAs2IntsCodec": {
+            "start": 20,
+            "end": 20,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "new LongUnaryOperator(...) { ... }",
+                "new LongUnaryOperator(...) { ... }"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "100-102:testCodec_intermediateHighPowerOfTwo_test0_decomposed": {
+                    "start": 100,
+                    "end": 102,
+                    "body": [
+                        "    public void testCodec_intermediateHighPowerOfTwo_test0_decomposed()  {\n",
+                        "        Assert.assertEquals(3, LongTestUtils.compress1((LongCODEC) codec, new long[] { 1L << 42 }).length);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCodec_intermediateHighPowerOfTwo_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "Assert",
+                            "assertEquals(long,long)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
+                            "LongTestUtils",
+                            "79-85:compress1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testCodec_intermediateHighPowerOfTwo_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testCodec_intermediateHighPowerOfTwo_test0_decomposed(self) -> None:",
+                        "        self.assertEqual(",
+                        "            3,",
+                        "            len(LongTestUtils._compress1(self.codec, [1 << 42]))",
+                        "        )"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0.7398712635040283,
+                    "generation_timestamp": "2024-11-29T11:50:03.711907",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "93-97:testCodec_ZeroThenAllPowerOfTwo_test0_decomposed": {
+                    "start": 93,
+                    "end": 97,
+                    "body": [
+                        "    public void testCodec_ZeroThenAllPowerOfTwo_test0_decomposed()  {\n",
+                        "        for (int i = 0; i < 64; i++) {\n",
+                        "\t\t\tcheckConsistency(codec, new long[] { 0, 1L << i });\n",
+                        "\t\t}\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCodec_ZeroThenAllPowerOfTwo_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.TestLongAs2IntsCodec",
+                            "TestLongAs2IntsCodec",
+                            "23-45:checkConsistency"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testCodec_ZeroThenAllPowerOfTwo_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testCodec_ZeroThenAllPowerOfTwo_test0_decomposed(self) -> None:",
+                        "        for i in range(64):",
+                        "            self.__checkConsistency(self.codec, [0, 1 << i])"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0.7704958915710449,
+                    "generation_timestamp": "2024-11-29T09:16:17.067001",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": 1,
+                        "test_execution": 1
+                    }
+                },
+                "85-90:testCodec_allPowerOfTwo_test0_decomposed": {
+                    "start": 85,
+                    "end": 90,
+                    "body": [
+                        "    public void testCodec_allPowerOfTwo_test0_decomposed()  {\n",
+                        "        checkConsistency(codec, new long[] { 1L << 42 });\n",
+                        "        for (int i = 0; i < 64; i++) {\n",
+                        "\t\t\tcheckConsistency(codec, new long[] { 1L << i });\n",
+                        "\t\t}\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCodec_allPowerOfTwo_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.TestLongAs2IntsCodec",
+                            "TestLongAs2IntsCodec",
+                            "23-45:checkConsistency"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testCodec_allPowerOfTwo_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testCodec_allPowerOfTwo_test0_decomposed(self) -> None:",
+                        "        self.__checkConsistency(self.codec, [1 << 42])",
+                        "        for i in range(64):",
+                        "            self.__checkConsistency(self.codec, [1 << i])"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 4.606017827987671,
+                    "generation_timestamp": "2024-11-29T09:14:07.902605",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "80-82:testCodec_ZeroMinValue_test0_decomposed": {
+                    "start": 80,
+                    "end": 82,
+                    "body": [
+                        "    public void testCodec_ZeroMinValue_test0_decomposed()  {\n",
+                        "        checkConsistency(codec, new long[] { 0, Long.MIN_VALUE });\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCodec_ZeroMinValue_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.TestLongAs2IntsCodec",
+                            "TestLongAs2IntsCodec",
+                            "23-45:checkConsistency"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testCodec_ZeroMinValue_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testCodec_ZeroMinValue_test0_decomposed(self) -> None:",
+                        "        self.__checkConsistency(self.codec, [0, -9223372036854775808])"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 1.713226079940796,
+                    "generation_timestamp": "2024-11-29T09:14:09.656210",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "75-77:testCodec_MinValue_test0_decomposed": {
+                    "start": 75,
+                    "end": 77,
+                    "body": [
+                        "    public void testCodec_MinValue_test0_decomposed()  {\n",
+                        "        checkConsistency(codec, new long[] { Long.MIN_VALUE });\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCodec_MinValue_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.TestLongAs2IntsCodec",
+                            "TestLongAs2IntsCodec",
+                            "23-45:checkConsistency"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testCodec_MinValue_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testCodec_MinValue_test0_decomposed(self) -> None:",
+                        "        self.__checkConsistency(self.codec, [-(2**63)])  # -9223372036854775808 in Java is -(2^63)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 5.302863359451294,
+                    "generation_timestamp": "2024-11-29T09:14:15.006100",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "69-72:testCodec_ZeroTimes128Minus1_test0_decomposed": {
+                    "start": 69,
+                    "end": 72,
+                    "body": [
+                        "    public void testCodec_ZeroTimes128Minus1_test0_decomposed()  {\n",
+                        "        long[] array = LongStream.concat(LongStream.range(0, 128).map(l -> 0), LongStream.of(-1)).toArray();\n",
+                        "        checkConsistency(codec, array);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCodec_ZeroTimes128Minus1_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/stream/LongStream",
+                            "toArray()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/stream/LongStream",
+                            "concat(java.util.stream.LongStream,java.util.stream.LongStream)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/stream/LongStream",
+                            "map(java.util.function.LongUnaryOperator)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/stream/LongStream",
+                            "of(long)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/stream/LongStream",
+                            "range(long,long)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.TestLongAs2IntsCodec",
+                            "TestLongAs2IntsCodec",
+                            "23-45:checkConsistency"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testCodec_ZeroTimes128Minus1_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testCodec_ZeroTimes128Minus1_test0_decomposed(self) -> None:",
+                        "        array = list(range(0, 128)) + [-1]",
+                        "        array = [0] * len(array)  # Replace all elements in the range with 0, except the last element which is -1",
+                        "        array[-1] = -1",
+                        "        self.__checkConsistency(self.codec, array)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 3.470245122909546,
+                    "generation_timestamp": "2024-11-29T09:14:18.544850",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "63-66:testCodec_ZeroTimes127Minus1_test0_decomposed": {
+                    "start": 63,
+                    "end": 66,
+                    "body": [
+                        "    public void testCodec_ZeroTimes127Minus1_test0_decomposed()  {\n",
+                        "        long[] array = LongStream.concat(LongStream.range(0, 127).map(l -> 0), LongStream.of(-1)).toArray();\n",
+                        "        checkConsistency(codec, array);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCodec_ZeroTimes127Minus1_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/stream/LongStream",
+                            "toArray()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/stream/LongStream",
+                            "concat(java.util.stream.LongStream,java.util.stream.LongStream)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/stream/LongStream",
+                            "map(java.util.function.LongUnaryOperator)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/stream/LongStream",
+                            "of(long)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/stream/LongStream",
+                            "range(long,long)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.TestLongAs2IntsCodec",
+                            "TestLongAs2IntsCodec",
+                            "23-45:checkConsistency"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testCodec_ZeroTimes127Minus1_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testCodec_ZeroTimes127Minus1_test0_decomposed(self) -> None:",
+                        "        array = list(range(0, 127)) + [-1]",
+                        "        array = [0] * len(array)  # Replace all elements in the range with 0, except the last element (-1)",
+                        "        array[-1] = -1",
+                        "        self.__checkConsistency(self.codec, array)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 4.396561622619629,
+                    "generation_timestamp": "2024-11-29T09:14:22.990206",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "58-60:testCodec_ZeroTimes8Minus1_test0_decomposed": {
+                    "start": 58,
+                    "end": 60,
+                    "body": [
+                        "    public void testCodec_ZeroTimes8Minus1_test0_decomposed()  {\n",
+                        "        checkConsistency(codec, new long[] { 0, 0, 0, 0, 0, 0, 0, 0, -1 });\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCodec_ZeroTimes8Minus1_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.TestLongAs2IntsCodec",
+                            "TestLongAs2IntsCodec",
+                            "23-45:checkConsistency"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testCodec_ZeroTimes8Minus1_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testCodec_ZeroTimes8Minus1_test0_decomposed(self) -> None:",
+                        "        self.__checkConsistency(self.codec, [0, 0, 0, 0, 0, 0, 0, 0, -1])"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 2.7261927127838135,
+                    "generation_timestamp": "2024-11-29T09:14:25.764337",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "53-55:testCodec_Minus1_test0_decomposed": {
+                    "start": 53,
+                    "end": 55,
+                    "body": [
+                        "    public void testCodec_Minus1_test0_decomposed()  {\n",
+                        "        checkConsistency(codec, new long[] { -1 });\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCodec_Minus1_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.TestLongAs2IntsCodec",
+                            "TestLongAs2IntsCodec",
+                            "23-45:checkConsistency"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testCodec_Minus1_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testCodec_Minus1_test0_decomposed(self) -> None:",
+                        "        self.__checkConsistency(self.codec, [-1])"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0.6055870056152344,
+                    "generation_timestamp": "2024-11-29T09:14:26.397236",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "48-50:testCodec_Zero_test0_decomposed": {
+                    "start": 48,
+                    "end": 50,
+                    "body": [
+                        "    public void testCodec_Zero_test0_decomposed()  {\n",
+                        "        checkConsistency(codec, new long[] { 0 });\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCodec_Zero_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.TestLongAs2IntsCodec",
+                            "TestLongAs2IntsCodec",
+                            "23-45:checkConsistency"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testCodec_Zero_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testCodec_Zero_test0_decomposed(self) -> None:",
+                        "        self.__checkConsistency(self.codec, [0])"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0.6113955974578857,
+                    "generation_timestamp": "2024-11-29T09:14:27.052718",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "23-45:checkConsistency": {
+                    "start": 23,
+                    "end": 45,
+                    "body": [
+                        "\tprivate void checkConsistency(LongCODEC codec, long[] array) {\n",
+                        "\t\t{\n",
+                        "\t\t\tlong[] compressed = LongTestUtils.compress1(codec, array);\n",
+                        "\t\t\tlong[] uncompressed = LongTestUtils.uncompress0(codec, compressed, array.length);\n",
+                        "\n",
+                        "\t\t\tAssert.assertArrayEquals(array, uncompressed);\n",
+                        "\t\t}\n",
+                        "\n",
+                        "\t\tif (codec instanceof ByteLongCODEC) {\n",
+                        "\t\t\tbyte[] compressed = LongTestUtils.compress0((ByteLongCODEC) codec, array);\n",
+                        "\t\t\tlong[] uncompressed = LongTestUtils.uncompress1((ByteLongCODEC) codec, compressed, array.length);\n",
+                        "\n",
+                        "\t\t\tAssert.assertArrayEquals(array, uncompressed);\n",
+                        "\t\t}\n",
+                        "\n",
+                        "\t\tif (codec instanceof SkippableLongCODEC) {\n",
+                        "\t\t\tlong[] compressed = LongTestUtils.compressHeadless((SkippableLongCODEC) codec, array);\n",
+                        "\t\t\tlong[] uncompressed =\n",
+                        "\t\t\t\t\tLongTestUtils.uncompressHeadless((SkippableLongCODEC) codec, compressed, array.length);\n",
+                        "\n",
+                        "\t\t\tAssert.assertArrayEquals(array, uncompressed);\n",
+                        "\t\t}\n",
+                        "\t}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "checkConsistency(LongCODEC, long[])",
+                    "parameters": [
+                        "codec",
+                        "array"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
+                            "LongTestUtils",
+                            "79-85:compress1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
+                            "LongTestUtils",
+                            "87-93:uncompress0"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertArrayEquals(long[],long[])"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
+                            "LongTestUtils",
+                            "97-103:compress0"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
+                            "LongTestUtils",
+                            "105-111:uncompress1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
+                            "LongTestUtils",
+                            "113-119:compressHeadless"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
+                            "LongTestUtils",
+                            "121-128:uncompressHeadless"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __checkConsistency(self, codec: LongCODEC, array: typing.List[int]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __checkConsistency(self, codec: LongCODEC, array: typing.List[int]) -> None:",
+                        "        # First block: General compression and decompression",
+                        "        compressed = LongTestUtils._compress1(codec, array)",
+                        "        uncompressed = LongTestUtils._uncompress0(codec, compressed, len(array))",
+                        "        self.assertEqual(array, uncompressed)",
+                        "",
+                        "        # Second block: If codec is an instance of ByteLongCODEC",
+                        "        if isinstance(codec, ByteLongCODEC):",
+                        "            compressed = LongTestUtils._compress0(codec, array)",
+                        "            uncompressed = LongTestUtils._uncompress1(codec, compressed, len(array))",
+                        "            self.assertEqual(array, uncompressed)",
+                        "",
+                        "        # Third block: If codec is an instance of SkippableLongCODEC",
+                        "        if isinstance(codec, SkippableLongCODEC):",
+                        "            compressed = LongTestUtils._compressHeadless(codec, array)",
+                        "            uncompressed = LongTestUtils._uncompressHeadless(codec, compressed, len(array))",
+                        "            self.assertEqual(array, uncompressed)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 113.64378380775452,
+                    "generation_timestamp": "2024-11-29T09:15:33.221257",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 1
+                    }
+                }
+            },
+            "fields": {
+                "21-21:codec": {
+                    "start": 21,
+                    "end": 21,
+                    "body": [
+                        "\tfinal LongAs2IntsCodec codec = LongAs2IntsCodec.LongAs2IntsCodec1();\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "LongAs2IntsCodec",
+                            "LongAs2IntsCodec"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    codec: LongAs2IntsCodec = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    codec: LongAs2IntsCodec = LongAs2IntsCodec.LongAs2IntsCodec1()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 16.038201808929443,
+                    "generation_timestamp": "2024-11-27T11:43:39.134484",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class TestLongAs2IntsCodec(unittest.TestCase):\n\n"
+        },
+        "new LongUnaryOperator(...) { ... }": {
+            "start": 64,
+            "end": 64,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "TestLongAs2IntsCodec",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "64-64:applyAsLong": {
+                    "start": 64,
+                    "end": 64,
+                    "body": [
+                        "        long[] array = LongStream.concat(LongStream.range(0, 127).map(l -> 0), LongStream.of(-1)).toArray();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "applyAsLong(long)",
+                    "parameters": [
+                        "l"
+                    ],
+                    "calls": [],
+                    "is_overload": true
+                },
+                "70-70:applyAsLong": {
+                    "start": 70,
+                    "end": 70,
+                    "body": [
+                        "        long[] array = LongStream.concat(LongStream.range(0, 128).map(l -> 0), LongStream.of(-1)).toArray();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "applyAsLong(long)",
+                    "parameters": [
+                        "l"
+                    ],
+                    "calls": [],
+                    "is_overload": true
+                }
+            },
+            "fields": {}
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os",
+        "import unittest",
+        "from src.main.me.lemire.longcompression.ByteLongCODEC import *",
+        "from src.main.me.lemire.longcompression.LongAs2IntsCodec import *",
+        "from src.main.me.lemire.longcompression.LongCODEC import *",
+        "from src.test.me.lemire.longcompression.LongTestUtils import *",
+        "from src.main.me.lemire.longcompression.SkippableLongCODEC import *"
+    ]
+}

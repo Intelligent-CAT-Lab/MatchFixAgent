@@ -1,0 +1,431 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/main/java/me/lemire/longcompression/SkippableLongComposition.java",
+    "imports": {
+        "9-9:import IntWrapper": {
+            "start": 9,
+            "end": 9,
+            "body": [
+                "import me.lemire.integercompression.IntWrapper;\n"
+            ]
+        }
+    },
+    "classes": {
+        "SkippableLongComposition": {
+            "start": 16,
+            "end": 16,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "SkippableLongCODEC"
+            ],
+            "extends": [],
+            "methods": {
+                "66-68:toString": {
+                    "start": 66,
+                    "end": 68,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        return F1.toString() + \"+\" + F2.toString();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "toString()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "        return self.F1.toString() + \"+\" + self.F2.toString()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 61.928622007369995,
+                    "generation_timestamp": "2024-11-29T06:52:36.463385",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "53-63:headlessUncompress": {
+                    "start": 53,
+                    "end": 63,
+                    "body": [
+                        "    public void headlessUncompress(long[] in, IntWrapper inpos, int inlength, long[] out,\n",
+                        "            IntWrapper outpos, int num) {\n",
+                        "        int init = inpos.get();\n",
+                        "        F1.headlessUncompress(in, inpos, inlength, out, outpos, num);\n",
+                        "        if (inpos.get() == init) {\n",
+                        "        \t  inpos.increment();\n",
+                        "        }\n",
+                        "        inlength -= inpos.get() - init;\n",
+                        "        num -= outpos.get();\n",
+                        "        F2.headlessUncompress(in, inpos, inlength, out, outpos, num);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "headlessUncompress(long[], IntWrapper, int, long[], IntWrapper, int)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos",
+                        "num"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.SkippableLongCODEC",
+                            "SkippableLongCODEC",
+                            "67-69:headlessUncompress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "69-71:increment"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def headlessUncompress(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper, num: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def headlessUncompress(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper, num: int) -> None:",
+                        "        init = inpos.get()",
+                        "        self.F1.headlessUncompress(in_, inpos, inlength, out, outpos, num)",
+                        "        if inpos.get() == init:",
+                        "            inpos.increment()",
+                        "        inlength -= inpos.get() - init",
+                        "        num -= outpos.get()",
+                        "        self.F2.headlessUncompress(in_, inpos, inlength, out, outpos, num)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 59.85578227043152,
+                    "generation_timestamp": "2024-11-29T08:16:52.379006",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "39-50:headlessCompress": {
+                    "start": 39,
+                    "end": 50,
+                    "body": [
+                        "    public void headlessCompress(long[] in, IntWrapper inpos, int inlength, long[] out,\n",
+                        "            IntWrapper outpos) {\n",
+                        "        int init = inpos.get();\n",
+                        "        int outposInit = outpos.get();\n",
+                        "        F1.headlessCompress(in, inpos, inlength, out, outpos);\n",
+                        "        if (outpos.get() == outposInit) {\n",
+                        "            out[outposInit] = 0;\n",
+                        "            outpos.increment();\n",
+                        "        }\n",
+                        "        inlength -= inpos.get() - init;\n",
+                        "        F2.headlessCompress(in, inpos, inlength, out, outpos);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "headlessCompress(long[], IntWrapper, int, long[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.SkippableLongCODEC",
+                            "SkippableLongCODEC",
+                            "45-47:headlessCompress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "69-71:increment"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def headlessCompress(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def headlessCompress(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:",
+                        "        init = inpos.get()",
+                        "        outposInit = outpos.get()",
+                        "        self.F1.headlessCompress(in_, inpos, inlength, out, outpos)",
+                        "        if outpos.get() == outposInit:",
+                        "            out[outposInit] = 0",
+                        "            outpos.increment()",
+                        "        inlength -= inpos.get() - init",
+                        "        self.F2.headlessCompress(in_, inpos, inlength, out, outpos)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 60.66142725944519,
+                    "generation_timestamp": "2024-11-29T08:38:22.229424",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "32-36:SkippableLongComposition": {
+                    "start": 32,
+                    "end": 36,
+                    "body": [
+                        "    public SkippableLongComposition(SkippableLongCODEC f1,\n",
+                        "            SkippableLongCODEC f2) {\n",
+                        "        F1 = f1;\n",
+                        "        F2 = f2;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "SkippableLongComposition(SkippableLongCODEC, SkippableLongCODEC)",
+                    "parameters": [
+                        "f1",
+                        "f2"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, f1: SkippableLongCODEC, f2: SkippableLongCODEC) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, f1: SkippableLongCODEC, f2: SkippableLongCODEC) -> None:",
+                        "        self.F1 = f1",
+                        "        self.F2 = f2"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 56.34707283973694,
+                    "generation_timestamp": "2024-11-29T08:59:04.007428",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "17-17:F2": {
+                    "start": 17,
+                    "end": 17,
+                    "body": [
+                        "    SkippableLongCODEC F1, F2;\n"
+                    ],
+                    "modifiers": [],
+                    "types": [
+                        [
+                            "SkippableLongCODEC",
+                            "SkippableLongCODEC"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    F2: SkippableLongCODEC = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    F2: SkippableLongCODEC = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-11-27T11:47:46.188313",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "17-17:F1": {
+                    "start": 17,
+                    "end": 17,
+                    "body": [
+                        "    SkippableLongCODEC F1, F2;\n"
+                    ],
+                    "modifiers": [],
+                    "types": [
+                        [
+                            "SkippableLongCODEC",
+                            "SkippableLongCODEC"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    F1: SkippableLongCODEC = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    F1: SkippableLongCODEC = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-11-27T11:47:46.190829",
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class SkippableLongComposition(SkippableLongCODEC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os",
+        "from src.main.me.lemire.integercompression.IntWrapper import *",
+        "from src.main.me.lemire.longcompression.SkippableLongCODEC import *"
+    ]
+}

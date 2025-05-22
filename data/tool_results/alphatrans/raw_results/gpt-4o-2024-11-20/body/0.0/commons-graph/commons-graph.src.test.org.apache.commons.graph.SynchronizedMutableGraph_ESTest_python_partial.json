@@ -1,0 +1,472 @@
+{
+    "path": "java_projects/cleaned_final_projects_evosuite/commons-graph/src/test/java/org/apache/commons/graph/SynchronizedMutableGraph_ESTest.java",
+    "imports": {
+        "12-12:import MutableGraph": {
+            "start": 12,
+            "end": 12,
+            "body": [
+                "import org.apache.commons.graph.MutableGraph;\n"
+            ]
+        },
+        "15-15:import EvoRunnerParameters": {
+            "start": 15,
+            "end": 15,
+            "body": [
+                "import org.evosuite.runtime.EvoRunnerParameters;\n"
+            ]
+        },
+        "17-17:import RunWith": {
+            "start": 17,
+            "end": 17,
+            "body": [
+                "import org.junit.runner.RunWith;\n"
+            ]
+        },
+        "14-14:import EvoRunner": {
+            "start": 14,
+            "end": 14,
+            "body": [
+                "import org.evosuite.runtime.EvoRunner;\n"
+            ]
+        },
+        "8-8:import Test": {
+            "start": 8,
+            "end": 8,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "13-13:import SynchronizedMutableGraph": {
+            "start": 13,
+            "end": 13,
+            "body": [
+                "import org.apache.commons.graph.SynchronizedMutableGraph;\n"
+            ]
+        },
+        "16-16:import ViolatedAssumptionAnswer": {
+            "start": 16,
+            "end": 16,
+            "body": [
+                "import org.evosuite.runtime.ViolatedAssumptionAnswer;\n"
+            ]
+        },
+        "11-11:import static EvoAssertions.*": {
+            "start": 11,
+            "end": 11,
+            "body": [
+                "import static org.evosuite.runtime.EvoAssertions.*;\n"
+            ]
+        },
+        "10-10:import static Mockito.*": {
+            "start": 10,
+            "end": 10,
+            "body": [
+                "import static org.evosuite.shaded.org.mockito.Mockito.*;\n"
+            ]
+        },
+        "9-9:import static Assert.*": {
+            "start": 9,
+            "end": 9,
+            "body": [
+                "import static org.junit.Assert.*;\n"
+            ]
+        }
+    },
+    "classes": {
+        "SynchronizedMutableGraph_ESTest": {
+            "start": 20,
+            "end": 20,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "67-73:test4": {
+                    "start": 67,
+                    "end": 73,
+                    "body": [
+                        "  public void test4()  throws Throwable  {\n",
+                        "      MutableGraph<Integer, Integer> mutableGraph0 = (MutableGraph<Integer, Integer>) mock(MutableGraph.class, new ViolatedAssumptionAnswer());\n",
+                        "      SynchronizedMutableGraph<Integer, Integer> synchronizedMutableGraph0 = new SynchronizedMutableGraph<Integer, Integer>(mutableGraph0);\n",
+                        "      Integer integer0 = new Integer((-1));\n",
+                        "      synchronizedMutableGraph0.removeVertex(integer0);\n",
+                        "      assertEquals(0, synchronizedMutableGraph0.getOrder());\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test4()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test4(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test4(self) -> None:",
+                        "        ",
+                        "        # Create a mock object for MutableGraph",
+                        "        mutableGraph0 = unittest.mock.Mock(spec=MutableGraph)",
+                        "",
+                        "        # Create a SynchronizedMutableGraph object using the mock MutableGraph",
+                        "        synchronizedMutableGraph0 = SynchronizedMutableGraph(mutableGraph0)",
+                        "",
+                        "        # Create an Integer object",
+                        "        integer0 = Integer(-1)",
+                        "",
+                        "        # Remove the vertex from the SynchronizedMutableGraph",
+                        "        synchronizedMutableGraph0.removeVertex(integer0)",
+                        "",
+                        "        # Assert that the order of the SynchronizedMutableGraph is 0",
+                        "        self.assertEqual(0, synchronizedMutableGraph0.getOrder())"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 18.279036045074463,
+                    "generation_timestamp": "2024-09-09T12:18:34.745149",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "59-64:test3": {
+                    "start": 59,
+                    "end": 64,
+                    "body": [
+                        "  public void test3()  throws Throwable  {\n",
+                        "      MutableGraph<Integer, Integer> mutableGraph0 = (MutableGraph<Integer, Integer>) mock(MutableGraph.class, new ViolatedAssumptionAnswer());\n",
+                        "      SynchronizedMutableGraph<Integer, Integer> synchronizedMutableGraph0 = new SynchronizedMutableGraph<Integer, Integer>(mutableGraph0);\n",
+                        "      synchronizedMutableGraph0.removeEdge((Integer) null);\n",
+                        "      assertEquals(0, synchronizedMutableGraph0.getSize());\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test3()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test3(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test3(self) -> None:",
+                        "        ",
+                        "        # Create a mock object for MutableGraph",
+                        "        mutableGraph0 = unittest.mock.Mock(spec=MutableGraph)",
+                        "",
+                        "        # Create a SynchronizedMutableGraph object using the mock MutableGraph",
+                        "        synchronizedMutableGraph0 = SynchronizedMutableGraph(mutableGraph0)",
+                        "",
+                        "        # Call the removeEdge method on the SynchronizedMutableGraph object",
+                        "        synchronizedMutableGraph0.removeEdge(None)",
+                        "",
+                        "        # Assert that the size of the SynchronizedMutableGraph object is 0",
+                        "        self.assertEqual(0, synchronizedMutableGraph0.getSize())"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 22.03844428062439,
+                    "generation_timestamp": "2024-09-09T12:18:56.799386",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "50-56:test2": {
+                    "start": 50,
+                    "end": 56,
+                    "body": [
+                        "  public void test2()  throws Throwable  {\n",
+                        "      MutableGraph<Integer, Integer> mutableGraph0 = (MutableGraph<Integer, Integer>) mock(MutableGraph.class, new ViolatedAssumptionAnswer());\n",
+                        "      SynchronizedMutableGraph<Integer, Integer> synchronizedMutableGraph0 = new SynchronizedMutableGraph<Integer, Integer>(mutableGraph0);\n",
+                        "      Integer integer0 = new Integer((-1));\n",
+                        "      synchronizedMutableGraph0.addVertex(integer0);\n",
+                        "      assertEquals(0, synchronizedMutableGraph0.getSize());\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test2()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test2(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test2(self) -> None:",
+                        "        ",
+                        "        # Create a mock object for MutableGraph",
+                        "        mutableGraph0 = unittest.mock.Mock(spec=MutableGraph)",
+                        "",
+                        "        # Create a SynchronizedMutableGraph object using the mock MutableGraph",
+                        "        synchronizedMutableGraph0 = SynchronizedMutableGraph(mutableGraph0)",
+                        "",
+                        "        # Create an Integer object",
+                        "        integer0 = Integer(-1)",
+                        "",
+                        "        # Add the vertex to the SynchronizedMutableGraph",
+                        "        synchronizedMutableGraph0.addVertex(integer0)",
+                        "",
+                        "        # Assert that the size of the SynchronizedMutableGraph is 0",
+                        "        self.assertEqual(0, synchronizedMutableGraph0.getSize())"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 17.843467712402344,
+                    "generation_timestamp": "2024-09-09T12:19:14.659484",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "33-47:test1": {
+                    "start": 33,
+                    "end": 47,
+                    "body": [
+                        "  public void test1()  throws Throwable  {\n",
+                        "      SynchronizedMutableGraph<Integer, Integer> synchronizedMutableGraph0 = new SynchronizedMutableGraph<Integer, Integer>((MutableGraph<Integer, Integer>) null);\n",
+                        "      Integer integer0 = new Integer(3805);\n",
+                        "      // Undeclared exception!\n",
+                        "      try { \n",
+                        "        synchronizedMutableGraph0.removeEdge(integer0);\n",
+                        "        fail(\"Expecting exception: NullPointerException\");\n",
+                        "      \n",
+                        "      } catch(NullPointerException e) {\n",
+                        "         //\n",
+                        "         // no message in exception (getMessage() returned null)\n",
+                        "         //\n",
+                        "         verifyException(\"org.apache.commons.graph.SynchronizedMutableGraph\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test1()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test1(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test1(self) -> None:",
+                        "        ",
+                        "        synchronizedMutableGraph0 = SynchronizedMutableGraph[int, int](None)",
+                        "        integer0 = 3805",
+                        "        ",
+                        "        with pytest.raises(RuntimeError) as e:",
+                        "            synchronizedMutableGraph0.removeEdge(integer0)",
+                        "        ",
+                        "        assert str(e.value) == \"Expecting exception: RuntimeError\"",
+                        "        verifyException(\"org.apache.commons.graph.SynchronizedMutableGraph\", e)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 14.54224705696106,
+                    "generation_timestamp": "2024-09-09T12:19:29.217401",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "23-30:test0": {
+                    "start": 23,
+                    "end": 30,
+                    "body": [
+                        "  public void test0()  throws Throwable  {\n",
+                        "      MutableGraph<Integer, Integer> mutableGraph0 = (MutableGraph<Integer, Integer>) mock(MutableGraph.class, new ViolatedAssumptionAnswer());\n",
+                        "      SynchronizedMutableGraph<Integer, Integer> synchronizedMutableGraph0 = new SynchronizedMutableGraph<Integer, Integer>(mutableGraph0);\n",
+                        "      Integer integer0 = new Integer((-1));\n",
+                        "      Integer integer1 = new Integer(0);\n",
+                        "      synchronizedMutableGraph0.addEdge((Integer) null, integer1, integer0);\n",
+                        "      assertFalse(integer1.equals((Object)integer0));\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test0()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def test0(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def test0(self) -> None:",
+                        "        ",
+                        "        # Create a mock object for MutableGraph",
+                        "        mutableGraph0 = mock(MutableGraph, new=ViolatedAssumptionAnswer)",
+                        "        ",
+                        "        # Create an instance of SynchronizedMutableGraph using the mock object",
+                        "        synchronizedMutableGraph0 = SynchronizedMutableGraph(mutableGraph0)",
+                        "        ",
+                        "        # Create Integer objects",
+                        "        integer0 = Integer(-1)",
+                        "        integer1 = Integer(0)",
+                        "        ",
+                        "        # Call the addEdge method on synchronizedMutableGraph0",
+                        "        synchronizedMutableGraph0.addEdge(None, integer1, integer0)",
+                        "        ",
+                        "        # Assert that integer1 is not equal to integer0",
+                        "        self.assertFalse(integer1.equals(integer0))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 14.985429048538208,
+                    "generation_timestamp": "2024-09-09T12:19:44.219087",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class SynchronizedMutableGraph_ESTest(unittest.TestCase):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import unittest",
+        "from src.main.org.apache.commons.graph.MutableGraph import *",
+        "from src.main.org.apache.commons.graph.SynchronizedMutableGraph import *",
+        "# from src.test.org.apache.commons.graph.SynchronizedMutableGraph_ESTest_scaffolding import *",
+        "# from src.main.org.evosuite.runtime.EvoAssertions import *",
+        "# from src.main.org.evosuite.runtime.EvoRunnerParameters import *",
+        "# from src.main.org.evosuite.runtime.ViolatedAssumptionAnswer import *",
+        "# from src.main.org.evosuite.shaded.org.mockito.Mockito import *",
+        "# from src.main.org.evosuite.shaded.org.mockito.stubbing.Answer import *"
+    ]
+}
