@@ -2,7 +2,7 @@ templates:
   validator_agent:
     instruction: |-
       <instruction>
-        Use the given Java and Python file paths to analyze whether the "{{ method_name }}" implementation is functionally equivalent. You can explore other files in the project to make your decision.
+        Use the given Java and Python file paths to analyze whether the "{{ method_name }}" implementation is functionally equivalent. Only determine the functional correctness of the given method "{{ method_name }}" in isolation and DO NOT consider bugs in its dependencies. All dependencies will be prompted separately for equivalence. You can explore other files in the project to make your decision.
       </instruction>
     fragment_details: |-
       <fragment_details>
@@ -47,4 +47,5 @@ templates:
         - Always write an explanation in natural language to justify your decision.
         - Please THINK HARD to make sure your answer is correct.
         - Please follow the provided response format strictly and DO NOT include any additional text outside the JSON response.
+        - If the given method implementation has dependencies, DO NOT include them in your analysis and focus only on the correctness of the given method. A separate analysis will be done for the dependencies.
       </general_notes>
