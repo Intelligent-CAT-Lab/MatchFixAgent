@@ -175,7 +175,9 @@ class Option:
     def Option2(option: str, hasArg: bool, description: str) -> Option:
         return Option(0, option, None, description, hasArg, None)
 
-    return Option(0, option, None, description, False, None)
+    @staticmethod
+    def Option1(option: str, description: str) -> Option:
+        return Option(0, option, None, description, False, None)
 
     def __init__(
         self,
