@@ -79,7 +79,7 @@ def main(args):
             for method_name in results[schema_name][class_name]:
 
                 if "validator_agent" in results[schema_name][class_name][method_name]:
-                    if results[schema_name][class_name][method_name]["validator_agent"]["status"] == "success":
+                    if results[schema_name][class_name][method_name]["validator_agent"]["status"]:
                         continue
 
                 status, agent_output = validate_by_agent(
