@@ -102,6 +102,7 @@ class ValidatorAgent:
         env = os.environ.copy()
         env["CLAUDE_CODE_USE_BEDROCK"] = "true"
         env["ANTHROPIC_MODEL"] = self.model.model_name
+        env["PATH"] = f"{os.path.expanduser('~/apache-maven-3.9.9/bin')}:{env['PATH']}"
 
         try:
             self.logger.info("Executing Claude CLI command...")
@@ -112,6 +113,7 @@ class ValidatorAgent:
                 prompt,
                 "--output-format",
                 "json",
+                "--dangerously-skip-permissions",
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
                 env=env,
