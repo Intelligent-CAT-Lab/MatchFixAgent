@@ -19,6 +19,7 @@ import json
 import yaml
 import re
 import logging
+import shutil
 import uuid
 from pathlib import Path
 
@@ -26,7 +27,7 @@ from src.utils.agent_utils import MCPConfig
 from src.utils.agent_utils import Model
 from src.utils.agent_utils import Conversation
 
-from src.agents.validator_agent.prompt_generator import ValidatorAgentPromptGenerator
+from src.agents.prompt_generator import PromptGenerator
 
 
 class ValidatorAgent:
@@ -43,7 +44,7 @@ class ValidatorAgent:
         logger (Logger): Configured logger for this agent instance
     """
 
-    def __init__(self, model: Model, mcp_config: MCPConfig) -> None:
+    def __init__(self, configs: dict) -> None:
         """
         Initialize the validator agent with a model and configuration.
 
@@ -51,17 +52,19 @@ class ValidatorAgent:
             model (Model): The LLM model to use for validation
             mcp_config (MCPConfig): Configuration for the model control plane
         """
-        self.model = model
+        self.configs = configs
+        self.model = Model(self.configs["model"])
+        self.mcp_config = MCPConfig(self.configs["mcp_config_file"])
         self.conversation = Conversation()
         self.session_id = str(uuid.uuid4())
 
         # Set up logging
-        log_dir = Path("logs/validator_agent")
+        log_dir = Path(f"logs/{self.configs['agent_name']}")
         log_dir.mkdir(parents=True, exist_ok=True)
 
         log_file = log_dir / f"{self.session_id}.log"
 
-        self.logger = logging.getLogger(f"validator_agent.{self.session_id}")
+        self.logger = logging.getLogger(f"{self.configs['agent_name']}.{self.session_id}")
         self.logger.setLevel(logging.DEBUG)  # Set to DEBUG to allow all messages
         self.logger.propagate = False  # Prevent propagation to parent loggers
 
@@ -82,10 +85,10 @@ class ValidatorAgent:
         self.logger.addHandler(file_handler)
         self.logger.addHandler(console_handler)
 
-        self.logger.info(f"Validator Agent initialized with session ID: {self.session_id}")
-        self.logger.info(f"Using model: {model.model_name}")
+        self.logger.info(f"{self.configs['agent_name']} initialized with session ID: {self.session_id}")
+        self.logger.info(f"Using model: {self.model.model_name}")
 
-    async def run_cmd(self, prompt: str) -> tuple[bool, dict]:
+    async def run_cmd(self, prompt: str, feedback: str) -> tuple[bool, dict]:
         """
         Execute Claude CLI command with the given prompt.
 
@@ -93,6 +96,7 @@ class ValidatorAgent:
 
         Args:
             prompt (str): The prompt to send to Claude
+            feedback (str): Optional feedback to append to the prompt for retries
 
         Returns:
             tuple[bool, dict]: (success_status, parsed_output)
@@ -104,16 +108,16 @@ class ValidatorAgent:
         env["ANTHROPIC_MODEL"] = self.model.model_name
         env["PATH"] = f"{os.path.expanduser('~/apache-maven-3.9.9/bin')}:{env['PATH']}"
 
+        if feedback != "":
+            self.logger.info(f"Feedback provided: {feedback}")
+            prompt += f"\n\nFeedback: {feedback}"
+
         try:
             self.logger.info("Executing Claude CLI command...")
             # Use asyncio.create_subprocess_exec for true async operation
+            cmd = ["claude", "-p", prompt] + self.configs["extra_agent_args"]
             process = await asyncio.create_subprocess_exec(
-                "claude",
-                "-p",
-                prompt,
-                "--output-format",
-                "json",
-                "--dangerously-skip-permissions",
+                *cmd,
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
                 env=env,
@@ -142,7 +146,7 @@ class ValidatorAgent:
             self.logger.error(f"Error executing Claude: {str(e)}")
             return False, None
 
-    async def validate_agent_output(self, agent_output: dict) -> tuple[bool, dict]:
+    async def validate_agent_output(self, agent_output: dict) -> tuple[bool, dict, str]:
         """
         Validate and parse the agent's output.
 
@@ -152,16 +156,17 @@ class ValidatorAgent:
             agent_output (dict): The raw output from the agent
 
         Returns:
-            tuple[bool, dict]: (validation_status, parsed_output)
+            tuple[bool, dict, str]: (validation_status, parsed_output, feedback)
                 - validation_status: True if the output was successfully validated
                 - parsed_output: The original output with the parsed final response added,
                   or None if validation failed
+                - feedback: A message indicating the validation result
         """
         # extract the <final_response_format> </final_response_format> from the agent output
         result = agent_output.get("result", None)
         if result is None:
             self.logger.error("No result found in agent output")
-            return False, None
+            return False, None, "No result found in agent output"
 
         self.logger.info("Extracting final response format from agent output")
         pattern = r"<final_response_format>(.*?)</final_response_format>"
@@ -172,20 +177,32 @@ class ValidatorAgent:
             try:
                 # Attempt to parse the final response as JSON
                 parsed_response = json.loads(final_response)
+
+                if self.configs["agent_name"] == "base_agent":
+                    if (
+                        len(parsed_response) != 3
+                        or "is_equivalent" not in parsed_response
+                        or "explanation" not in parsed_response
+                        or "correct_target_method_implementation" not in parsed_response
+                    ):
+                        self.logger.error("Parsed response does not match expected response format")
+                        return False, None, "Parsed response does not match expected response format"
+                elif self.configs["agent_name"] == "match_agent":
+                    raise NotImplementedError("Match agent validation not implemented yet")
+
                 agent_output["parsed_final_response"] = parsed_response
                 self.logger.info("Successfully parsed final response as JSON")
-                return True, agent_output
+                return True, agent_output, "Final response format validated successfully"
             except json.JSONDecodeError as e:
                 self.logger.error(f"Final response is not valid JSON: {e}")
                 self.logger.debug(f"Invalid JSON: {final_response}")
-                return False, None
+                return False, None, "Final response is not valid JSON"
         else:
             self.logger.error("No final response format found in agent output")
-            return False, None
+            return False, None, "Final response format not found in agent output"
 
     async def run(
         self,
-        configs: dict,
         source_schema_name: str,
         target_schema_name: str,
         class_name: str,
@@ -219,8 +236,8 @@ class ValidatorAgent:
         self.logger.info(f"Source schema: {source_schema_name}")
         self.logger.info(f"Target schema: {target_schema_name}")
 
-        prompt_generator = ValidatorAgentPromptGenerator(
-            configs=configs,
+        prompt_generator = PromptGenerator(
+            configs=self.configs,
             source_schema_name=source_schema_name,
             target_schema_name=target_schema_name,
             class_name=class_name,
@@ -234,33 +251,33 @@ class ValidatorAgent:
 
         self.conversation.add_message(role="user", content=prompt)
 
-        max_retries = configs["agents"]["validator_agent"]["max_retries"]
+        max_retries = self.configs["max_retries"]
         self.logger.info(f"Maximum retries: {max_retries}")
 
         agent_output = None
         status = False
+        feedback = ""
 
-        while True:
-            remaining_retries = max_retries
-            max_retries -= 1
-            self.logger.info(f"Executing agent (remaining retries: {remaining_retries})...")
+        for attempt in range(max_retries + 1):
+            self.logger.info(f"Execution attempt {attempt+1}/{max_retries}")
 
-            status, agent_output = await self.run_cmd(prompt)
+            status, agent_output = await self.run_cmd(prompt, feedback)
+
             if status:
                 self.logger.info("Command execution successful, validating output...")
-                validation_status, agent_output = await self.validate_agent_output(agent_output)
+                validation_status, agent_output, feedback = await self.validate_agent_output(agent_output)
                 if validation_status:
                     self.logger.info("Agent output validation successful")
                     break
                 else:
                     self.logger.warning("Agent output validation failed")
-                    if max_retries == 0:
-                        self.logger.error("Max retries reached")
+                    if attempt == max_retries:
+                        self.logger.error("Max retries reached. Exiting.")
                         break
                     self.logger.info("Retrying...")
             else:
                 self.logger.warning("Command execution failed")
-                if max_retries == 0:
+                if attempt == max_retries:
                     self.logger.error("Max retries reached. Exiting.")
                     break
                 self.logger.info("Retrying command execution...")
@@ -285,25 +302,35 @@ class ValidatorAgent:
                 self.logger.removeHandler(handler)
 
             # Original and new log file paths
-            original_log_file = Path("logs/validator_agent") / f"{self.session_id}.log"
-            new_log_file = Path("logs/validator_agent") / f"{agent_output['session_id']}.log"
+            original_log_file = Path(f"logs/{self.configs['agent_name']}") / f"{self.session_id}.log"
+            new_log_file = Path(f"logs/{self.configs['agent_name']}") / f"{agent_output['session_id']}.log"
 
             # Only rename if the paths are different
             if original_log_file != new_log_file:
                 # Use shutil.copy2 and then remove the original instead of rename
                 # This avoids issues if the files are on different filesystems
-                import shutil
 
                 shutil.copy2(original_log_file, new_log_file)
                 original_log_file.unlink(missing_ok=True)
 
                 # Create a new logger with the new session ID
-                new_logger = logging.getLogger(f"validator_agent.{agent_output['session_id']}")
+                new_logger = logging.getLogger(f"{self.configs['agent_name']}.{agent_output['session_id']}")
                 new_logger.setLevel(logging.INFO)
                 new_logger.propagate = False
 
-                # Log the file rename operation using the root logger since our logger is closed
-                logging.getLogger().info(f"Log file renamed from {original_log_file} to {new_log_file}")
+                # Add handlers to the new logger
+                file_handler = logging.FileHandler(new_log_file)
+                file_handler.setLevel(logging.DEBUG)
+                console_handler = logging.StreamHandler()
+                console_handler.setLevel(logging.INFO)
+                formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+                file_handler.setFormatter(formatter)
+                console_handler.setFormatter(formatter)
+                new_logger.addHandler(file_handler)
+                new_logger.addHandler(console_handler)
+
+                # Log the file rename operation using the new logger
+                new_logger.info(f"Log file renamed from {original_log_file} to {new_log_file}")
 
         else:
             logging.getLogger().error("Validation failed")
@@ -320,6 +347,7 @@ if __name__ == "__main__":
     """
     parser = argparse.ArgumentParser(description="Validator Agent")
     parser.add_argument("--config_file", type=str, required=True, help="Path to the config file")
+    parser.add_argument("--agent_name", type=str, required=True, help="Name of the agent to run")
     parser.add_argument(
         "--log_level",
         type=str,
@@ -334,17 +362,12 @@ if __name__ == "__main__":
         level=getattr(logging, args.log_level), format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     )
 
-    logger = logging.getLogger("validator_agent_main")
+    logger = logging.getLogger(f"{args.agent_name}_main")
     logger.info(f"Starting validator agent with config file: {args.config_file}")
 
-    configs = yaml.safe_load(open(args.config_file, "r"))
-    args.model = configs["agents"]["validator_agent"]["model"]
-    args.mcp_config_file = configs["agents"]["validator_agent"]["mcp_config_file"]
+    configs = yaml.safe_load(open(args.config_file, "r"))["agents"][args.agent_name]
 
-    model = Model(args.model)
-    mcp_config = MCPConfig(args.mcp_config_file)
-
-    validator_agent = ValidatorAgent(model, mcp_config)
+    validator_agent = ValidatorAgent(configs=configs)
 
     ### sample test case
     logger.info("Running sample test case")
@@ -370,5 +393,5 @@ if __name__ == "__main__":
     }
 
     status, result = asyncio.run(
-        validator_agent.run(configs, source_schema_name, target_schema_name, class_name, method_name, method_pair)
+        validator_agent.run(source_schema_name, target_schema_name, class_name, method_name, method_pair)
     )

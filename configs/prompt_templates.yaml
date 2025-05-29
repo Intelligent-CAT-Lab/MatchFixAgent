@@ -1,8 +1,56 @@
 templates:
-  validator_agent:
+  base_agent:
     instruction: |-
       <instruction>
-        You are an expert agent that can judge if two code fragments in different programming languages (PLs) are functionally equivalent. Here equivalence means two code fragments in different PLs are considered equivalent if, when executed on the same input, they always have identical program states at all corresponding points reachable by program execution, and they both produce the same output upon termination.
+        Use the given {{ source_language }} and {{ target_language }} file paths to analyze whether the "{{ method_name }}" implementation is functionally equivalent.
+      </instruction>
+    fragment_details: |-
+      <fragment_details>
+        
+        <source_fragment_path>
+          {{ source_file_path }}
+        </source_fragment_path>
+
+        <target_fragment_path>
+          {{ target_file_path }}
+        </target_fragment_path>
+
+        <source_fragment_class>
+          {{ source_class_name }}
+        </source_fragment_class>
+
+        <target_fragment_class>
+          {{ target_class_name }}
+        </target_fragment_class>
+
+        <source_fragment_method>
+          {{ source_method_implementation }}
+        </source_fragment_method>
+
+        <target_fragment_method>
+          {{ target_method_implementation }}
+        </target_fragment_method>
+
+      </fragment_details>
+    response_format: |-
+      Provide your response in the following format and DO NOT include any additional text outside the JSON response. Make sure you wrap the JSON inside <final_response_format> tags.
+
+      <final_response_format>
+      {
+        "is_equivalent": "yes" / "no" / "need_more_context",
+        "explanation": "<explanation>",
+        "correct_target_method_implementation": "<correct_target_method_implementation if is_equivalent is 'no', otherwise empty>"
+      }
+      </final_response_format>
+    general_notes: |-
+      <general_notes>
+        - Always write an explanation in natural language to justify your decision.
+        - Please follow the provided response format strictly and DO NOT include any additional text outside the JSON response.
+      </general_notes>
+  match_agent:
+    instruction: |-
+      <instruction>
+        You are an expert agent that can judge if two code fragments in different programming languages (PLs) are functionally equivalent. Here equivalence means: two code fragments in different PLs are considered equivalent if, when executed on the same input, they always have identical program states at all corresponding points reachable by program execution, and they both produce the same output upon termination.
         Use the given Java and Python file paths to analyze whether the "{{ method_name }}" implementation is functionally equivalent. Only determine the functional correctness of the given method "{{ method_name }}" in isolation and DO NOT consider bugs in its dependencies. All dependencies will be prompted separately for functional equivalence. You can explore other files in the project to make your decision.
 
         If you think the given code fragments are NOT functionally equivalent, please provide:

@@ -2,7 +2,7 @@ import yaml
 from jinja2 import Template
 
 
-class ValidatorAgentPromptGenerator:
+class PromptGenerator:
 
     def __init__(
         self,
@@ -29,13 +29,19 @@ class ValidatorAgentPromptGenerator:
     def generate_prompt(self) -> str:
 
         ### add instruction
-        template = Template(self.prompt_templates["templates"]["validator_agent"]["instruction"])
-        instruction = template.render({"method_name": self.method_name})
+        template = Template(self.prompt_templates["templates"][self.configs["agent_name"]]["instruction"])
+        instruction = template.render(
+            {
+                "source_language": self.configs["source_language"].capitalize(),
+                "target_language": self.configs["target_language"].capitalize(),
+                "method_name": self.method_name,
+            }
+        )
         self.prompt += instruction
         self.prompt += "\n\n"
 
         ### add fragment details
-        template = Template(self.prompt_templates["templates"]["validator_agent"]["fragment_details"])
+        template = Template(self.prompt_templates["templates"][self.configs["agent_name"]]["fragment_details"])
         fragment_details = template.render(
             {
                 "source_file_path": self.source_file_path,
@@ -50,19 +56,19 @@ class ValidatorAgentPromptGenerator:
         self.prompt += "\n\n"
 
         ### add response format
-        self.prompt += self.prompt_templates["templates"]["validator_agent"]["response_format"]
+        self.prompt += self.prompt_templates["templates"][self.configs["agent_name"]]["response_format"]
         self.prompt += "\n\n"
 
         ### add general notes
-        self.prompt += self.prompt_templates["templates"]["validator_agent"]["general_notes"]
+        self.prompt += self.prompt_templates["templates"][self.configs["agent_name"]]["general_notes"]
 
         return self.prompt
 
     def format_fragment_details(self) -> None:
-        tool_source_projects_path = self.configs["agents"]["validator_agent"]["tool_source_projects_path"]
+        tool_source_projects_path = self.configs["tool_source_projects_path"]
         self.source_file_path = f"{tool_source_projects_path}/{self.source_schema_name.replace('.', '/')}.java"
 
-        tool_target_projects_path = self.configs["agents"]["validator_agent"]["tool_target_projects_path"]
+        tool_target_projects_path = self.configs["tool_target_projects_path"]
         self.target_file_path = f"{tool_target_projects_path}/{self.target_schema_name.replace('.', '/')}.py"
 
         self.source_method_implementation = "\n".join(self.method_pair["source_code"]).strip()

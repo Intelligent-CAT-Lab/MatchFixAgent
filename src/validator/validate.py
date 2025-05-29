@@ -11,9 +11,7 @@ import yaml
 import json
 import asyncio
 
-from src.agents.validator_agent.agent import ValidatorAgent
-from src.utils.agent_utils import MCPConfig
-from src.utils.agent_utils import Model
+from src.agents.validator_agent import ValidatorAgent
 
 
 def validate_by_agent(
@@ -41,16 +39,10 @@ def validate_by_agent(
     source_schema_name = schema_name.replace("_python_partial", "").replace("src.main.", "src.main.java.")
     target_schema_name = schema_name.replace("_python_partial", "")
 
-    model = Model(configs["agents"]["validator_agent"]["model"])
-    mcp_config = MCPConfig(configs["agents"]["validator_agent"]["mcp_config_file"])
-
-    validator_agent = ValidatorAgent(
-        model=model,
-        mcp_config=mcp_config,
-    )
+    validator_agent = ValidatorAgent(configs=configs)
 
     status, agent_output = asyncio.run(
-        validator_agent.run(configs, source_schema_name, target_schema_name, class_name, method_name, method_pair)
+        validator_agent.run(source_schema_name, target_schema_name, class_name, method_name, method_pair)
     )
 
     return status, agent_output
@@ -68,9 +60,9 @@ def main(args):
             - config_file: Path to configuration file
             - project_name: Name of the project to validate
     """
-    configs = yaml.safe_load(open(args.config_file, "r"))
+    configs = yaml.safe_load(open(args.config_file, "r"))["agents"][args.agent_name]
 
-    results_path = configs["agents"]["validator_agent"]["tool_results_path"]
+    results_path = configs["tool_results_path"]
     with open(os.path.join(results_path, f"{args.project_name}.json"), "r") as f:
         results = json.load(f)
 
@@ -78,8 +70,8 @@ def main(args):
         for class_name in results[schema_name]:
             for method_name in results[schema_name][class_name]:
 
-                if "validator_agent" in results[schema_name][class_name][method_name]:
-                    if results[schema_name][class_name][method_name]["validator_agent"]["status"]:
+                if args.agent_name in results[schema_name][class_name][method_name]:
+                    if results[schema_name][class_name][method_name][args.agent_name]["status"]:
                         continue
 
                 status, agent_output = validate_by_agent(
@@ -90,7 +82,7 @@ def main(args):
                     method_pair=results[schema_name][class_name][method_name],
                 )
 
-                results[schema_name][class_name][method_name]["validator_agent"] = {
+                results[schema_name][class_name][method_name][args.agent_name] = {
                     "status": status,
                     "output": agent_output,
                 }
@@ -108,6 +100,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Validate existing translations using the Validator Agent")
     parser.add_argument("--config_file", type=str, required=True, help="Path to the config file")
     parser.add_argument("--project_name", type=str, required=True, help="Name of the project")
+    parser.add_argument("--agent_name", type=str, required=True, help="Name of the agent to use for validation")
     args = parser.parse_args()
 
     main(args)
