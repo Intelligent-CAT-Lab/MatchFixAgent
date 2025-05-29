@@ -178,17 +178,16 @@ class ValidatorAgent:
                 # Attempt to parse the final response as JSON
                 parsed_response = json.loads(final_response)
 
-                if self.configs["agent_name"] == "base_agent":
-                    if (
-                        len(parsed_response) != 3
-                        or "is_equivalent" not in parsed_response
-                        or "explanation" not in parsed_response
-                        or "correct_target_method_implementation" not in parsed_response
-                    ):
-                        self.logger.error("Parsed response does not match expected response format")
-                        return False, None, "Parsed response does not match expected response format"
-                elif self.configs["agent_name"] == "match_agent":
-                    raise NotImplementedError("Match agent validation not implemented yet")
+                if (
+                    len(parsed_response) != 5
+                    or "is_equivalent" not in parsed_response
+                    or "explanation" not in parsed_response
+                    or "source_test_class" not in parsed_response
+                    or "target_test_class" not in parsed_response
+                    or "correct_target_method_implementation" not in parsed_response
+                ):
+                    self.logger.error("Parsed response does not match expected response format")
+                    return False, None, "Parsed response does not match expected response format"
 
                 agent_output["parsed_final_response"] = parsed_response
                 self.logger.info("Successfully parsed final response as JSON")
