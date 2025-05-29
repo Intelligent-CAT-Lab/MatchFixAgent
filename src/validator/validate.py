@@ -9,6 +9,8 @@ import os
 import argparse
 import yaml
 import json
+import shutil
+import subprocess
 import asyncio
 
 from src.agents.validator_agent import ValidatorAgent
@@ -46,6 +48,36 @@ def validate_by_agent(
     )
 
     return status, agent_output
+
+
+def cleanup():
+    """
+    Cleanup function to remove temporary files created during validation.
+
+    This function deletes the temporary files used by the ValidatorAgent
+    to ensure no residual data is left after validation.
+    """
+
+    # Run `git status --porcelain data/tool_projects`
+    proc = subprocess.run(
+        ["git", "status", "--porcelain", "data/tool_projects"],
+        capture_output=True,
+        text=True,
+        check=True
+    )
+    for line in proc.stdout.splitlines():
+        if not line.strip():
+            continue
+        status, path = line[:2], line[3:]
+        # Untracked files (“??”) → delete
+        if status.strip() == "??":
+            if os.path.isdir(path):
+                shutil.rmtree(path)
+            elif os.path.isfile(path):
+                os.remove(path)
+        # Any other status → restore to HEAD
+        else:
+            subprocess.run(["git", "restore", path], check=False)
 
 
 def main(args):
@@ -89,6 +121,8 @@ def main(args):
 
                 with open(os.path.join(results_path, f"{args.project_name}.json"), "w") as f:
                     json.dump(results, f, indent=4)
+
+                cleanup()
 
 
 if __name__ == "__main__":
