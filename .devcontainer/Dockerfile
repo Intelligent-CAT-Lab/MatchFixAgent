@@ -83,17 +83,16 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     ./aws/install && \
     rm awscliv2.zip
 
-RUN arch=$(uname -m) && \
+RUN rm -rf /opt/conda && \
+    arch=$(uname -m) && \
     if [ "$arch" = "x86_64" ]; then \
-    MINICONDA_URL="https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh"; \
+      MINICONDA_URL="https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh"; \
     elif [ "$arch" = "aarch64" ]; then \
-    MINICONDA_URL="https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh"; \
+      MINICONDA_URL="https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh"; \
     else \
-    echo "Unsupported architecture: $arch"; \
-    exit 1; \
+      echo "Unsupported architecture: $arch"; exit 1; \
     fi && \
     wget $MINICONDA_URL -O miniconda.sh && \
-    mkdir -p /opt/conda && \
     bash miniconda.sh -b -p /opt/conda && \
     rm -f miniconda.sh && \
     chown -R node:node /opt/conda
