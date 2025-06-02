@@ -60,10 +60,7 @@ def cleanup():
 
     # Run `git status --porcelain data/tool_projects`
     proc = subprocess.run(
-        ["git", "status", "--porcelain", "data/tool_projects"],
-        capture_output=True,
-        text=True,
-        check=True
+        ["git", "status", "--porcelain", "data/tool_projects"], capture_output=True, text=True, check=True
     )
     for line in proc.stdout.splitlines():
         if not line.strip():

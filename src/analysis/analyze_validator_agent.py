@@ -65,6 +65,9 @@ def main(args):
                 if args.agent_name not in data[schema_name][class_name][method_name]:
                     continue
 
+                if not data[schema_name][class_name][method_name][args.agent_name]["status"]:
+                    continue
+
                 total_methods += 1
 
                 # Get tool validation outcome
@@ -122,7 +125,9 @@ def main(args):
     print(f"Progress: {total_methods}/{total} [{total_methods / total:.2%}]")
     last_modified_time = os.path.getmtime(results_file)
     seconds_ago = time.time() - last_modified_time
-    print(f"Results file last modified: {seconds_ago // 60}m, {seconds_ago % 60:.2f}s ago")
+    print(
+        f"Results file last modified: {seconds_ago // 3600}h, {(seconds_ago % 3600) // 60}m, {seconds_ago % 60:.2f}s ago"
+    )
     print(f"Total methods: {total_methods}")
     print(
         f"Agent Equivalency Dist: [yes: {equivalency_dist['yes']} ({equivalency_dist['yes'] / total_methods:.2%}), "
