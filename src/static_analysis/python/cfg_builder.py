@@ -15,13 +15,13 @@ class CFGBuilder:
         self.lines = source_code.splitlines()
         self.graph = nx.DiGraph()
         self._id_counter = 0
-        self.node_labels = {}  # node_id → label string
+        self.node_labels = {}   # node_id → label string
         self.return_nodes = set()  # node_ids for return statements
 
         # For loop handling (unused here but kept for completeness)
         self.loop_stack = []
 
-        # Maps for break/continue to their loop header (unused for exceptions)
+        # Maps for break/continue to their loop header
         self.break_map = {}
         self.continue_map = {}
 
@@ -151,11 +151,11 @@ class CFGBuilder:
                     for se in sub_entries:
                         self.graph.add_edge(pe, se)
 
-                # Partition sub_exits into "fallthrough" vs. "special" (returns)
+                # Partition sub_exits into "fallthrough" vs. "special" (returns, breaks, continues)
                 fallthrough = set()
                 special = set()
                 for e in sub_exits:
-                    if e in self.return_nodes:
+                    if e in self.return_nodes or e in self.break_map or e in self.continue_map:
                         special.add(e)
                     else:
                         fallthrough.add(e)
@@ -251,7 +251,9 @@ class CFGBuilder:
             else:
                 # Last condition: false → else or exit
                 if else_body:
-                    e_entries, e_exits = self._build_block(list(else_body.named_children))
+                    e_entries, e_exits = self._build_block(
+                        list(else_body.named_children)
+                    )
                     if not e_exits:
                         e_exits = {cid}
                     for ee in e_entries:
@@ -300,7 +302,10 @@ class CFGBuilder:
     def _build_try(self, node):
         """
         Build CFG for try-except-finally, explicitly including a 'finally' header node.
-        Ensures the try-header itself also links to finally for the normal path.
+        The outer `try` header does not directly point to `finally`. After the
+        inner `finally`, normal flow returns up to the caller, which may link it to
+        the outer except or outer finally. The outer except itself only points to
+        the outer finally (no self-loop).
         """
         # 1) Create a 'try' header
         tid = self._new_node(ts_node=node)  # e.g., "(L2) try:"
@@ -323,10 +328,13 @@ class CFGBuilder:
 
         # 3) Parse all except clauses
         except_clauses = [c for c in node.named_children if c.type == "except_clause"]
+        except_headers = []
         all_except_exits = []
         for ex_clause in except_clauses:
             # Create a header for this "except"
-            ex_hdr = self._new_node(ts_node=ex_clause)  # e.g., "(L5) except ZeroDivisionError:"
+            ex_hdr = self._new_node(ts_node=ex_clause)  # e.g., "(L10) except ValueError:"
+            except_headers.append(ex_hdr)
+
             ex_body = ex_clause.child_by_field_name("body")
             ex_entries, ex_exits = (set(), set())
             if ex_body:
@@ -352,9 +360,7 @@ class CFGBuilder:
 
         if finally_clause:
             # Create a "finally" header
-            fin_hdr = self._new_node(ts_node=finally_clause)  # e.g., "(L8) finally:"
-            # Link the try-header itself ➔ finally-header (normal completion path)
-            self.graph.add_edge(tid, fin_hdr)
+            fin_hdr = self._new_node(ts_node=finally_clause)  # e.g., "(L12) finally:"
             # Link every normal try exit to fin_hdr
             for te in t_exits:
                 self.graph.add_edge(te, fin_hdr)
@@ -366,7 +372,9 @@ class CFGBuilder:
             fin_body = finally_clause.child_by_field_name("body")
             f_entries, f_exits = (set(), set())
             if fin_body:
-                f_entries, f_exits = self._build_block(list(fin_body.named_children))
+                f_entries, f_exits = self._build_block(
+                    list(fin_body.named_children)
+                )
                 # If no exits from finally-body, treat fin_hdr as fall-through
                 if not f_exits:
                     f_exits = {fin_hdr}
@@ -437,6 +445,11 @@ class CFGBuilder:
         """
         Print each node and its successors in a human-readable format.
         """
+        print("SOURCE CODE:")
+        for i, line in enumerate(self.lines, start=1):
+            print(f"{i:>3}: {line}")
+
+        print("\nCONTROL FLOW GRAPH:")
         for nid in sorted(self.graph.nodes()):
             label = self.node_labels.get(nid, str(nid))
             print(f"Node {nid}: {label}")
