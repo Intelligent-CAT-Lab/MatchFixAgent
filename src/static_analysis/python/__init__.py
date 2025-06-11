@@ -1,3 +1,2 @@
-from .builder import CFGBuilder
-from .dfg_builder import DFGBuilder
+from .cfg_builder import CFGBuilder
 from .model import Block, Link, CFG
