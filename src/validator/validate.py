@@ -13,7 +13,7 @@ import shutil
 import subprocess
 import asyncio
 
-from src.agents.validator_agent import ValidatorAgent
+from src.agents.base_agent.agent import BaseAgent
 
 
 def validate_by_agent(
@@ -41,7 +41,7 @@ def validate_by_agent(
     source_schema_name = schema_name.replace("_python_partial", "").replace("src.main.", "src.main.java.")
     target_schema_name = schema_name.replace("_python_partial", "")
 
-    validator_agent = ValidatorAgent(configs=configs)
+    validator_agent = BaseAgent(configs=configs)
 
     status, agent_output = asyncio.run(
         validator_agent.run(source_schema_name, target_schema_name, class_name, method_name, method_pair)
@@ -89,7 +89,7 @@ def main(args):
             - config_file: Path to configuration file
             - project_name: Name of the project to validate
     """
-    configs = yaml.safe_load(open(args.config_file, "r"))["agents"][args.agent_name]
+    configs = yaml.safe_load(open(args.config_file, "r"))[args.agent_name]
 
     results_path = configs["tool_results_path"]
     with open(os.path.join(results_path, f"{args.project_name}.json"), "r") as f:

@@ -27,10 +27,10 @@ from src.utils.agent_utils import MCPConfig
 from src.utils.agent_utils import Model
 from src.utils.agent_utils import Conversation
 
-from src.agents.prompt_generator import PromptGenerator
+from src.agents.base_agent.prompt_generator import BaseAgentPromptGenerator
 
 
-class ValidatorAgent:
+class BaseAgent:
     """
     Agent that validates the functional equivalence between source and target code translations.
 
@@ -59,12 +59,12 @@ class ValidatorAgent:
         self.session_id = str(uuid.uuid4())
 
         # Set up logging
-        log_dir = Path(f"logs/{self.configs['agent_name']}")
+        log_dir = Path(f"logs/base_agent")
         log_dir.mkdir(parents=True, exist_ok=True)
 
         log_file = log_dir / f"{self.session_id}.log"
 
-        self.logger = logging.getLogger(f"{self.configs['agent_name']}.{self.session_id}")
+        self.logger = logging.getLogger(f"base_agent.{self.session_id}")
         self.logger.setLevel(logging.DEBUG)  # Set to DEBUG to allow all messages
         self.logger.propagate = False  # Prevent propagation to parent loggers
 
@@ -85,7 +85,7 @@ class ValidatorAgent:
         self.logger.addHandler(file_handler)
         self.logger.addHandler(console_handler)
 
-        self.logger.info(f"{self.configs['agent_name']} initialized with session ID: {self.session_id}")
+        self.logger.info(f"base_agent initialized with session ID: {self.session_id}")
         self.logger.info(f"Using model: {self.model.model_name}")
 
     async def run_cmd(self, prompt: str, feedback: str) -> tuple[bool, dict]:
@@ -235,7 +235,7 @@ class ValidatorAgent:
         self.logger.info(f"Source schema: {source_schema_name}")
         self.logger.info(f"Target schema: {target_schema_name}")
 
-        prompt_generator = PromptGenerator(
+        prompt_generator = BaseAgentPromptGenerator(
             configs=self.configs,
             source_schema_name=source_schema_name,
             target_schema_name=target_schema_name,
@@ -301,8 +301,8 @@ class ValidatorAgent:
                 self.logger.removeHandler(handler)
 
             # Original and new log file paths
-            original_log_file = Path(f"logs/{self.configs['agent_name']}") / f"{self.session_id}.log"
-            new_log_file = Path(f"logs/{self.configs['agent_name']}") / f"{agent_output['session_id']}.log"
+            original_log_file = Path(f"logs/base_agent") / f"{self.session_id}.log"
+            new_log_file = Path(f"logs/base_agent") / f"{agent_output['session_id']}.log"
 
             # Only rename if the paths are different
             if original_log_file != new_log_file:
@@ -313,7 +313,7 @@ class ValidatorAgent:
                 original_log_file.unlink(missing_ok=True)
 
                 # Create a new logger with the new session ID
-                new_logger = logging.getLogger(f"{self.configs['agent_name']}.{agent_output['session_id']}")
+                new_logger = logging.getLogger(f"base_agent.{agent_output['session_id']}")
                 new_logger.setLevel(logging.INFO)
                 new_logger.propagate = False
 
@@ -346,7 +346,6 @@ if __name__ == "__main__":
     """
     parser = argparse.ArgumentParser(description="Validator Agent")
     parser.add_argument("--config_file", type=str, required=True, help="Path to the config file")
-    parser.add_argument("--agent_name", type=str, required=True, help="Name of the agent to run")
     parser.add_argument(
         "--log_level",
         type=str,
@@ -361,12 +360,12 @@ if __name__ == "__main__":
         level=getattr(logging, args.log_level), format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     )
 
-    logger = logging.getLogger(f"{args.agent_name}_main")
+    logger = logging.getLogger(f"base_agent_main")
     logger.info(f"Starting validator agent with config file: {args.config_file}")
 
-    configs = yaml.safe_load(open(args.config_file, "r"))["agents"][args.agent_name]
+    configs = yaml.safe_load(open(args.config_file, "r"))["base_agent"]
 
-    validator_agent = ValidatorAgent(configs=configs)
+    validator_agent = BaseAgent(configs=configs)
 
     ### sample test case
     logger.info("Running sample test case")

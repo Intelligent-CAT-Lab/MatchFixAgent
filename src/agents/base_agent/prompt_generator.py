@@ -2,7 +2,7 @@ import yaml
 from jinja2 import Template
 
 
-class PromptGenerator:
+class BaseAgentPromptGenerator:
 
     def __init__(
         self,
@@ -29,7 +29,7 @@ class PromptGenerator:
     def generate_prompt(self) -> str:
 
         ### add instruction
-        template = Template(self.prompt_templates["templates"][self.configs["agent_name"]]["instruction"])
+        template = Template(self.prompt_templates["templates"]["base_agent"]["instruction"])
         instruction = template.render(
             {
                 "source_language": self.configs["source_language"].capitalize(),
@@ -41,7 +41,7 @@ class PromptGenerator:
         self.prompt += "\n\n"
 
         ### add fragment details
-        template = Template(self.prompt_templates["templates"][self.configs["agent_name"]]["fragment_details"])
+        template = Template(self.prompt_templates["templates"]["base_agent"]["fragment_details"])
         fragment_details = template.render(
             {
                 "source_file_path": self.source_file_path,
@@ -56,11 +56,11 @@ class PromptGenerator:
         self.prompt += "\n\n"
 
         ### add response format
-        self.prompt += self.prompt_templates["templates"][self.configs["agent_name"]]["response_format"]
+        self.prompt += self.prompt_templates["templates"]["base_agent"]["response_format"]
         self.prompt += "\n\n"
 
         ### add general notes
-        self.prompt += self.prompt_templates["templates"][self.configs["agent_name"]]["general_notes"]
+        self.prompt += self.prompt_templates["templates"]["base_agent"]["general_notes"]
 
         return self.prompt
 
