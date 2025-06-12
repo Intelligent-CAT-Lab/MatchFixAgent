@@ -41,7 +41,13 @@ def validate_by_agent(
     source_schema_name = schema_name.replace("_python_partial", "").replace("src.main.", "src.main.java.")
     target_schema_name = schema_name.replace("_python_partial", "")
 
-    validator_agent = BaseAgent(configs=configs)
+    validator_agent = None
+    if configs["agent_name"] == "base_agent":
+        validator_agent = BaseAgent(configs=configs)
+    elif configs["agent_name"] == "match_agent":
+        raise NotImplementedError("MatchAgent is not implemented yet")
+    else:
+        raise ValueError(f"Agent {configs['agent_name']} is not supported")
 
     status, agent_output = asyncio.run(
         validator_agent.run(source_schema_name, target_schema_name, class_name, method_name, method_pair)
@@ -89,7 +95,7 @@ def main(args):
             - config_file: Path to configuration file
             - project_name: Name of the project to validate
     """
-    configs = yaml.safe_load(open(args.config_file, "r"))[args.agent_name]
+    configs = yaml.safe_load(open(args.config_file, "r"))
 
     results_path = configs["tool_results_path"]
     with open(os.path.join(results_path, f"{args.project_name}.json"), "r") as f:
@@ -99,8 +105,8 @@ def main(args):
         for class_name in results[schema_name]:
             for method_name in results[schema_name][class_name]:
 
-                if args.agent_name in results[schema_name][class_name][method_name]:
-                    if results[schema_name][class_name][method_name][args.agent_name]["status"]:
+                if configs['agent_name'] in results[schema_name][class_name][method_name]:
+                    if results[schema_name][class_name][method_name][configs['agent_name']]["status"]:
                         continue
 
                 status, agent_output = validate_by_agent(
@@ -111,7 +117,7 @@ def main(args):
                     method_pair=results[schema_name][class_name][method_name],
                 )
 
-                results[schema_name][class_name][method_name][args.agent_name] = {
+                results[schema_name][class_name][method_name][configs['agent_name']] = {
                     "status": status,
                     "output": agent_output,
                 }
@@ -131,7 +137,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Validate existing translations using the Validator Agent")
     parser.add_argument("--config_file", type=str, required=True, help="Path to the config file")
     parser.add_argument("--project_name", type=str, required=True, help="Name of the project")
-    parser.add_argument("--agent_name", type=str, required=True, help="Name of the agent to use for validation")
     args = parser.parse_args()
 
     main(args)

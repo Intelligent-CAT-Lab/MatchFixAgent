@@ -363,7 +363,7 @@ if __name__ == "__main__":
     logger = logging.getLogger(f"base_agent_main")
     logger.info(f"Starting validator agent with config file: {args.config_file}")
 
-    configs = yaml.safe_load(open(args.config_file, "r"))["base_agent"]
+    configs = yaml.safe_load(open(args.config_file, "r"))
 
     validator_agent = BaseAgent(configs=configs)
 
