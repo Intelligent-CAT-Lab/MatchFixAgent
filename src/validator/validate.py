@@ -14,6 +14,7 @@ import subprocess
 import asyncio
 
 from src.agents.base_agent.agent import BaseAgent
+from src.agents.match_agent.agent import MatchAgent
 
 
 def validate_by_agent(
@@ -45,7 +46,7 @@ def validate_by_agent(
     if configs["agent_name"] == "base_agent":
         validator_agent = BaseAgent(configs=configs)
     elif configs["agent_name"] == "match_agent":
-        raise NotImplementedError("MatchAgent is not implemented yet")
+        validator_agent = MatchAgent(configs=configs)
     else:
         raise ValueError(f"Agent {configs['agent_name']} is not supported")
 
@@ -105,8 +106,8 @@ def main(args):
         for class_name in results[schema_name]:
             for method_name in results[schema_name][class_name]:
 
-                if configs['agent_name'] in results[schema_name][class_name][method_name]:
-                    if results[schema_name][class_name][method_name][configs['agent_name']]["status"]:
+                if configs["agent_name"] in results[schema_name][class_name][method_name]:
+                    if results[schema_name][class_name][method_name][configs["agent_name"]]["status"]:
                         continue
 
                 status, agent_output = validate_by_agent(
@@ -117,7 +118,7 @@ def main(args):
                     method_pair=results[schema_name][class_name][method_name],
                 )
 
-                results[schema_name][class_name][method_name][configs['agent_name']] = {
+                results[schema_name][class_name][method_name][configs["agent_name"]] = {
                     "status": status,
                     "output": agent_output,
                 }

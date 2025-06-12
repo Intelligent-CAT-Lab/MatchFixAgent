@@ -1,0 +1,137 @@
+import os
+import json
+import logging
+import re
+import uuid
+from pathlib import Path
+
+from src.utils.agent_utils import Model
+from src.utils.agent_utils import Conversation
+
+
+class TestGenRepairAgent:
+    """
+    Agent that generates tests and repairs code based on analysis from other agents.
+    Focuses on comprehensive test generation and fixing identified discrepancies.
+    """
+
+    def __init__(self, configs: dict, session_id=None) -> None:
+        """
+        Initialize the test generation and repair agent.
+
+        Args:
+            configs (dict): Configuration for the agent
+            session_id (str, optional): Session ID for logging. If None, a new UUID will be generated.
+        """
+        self.configs = configs
+        self.model = Model(self.configs["model"])
+        self.conversation = Conversation()
+        self.session_id = session_id or str(uuid.uuid4())
+
+        # Set up logging
+        log_dir = Path(f"logs/match_agent")
+        log_dir.mkdir(parents=True, exist_ok=True)
+
+        log_file = log_dir / f"test_gen_repair_agent_{self.session_id}.log"
+
+        self.logger = logging.getLogger(f"test_gen_repair_agent.{self.session_id}")
+        self.logger.setLevel(logging.DEBUG)
+        self.logger.propagate = False  # Don't propagate to parent loggers
+
+        # File handler
+        file_handler = logging.FileHandler(log_file)
+        file_handler.setLevel(logging.DEBUG)
+
+        # Console handler
+        console_handler = logging.StreamHandler()
+        console_handler.setLevel(logging.INFO)
+
+        # Formatter
+        formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+        file_handler.setFormatter(formatter)
+        console_handler.setFormatter(formatter)
+
+        # Add handlers
+        self.logger.addHandler(file_handler)
+        self.logger.addHandler(console_handler)
+
+        self.logger.info("Test Generation & Repair Agent initialized")
+
+    async def analyze(self, prompt_generator, method_pair, analysis_results):
+        """
+        Generate tests and repair code based on analysis from other agents.
+
+        Args:
+            prompt_generator: The prompt generator to use
+            method_pair (dict): The method pair to analyze
+            analysis_results (dict): Results from all analysis agents
+
+        Returns:
+            dict: Test generation and repair results
+        """
+        self.logger.info("Generating tests and repairs based on analysis results")
+
+        # Generate the prompt using the template for test_gen_repair_agent
+        prompt = prompt_generator.generate_prompt("test_gen_repair_agent")
+
+        # Add analysis results to the prompt
+        prompt += "\n\n<analysis_results>\n"
+        prompt += json.dumps(analysis_results, indent=2)
+        prompt += "\n</analysis_results>"
+
+        # Log the full prompt
+        self.logger.debug("Generated test generation and repair prompt:")
+        self.logger.debug(prompt)
+
+        self.conversation.add_message(role="user", content=prompt)
+
+        # Execute the model
+        env = os.environ.copy()
+        env["CLAUDE_CODE_USE_BEDROCK"] = "true"
+        env["ANTHROPIC_MODEL"] = self.model.model_name
+
+        try:
+            # Use the dedicated utility function for command execution
+            from src.utils.cmd_utils import run_claude_command
+
+            status, agent_output = await run_claude_command(
+                prompt, "", self.model.model_name, self.configs, self.logger
+            )
+
+            if status:
+                self.logger.info("Test generation and repair completed successfully")
+                # Extract the final response format
+                result = agent_output.get("result", "")
+                self.logger.debug("Raw response from model:")
+                self.logger.debug(result)
+
+                pattern = r"<final_response_format>(.*?)</final_response_format>"
+                match = re.search(pattern, result, re.DOTALL)
+
+                if match:
+                    try:
+                        test_repair_results = json.loads(match.group(1))
+                        self.logger.info(f"Generated test cases and repairs")
+                        # Return the entire agent_output with the parsed result
+                        agent_output["parsed_final_response"] = test_repair_results
+                        return agent_output
+                    except json.JSONDecodeError as e:
+                        self.logger.error(f"Failed to parse test generation and repair response as JSON: {e}")
+                        agent_output["error"] = f"Failed to parse response: {e}"
+                        agent_output["parsed_final_response"] = {"error": f"Failed to parse response: {e}"}
+                        return agent_output
+                else:
+                    self.logger.error("No final response format found in test generation and repair output")
+                    agent_output["error"] = "No final response format found"
+                    agent_output["parsed_final_response"] = {"error": "No response format found"}
+                    return agent_output
+            else:
+                self.logger.error("Test generation and repair failed")
+                return {
+                    "error": "Test generation and repair execution failed",
+                    "parsed_final_response": {"error": "Execution failed"},
+                }
+
+        except Exception as e:
+            self.logger.error(f"Error in test generation and repair: {str(e)}")
+            return {"error": f"Exception: {str(e)}", "parsed_final_response": {"error": f"Exception: {str(e)}"}}

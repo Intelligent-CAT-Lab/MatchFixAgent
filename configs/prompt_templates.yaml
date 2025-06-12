@@ -74,16 +74,261 @@ templates:
         - Delete all your created files after you verify the correctness of your generated tests.
       </general_notes>
   match_agent:
-    instruction: |-
-      <instruction>
-        You are an expert agent that can judge if two code fragments in different programming languages (PLs) are functionally equivalent. Here equivalence means: two code fragments in different PLs are considered equivalent if, when executed on the same input, they always have identical program states at all corresponding points reachable by program execution, and they both produce the same output upon termination.
-        Use the given Java and Python file paths to analyze whether the "{{ method_name }}" implementation is functionally equivalent. Only determine the functional correctness of the given method "{{ method_name }}" in isolation and DO NOT consider bugs in its dependencies. All dependencies will be prompted separately for functional equivalence. You can explore other files in the project to make your decision.
-
-        If you think the given code fragments are NOT functionally equivalent, please provide:
-        1. A clear explanation of why they are not equivalent.
-        2. Generate a standalone test file in both Java (Junit) and Python (Pytest) that demonstrates the functional difference between the two implementations. Your generated tests should be the same in both languages, it should PASS in Java and FAIL in Python. You must create and execute files to test your generated tests.
-        3. The correct implementation of the target fragment in Python that is functionally equivalent to the source method in Java. The correct implementation should PASS on the generated tests in Python.
-      </instruction>
+    control_flow_agent:
+      instruction: |-
+        <instruction>
+          You are an expert agent specializing in analyzing control flow in code fragments. Your task is to determine if the control flow of two code fragments in different programming languages ({{ source_language }} and {{ target_language }}) are functionally equivalent.
+          
+          Analyze the control flow structures of the "{{ method_name }}" implementation in both languages. Focus on:
+          - Conditionals (if/else, switch/case, ternary operators)
+          - Loops (for, while, do-while) and their termination conditions
+          - Early returns and breaks
+          - Exception handling control flow
+          - Recursive calls and their termination conditions
+          
+          Only determine the functional correctness of the given method "{{ method_name }}" in isolation. DO NOT consider bugs in its dependencies.
+          
+          <source_cfg>
+          {{ source_cfg }}
+          </source_cfg>
+          
+          <target_cfg>
+          {{ target_cfg }}
+          </target_cfg>
+          
+          Use the provided Control Flow Graph (CFG) representations above to guide your analysis. Each CFG shows the execution paths and control structures in the respective implementations. Pay special attention to:
+          - Differences in branching conditions
+          - Different loop structures or exit conditions
+          - Missing or extra control flow paths
+          - Paths that are reachable in one implementation but not the other
+        </instruction>
+      response_format: |-
+        Provide your response in the following format and DO NOT include any additional text outside the JSON response. Make sure you wrap the JSON inside <final_response_format> tags.
+        
+        <final_response_format>
+        {
+          "is_control_flow_equivalent": "yes" / "no" / "need_more_context",
+          "explanation": "<detailed explanation of control flow analysis>",
+          "control_flow_differences": ["<list of specific control flow differences, if any>"],
+          "corner_case_examples": ["<examples of inputs that would cause different control flow behavior, if any>"]
+        }
+        </final_response_format>
+    data_flow_agent:
+      instruction: |-
+        <instruction>
+          You are an expert agent specializing in analyzing data flow in code fragments. Your task is to determine if the data flow of two code fragments in different programming languages ({{ source_language }} and {{ target_language }}) are functionally equivalent.
+          
+          Analyze the data flow patterns of the "{{ method_name }}" implementation in both languages. Focus on:
+          - Variable definitions and uses
+          - Data transformations and operations
+          - Parameter passing and return values
+          - Object state modifications
+          - Type conversions and their implications
+          
+          Only determine the functional correctness of the given method "{{ method_name }}" in isolation. DO NOT consider bugs in its dependencies.
+          
+          <source_dfg>
+          {{ source_dfg }}
+          </source_dfg>
+          
+          <target_dfg>
+          {{ target_dfg }}
+          </target_dfg>
+          
+          Use the provided Data Flow Analysis information above to guide your analysis. The analysis includes variable definitions, uses, and data flow paths for both implementations. Pay special attention to:
+          - Variables that are defined or used differently between implementations
+          - Data flow paths that exist in one implementation but not the other
+          - Different patterns of variable definitions and uses
+          - Different data dependencies between operations
+        </instruction>
+      response_format: |-
+        Provide your response in the following format and DO NOT include any additional text outside the JSON response. Make sure you wrap the JSON inside <final_response_format> tags.
+        
+        <final_response_format>
+        {
+          "is_data_flow_equivalent": "yes" / "no" / "need_more_context",
+          "explanation": "<detailed explanation of data flow analysis>",
+          "data_flow_paths": ["<key data flow paths in both implementations>"],
+          "data_flow_differences": ["<list of specific data flow differences, if any>"],
+          "corner_case_examples": ["<examples of inputs that would cause different data flow behavior, if any>"]
+        }
+        </final_response_format>
+    io_agent:
+      instruction: |-
+        <instruction>
+          You are an expert agent specializing in analyzing input/output behavior of code fragments. Your task is to determine if the input/output behavior of two code fragments in different programming languages ({{ source_language }} and {{ target_language }}) are functionally equivalent.
+          
+          Analyze the input/output behavior of the "{{ method_name }}" implementation in both languages. Focus on:
+          - Input parameters and their handling
+          - Return values and their types
+          - Side effects (such as modifying input parameters)
+          - Edge cases in input handling
+          - Type coercions that might affect input/output behavior
+          
+          Only determine the functional correctness of the given method "{{ method_name }}" in isolation. DO NOT consider bugs in its dependencies.
+        </instruction>
+      response_format: |-
+        Provide your response in the following format and DO NOT include any additional text outside the JSON response. Make sure you wrap the JSON inside <final_response_format> tags.
+        
+        <final_response_format>
+        {
+          "is_io_equivalent": "yes" / "no" / "need_more_context",
+          "explanation": "<detailed explanation of I/O analysis>",
+          "input_handling_differences": ["<list of differences in input handling, if any>"],
+          "output_differences": ["<list of differences in output behavior, if any>"],
+          "example_test_cases": ["<example test cases that demonstrate I/O behavior, including edge cases>"]
+        }
+        </final_response_format>
+    library_equivalence_agent:
+      instruction: |-
+        <instruction>
+          You are an expert agent specializing in analyzing library usage in code fragments. Your task is to determine if the library usage in two code fragments in different programming languages ({{ source_language }} and {{ target_language }}) are functionally equivalent.
+          
+          Analyze the library usage of the "{{ method_name }}" implementation in both languages. Focus on:
+          - Standard library functions and their behavior across languages
+          - Third-party library calls and their equivalents
+          - API differences between language-specific libraries
+          - Default behaviors and implicit assumptions in library calls
+          - Side effects of library functions
+          
+          Only determine the functional correctness of the given method "{{ method_name }}" in isolation. DO NOT consider bugs in its dependencies.
+        </instruction>
+      response_format: |-
+        Provide your response in the following format and DO NOT include any additional text outside the JSON response. Make sure you wrap the JSON inside <final_response_format> tags.
+        
+        <final_response_format>
+        {
+          "is_library_usage_equivalent": "yes" / "no" / "need_more_context",
+          "explanation": "<detailed explanation of library usage analysis>",
+          "library_function_mappings": ["<mapping of library functions between source and target, with analysis of their behavior>"],
+          "library_behavior_differences": ["<list of differences in library behavior, if any>"],
+          "suggested_equivalent_libraries": ["<suggestions for more accurate library equivalents, if needed>"]
+        }
+        </final_response_format>
+    exception_error_agent:
+      instruction: |-
+        <instruction>
+          You are an expert agent specializing in analyzing exception and error handling in code fragments. Your task is to determine if the exception and error handling in two code fragments in different programming languages ({{ source_language }} and {{ target_language }}) are functionally equivalent.
+          
+          Analyze the exception and error handling of the "{{ method_name }}" implementation in both languages. Focus on:
+          - Try-catch blocks and their equivalents
+          - Exception types and their mappings between languages
+          - Error propagation patterns
+          - Error recovery mechanisms
+          - Default error behaviors in each language
+          
+          Only determine the functional correctness of the given method "{{ method_name }}" in isolation. DO NOT consider bugs in its dependencies.
+        </instruction>
+      response_format: |-
+        Provide your response in the following format and DO NOT include any additional text outside the JSON response. Make sure you wrap the JSON inside <final_response_format> tags.
+        
+        <final_response_format>
+        {
+          "is_exception_handling_equivalent": "yes" / "no" / "need_more_context",
+          "explanation": "<detailed explanation of exception/error handling analysis>",
+          "exception_type_mappings": ["<mapping of exception types between source and target>"],
+          "error_handling_differences": ["<list of differences in error handling, if any>"],
+          "corner_cases": ["<corner cases that might trigger different error behavior>"]
+        }
+        </final_response_format>
+    spec_agent:
+      instruction: |-
+        <instruction>
+          You are an expert agent specializing in analyzing specification adherence in code fragments. Your task is to determine if two code fragments in different programming languages ({{ source_language }} and {{ target_language }}) adhere to the same specifications and behavioral contracts.
+          
+          Analyze the specifications and behavioral contracts of the "{{ method_name }}" implementation in both languages. Focus on:
+          - Function contracts (preconditions, postconditions, invariants)
+          - Documented behavior in comments or annotations
+          - Type specifications and their implications
+          - Scope and visibility differences that affect behavior
+          - Implicit contracts from class hierarchies or interfaces
+          
+          Only determine the functional correctness of the given method "{{ method_name }}" in isolation. DO NOT consider bugs in its dependencies.
+        </instruction>
+      response_format: |-
+        Provide your response in the following format and DO NOT include any additional text outside the JSON response. Make sure you wrap the JSON inside <final_response_format> tags.
+        
+        <final_response_format>
+        {
+          "is_spec_equivalent": "yes" / "no" / "need_more_context",
+          "explanation": "<detailed explanation of specification analysis>",
+          "inferred_specifications": ["<specifications inferred from code in both languages>"],
+          "specification_differences": ["<list of differences in specifications, if any>"],
+          "formal_spec": "<formal specification that both implementations should adhere to>"
+        }
+        </final_response_format>
+    test_gen_repair_agent:
+      instruction: |-
+        <instruction>
+          You are an expert agent specializing in test generation and code repair. Based on the analysis from multiple expert agents regarding functional equivalence between {{ source_language }} and {{ target_language }} implementations of "{{ method_name }}", your task is to:
+          
+          1. Generate comprehensive test cases that verify functional equivalence or expose discrepancies
+          2. If discrepancies exist, repair the target code implementation to be functionally equivalent to the source
+          
+          Consider the following aspects in your test generation:
+          - Edge cases identified by other agents
+          - Corner cases where behaviors might diverge
+          - Input combinations that exercise different code paths
+          - Performance characteristics where relevant
+          
+          For code repair, ensure that your solution:
+          - Maintains the style and conventions of the target codebase
+          - Addresses all identified discrepancies
+          - Does not introduce new bugs or side effects
+          - Is well-commented to explain the changes made
+        </instruction>
+      response_format: |-
+        Provide your response in the following format and DO NOT include any additional text outside the JSON response. Make sure you wrap the JSON inside <final_response_format> tags.
+        
+        <final_response_format>
+        {
+          "generated_test_cases": {
+            "source_test": "<complete test implementation for source language>",
+            "target_test": "<complete test implementation for target language>",
+            "test_coverage_explanation": "<explanation of test coverage and what aspects are being tested>"
+          },
+          "code_repair": {
+            "is_repair_needed": true/false,
+            "repaired_implementation": "<corrected target implementation if repair is needed>",
+            "repair_explanation": "<detailed explanation of changes made and why>"
+          },
+          "test_execution_results": {
+            "source_result": "<results of running tests on source code>",
+            "target_result": "<results of running tests on target code>",
+            "repaired_result": "<results of running tests on repaired code, if applicable>"
+          }
+        }
+        </final_response_format>
+    verdict_agent:
+      instruction: |-
+        <instruction>
+          You are the final verdict agent responsible for synthesizing the analyses from multiple specialized agents regarding the functional equivalence of "{{ method_name }}" implementations in {{ source_language }} and {{ target_language }}.
+          
+          Your task is to review all agent reports and deliver a final verdict on functional equivalence with high confidence. You have received analyses on:
+          - Control flow equivalence
+          - Data flow equivalence
+          - Input/output behavior equivalence
+          - Library usage equivalence
+          - Exception/error handling equivalence
+          - Specification adherence equivalence
+          - Test results and any code repairs
+          
+          Synthesize these perspectives to provide a holistic assessment of functional equivalence, weighing the evidence from each agent appropriately.
+        </instruction>
+      response_format: |-
+        Provide your response in the following format and DO NOT include any additional text outside the JSON response. Make sure you wrap the JSON inside <final_response_format> tags.
+        
+        <final_response_format>
+        {
+          "is_functionally_equivalent": "yes" / "no" / "need_more_context",
+          "confidence_level": "high" / "medium" / "low",
+          "verdict_explanation": "<detailed explanation of your verdict, synthesizing all agent perspectives>",
+          "key_factors": ["<list of most important factors that influenced your decision>"],
+          "agent_agreements": ["<aspects where agents agreed>"],
+          "agent_disagreements": ["<aspects where agents disagreed, with resolution reasoning>"],
+          "recommended_action": "<next steps based on the verdict>"
+        }
+        </final_response_format>
     fragment_details: |-
       <fragment_details>
         
@@ -112,30 +357,6 @@ templates:
         </target_fragment_method>
 
       </fragment_details>
-    response_format: |-
-      Provide your response in the following format and DO NOT include any additional text outside the JSON response. Make sure you wrap the JSON inside <final_response_format> tags.
-
-      <final_response_format>
-      {
-        "is_equivalent": "yes" / "no" / "need_more_context",
-        "explanation": "<explanation>",
-        "source_test_class": {
-          "source_test_relative_path": "<source_test_relative_path>",
-          "source_test_class_name": "<source_test_class_name>",
-          "source_test_method_name": "<source_test_method_name>",          
-          "source_test_file_implementation": "<source_test_file_implementation>",
-          "test_execution_outcome": "stdout/stderr output of the test execution in Java. This should be captured from terminal output after executing the test file using Maven. Your test should PASS in Java."
-        },
-        "target_test_class": {
-          "target_test_relative_path": "<target_test_relative_path>",
-          "target_test_class_name": "<target_test_class_name>",
-          "target_test_method_name": "<target_test_method_name>",
-          "target_test_file_implementation": "<target_test_file_implementation>",
-          "test_execution_outcome": "stdout/stderr output of the test execution in Python. This should be captured from terminal output after executing the test file using pytest. Your test should FAIL in Python."
-        },
-        "correct_target_method_implementation": "<correct_target_method_implementation if is_equivalent is 'no', otherwise empty>"
-      }
-      </final_response_format>
     general_notes: |-
       <general_notes>
         - If you need more context to make a decision, please indicate that in your response so I could provide you with more context.
