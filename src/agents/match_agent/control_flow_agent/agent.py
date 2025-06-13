@@ -92,6 +92,8 @@ class ControlFlowAgent:
                 prompt, "", self.model.model_name, self.configs, self.logger
             )
 
+            agent_output = agent_output or {}
+
             if status:
                 self.logger.info("Control flow analysis completed successfully")
                 # Extract the final response format
@@ -106,35 +108,37 @@ class ControlFlowAgent:
                     try:
                         control_flow_analysis = json.loads(match.group(1))
                         self.logger.info(
-                            f"Control flow equivalence: {control_flow_analysis.get('is_control_flow_equivalent', 'unknown')}"
+                            f"Control flow equivalence: {control_flow_analysis.get('is_equivalent', 'unknown')}"
                         )
                         # Return the entire agent_output with the parsed result
                         agent_output["parsed_final_response"] = control_flow_analysis
                         return agent_output
                     except json.JSONDecodeError as e:
                         self.logger.error(f"Failed to parse control flow analysis response as JSON: {e}")
-                        agent_output["error"] = f"Failed to parse response: {e}"
                         agent_output["parsed_final_response"] = {
-                            "is_control_flow_equivalent": "error",
-                            "explanation": f"Failed to parse response: {e}",
+                            "is_equivalent": "error",
+                            "explanation": f"Failed to parse model response as JSON: {str(e)}",
                         }
                         return agent_output
                 else:
                     self.logger.error("No final response format found in control flow analysis output")
-                    agent_output["error"] = "No final response format found"
+                    agent_output["parsed_final_response"] = {
+                        "is_equivalent": "error",
+                        "explanation": "No final response format found in control flow analysis output",
+                    }
                     return agent_output
             else:
                 self.logger.error("Control flow analysis failed")
-                return {
-                    "error": "Control flow analysis failed",
-                    "is_control_flow_equivalent": "error",
-                    "explanation": "Analysis execution failed",
+                agent_output["parsed_final_response"] = {
+                    "is_equivalent": "error",
+                    "explanation": "Control flow analysis did not complete successfully",
                 }
+                return agent_output
 
         except Exception as e:
             self.logger.error(f"Error in control flow analysis: {str(e)}")
-            return {
-                "error": f"Exception: {str(e)}",
-                "is_control_flow_equivalent": "error",
-                "explanation": f"Exception: {str(e)}",
+            agent_output["parsed_final_response"] = {
+                "is_equivalent": "error",
+                "explanation": f"An error occurred during control flow analysis: {str(e)}",
             }
+            return agent_output

@@ -92,6 +92,8 @@ class LibraryEquivalenceAgent:
                 prompt, "", self.model.model_name, self.configs, self.logger
             )
 
+            agent_output = agent_output or {}
+
             if status:
                 self.logger.info("Library equivalence analysis completed successfully")
                 # Extract the final response format
@@ -106,43 +108,37 @@ class LibraryEquivalenceAgent:
                     try:
                         library_analysis = json.loads(match.group(1))
                         self.logger.info(
-                            f"Library usage equivalence: {library_analysis.get('is_library_usage_equivalent', 'unknown')}"
+                            f"Library usage equivalence: {library_analysis.get('is_equivalent', 'unknown')}"
                         )
                         # Return the entire agent_output with the parsed result
                         agent_output["parsed_final_response"] = library_analysis
                         return agent_output
                     except json.JSONDecodeError as e:
                         self.logger.error(f"Failed to parse library equivalence analysis response as JSON: {e}")
-                        agent_output["error"] = f"Failed to parse response: {e}"
                         agent_output["parsed_final_response"] = {
-                            "is_library_usage_equivalent": "error",
-                            "explanation": f"Failed to parse response: {e}",
+                            "is_equivalent": "error",
+                            "explanation": "Failed to parse response as JSON: " + str(e),
                         }
                         return agent_output
                 else:
                     self.logger.error("No final response format found in library equivalence analysis output")
-                    agent_output["error"] = "No final response format found"
                     agent_output["parsed_final_response"] = {
-                        "is_library_usage_equivalent": "error",
-                        "explanation": "No response format found",
+                        "is_equivalent": "error",
+                        "explanation": "No final response format found in the output",
                     }
                     return agent_output
             else:
                 self.logger.error("Library equivalence analysis failed")
-                agent_output = {}
-                agent_output["error"] = "Library equivalence analysis failed"
                 agent_output["parsed_final_response"] = {
-                    "is_library_usage_equivalent": "error",
-                    "explanation": "Analysis execution failed",
+                    "is_equivalent": "error",
+                    "explanation": "Library equivalence analysis failed to execute properly",
                 }
                 return agent_output
 
         except Exception as e:
             self.logger.error(f"Error in library equivalence analysis: {str(e)}")
-            agent_output = {}
-            agent_output["error"] = f"Exception: {str(e)}"
             agent_output["parsed_final_response"] = {
-                "is_library_usage_equivalent": "error",
-                "explanation": f"Exception: {str(e)}",
+                "is_equivalent": "error",
+                "explanation": "An error occurred during library equivalence analysis: " + str(e),
             }
             return agent_output

@@ -90,6 +90,8 @@ class DataFlowAgent:
             status, agent_output = await run_claude_command(
                 prompt, "", self.model.model_name, self.configs, self.logger
             )
+
+            agent_output = agent_output or {}
             
             if status:
                 self.logger.info("Data flow analysis completed successfully")
@@ -104,30 +106,36 @@ class DataFlowAgent:
                 if match:
                     try:
                         data_flow_analysis = json.loads(match.group(1))
-                        self.logger.info(f"Data flow equivalence: {data_flow_analysis.get('is_data_flow_equivalent', 'unknown')}")
+                        self.logger.info(f"Data flow equivalence: {data_flow_analysis.get('is_equivalent', 'unknown')}")
                         # Return the entire agent_output with the parsed result
                         agent_output["parsed_final_response"] = data_flow_analysis
                         return agent_output
                     except json.JSONDecodeError as e:
                         self.logger.error(f"Failed to parse data flow analysis response as JSON: {e}")
-                        agent_output["error"] = f"Failed to parse response: {e}"
-                        agent_output["parsed_final_response"] = {"is_data_flow_equivalent": "error", "explanation": f"Failed to parse response: {e}"}
+                        agent_output["parsed_final_response"] = {
+                            "is_equivalent": "error", 
+                            "explanation": f"Failed to parse model response as JSON: {str(e)}"
+                        }
                         return agent_output
                 else:
                     self.logger.error("No final response format found in data flow analysis output")
-                    agent_output["error"] = "No final response format found"
-                    agent_output["parsed_final_response"] = {"is_data_flow_equivalent": "error", "explanation": "No response format found"}
+                    agent_output["parsed_final_response"] = {
+                        "is_equivalent": "error", 
+                        "explanation": "No final response format found in data flow analysis output"
+                    }
                     return agent_output
             else:
                 self.logger.error("Data flow analysis failed")
-                agent_output = {}
-                agent_output["error"] = "Data flow analysis failed"
-                agent_output["parsed_final_response"] = {"is_data_flow_equivalent": "error", "explanation": "Analysis execution failed"}
+                agent_output["parsed_final_response"] = {
+                    "is_equivalent": "error", 
+                    "explanation": "Data flow analysis did not complete successfully"
+                }
                 return agent_output
                 
         except Exception as e:
             self.logger.error(f"Error in data flow analysis: {str(e)}")
-            agent_output = {}
-            agent_output["error"] = f"Exception: {str(e)}"
-            agent_output["parsed_final_response"] = {"is_data_flow_equivalent": "error", "explanation": f"Exception: {str(e)}"}
+            agent_output["parsed_final_response"] = {
+                "is_equivalent": "error", 
+                "explanation": f"Error during data flow analysis: {str(e)}"
+            }
             return agent_output

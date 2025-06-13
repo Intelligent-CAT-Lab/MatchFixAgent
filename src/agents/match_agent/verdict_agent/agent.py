@@ -71,12 +71,16 @@ class VerdictAgent:
         """
         self.logger.info("Producing final verdict on functional equivalence")
 
+        specialized_analyses = {"specialized_analyses": {}}
+        for analysis_type, analysis_result in all_results["specialized_analyses"].items():
+            specialized_analyses["specialized_analyses"][analysis_type] = analysis_result["parsed_final_response"]
+
         # Generate the prompt using the template for verdict_agent
         prompt = prompt_generator.generate_prompt("verdict_agent")
 
         # Add all analysis results to the prompt
         prompt += "\n\n<all_analysis_results>\n"
-        prompt += json.dumps(all_results, indent=2)
+        prompt += json.dumps(specialized_analyses, indent=2)
         prompt += "\n</all_analysis_results>"
 
         # Log the full prompt
@@ -112,7 +116,7 @@ class VerdictAgent:
                     try:
                         verdict_analysis = json.loads(match.group(1))
                         self.logger.info(
-                            f"Final verdict on functional equivalence: {verdict_analysis.get('is_functionally_equivalent', 'unknown')}"
+                            f"Final verdict on functional equivalence: {verdict_analysis.get('is_equivalent', 'unknown')}"
                         )
                         self.logger.info(f"Confidence level: {verdict_analysis.get('confidence_level', 'unknown')}")
                         # Return the entire agent_output with the parsed result
@@ -120,33 +124,34 @@ class VerdictAgent:
                         return agent_output
                     except json.JSONDecodeError as e:
                         self.logger.error(f"Failed to parse verdict analysis response as JSON: {e}")
-                        agent_output["error"] = f"Failed to parse response: {e}"
                         agent_output["parsed_final_response"] = {
-                            "is_functionally_equivalent": "error",
-                            "explanation": f"Failed to parse response: {e}",
+                            "is_equivalent": "error",
+                            "confidence_level": "error",
+                            "explanation": "Failed to parse response",
                         }
                         return agent_output
                 else:
                     self.logger.error("No final response format found in verdict analysis output")
-                    agent_output["error"] = "No final response format found"
                     agent_output["parsed_final_response"] = {
-                        "is_functionally_equivalent": "error",
+                        "is_equivalent": "error",
+                        "confidence_level": "error",
                         "explanation": "No response format found",
                     }
                     return agent_output
             else:
                 self.logger.error("Verdict analysis failed")
-                return {
-                    "error": "Verdict analysis failed",
-                    "parsed_final_response": {
-                        "is_functionally_equivalent": "error",
-                        "explanation": "Analysis execution failed",
-                    },
+                agent_output["parsed_final_response"] = {
+                    "is_equivalent": "error",
+                    "confidence_level": "error",
+                    "explanation": "Model execution failed",
                 }
+                return agent_output
 
         except Exception as e:
             self.logger.error(f"Error in verdict analysis: {str(e)}")
-            return {
-                "error": f"Exception: {str(e)}",
-                "parsed_final_response": {"is_functionally_equivalent": "error", "explanation": f"Exception: {str(e)}"},
+            agent_output["parsed_final_response"] = {
+                "is_equivalent": "error",
+                "confidence_level": "error",
+                "explanation": f"Exception: {str(e)}",
             }
+            return agent_output

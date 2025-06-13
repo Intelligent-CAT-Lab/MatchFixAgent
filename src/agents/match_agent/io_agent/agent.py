@@ -92,6 +92,8 @@ class IOAgent:
                 prompt, "", self.model.model_name, self.configs, self.logger
             )
 
+            agent_output = agent_output or {}
+
             if status:
                 self.logger.info("I/O analysis completed successfully")
                 # Extract the final response format
@@ -105,39 +107,36 @@ class IOAgent:
                 if match:
                     try:
                         io_analysis = json.loads(match.group(1))
-                        self.logger.info(f"I/O equivalence: {io_analysis.get('is_io_equivalent', 'unknown')}")
+                        self.logger.info(f"I/O equivalence: {io_analysis.get('is_equivalent', 'unknown')}")
                         # Return the entire agent_output with the parsed result
                         agent_output["parsed_final_response"] = io_analysis
                         return agent_output
                     except json.JSONDecodeError as e:
                         self.logger.error(f"Failed to parse I/O analysis response as JSON: {e}")
-                        agent_output["error"] = f"Failed to parse response: {e}"
                         agent_output["parsed_final_response"] = {
-                            "is_io_equivalent": "error",
-                            "explanation": f"Failed to parse response: {e}",
+                            "is_equivalent": "error",
+                            "explanation": f"Failed to parse I/O analysis response: {str(e)}",
                         }
                         return agent_output
                 else:
                     self.logger.error("No final response format found in I/O analysis output")
-                    agent_output["error"] = "No final response format found"
                     agent_output["parsed_final_response"] = {
-                        "is_io_equivalent": "error",
-                        "explanation": "No response format found",
+                        "is_equivalent": "error",
+                        "explanation": "No final response format found in I/O analysis output",
                     }
                     return agent_output
             else:
                 self.logger.error("I/O analysis failed")
-                agent_output = {}
-                agent_output["error"] = "I/O analysis failed"
                 agent_output["parsed_final_response"] = {
-                    "is_io_equivalent": "error",
-                    "explanation": "Analysis execution failed",
+                    "is_equivalent": "error",
+                    "explanation": "Failed to execute I/O analysis command",
                 }
                 return agent_output
 
         except Exception as e:
             self.logger.error(f"Error in I/O analysis: {str(e)}")
-            agent_output = {}
-            agent_output["error"] = f"Exception: {str(e)}"
-            agent_output["parsed_final_response"] = {"is_io_equivalent": "error", "explanation": f"Exception: {str(e)}"}
+            agent_output["parsed_final_response"] = {
+                "is_equivalent": "error",
+                "explanation": f"An error occurred during I/O analysis: {str(e)}",
+            }
             return agent_output

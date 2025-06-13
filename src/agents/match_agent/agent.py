@@ -128,22 +128,22 @@ class MatchAgent:
 
         analysis_tasks = [
             self.control_flow_agent.analyze(prompt_generator, method_pair),
-            # self.data_flow_agent.analyze(prompt_generator, method_pair),
-            # self.io_agent.analyze(prompt_generator, method_pair),
-            # self.library_equivalence_agent.analyze(prompt_generator, method_pair),
-            # self.exception_error_agent.analyze(prompt_generator, method_pair),
-            # self.spec_agent.analyze(prompt_generator, method_pair),
+            self.data_flow_agent.analyze(prompt_generator, method_pair),
+            self.io_agent.analyze(prompt_generator, method_pair),
+            self.library_equivalence_agent.analyze(prompt_generator, method_pair),
+            self.exception_error_agent.analyze(prompt_generator, method_pair),
+            self.spec_agent.analyze(prompt_generator, method_pair),
         ]
 
         specialized_results = await asyncio.gather(*analysis_tasks)
 
         all_analysis_results = {
-            "control_flow": specialized_results[0]["parsed_final_response"],
-            # "data_flow": specialized_results[1],
-            # "io": specialized_results[2],
-            # "library_equivalence": specialized_results[3],
-            # "exception_error": specialized_results[4],
-            # "spec": specialized_results[5],
+            "control_flow": specialized_results[0],
+            "data_flow": specialized_results[1],
+            "io": specialized_results[2],
+            "library_equivalence": specialized_results[3],
+            "exception_error": specialized_results[4],
+            "spec": specialized_results[5],
         }
 
         self.logger.info("All specialized agent analyses completed")
@@ -168,10 +168,9 @@ class MatchAgent:
         all_results["verdict"] = verdict_results
 
         # Determine overall success status
-        success = "error" not in verdict_results
+        success = verdict_results["parsed_final_response"]["is_equivalent"] != "error"
 
         self.logger.info(f"Match agent analysis completed with success={success}")
-        self.logger.info(f"Final verdict: {verdict_results.get('is_functionally_equivalent', 'unknown')}")
 
         return success, all_results
 

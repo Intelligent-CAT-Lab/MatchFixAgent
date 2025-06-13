@@ -224,20 +224,6 @@ class MatchAgentPromptGenerator:
                         "method_name": self.method_name,
                     }
                 )
-            prompt += instruction
-            prompt += "\n\n"
-        else:
-            # Fallback to match_agent base instruction if specific agent instruction not found
-            template = Template(self.prompt_templates["templates"]["match_agent"]["instruction"])
-            instruction = template.render(
-                {
-                    "source_language": self.configs["source_language"].capitalize(),
-                    "target_language": self.configs["target_language"].capitalize(),
-                    "method_name": self.method_name,
-                }
-            )
-            prompt += instruction
-            prompt += "\n\n"
 
         # Add fragment details
         template = Template(self.prompt_templates["templates"]["match_agent"]["fragment_details"])
@@ -254,6 +240,9 @@ class MatchAgentPromptGenerator:
         prompt += fragment_details
         prompt += "\n\n"
 
+        prompt += instruction
+        prompt += "\n\n"
+
         # Add response format
         if (
             agent_type in self.prompt_templates["templates"]["match_agent"]
@@ -264,9 +253,6 @@ class MatchAgentPromptGenerator:
             # Fallback to match_agent base response format if specific agent response format not found
             prompt += self.prompt_templates["templates"]["match_agent"]["response_format"]
         prompt += "\n\n"
-
-        # Add general notes
-        prompt += self.prompt_templates["templates"]["match_agent"]["general_notes"]
 
         return prompt
 
@@ -281,8 +267,8 @@ class MatchAgentPromptGenerator:
         self.target_file_path = f"{tool_target_projects_path}/{self.target_schema_name.replace('.', '/')}.py"
 
         # trim leading indentation from source and target code (e.g., some languages like Python only parse when the indentation is correct)
-        source_code = self.method_pair["source_code"]
-        target_code = self.method_pair["target_code"]
+        source_code = self.method_pair["source_code"].copy()
+        target_code = self.method_pair["target_code"].copy()
         for i in range(len(source_code)):
             if source_code[i].startswith("    "):
                 source_code[i] = source_code[i][4:]
@@ -290,5 +276,5 @@ class MatchAgentPromptGenerator:
             if target_code[i].startswith("    "):
                 target_code[i] = target_code[i][4:]
 
-        self.source_method_implementation = "\n".join(self.method_pair["source_code"])
-        self.target_method_implementation = "\n".join(self.method_pair["target_code"])
+        self.source_method_implementation = "\n".join(source_code)
+        self.target_method_implementation = "\n".join(target_code)
