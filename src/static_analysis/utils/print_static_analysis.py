@@ -6,6 +6,9 @@ from collections import defaultdict, deque
 from tree_sitter import Language, Parser
 import tree_sitter_python as tspython
 import tree_sitter_java as tsjava
+import tree_sitter_rust as tsrust
+import tree_sitter_go as tsgo
+import tree_sitter_c as tsc
 
 
 class DataFlowAnalyzer:
@@ -423,6 +426,94 @@ def get_python_variables(root):
     return variables
 
 
+def get_rust_variables(root):
+    variables = {"local_vars": [], "parameters": []}
+
+    def extract_parameters(node):
+        if node.type == "parameters":
+            for param in node.named_children:
+                ident = param.child_by_field_name("pattern") or param.child_by_field_name("name")
+                if ident and ident.type == "identifier":
+                    variables["parameters"].append(ident.text.decode("utf-8"))
+            return
+        for child in node.children:
+            extract_parameters(child)
+
+    def extract_local_vars(node):
+        if node.type == "let_declaration":
+            pat = node.child_by_field_name("pattern")
+            if pat and pat.type == "identifier":
+                variables["local_vars"].append(pat.text.decode("utf-8"))
+        for child in node.children:
+            extract_local_vars(child)
+
+    try:
+        extract_parameters(root)
+        extract_local_vars(root)
+    except Exception:
+        pass
+
+    return variables
+
+
+def get_go_variables(root):
+    variables = {"local_vars": [], "parameters": []}
+
+    def extract_parameters(node):
+        if node.type == "parameter_declaration":
+            name = node.child_by_field_name("name")
+            if name:
+                variables["parameters"].append(name.text.decode("utf-8"))
+        for child in node.children:
+            extract_parameters(child)
+
+    def extract_local_vars(node):
+        if node.type in ("short_var_declaration", "var_spec"):
+            name = node.child_by_field_name("name")
+            if name:
+                variables["local_vars"].append(name.text.decode("utf-8"))
+        for child in node.children:
+            extract_local_vars(child)
+
+    try:
+        extract_parameters(root)
+        extract_local_vars(root)
+    except Exception:
+        pass
+
+    return variables
+
+
+def get_c_variables(root):
+    variables = {"local_vars": [], "parameters": []}
+
+    def extract_parameters(node):
+        if node.type == "parameter_declaration":
+            declarator = node.child_by_field_name("declarator")
+            if declarator:
+                ident = declarator.child_by_field_name("declarator") or declarator.child_by_field_name("identifier")
+                if ident and ident.type == "identifier":
+                    variables["parameters"].append(ident.text.decode("utf-8"))
+        for child in node.children:
+            extract_parameters(child)
+
+    def extract_local_vars(node):
+        if node.type == "init_declarator":
+            declarator = node.child_by_field_name("declarator")
+            if declarator and declarator.type == "identifier":
+                variables["local_vars"].append(declarator.text.decode("utf-8"))
+        for child in node.children:
+            extract_local_vars(child)
+
+    try:
+        extract_parameters(root)
+        extract_local_vars(root)
+    except Exception:
+        pass
+
+    return variables
+
+
 def get_variables_from_source(args):
 
     LANGUAGE = None
@@ -430,9 +521,15 @@ def get_variables_from_source(args):
         LANGUAGE = Language(tsjava.language())
     elif args.language == "python":
         LANGUAGE = Language(tspython.language())
+    elif args.language == "rust" and tsrust is not None:
+        LANGUAGE = Language(tsrust.language())
+    elif args.language == "go" and tsgo is not None:
+        LANGUAGE = Language(tsgo.language())
+    elif args.language == "c" and tsc is not None:
+        LANGUAGE = Language(tsc.language())
 
     if LANGUAGE is None:
-        raise ValueError("Unsupported language. Use 'java' or 'python'.")
+        raise ValueError(f"Unsupported language: {args.language}")
 
     parser = Parser(LANGUAGE)
 
@@ -447,9 +544,14 @@ def get_variables_from_source(args):
 
     if args.language == "java":
         variables = get_java_variables(root)
-
     elif args.language == "python":
         variables = get_python_variables(root)
+    elif args.language == "rust":
+        variables = get_rust_variables(root)
+    elif args.language == "go":
+        variables = get_go_variables(root)
+    elif args.language == "c":
+        variables = get_c_variables(root)
 
     return variables
 
@@ -458,7 +560,11 @@ def main():
     parser = argparse.ArgumentParser(description="CFG and DFG Printer")
     parser.add_argument("--dot_file", help="Path to the DOT file containing the CFG")
     parser.add_argument("--source_file", help="Path to the source file")
-    parser.add_argument("--language", default="python", help="Programming language for parsing")
+    parser.add_argument(
+        "--language",
+        default="python",
+        help="Programming language for parsing (python, java, rust, go, c)",
+    )
     parser.add_argument("--dataflow", action="store_true", help="Enable data flow analysis")
     args = parser.parse_args()
 
