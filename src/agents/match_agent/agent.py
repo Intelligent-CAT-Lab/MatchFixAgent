@@ -75,15 +75,32 @@ class MatchAgent:
         self.logger.info(f"match_agent initialized with session ID: {self.session_id}")
         self.logger.info(f"Using model: {self.model.model_name}")
 
-        # Initialize sub-agents with the same session ID
-        self.control_flow_agent = ControlFlowAgent(configs, self.session_id)
-        self.data_flow_agent = DataFlowAgent(configs, self.session_id)
-        self.io_agent = IOAgent(configs, self.session_id)
-        self.library_equivalence_agent = LibraryEquivalenceAgent(configs, self.session_id)
-        self.exception_error_agent = ExceptionErrorAgent(configs, self.session_id)
-        self.spec_agent = SpecAgent(configs, self.session_id)
-        self.test_gen_repair_agent = TestGenRepairAgent(configs, self.session_id)
-        self.verdict_agent = VerdictAgent(configs, self.session_id)
+        # Initialize sub-agents with the same session ID and specialized configurations
+        subagent_configs = {}
+        for agent_name, agent_config in self.configs.get("sub_agents", {}).items():
+            # Create a copy of the base configs
+            agent_specific_config = dict(self.configs)
+            # Update with sub-agent specific configuration
+            agent_specific_config.update(agent_config)
+            subagent_configs[agent_name] = agent_specific_config
+
+        # Initialize all sub-agents with their configs
+        self.control_flow_agent = ControlFlowAgent(
+            subagent_configs.get("control_flow_agent", self.configs), self.session_id
+        )
+        self.data_flow_agent = DataFlowAgent(subagent_configs.get("data_flow_agent", self.configs), self.session_id)
+        self.io_agent = IOAgent(subagent_configs.get("io_agent", self.configs), self.session_id)
+        self.library_equivalence_agent = LibraryEquivalenceAgent(
+            subagent_configs.get("library_equivalence_agent", self.configs), self.session_id
+        )
+        self.exception_error_agent = ExceptionErrorAgent(
+            subagent_configs.get("exception_error_agent", self.configs), self.session_id
+        )
+        self.spec_agent = SpecAgent(subagent_configs.get("spec_agent", self.configs), self.session_id)
+        self.test_gen_repair_agent = TestGenRepairAgent(
+            subagent_configs.get("test_gen_repair_agent", self.configs), self.session_id
+        )
+        self.verdict_agent = VerdictAgent(subagent_configs.get("verdict_agent", self.configs), self.session_id)
 
     # MatchAgent is now a pure orchestrator without command execution functionality
 
@@ -127,12 +144,22 @@ class MatchAgent:
         self.logger.info("Starting parallel execution of 6 specialized agents")
 
         analysis_tasks = [
-            self.control_flow_agent.analyze(prompt_generator, method_pair),
-            self.data_flow_agent.analyze(prompt_generator, method_pair),
-            self.io_agent.analyze(prompt_generator, method_pair),
-            self.library_equivalence_agent.analyze(prompt_generator, method_pair),
-            self.exception_error_agent.analyze(prompt_generator, method_pair),
-            self.spec_agent.analyze(prompt_generator, method_pair),
+            self.control_flow_agent.analyze(
+                prompt_generator, method_pair, agent_name="match_agent", sub_agent_name="control_flow_agent"
+            ),
+            self.data_flow_agent.analyze(
+                prompt_generator, method_pair, agent_name="match_agent", sub_agent_name="data_flow_agent"
+            ),
+            self.io_agent.analyze(prompt_generator, method_pair, agent_name="match_agent", sub_agent_name="io_agent"),
+            self.library_equivalence_agent.analyze(
+                prompt_generator, method_pair, agent_name="match_agent", sub_agent_name="library_equivalence_agent"
+            ),
+            self.exception_error_agent.analyze(
+                prompt_generator, method_pair, agent_name="match_agent", sub_agent_name="exception_error_agent"
+            ),
+            self.spec_agent.analyze(
+                prompt_generator, method_pair, agent_name="match_agent", sub_agent_name="spec_agent"
+            ),
         ]
 
         specialized_results = await asyncio.gather(*analysis_tasks)
@@ -149,26 +176,36 @@ class MatchAgent:
         self.logger.info("All specialized agent analyses completed")
 
         # Run the test generation and repair agent
-        # self.logger.info("Starting test generation and repair agent")
-        # test_repair_results = await self.test_gen_repair_agent.analyze(
-        #     prompt_generator, method_pair, all_analysis_results
-        # )
+        self.logger.info("Starting test generation and repair agent")
+        test_repair_results = await self.test_gen_repair_agent.analyze(
+            prompt_generator,
+            method_pair,
+            all_analysis_results,
+            agent_name="match_agent",
+            sub_agent_name="test_gen_repair_agent",
+        )
 
         # Combine all results
-        all_results = {
-            "specialized_analyses": all_analysis_results,
-            # "test_repair": test_repair_results
-        }
+        all_results = {"specialized_analyses": all_analysis_results, "test_repair": test_repair_results}
 
         # Run the verdict agent for final decision
         self.logger.info("Starting verdict agent for final decision")
-        verdict_results = await self.verdict_agent.analyze(prompt_generator, method_pair, all_results)
+        verdict_results = await self.verdict_agent.analyze(
+            prompt_generator, method_pair, all_results, agent_name="match_agent", sub_agent_name="verdict_agent"
+        )
 
         # Add verdict to final results
         all_results["verdict"] = verdict_results
 
         # Determine overall success status
-        success = verdict_results["parsed_final_response"]["is_equivalent"] != "error"
+        success = False
+        try:
+            parsed_response = verdict_results.get("parsed_final_response", {})
+            is_equivalent = parsed_response.get("is_equivalent")
+            success = is_equivalent is not None and is_equivalent != "error"
+            self.logger.debug(f"Verdict parsed_final_response: {parsed_response}")
+        except Exception as e:
+            self.logger.error(f"Error parsing verdict results: {str(e)}")
 
         self.logger.info(f"Match agent analysis completed with success={success}")
 

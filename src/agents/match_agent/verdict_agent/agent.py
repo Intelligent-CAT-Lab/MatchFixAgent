@@ -57,7 +57,7 @@ class VerdictAgent:
 
         self.logger.info("Verdict Agent initialized")
 
-    async def analyze(self, prompt_generator, method_pair, all_results):
+    async def analyze(self, prompt_generator, method_pair, all_results, agent_name=None, sub_agent_name=None):
         """
         Synthesize analyses from all agents to provide a final verdict.
 
@@ -65,6 +65,8 @@ class VerdictAgent:
             prompt_generator: The prompt generator to use
             method_pair (dict): The method pair to analyze
             all_results (dict): Results from all agents including test/repair agent
+            agent_name (str, optional): Name of the parent agent
+            sub_agent_name (str, optional): Name of this sub-agent
 
         Returns:
             dict: Final verdict on functional equivalence
@@ -99,7 +101,13 @@ class VerdictAgent:
             from src.utils.cmd_utils import run_claude_command
 
             status, agent_output = await run_claude_command(
-                prompt, "", self.model.model_name, self.configs, self.logger
+                prompt,
+                "",
+                self.model.model_name,
+                self.configs,
+                self.logger,
+                agent_name=agent_name or "verdict_agent",
+                sub_agent_name=sub_agent_name,
             )
 
             if status:

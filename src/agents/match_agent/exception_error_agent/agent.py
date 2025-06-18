@@ -57,13 +57,15 @@ class ExceptionErrorAgent:
 
         self.logger.info("Exception/Error Agent initialized")
 
-    async def analyze(self, prompt_generator, method_pair):
+    async def analyze(self, prompt_generator, method_pair, agent_name=None, sub_agent_name=None):
         """
         Analyze the exception and error handling of source and target code fragments.
 
         Args:
             prompt_generator: The prompt generator to use
             method_pair (dict): The method pair to analyze
+            agent_name (str, optional): Name of the parent agent
+            sub_agent_name (str, optional): Name of this sub-agent
 
         Returns:
             dict: Analysis results
@@ -89,7 +91,13 @@ class ExceptionErrorAgent:
             from src.utils.cmd_utils import run_claude_command
 
             status, agent_output = await run_claude_command(
-                prompt, "", self.model.model_name, self.configs, self.logger
+                prompt,
+                "",
+                self.model.model_name,
+                self.configs,
+                self.logger,
+                agent_name=agent_name or "exception_error_agent",
+                sub_agent_name=sub_agent_name,
             )
 
             agent_output = agent_output or {}

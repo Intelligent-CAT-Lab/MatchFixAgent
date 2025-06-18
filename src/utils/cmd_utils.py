@@ -2,10 +2,19 @@ import os
 import json
 import asyncio
 import logging
+import yaml
+import random
+from pathlib import Path
 
 
 async def run_claude_command(
-    prompt: str, feedback: str, model_name: str, configs: dict, logger=None
+    prompt: str,
+    feedback: str,
+    model_name: str,
+    configs: dict,
+    logger=None,
+    agent_name: str = None,
+    sub_agent_name: str = None,
 ) -> tuple[bool, dict]:
     """
     Execute Claude CLI command with the given prompt.
@@ -19,16 +28,36 @@ async def run_claude_command(
         model_name (str): Name of the model to use
         configs (dict): Configuration settings
         logger (logging.Logger, optional): Logger to use. If None, logs to console only.
+        agent_name (str): The name of the agent running the command
+        sub_agent_name (str, optional): The name of the sub-agent running the command
 
     Returns:
         tuple[bool, dict]: (success_status, parsed_output)
             - success_status: True if command executed successfully and output was valid JSON
             - parsed_output: The parsed JSON output from Claude, or None if unsuccessful
+
+    Raises:
+        ValueError: If agent_name is not provided or credentials are not available
     """
-    env = os.environ.copy()
-    env["CLAUDE_CODE_USE_BEDROCK"] = "true"
-    env["ANTHROPIC_MODEL"] = model_name
-    env["PATH"] = f"{os.path.expanduser('~/apache-maven-3.9.9/bin')}:{env['PATH']}"
+    if not agent_name:
+        raise ValueError("Agent name must be provided to run Claude command")
+
+    # Import and use credential utility
+    from src.utils.credential_utils import setup_environment_for_agent
+
+    # Set up environment with appropriate credentials
+    try:
+        env, credential_name = setup_environment_for_agent(
+            agent_name=agent_name, sub_agent_name=sub_agent_name, model_name=model_name
+        )
+
+        if logger:
+            logger.info(f"Using credentials for agent: {agent_name}, sub-agent: {sub_agent_name or 'None'}")
+            logger.info(f"Using credential: '{credential_name}' in region: {env.get('AWS_REGION', 'unknown')}")
+    except Exception as e:
+        if logger:
+            logger.error(f"Failed to set up credentials: {str(e)}")
+        raise
 
     if feedback != "" and logger:
         logger.info(f"Feedback provided: {feedback}")

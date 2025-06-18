@@ -28,6 +28,8 @@ from src.utils.agent_utils import Model
 from src.utils.agent_utils import Conversation
 
 from src.agents.base_agent.prompt_generator import BaseAgentPromptGenerator
+from src.utils.cmd_utils import run_claude_command
+from src.utils.credential_utils import setup_environment_for_agent
 
 
 class BaseAgent:
@@ -103,48 +105,15 @@ class BaseAgent:
                 - success_status: True if command executed successfully and output was valid JSON
                 - parsed_output: The parsed JSON output from Claude, or None if unsuccessful
         """
-        env = os.environ.copy()
-        env["CLAUDE_CODE_USE_BEDROCK"] = "true"
-        env["ANTHROPIC_MODEL"] = self.model.model_name
-        env["PATH"] = f"{os.path.expanduser('~/apache-maven-3.9.9/bin')}:{env['PATH']}"
-
-        if feedback != "":
-            self.logger.info(f"Feedback provided: {feedback}")
-            prompt += f"\n\nFeedback: {feedback}"
-
-        try:
-            self.logger.info("Executing Claude CLI command...")
-            # Use asyncio.create_subprocess_exec for true async operation
-            cmd = ["claude", "-p", prompt] + self.configs["extra_agent_args"]
-            process = await asyncio.create_subprocess_exec(
-                *cmd,
-                stdout=asyncio.subprocess.PIPE,
-                stderr=asyncio.subprocess.PIPE,
-                env=env,
-            )
-
-            stdout, stderr = await process.communicate()
-
-            if process.returncode != 0:
-                self.logger.error(f"Claude failed with exit code {process.returncode}")
-                self.logger.error(f"Error details: {stderr.decode()}")
-                return False, None
-
-            output = stdout.decode("utf-8")
-            self.logger.debug("Raw output received from Claude")
-
-            try:
-                parsed_output = json.loads(output)
-                self.logger.info("Successfully parsed Claude output as JSON")
-                return True, parsed_output
-            except json.JSONDecodeError as e:
-                self.logger.error(f"Failed to parse Claude output as JSON: {e}")
-                self.logger.debug(f"Raw output: {output}")
-                return False, None
-
-        except Exception as e:
-            self.logger.error(f"Error executing Claude: {str(e)}")
-            return False, None
+        # Use shared command utility for consistent credential handling
+        return await run_claude_command(
+            prompt=prompt,
+            feedback=feedback,
+            model_name=self.model.model_name,
+            configs=self.configs,
+            logger=self.logger,
+            agent_name=self.configs["agent_name"],
+        )
 
     async def validate_agent_output(self, agent_output: dict) -> tuple[bool, dict, str]:
         """
