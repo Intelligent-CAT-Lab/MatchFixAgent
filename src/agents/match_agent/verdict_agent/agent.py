@@ -11,7 +11,7 @@ from src.utils.agent_utils import Conversation
 
 class VerdictAgent:
     """
-    Final verdict agent that synthesizes analyses from multiple specialized agents.
+    Final verdict agent that synthesizes analyses from multiple semantic analyzer agents.
     Provides a holistic assessment of functional equivalence between code fragments.
     """
 
@@ -73,16 +73,20 @@ class VerdictAgent:
         """
         self.logger.info("Producing final verdict on functional equivalence")
 
-        specialized_analyses = {"specialized_analyses": {}}
-        for analysis_type, analysis_result in all_results["specialized_analyses"].items():
-            specialized_analyses["specialized_analyses"][analysis_type] = analysis_result["parsed_final_response"]
+        semantic_analyzer_analyses = {"semantic_analyzer_analyses": {}, "test_repair_analyses": {}}
+        for analysis_type, analysis_result in all_results["semantic_analyzer_analyses"].items():
+            semantic_analyzer_analyses["semantic_analyzer_analyses"][analysis_type] = analysis_result[
+                "parsed_final_response"
+            ]
+
+        semantic_analyzer_analyses["test_repair_analyses"] = all_results["test_repair"]["parsed_final_response"]
 
         # Generate the prompt using the template for verdict_agent
         prompt = prompt_generator.generate_prompt("verdict_agent")
 
         # Add all analysis results to the prompt
         prompt += "\n\n<all_analysis_results>\n"
-        prompt += json.dumps(specialized_analyses, indent=2)
+        prompt += json.dumps(semantic_analyzer_analyses, indent=2)
         prompt += "\n</all_analysis_results>"
 
         # Log the full prompt

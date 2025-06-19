@@ -73,13 +73,17 @@ class TestGenRepairAgent:
         """
         self.logger.info("Generating tests and repairs based on analysis results")
 
+        semantic_analyzer_analyses = {}
+        for analysis_type, analysis_result in analysis_results.items():
+            semantic_analyzer_analyses[analysis_type] = analysis_result["parsed_final_response"]
+
         # Generate the prompt using the template for test_gen_repair_agent
         prompt = prompt_generator.generate_prompt("test_gen_repair_agent")
 
         # Add analysis results to the prompt
-        prompt += "\n\n<analysis_results>\n"
-        prompt += json.dumps(analysis_results, indent=2)
-        prompt += "\n</analysis_results>"
+        prompt += "\n\n<semantic_analysis_results>\n"
+        prompt += json.dumps(semantic_analyzer_analyses, indent=2)
+        prompt += "\n</semantic_analysis_results>"
 
         # Log the full prompt
         self.logger.debug("Generated test generation and repair prompt:")
@@ -106,6 +110,8 @@ class TestGenRepairAgent:
                 sub_agent_name=sub_agent_name,
             )
 
+            agent_output = agent_output or {}
+
             if status:
                 self.logger.info("Test generation and repair completed successfully")
                 # Extract the final response format
@@ -125,21 +131,30 @@ class TestGenRepairAgent:
                         return agent_output
                     except json.JSONDecodeError as e:
                         self.logger.error(f"Failed to parse test generation and repair response as JSON: {e}")
-                        agent_output["error"] = f"Failed to parse response: {e}"
-                        agent_output["parsed_final_response"] = {"error": f"Failed to parse response: {e}"}
+                        agent_output["parsed_final_response"] = {
+                            "is_equivalent": "error",
+                            "explanation": f"JSON parsing error: {str(e)}",
+                        }
                         return agent_output
                 else:
                     self.logger.error("No final response format found in test generation and repair output")
-                    agent_output["error"] = "No final response format found"
-                    agent_output["parsed_final_response"] = {"error": "No response format found"}
+                    agent_output["parsed_final_response"] = {
+                        "is_equivalent": "error",
+                        "explanation": "No final response format found in output",
+                    }
                     return agent_output
             else:
                 self.logger.error("Test generation and repair failed")
-                return {
-                    "error": "Test generation and repair execution failed",
-                    "parsed_final_response": {"error": "Execution failed"},
+                agent_output["parsed_final_response"] = {
+                    "is_equivalent": "error",
+                    "explanation": "Test generation and repair failed",
                 }
+                return agent_output
 
         except Exception as e:
             self.logger.error(f"Error in test generation and repair: {str(e)}")
-            return {"error": f"Exception: {str(e)}", "parsed_final_response": {"error": f"Exception: {str(e)}"}}
+            agent_output["parsed_final_response"] = {
+                "is_equivalent": "error",
+                "explanation": f"Exception: {str(e)}",
+            }
+            return agent_output
