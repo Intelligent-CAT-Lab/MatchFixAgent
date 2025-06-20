@@ -7,18 +7,10 @@ class BaseAgentPromptGenerator:
     def __init__(
         self,
         configs: dict,
-        source_schema_name: str,
-        target_schema_name: str,
-        class_name: str,
-        method_name: str,
-        method_pair: dict,
+        fragment_details: dict
     ) -> None:
         self.configs = configs
-        self.source_schema_name = source_schema_name
-        self.target_schema_name = target_schema_name
-        self.class_name = class_name.split(":")[1] if ":" in class_name else class_name
-        self.method_name = method_name.split(":")[1] if ":" in method_name else method_name
-        self.method_pair = method_pair
+        self.fragment_details = fragment_details
 
         self.prompt_templates = yaml.safe_load(open("configs/prompt_templates.yaml", "r"))
 
@@ -34,7 +26,6 @@ class BaseAgentPromptGenerator:
             {
                 "source_language": self.configs["source_language"].capitalize(),
                 "target_language": self.configs["target_language"].capitalize(),
-                "method_name": self.method_name,
             }
         )
         self.prompt += instruction
@@ -46,8 +37,6 @@ class BaseAgentPromptGenerator:
             {
                 "source_file_path": self.source_file_path,
                 "target_file_path": self.target_file_path,
-                "source_class_name": self.class_name,
-                "target_class_name": self.class_name,
                 "source_method_implementation": self.source_method_implementation,
                 "target_method_implementation": self.target_method_implementation,
             }
@@ -66,10 +55,10 @@ class BaseAgentPromptGenerator:
 
     def format_fragment_details(self) -> None:
         tool_source_projects_path = self.configs["tool_source_projects_path"]
-        self.source_file_path = f"{tool_source_projects_path}/{self.source_schema_name.replace('.', '/')}.java"
+        self.source_file_path = f"{tool_source_projects_path}/{self.fragment_details['source_path']}"
 
         tool_target_projects_path = self.configs["tool_target_projects_path"]
-        self.target_file_path = f"{tool_target_projects_path}/{self.target_schema_name.replace('.', '/')}.py"
+        self.target_file_path = f"{tool_target_projects_path}/{self.fragment_details['target_path']}"
 
-        self.source_method_implementation = "\n".join(self.method_pair["source_code"]).strip()
-        self.target_method_implementation = "\n".join(self.method_pair["target_code"]).strip()
+        self.source_method_implementation = "\n".join(self.fragment_details["source_function"]).strip()
+        self.target_method_implementation = "\n".join(self.fragment_details["target_function"]).strip()

@@ -57,13 +57,12 @@ class TestGenRepairAgent:
 
         self.logger.info("Test Generation & Repair Agent initialized")
 
-    async def analyze(self, prompt_generator, method_pair, analysis_results, agent_name=None, sub_agent_name=None):
+    async def analyze(self, prompt_generator, analysis_results, agent_name=None, sub_agent_name=None):
         """
         Generate tests and repair code based on analysis from other agents.
 
         Args:
             prompt_generator: The prompt generator to use
-            method_pair (dict): The method pair to analyze
             analysis_results (dict): Results from all analysis agents
             agent_name (str, optional): Name of the parent agent
             sub_agent_name (str, optional): Name of this sub-agent

@@ -289,8 +289,6 @@ def get_subgraph_label(graph):
 
 
 def pretty_print_cfg(nodes, preds, succs, mapping, entry_orig, header_label=None, parameters=None):
-    if header_label:
-        print(f"### CFG for {header_label} ###")
 
     # Print Node 0 (Parameters) if parameters exist
     if parameters:

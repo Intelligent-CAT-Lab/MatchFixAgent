@@ -57,13 +57,12 @@ class VerdictAgent:
 
         self.logger.info("Verdict Agent initialized")
 
-    async def analyze(self, prompt_generator, method_pair, all_results, agent_name=None, sub_agent_name=None):
+    async def analyze(self, prompt_generator, all_results, agent_name=None, sub_agent_name=None):
         """
         Synthesize analyses from all agents to provide a final verdict.
 
         Args:
             prompt_generator: The prompt generator to use
-            method_pair (dict): The method pair to analyze
             all_results (dict): Results from all agents including test/repair agent
             agent_name (str, optional): Name of the parent agent
             sub_agent_name (str, optional): Name of this sub-agent

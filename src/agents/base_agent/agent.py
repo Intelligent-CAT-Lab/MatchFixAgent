@@ -171,11 +171,7 @@ class BaseAgent:
 
     async def run(
         self,
-        source_schema_name: str,
-        target_schema_name: str,
-        class_name: str,
-        method_name: str,
-        method_pair: dict,
+        fragment_details: dict
     ) -> tuple[bool, dict]:
         """
         Run the validator agent to check equivalence between source and target code.
@@ -187,12 +183,7 @@ class BaseAgent:
         4. Returns validation results with detailed reasoning
 
         Args:
-            configs (dict): Configuration settings
-            source_schema_name (str): Name of the source schema
-            target_schema_name (str): Name of the target schema
-            class_name (str): Name of the class containing the method
-            method_name (str): Name of the method to validate
-            method_pair (dict): Dictionary containing source and target code
+            fragment_details (dict): Details of the method to validate
 
         Returns:
             tuple[bool, dict]: (success_status, validation_results)
@@ -200,17 +191,11 @@ class BaseAgent:
                 - validation_results: The validation results including detailed reasoning,
                   or None if validation failed
         """
-        self.logger.info(f"Running validator for {class_name}.{method_name}")
-        self.logger.info(f"Source schema: {source_schema_name}")
-        self.logger.info(f"Target schema: {target_schema_name}")
+        self.logger.info(f"Starting base agent for {fragment_details['source_path']}")
 
         prompt_generator = BaseAgentPromptGenerator(
             configs=self.configs,
-            source_schema_name=source_schema_name,
-            target_schema_name=target_schema_name,
-            class_name=class_name,
-            method_name=method_name,
-            method_pair=method_pair,
+            fragment_details=fragment_details
         )
         prompt = prompt_generator.generate_prompt()
 
@@ -339,26 +324,28 @@ if __name__ == "__main__":
     ### sample test case
     logger.info("Running sample test case")
 
-    source_schema_name = "commons-cli.src.main.java.org.apache.commons.cli.PatternOptionBuilder"
-    target_schema_name = "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder"
-    class_name = "PatternOptionBuilder"
-    method_name = "135-138:isValueCode"
-    method_pair = {
-        "graal_validation": "success",
-        "source_code": [
+    fragment_details = {
+        "project": "commons-cli",
+        "source_path": "commons-cli/src/main/java/org/apache/commons/cli/PatternOptionBuilder.java",
+        "target_path": "commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py",
+        "source_function": [
             "    public static boolean isValueCode(final char ch) {",
             "        return ch == '@' || ch == ':' || ch == '%' || ch == '+' || ch == '#' || ch == '<'",
             "                || ch == '>' || ch == '*' || ch == '/' || ch == '!';",
             "    }",
-            "",
+            ""
         ],
-        "target_code": [
+        "target_function": [
             "    @staticmethod",
             "    def isValueCode(ch: str) -> bool:",
-            "        return ch in {'@', ':', '%', '+', '#', '<', '>', '*', '/', '!'}",
+            "        return ch in {'@', ':', '%', '+', '#', '<', '>', '*', '/', '!'}"
         ],
+        "ground_truth_target_function": "",
+        "source_language": "java",
+        "target_language": "python",
+        "result": "success"
     }
 
     status, result = asyncio.run(
-        validator_agent.run(source_schema_name, target_schema_name, class_name, method_name, method_pair)
+        validator_agent.run(fragment_details=fragment_details)
     )

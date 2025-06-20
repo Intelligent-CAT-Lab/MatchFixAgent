@@ -17,29 +17,17 @@ class MatchAgentPromptGenerator:
     def __init__(
         self,
         configs: dict,
-        source_schema_name: str,
-        target_schema_name: str,
-        class_name: str,
-        method_name: str,
-        method_pair: dict,
+        fragment_details: dict
     ) -> None:
         """
         Initialize the prompt generator.
 
         Args:
             configs (dict): Configuration settings
-            source_schema_name (str): Name of the source schema
-            target_schema_name (str): Name of the target schema
-            class_name (str): Name of the class containing the method
-            method_name (str): Name of the method to validate
-            method_pair (dict): Dictionary containing source and target code
+            fragment_details (dict): Details of the code fragments to be matched
         """
         self.configs = configs
-        self.source_schema_name = source_schema_name
-        self.target_schema_name = target_schema_name
-        self.class_name = class_name.split(":")[1] if ":" in class_name else class_name
-        self.method_name = method_name.split(":")[1] if ":" in method_name else method_name
-        self.method_pair = method_pair
+        self.fragment_details = fragment_details
 
         self.prompt_templates = yaml.safe_load(open("configs/prompt_templates.yaml", "r"))
 
@@ -190,28 +178,26 @@ class MatchAgentPromptGenerator:
 
             # Generate CFG for control flow agent
             if agent_type == "control_flow_agent":
-                source_cfg = self.generate_cfg("java", self.source_method_implementation, self.method_name)
-                target_cfg = self.generate_cfg("python", self.target_method_implementation, self.method_name)
+                source_cfg = self.generate_cfg("java", self.source_method_implementation, '')
+                target_cfg = self.generate_cfg("python", self.target_method_implementation, '')
 
                 instruction = template.render(
                     {
                         "source_language": self.configs["source_language"].capitalize(),
                         "target_language": self.configs["target_language"].capitalize(),
-                        "method_name": self.method_name,
                         "source_cfg": source_cfg,
                         "target_cfg": target_cfg,
                     }
                 )
             # Generate DFG for data flow agent
             elif agent_type == "data_flow_agent":
-                source_dfg = self.generate_dfg("java", self.source_method_implementation, self.method_name)
-                target_dfg = self.generate_dfg("python", self.target_method_implementation, self.method_name)
+                source_dfg = self.generate_dfg("java", self.source_method_implementation, '')
+                target_dfg = self.generate_dfg("python", self.target_method_implementation, '')
 
                 instruction = template.render(
                     {
                         "source_language": self.configs["source_language"].capitalize(),
                         "target_language": self.configs["target_language"].capitalize(),
-                        "method_name": self.method_name,
                         "source_dfg": source_dfg,
                         "target_dfg": target_dfg,
                     }
@@ -221,7 +207,6 @@ class MatchAgentPromptGenerator:
                     {
                         "source_language": self.configs["source_language"].capitalize(),
                         "target_language": self.configs["target_language"].capitalize(),
-                        "method_name": self.method_name,
                     }
                 )
 
@@ -231,8 +216,6 @@ class MatchAgentPromptGenerator:
             {
                 "source_file_path": self.source_file_path,
                 "target_file_path": self.target_file_path,
-                "source_class_name": self.class_name,
-                "target_class_name": self.class_name,
                 "source_method_implementation": self.source_method_implementation,
                 "target_method_implementation": self.target_method_implementation,
             }
@@ -261,14 +244,14 @@ class MatchAgentPromptGenerator:
         Format the details of the source and target code fragments.
         """
         tool_source_projects_path = self.configs["tool_source_projects_path"]
-        self.source_file_path = f"{tool_source_projects_path}/{self.source_schema_name.replace('.', '/')}.java"
+        self.source_file_path = f"{tool_source_projects_path}/{self.fragment_details['source_path']}"
 
         tool_target_projects_path = self.configs["tool_target_projects_path"]
-        self.target_file_path = f"{tool_target_projects_path}/{self.target_schema_name.replace('.', '/')}.py"
+        self.target_file_path = f"{tool_target_projects_path}/{self.fragment_details['target_path']}"
 
         # trim leading indentation from source and target code (e.g., some languages like Python only parse when the indentation is correct)
-        source_code = self.method_pair["source_code"].copy()
-        target_code = self.method_pair["target_code"].copy()
+        source_code = self.fragment_details["source_function"].copy()
+        target_code = self.fragment_details["target_function"].copy()
         for i in range(len(source_code)):
             if source_code[i].startswith("    "):
                 source_code[i] = source_code[i][4:]

@@ -170,11 +170,7 @@ class MatchAgent:
 
     async def run(
         self,
-        source_schema_name: str,
-        target_schema_name: str,
-        class_name: str,
-        method_name: str,
-        method_pair: dict,
+        fragment_details: dict
     ) -> tuple[bool, dict]:
         """
         Run the match agent to analyze code equivalence.
@@ -183,25 +179,17 @@ class MatchAgent:
         of code equivalence between source and target implementations.
 
         Args:
-            source_schema_name (str): Name of the source schema
-            target_schema_name (str): Name of the target schema
-            class_name (str): Name of the class containing the method
-            method_name (str): Name of the method to validate
-            method_pair (dict): Dictionary containing source and target code
+            fragment_details (dict): Details of the method to analyze
 
         Returns:
             tuple[bool, dict]: (success_status, results)
         """
-        self.logger.info(f"Starting match agent analysis for {class_name}.{method_name}")
+        self.logger.info(f"Starting match agent analysis for {fragment_details}")
 
         # Create prompt generator for all agents
         prompt_generator = MatchAgentPromptGenerator(
             configs=self.configs,
-            source_schema_name=source_schema_name,
-            target_schema_name=target_schema_name,
-            class_name=class_name,
-            method_name=method_name,
-            method_pair=method_pair,
+            fragment_details=fragment_details
         )
 
         # Run the 6 semantic analyzer agents in parallel
@@ -209,20 +197,20 @@ class MatchAgent:
 
         analysis_tasks = [
             self.control_flow_agent.analyze(
-                prompt_generator, method_pair, agent_name="match_agent", sub_agent_name="control_flow_agent"
+                prompt_generator, agent_name="match_agent", sub_agent_name="control_flow_agent"
             ),
             self.data_flow_agent.analyze(
-                prompt_generator, method_pair, agent_name="match_agent", sub_agent_name="data_flow_agent"
+                prompt_generator, agent_name="match_agent", sub_agent_name="data_flow_agent"
             ),
-            self.io_agent.analyze(prompt_generator, method_pair, agent_name="match_agent", sub_agent_name="io_agent"),
+            self.io_agent.analyze(prompt_generator, agent_name="match_agent", sub_agent_name="io_agent"),
             self.library_equivalence_agent.analyze(
-                prompt_generator, method_pair, agent_name="match_agent", sub_agent_name="library_equivalence_agent"
+                prompt_generator, agent_name="match_agent", sub_agent_name="library_equivalence_agent"
             ),
             self.exception_error_agent.analyze(
-                prompt_generator, method_pair, agent_name="match_agent", sub_agent_name="exception_error_agent"
+                prompt_generator, agent_name="match_agent", sub_agent_name="exception_error_agent"
             ),
             self.spec_agent.analyze(
-                prompt_generator, method_pair, agent_name="match_agent", sub_agent_name="spec_agent"
+                prompt_generator, agent_name="match_agent", sub_agent_name="spec_agent"
             ),
         ]
 
@@ -243,7 +231,6 @@ class MatchAgent:
         self.logger.info("Starting test generation and repair agent")
         test_repair_results = await self.test_gen_repair_agent.analyze(
             prompt_generator,
-            method_pair,
             all_analysis_results,
             agent_name="match_agent",
             sub_agent_name="test_gen_repair_agent",
@@ -255,7 +242,7 @@ class MatchAgent:
         # Run the verdict agent for final decision
         self.logger.info("Starting verdict agent for final decision")
         verdict_results = await self.verdict_agent.analyze(
-            prompt_generator, method_pair, all_results, agent_name="match_agent", sub_agent_name="verdict_agent"
+            prompt_generator, all_results, agent_name="match_agent", sub_agent_name="verdict_agent"
         )
 
         # Add verdict to final results
@@ -326,28 +313,30 @@ if __name__ == "__main__":
     ### sample test case
     logger.info("Running sample test case")
 
-    source_schema_name = "commons-cli.src.main.java.org.apache.commons.cli.PatternOptionBuilder"
-    target_schema_name = "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder"
-    class_name = "PatternOptionBuilder"
-    method_name = "135-138:isValueCode"
-    method_pair = {
-        "graal_validation": "success",
-        "source_code": [
+    fragment_details = {
+        "project": "commons-cli",
+        "source_path": "commons-cli/src/main/java/org/apache/commons/cli/PatternOptionBuilder.java",
+        "target_path": "commons-cli/src/main/org/apache/commons/cli/PatternOptionBuilder.py",
+        "source_function": [
             "    public static boolean isValueCode(final char ch) {",
             "        return ch == '@' || ch == ':' || ch == '%' || ch == '+' || ch == '#' || ch == '<'",
             "                || ch == '>' || ch == '*' || ch == '/' || ch == '!';",
             "    }",
-            "",
+            ""
         ],
-        "target_code": [
+        "target_function": [
             "    @staticmethod",
             "    def isValueCode(ch: str) -> bool:",
-            "        return ch in {'@', ':', '%', '+', '#', '<', '>', '*', '/', '!'}",
+            "        return ch in {'@', ':', '%', '+', '#', '<', '>', '*', '/', '!'}"
         ],
+        "ground_truth_target_function": "",
+        "source_language": "java",
+        "target_language": "python",
+        "result": "success"
     }
 
     status, result = asyncio.run(
-        match_agent.run(source_schema_name, target_schema_name, class_name, method_name, method_pair)
+        match_agent.run(fragment_details=fragment_details)
     )
 
     print("Status:", status)

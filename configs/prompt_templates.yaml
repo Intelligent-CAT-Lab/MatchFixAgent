@@ -3,7 +3,7 @@ templates:
     instruction: |-
       <instruction>
         You are an expert agent that can judge if two code fragments in different programming languages (PLs) are functionally equivalent. Here equivalence means: two code fragments in different PLs are considered equivalent if, when executed on the same input, they always have identical program states at all corresponding points reachable by program execution, and they both produce the same output upon termination.
-        Use the given Java and Python file paths to analyze whether the "{{ method_name }}" implementation is functionally equivalent. Only determine the functional correctness of the given method "{{ method_name }}" in isolation and DO NOT consider bugs in its dependencies. All dependencies will be prompted separately for functional equivalence. You can explore other files in the project to make your decision.
+        Use the given Java and Python file paths to analyze whether the method/function implementation is functionally equivalent. Only determine the functional correctness of the given method/function in isolation and DO NOT consider bugs in its dependencies. All dependencies will be prompted separately for functional equivalence. You can explore other files in the project to make your decision.
 
         If you think the given code fragments are NOT functionally equivalent, please provide:
         1. A clear explanation of why they are not equivalent.
@@ -20,14 +20,6 @@ templates:
         <target_fragment_path>
           {{ target_file_path }}
         </target_fragment_path>
-
-        <source_fragment_class>
-          {{ source_class_name }}
-        </source_fragment_class>
-
-        <target_fragment_class>
-          {{ target_class_name }}
-        </target_fragment_class>
 
         <source_fragment_method>
       {{ source_method_implementation }}
@@ -92,7 +84,7 @@ templates:
           </target_cfg>
           
           <general_notes>
-           - You only need to focus on the Control Flow Graph (CFG) and source codes of the given method "{{ method_name }}" in both languages to determine if they are functionally equivalent.
+           - You only need to focus on the Control Flow Graph (CFG) and source codes of the given method/function in both languages to determine if they are functionally equivalent.
            - DO NOT spend time on analyzing anything else and provide your response as soon as possible.
           </general_notes>
         </instruction>
@@ -123,7 +115,7 @@ templates:
           </target_dfg>
 
           <general_notes>
-           - You only need to focus on the Data Flow Graph (DFG) and source codes of the given method "{{ method_name }}" in both languages to determine if they are functionally equivalent.
+           - You only need to focus on the Data Flow Graph (DFG) and source codes of the given method/function in both languages to determine if they are functionally equivalent.
            - DO NOT spend time on analyzing anything else and provide your response as soon as possible.
           </general_notes>
         </instruction>
@@ -146,7 +138,7 @@ templates:
           </functional_equivalence_definition>
           
           <general_notes>
-           - You only need to focus on the input/output behavior of the given method "{{ method_name }}" in both languages to determine if they are functionally equivalent.
+           - You only need to focus on the input/output behavior of the given method/function in both languages to determine if they are functionally equivalent.
            - DO NOT spend time on analyzing anything else and provide your response as soon as possible.
            - Focus on input parameters, return values, and side effects of the method.
            - If there is a discrepancy in the input/output behavior, provide a corner case scenario that might trigger different I/O behavior.
@@ -197,7 +189,7 @@ templates:
           </functional_equivalence_definition>
 
           <general_notes>
-            - You only need to focus on the exception and error handling of the given method "{{ method_name }}" in both languages to determine if they are functionally equivalent.
+            - You only need to focus on the exception and error handling of the given method/function in both languages to determine if they are functionally equivalent.
             - If there are no exceptions or error handling in either implementation, consider them equivalent in this aspect and provide a simple "yes" response as soon as possible.
           </general_notes>
         </instruction>
@@ -221,7 +213,7 @@ templates:
           </functional_equivalence_definition>
 
           <general_notes>
-            - You only need to focus on the specifications and behavioral contracts of the given method "{{ method_name }}" in both languages to determine if they are functionally equivalent.
+            - You only need to focus on the specifications and behavioral contracts of the given method/function in both languages to determine if they are functionally equivalent.
             - If you find that the specifications are not equivalent, provide a detailed explanation of the differences and suggest a formal specification that both implementations should adhere to.
             - DO NOT spend time on analyzing anything else and provide your response as soon as possible.
           </general_notes>
@@ -240,7 +232,7 @@ templates:
     test_gen_repair_agent:
       instruction: |-
         <instruction>
-          You are an expert agent specializing in test generation and code repair. Based on the analysis from multiple expert agents regarding functional equivalence between {{ source_language }} and {{ target_language }} implementations of "{{ method_name }}", your task is to:
+          You are an expert agent specializing in test generation and code repair. Based on the analysis from multiple expert agents regarding functional equivalence between {{ source_language }} and {{ target_language }} implementations of method/function, your task is to:
           
           <functional_equivalence_definition>
             Two code fragments in different programming languages are considered functionally equivalent if, when executed on the same input, they always have identical program states at all corresponding points reachable by program execution, and they both produce the same output upon termination.
@@ -272,7 +264,7 @@ templates:
     verdict_agent:
       instruction: |-
         <instruction>
-          You are the final verdict agent responsible for synthesizing the analyses from multiple specialized agents regarding the functional equivalence of "{{ method_name }}" implementations in {{ source_language }} and {{ target_language }}.
+          You are the final verdict agent responsible for synthesizing the analyses from multiple specialized agents regarding the functional equivalence of method/function implementations in {{ source_language }} and {{ target_language }}.
           
           <functional_equivalence_definition>
           Two code fragments in different programming languages are considered functionally equivalent if, when executed on the same input, they always have identical program states at all corresponding points reachable by program execution, and they both produce the same output upon termination.
@@ -314,14 +306,6 @@ templates:
         <target_fragment_path>
           {{ target_file_path }}
         </target_fragment_path>
-
-        <source_fragment_class>
-          {{ source_class_name }}
-        </source_fragment_class>
-
-        <target_fragment_class>
-          {{ target_class_name }}
-        </target_fragment_class>
 
         <source_fragment_method>
       {{ source_method_implementation }}

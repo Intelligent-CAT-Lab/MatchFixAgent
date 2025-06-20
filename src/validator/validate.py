@@ -19,28 +19,20 @@ from src.agents.match_agent.agent import MatchAgent
 
 def validate_by_agent(
     configs: dict,
-    schema_name: str,
-    class_name: str,
-    method_name: str,
-    method_pair: dict,
+    fragment_details: dict
 ) -> tuple[bool, dict]:
     """
     Validate a single method translation using the ValidatorAgent.
 
     Args:
         configs (dict): Configuration settings from the YAML config file
-        schema_name (str): Name of the schema containing the method
-        class_name (str): Name of the class containing the method
-        method_name (str): Name of the method to validate
-        method_pair (dict): Dictionary containing source and target code
+        fragment_details (dict): Details of the method to validate, including:
 
     Returns:
         tuple[bool, dict]: A tuple containing:
             - status (bool): True if validation was successful
             - agent_output (dict): The validation results from the agent
     """
-    source_schema_name = schema_name.replace("_python_partial", "").replace("src.main.", "src.main.java.")
-    target_schema_name = schema_name.replace("_python_partial", "")
 
     validator_agent = None
     if configs["agent_name"] == "base_agent":
@@ -51,7 +43,7 @@ def validate_by_agent(
         raise ValueError(f"Agent {configs['agent_name']} is not supported")
 
     status, agent_output = asyncio.run(
-        validator_agent.run(source_schema_name, target_schema_name, class_name, method_name, method_pair)
+        validator_agent.run(fragment_details)
     )
 
     return status, agent_output
@@ -102,31 +94,26 @@ def main(args):
     with open(os.path.join(results_path, f"{args.project_name}.json"), "r") as f:
         results = json.load(f)
 
-    for schema_name in results:
-        for class_name in results[schema_name]:
-            for method_name in results[schema_name][class_name]:
+    for fragment_details in results:
 
-                if configs["agent_name"] in results[schema_name][class_name][method_name]:
-                    if results[schema_name][class_name][method_name][configs["agent_name"]]["status"]:
-                        continue
+        if configs["agent_name"] in fragment_details:
+            if fragment_details[configs["agent_name"]]["status"]:
+                continue
 
-                status, agent_output = validate_by_agent(
-                    configs=configs,
-                    schema_name=schema_name,
-                    class_name=class_name,
-                    method_name=method_name,
-                    method_pair=results[schema_name][class_name][method_name],
-                )
+        status, agent_output = validate_by_agent(
+            configs,
+            fragment_details
+        )
 
-                results[schema_name][class_name][method_name][configs["agent_name"]] = {
-                    "status": status,
-                    "output": agent_output,
-                }
+        fragment_details[configs["agent_name"]] = {
+            "status": status,
+            "output": agent_output,
+        }
 
-                with open(os.path.join(results_path, f"{args.project_name}.json"), "w") as f:
-                    json.dump(results, f, indent=4)
+        with open(os.path.join(results_path, f"{args.project_name}.json"), "w") as f:
+            json.dump(results, f, indent=4)
 
-                cleanup()
+        cleanup()
 
 
 if __name__ == "__main__":

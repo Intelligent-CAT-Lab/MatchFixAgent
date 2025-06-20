@@ -57,13 +57,12 @@ class LibraryEquivalenceAgent:
 
         self.logger.info("Library Equivalence Agent initialized")
 
-    async def analyze(self, prompt_generator, method_pair, agent_name=None, sub_agent_name=None):
+    async def analyze(self, prompt_generator, agent_name=None, sub_agent_name=None):
         """
         Analyze the library usage of source and target code fragments.
 
         Args:
             prompt_generator: The prompt generator to use
-            method_pair (dict): The method pair to analyze
             agent_name (str, optional): Name of the parent agent
             sub_agent_name (str, optional): Name of this sub-agent
 
