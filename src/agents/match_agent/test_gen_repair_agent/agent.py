@@ -75,6 +75,9 @@ class TestGenRepairAgent:
 
         semantic_analyzer_analyses = {}
         for analysis_type, analysis_result in analysis_results.items():
+            # only allow certain analysis types
+            if analysis_type not in ["io"]:
+                continue
             semantic_analyzer_analyses[analysis_type] = analysis_result["parsed_final_response"]
 
         # Generate the prompt using the template for test_gen_repair_agent

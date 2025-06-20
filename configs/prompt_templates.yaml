@@ -149,6 +149,7 @@ templates:
            - You only need to focus on the input/output behavior of the given method "{{ method_name }}" in both languages to determine if they are functionally equivalent.
            - DO NOT spend time on analyzing anything else and provide your response as soon as possible.
            - Focus on input parameters, return values, and side effects of the method.
+           - If there is a discrepancy in the input/output behavior, provide a corner case scenario that might trigger different I/O behavior.
           </general_notes>
         </instruction>
       response_format: |-
@@ -214,7 +215,11 @@ templates:
       instruction: |-
         <instruction>
           You are an expert agent specializing in analyzing specification adherence in code fragments. Your task is to determine if two code fragments in different programming languages ({{ source_language }} and {{ target_language }}) adhere to the same specifications and behavioral contracts.
-                    
+
+          <functional_equivalence_definition>
+          Two code fragments in different programming languages are considered functionally equivalent if, when executed on the same input, they always have identical program states at all corresponding points reachable by program execution, and they both produce the same output upon termination.
+          </functional_equivalence_definition>
+
           <general_notes>
             - You only need to focus on the specifications and behavioral contracts of the given method "{{ method_name }}" in both languages to determine if they are functionally equivalent.
             - If you find that the specifications are not equivalent, provide a detailed explanation of the differences and suggest a formal specification that both implementations should adhere to.
@@ -237,41 +242,31 @@ templates:
         <instruction>
           You are an expert agent specializing in test generation and code repair. Based on the analysis from multiple expert agents regarding functional equivalence between {{ source_language }} and {{ target_language }} implementations of "{{ method_name }}", your task is to:
           
-          1. Generate comprehensive test cases that verify functional equivalence or expose discrepancies
-          2. If discrepancies exist, repair the target code implementation to be functionally equivalent to the source
-          
-          Consider the following aspects in your test generation:
-          - Edge cases identified by other agents
-          - Corner cases where behaviors might diverge
-          - Input combinations that exercise different code paths
-          - Performance characteristics where relevant
-          
-          For code repair, ensure that your solution:
-          - Maintains the style and conventions of the target codebase
-          - Addresses all identified discrepancies
-          - Does not introduce new bugs or side effects
-          - Is well-commented to explain the changes made
+          <functional_equivalence_definition>
+            Two code fragments in different programming languages are considered functionally equivalent if, when executed on the same input, they always have identical program states at all corresponding points reachable by program execution, and they both produce the same output upon termination.
+          </functional_equivalence_definition>
+
+          <general_notes>
+            - Focus on corner case scenario suggested by IO agent
+                1) If there is a corner case:
+                    - generate tests in both source and target languages assuming the corner case and expose the incorrect translation
+                    - generate a correct implementation in the target language that passes the tests
+                2) If there is no corner case:
+                    - generate tests in both source and target languages that demonstrate the functional equivalence of the implementations
+            - Do not spend time on analyzing anything else and provide your response as soon as possible
+          </general_notes>
+
         </instruction>
       response_format: |-
         Provide your response in the following format and DO NOT include any additional text outside the JSON response. Make sure you wrap the JSON inside <final_response_format> tags.
         
         <final_response_format>
         {
-          "generated_test_cases": {
-            "source_test": "<complete test implementation for source language>",
-            "target_test": "<complete test implementation for target language>",
-            "test_coverage_explanation": "<explanation of test coverage and what aspects are being tested>"
-          },
-          "code_repair": {
-            "is_repair_needed": true/false,
-            "repaired_implementation": "<corrected target implementation if repair is needed>",
-            "repair_explanation": "<detailed explanation of changes made and why>"
-          },
-          "test_execution_results": {
-            "source_result": "<results of running tests on source code>",
-            "target_result": "<results of running tests on target code>",
-            "repaired_result": "<results of running tests on repaired code, if applicable>"
-          }
+          "is_equivalent": "yes" / "no" / "need_more_context",
+          "explanation": "<explanation>",
+          "source_test_file_implementation": "<source_test_file_implementation>",
+          "target_test_file_implementation": "<target_test_file_implementation>",
+          "correct_target_method_implementation": "<correct_target_method_implementation if is_equivalent is 'no', otherwise empty. this should PASS on the previously failed tests in target language>"
         }
         </final_response_format>
     verdict_agent:
