@@ -1,0 +1,41 @@
+<path>
+projects/deltachat-core/rust/imex.rs
+</path>
+<function>
+async fn decrypt_setup_file<T: std::io::Read + std::io::Seek>(
+    passphrase: &str,
+    file: T,
+) -> Result<String> {
+    let plain_bytes = pgp::symm_decrypt(passphrase, file).await?;
+    let plain_text = std::string::String::from_utf8(plain_bytes)?;
+
+    Ok(plain_text)
+}
+</function>
+------
+
+<path>
+projects/deltachat-core/c/dc_imex.c
+</path>
+<function>
+char* dc_decrypt_setup_file(dc_context_t* context, const char* passphrase, const char* filecontent)
+{
+	char*         binary = NULL;
+	size_t        binary_bytes = 0;
+	size_t        indx = 0;
+	void*         plain = NULL;
+	size_t        plain_bytes = 0;
+	char*         payload = NULL;
+
+	/* decrypt symmetrically */
+	if (!dc_pgp_symm_decrypt(context, passphrase, binary, binary_bytes, &plain, &plain_bytes)) {
+		goto cleanup;
+	}
+	payload = strndup((const char*)plain, plain_bytes);
+
+cleanup:
+	free(plain);
+	if (binary) { mmap_string_unref(binary); }
+	return payload;
+}
+</function>
