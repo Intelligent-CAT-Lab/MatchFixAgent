@@ -81,11 +81,6 @@ class SpecAgent:
 
         self.conversation.add_message(role="user", content=prompt)
 
-        # Execute the model
-        env = os.environ.copy()
-        env["CLAUDE_CODE_USE_BEDROCK"] = "true"
-        env["ANTHROPIC_MODEL"] = self.model.model_name
-
         try:
             # Use the dedicated utility function for command execution
             from src.utils.cmd_utils import run_claude_command
