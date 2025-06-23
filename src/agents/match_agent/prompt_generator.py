@@ -281,5 +281,15 @@ class MatchAgentPromptGenerator:
         # trim leading indentation from source and target code (e.g., some languages like Python only parse when the indentation is correct)
         source_code = self.fragment_details["source_function"].copy()
         target_code = self.fragment_details["target_function"].copy()
+
+        # if source/target code's first line has leading indentation, remove indentation from all lines
+        if source_code and source_code[0].startswith("    "):
+            leading_spaces = len(source_code[0]) - len(source_code[0].lstrip())
+            source_code = [line[leading_spaces:] for line in source_code]
+
+        if target_code and target_code[0].startswith("    "):
+            leading_spaces = len(target_code[0]) - len(target_code[0].lstrip())
+            target_code = [line[leading_spaces:] for line in target_code]
+
         self.source_method_implementation = "\n".join(source_code)
         self.target_method_implementation = "\n".join(target_code)

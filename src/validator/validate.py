@@ -91,6 +91,12 @@ def main(args):
 
     for fragment_details in results:
 
+        if (
+            fragment_details["source_language"] != configs["source_language"]
+            or fragment_details["target_language"] != configs["target_language"]
+        ):
+            continue
+
         if configs["agent_name"] in fragment_details:
             if fragment_details[configs["agent_name"]]["status"]:
                 continue

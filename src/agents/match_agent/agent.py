@@ -45,17 +45,19 @@ class MatchAgent:
         # For match_agent itself, the filename is just the session ID
         if agent_name == "match_agent":
             original_log_file = log_dir / f"{old_session_id}.log"
-            new_log_file = log_dir / f"{new_session_id}.log"
+            new_log_file = log_dir / new_session_id / f"{new_session_id}.log"
             logger_name = f"match_agent"
         else:
             # For sub-agents, the filename includes the agent name
             original_log_file = log_dir / f"{agent_name}_{old_session_id}.log"
-            new_log_file = log_dir / f"{agent_name}_{new_session_id}.log"
+            new_log_file = log_dir / new_session_id / f"{agent_name}_{new_session_id}.log"
             logger_name = agent_name
 
         # Only proceed if the original file exists
         if not original_log_file.exists():
             return
+
+        os.makedirs(new_log_file.parent, exist_ok=True)
 
         # For match_agent, close its logger handlers first
         if agent_name == "match_agent":
