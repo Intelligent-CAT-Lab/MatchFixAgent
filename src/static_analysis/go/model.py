@@ -2,7 +2,6 @@
 
 import graphviz as gv
 
-
 class Block:
     __slots__ = ["id", "statements", "func_calls", "predecessors", "exits"]
 

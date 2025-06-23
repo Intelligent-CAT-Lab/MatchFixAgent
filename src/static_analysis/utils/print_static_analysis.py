@@ -143,7 +143,11 @@ class DataFlowAnalyzer:
                         paths = self.find_paths_between_nodes(def_node, use_node, remapped_succs)
                         for path in paths:
                             # Avoid duplicate paths
-                            path_info = {"def": (def_node, def_stmt), "use": (use_node, use_stmt), "path": path}
+                            path_info = {
+                                "def": (def_node, def_stmt), 
+                                "use": (use_node, use_stmt), 
+                                "path": path
+                            }
                             if path_info not in results[var]:
                                 results[var].append(path_info)
 
@@ -289,6 +293,7 @@ def get_subgraph_label(graph):
 
 
 def pretty_print_cfg(nodes, preds, succs, mapping, entry_orig, header_label=None, parameters=None):
+    print("### CFG ###")
 
     # Print Node 0 (Parameters) if parameters exist
     if parameters:

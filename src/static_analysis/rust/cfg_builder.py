@@ -165,6 +165,22 @@ class CFGBuilder:
                 self.add_exit(self.current_block, new)
                 self.current_block = new
 
+    def visit_let_declaration(self, node):
+        """Handle ``let`` statements, recursing into the initializer."""
+        value = node.child_by_field_name("value")
+        self.add_statement(self.current_block, node)
+        if value is not None:
+            if value.type == "match_expression":
+                self.visit_match_expression(value, add_statement=False)
+            else:
+                handler = getattr(self, f"visit_{value.type}", None)
+                if handler is not None:
+                    handler(value)
+        if self.separate_node_blocks:
+            new = self.new_block()
+            self.add_exit(self.current_block, new)
+            self.current_block = new
+
     visit_local_variable_declaration = visit_expression_statement
 
     # Treat compound statements like blocks so nested statements are visited
@@ -300,6 +316,46 @@ class CFGBuilder:
     visit_while_expression = visit_while_statement
     visit_for_expression = visit_for_statement
     visit_loop_expression = visit_while_statement
+
+    def visit_match_expression(self, node, add_statement=True):
+        """Handle Rust match expressions by creating branches for each arm."""
+        if add_statement:
+            self.add_statement(self.current_block, node)
+        after_match = self.new_block()
+        block = None
+        # ``match_expression`` structure: "match" <expr> <match_block>
+        for child in node.named_children:
+            if child.type == "match_block":
+                block = child
+                break
+        if block is None:
+            # No block found, treat generically
+            return
+
+        dispatch = self.current_block
+        arms = [c for c in block.named_children if c.type == "match_arm"]
+        for arm in arms:
+            case_block = self.new_block()
+            label = None
+            body = None
+            for c in arm.named_children:
+                if c.type == "match_pattern" and label is None:
+                    label = self.get_text(c)
+                elif c.type not in ("=>", ",") and body is None:
+                    body = c
+            self.add_exit(dispatch, case_block, label)
+            self.current_block = case_block
+            if body is not None:
+                if body.type in ("block", "compound_statement"):
+                    self.visit_block(body)
+                else:
+                    self.visit(body)
+            if not self.current_block.exits:
+                self.add_exit(self.current_block, after_match)
+        
+        self.current_block = after_match
+
+    visit_match_statement = visit_match_expression
 
     def visit_return_statement(self, node):
         self.add_statement(self.current_block, node)

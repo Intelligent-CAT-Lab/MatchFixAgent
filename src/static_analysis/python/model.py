@@ -1,7 +1,6 @@
 """
 Control flow graph for Python programs.
 """
-
 # Aurelien Coet, 2018.
 
 import ast
@@ -103,9 +102,9 @@ class Block(object):
         src = ""
         for statement in self.statements:
             if type(statement) in [ast.If, ast.For, ast.While, ast.Match]:
-                src += (_to_source(statement)).split("\n")[0] + "\n"
+                src += (_to_source(statement)).split('\n')[0] + "\n"
             elif type(statement) in (ast.FunctionDef, ast.AsyncFunctionDef):
-                src += (_to_source(statement)).split("\n")[0] + "...\n"
+                src += (_to_source(statement)).split('\n')[0] + "...\n"
             else:
                 src += _to_source(statement)
         return src
@@ -120,7 +119,7 @@ class Block(object):
         """
         txt = ""
         for func_name in self.func_calls:
-            txt += func_name + "\n"
+            txt += func_name + '\n'
         return txt
 
 
@@ -150,7 +149,8 @@ class Link(object):
 
     def __repr__(self):
         if self.exitcase is not None:
-            return "{}, with exitcase {}".format(str(self), ast.dump(self.exitcase))
+            return "{}, with exitcase {}".format(str(self),
+                                                 ast.dump(self.exitcase))
         return str(self)
 
     def get_exitcase(self):
@@ -206,10 +206,12 @@ class CFG(object):
 
         # Show the block's function calls in a node.
         if calls and block.func_calls:
-            calls_node = str(block.id) + "_calls"
+            calls_node = str(block.id)+"_calls"
             calls_label = block.get_calls().strip()
-            graph.node(calls_node, label=calls_label, _attributes={"shape": "box"})
-            graph.edge(str(block.id), calls_node, label="calls", _attributes={"style": "dashed"})
+            graph.node(calls_node, label=calls_label,
+                       _attributes={'shape': 'box'})
+            graph.edge(str(block.id), calls_node, label="calls",
+                       _attributes={'style': 'dashed'})
 
         # Recursively visit all the blocks of the CFG.
         for exit in block.exits:
@@ -217,14 +219,16 @@ class CFG(object):
             edgelabel = exit.get_exitcase().strip()
             graph.edge(str(block.id), str(exit.target.id), label=edgelabel)
 
-    def _build_visual(self, format="pdf", calls=True):
-        graph = gv.Digraph(name="cluster" + self.name, format=format, graph_attr={"label": self.name})
+    def _build_visual(self, format='pdf', calls=True):
+        graph = gv.Digraph(name='cluster'+self.name, format=format,
+                           graph_attr={'label': self.name})
         self._visit_blocks(graph, self.entryblock, visited=[], calls=calls)
 
         # Build the subgraphs for the function definitions in the CFG and add
         # them to the graph.
         for subcfg in self.functioncfgs:
-            subgraph = self.functioncfgs[subcfg]._build_visual(format=format, calls=calls)
+            subgraph = self.functioncfgs[subcfg]._build_visual(format=format,
+                                                               calls=calls)
             graph.subgraph(subgraph)
 
         return graph
