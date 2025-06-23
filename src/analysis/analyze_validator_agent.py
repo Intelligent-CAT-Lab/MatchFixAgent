@@ -56,62 +56,58 @@ def main(args):
     # Initialize confusion matrix with zeros
     confusion_df = pd.DataFrame(0, index=tool_outcomes, columns=llm_outcomes)
 
-    for schema_name in data:
-        for class_name in data[schema_name]:
-            for method_name in data[schema_name][class_name]:
+    for item in data:
 
-                total += 1
+        total += 1
 
-                if args.agent_name not in data[schema_name][class_name][method_name]:
-                    continue
+        if args.agent_name not in item:
+            continue
 
-                if not data[schema_name][class_name][method_name][args.agent_name]["status"]:
-                    continue
+        if not item[args.agent_name]["status"]:
+            continue
 
-                total_methods += 1
+        total_methods += 1
 
-                # Get tool validation outcome
-                tool_validation = data[schema_name][class_name][method_name]["graal_validation"]
+        # Get tool validation outcome
+        tool_validation = item["result"]
 
-                # Get LLM prediction
-                llm_prediction = data[schema_name][class_name][method_name][args.agent_name]["output"][
-                    "parsed_final_response"
-                ]["is_equivalent"]
+        # Get LLM prediction
+        llm_prediction = item[args.agent_name]["output"]["verdict"]["parsed_final_response"]["is_equivalent"]
 
-                # Update confusion matrix
-                confusion_df.loc[tool_validation, llm_prediction] += 1
+        # Update confusion matrix
+        confusion_df.loc[tool_validation, llm_prediction] += 1
 
-                # Continue with your existing stats collection
-                tool_validation_dist[tool_validation] += 1
-                equivalency_dist[llm_prediction] += 1
-                total_num_turns += data[schema_name][class_name][method_name][args.agent_name]["output"]["num_turns"]
-                total_cost += data[schema_name][class_name][method_name][args.agent_name]["output"]["total_cost"]
-                total_time += data[schema_name][class_name][method_name][args.agent_name]["output"]["duration_ms"]
+        # Continue with your existing stats collection
+        tool_validation_dist[tool_validation] += 1
+        equivalency_dist[llm_prediction] += 1
+        total_num_turns += item[args.agent_name]["output"]["verdict"]["num_turns"]
+        total_cost += item[args.agent_name]["output"]["verdict"]["total_cost_usd"]
+        total_time += item[args.agent_name]["output"]["verdict"]["duration_ms"]
 
-                # Load and analyze agent trajectory files
-                session_id = data[schema_name][class_name][method_name][args.agent_name]["output"]["session_id"]
-                trajectory_file = os.path.join(args.trajectory_dir, f"{session_id}.jsonl")
-                assert os.path.exists(
-                    trajectory_file
-                ), f"Trajectory file {trajectory_file} does not exist. Please check the session ID."
+        # Load and analyze agent trajectory files
+        session_id = item[args.agent_name]["output"]["verdict"]["session_id"]
+        trajectory_file = os.path.join(args.trajectory_dir, f"{session_id}.jsonl")
+        assert os.path.exists(
+            trajectory_file
+        ), f"Trajectory file {trajectory_file} does not exist. Please check the session ID."
 
-                agent_trajectory = []
-                with open(trajectory_file, "r") as f:
-                    agent_trajectory = [json.loads(line) for line in f]
+        agent_trajectory = []
+        with open(trajectory_file, "r") as f:
+            agent_trajectory = [json.loads(line) for line in f]
 
-                # Count tool calls in agent trajectories
-                for i, item in enumerate(agent_trajectory):
-                    if "message" not in item:
-                        continue
+        # Count tool calls in agent trajectories
+        for i, item in enumerate(agent_trajectory):
+            if "message" not in item:
+                continue
 
-                    message = item["message"]
+            message = item["message"]
 
-                    if message["role"] != "assistant":
-                        continue
+            if message["role"] != "assistant":
+                continue
 
-                    for content in message["content"]:
-                        if content["type"] == "tool_use":
-                            total_tool_calls += 1
+            for content in message["content"]:
+                if content["type"] == "tool_use":
+                    total_tool_calls += 1
 
     # Verify data consistency
     assert total_methods == sum(
