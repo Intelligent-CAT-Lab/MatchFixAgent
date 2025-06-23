@@ -52,6 +52,7 @@ def main():
                     file_path = formatted_schema_file.replace(".", "/").replace("_python_partial", "")
 
                     results = {}
+                    results["id"] = str(len(project_results) + 1)
                     results["project"] = project
                     results["source_path"] = file_path.replace("src/main/", "src/main/java/") + ".java"
                     results["target_path"] = file_path + ".py"

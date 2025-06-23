@@ -144,6 +144,7 @@ def main():
 
                 parsed["target_function"] = target_function.split("\n")
                 parsed = {
+                    "id": str(len(project_results) + 1),
                     "project": parsed["project"],
                     "source_path": parsed["source_path"],
                     "target_path": parsed["target_path"],
