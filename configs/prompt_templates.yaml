@@ -232,19 +232,24 @@ templates:
     test_gen_repair_agent:
       instruction: |-
         <instruction>
-          You are an expert agent specializing in test generation and code repair. Based on the analysis from multiple expert agents regarding functional equivalence between {{ source_language }} and {{ target_language }} implementations of method/function, your task is to:
-          
+
           <functional_equivalence_definition>
             Two code fragments in different programming languages are considered functionally equivalent if, when executed on the same input, they always have identical program states at all corresponding points reachable by program execution, and they both produce the same output upon termination.
           </functional_equivalence_definition>
 
+          You are an expert agent specializing in test generation and code repair. Based on the analysis from multiple expert agents regarding functional equivalence between {{ source_language }} and {{ target_language }} implementations of the given method/function, your task is to generate tests and repair the target implementation if necessary.
+          
           <general_notes>
-            - Focus on corner case scenario suggested by IO agent
+            - Focus on analysis of all agents, specifically corner case scenario suggested by IO agent
                 1) If there is a corner case:
                     - generate tests in both source and target languages assuming the corner case and expose the incorrect translation
                     - generate a correct implementation in the target language that passes the tests
                 2) If there is no corner case:
                     - generate tests in both source and target languages that demonstrate the functional equivalence of the implementations
+            - Execute your generated tests in both languages to verify correctness. If after 3 attempts you cannot expose the functional difference, consider the implementations equivalent
+            - If you find that the target implementation is not functionally equivalent, provide a correct implementation
+            - If you need to create files, use tempfile.NamedTemporaryFile() to create temporary files that will be automatically deleted after the program execution
+            - If you have created extra files, make sure to delete them after you finish your analysis
             - Do not spend time on analyzing anything else and provide your response as soon as possible
           </general_notes>
 
@@ -264,12 +269,13 @@ templates:
     verdict_agent:
       instruction: |-
         <instruction>
-          You are the final verdict agent responsible for synthesizing the analyses from multiple specialized agents regarding the functional equivalence of method/function implementations in {{ source_language }} and {{ target_language }}.
-          
+
           <functional_equivalence_definition>
           Two code fragments in different programming languages are considered functionally equivalent if, when executed on the same input, they always have identical program states at all corresponding points reachable by program execution, and they both produce the same output upon termination.
           </functional_equivalence_definition>
 
+          You are the final verdict agent responsible for synthesizing the analyses from multiple specialized agents regarding the functional equivalence of method/function implementations in {{ source_language }} and {{ target_language }}.
+          
           Your task is to review all agent reports and deliver a final verdict on functional equivalence with high confidence. You have received analyses on:
           - Control flow equivalence
           - Data flow equivalence
@@ -282,8 +288,10 @@ templates:
           Synthesize these perspectives to provide a holistic assessment of functional equivalence, weighing the evidence from each agent appropriately.
 
           <general_notes>
-            - You must only focus on provided analyses and DO NOT perform any additional analysis to determine functional equivalence.
-            - You are expected to provide to provide a final verdict as soon as possible after reviewing all agent reports.
+            - You must only focus on provided analyses and DO NOT perform any additional analysis to determine functional equivalence
+            - If you need to create files, use tempfile.NamedTemporaryFile() to create temporary files that will be automatically deleted after the program execution
+            - If you have created extra files, make sure to delete them after you finish your analysis
+            - You are expected to provide to provide a final verdict as soon as possible after reviewing all agent reports
           </general_notes>
         </instruction>
       response_format: |-
