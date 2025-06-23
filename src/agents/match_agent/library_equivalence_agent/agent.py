@@ -81,10 +81,10 @@ class LibraryEquivalenceAgent:
         self.conversation.add_message(role="user", content=prompt)
 
         try:
-            # Use the dedicated utility function for command execution
-            from src.utils.cmd_utils import run_claude_command
+            # Use the direct Claude API instead of CLI
+            from src.utils.cmd_utils import prompt_claude
 
-            status, agent_output = await run_claude_command(
+            status, agent_output = await prompt_claude(
                 prompt,
                 "",
                 self.model.model_name,
