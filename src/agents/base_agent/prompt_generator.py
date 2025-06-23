@@ -4,11 +4,7 @@ from jinja2 import Template
 
 class BaseAgentPromptGenerator:
 
-    def __init__(
-        self,
-        configs: dict,
-        fragment_details: dict
-    ) -> None:
+    def __init__(self, configs: dict, fragment_details: dict) -> None:
         self.configs = configs
         self.fragment_details = fragment_details
 

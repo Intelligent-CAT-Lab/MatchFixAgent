@@ -168,10 +168,7 @@ class MatchAgent:
 
     # MatchAgent is now a pure orchestrator without command execution functionality
 
-    async def run(
-        self,
-        fragment_details: dict
-    ) -> tuple[bool, dict]:
+    async def run(self, fragment_details: dict) -> tuple[bool, dict]:
         """
         Run the match agent to analyze code equivalence.
 
@@ -187,10 +184,7 @@ class MatchAgent:
         self.logger.info(f"Starting match agent analysis for {fragment_details}")
 
         # Create prompt generator for all agents
-        prompt_generator = MatchAgentPromptGenerator(
-            configs=self.configs,
-            fragment_details=fragment_details
-        )
+        prompt_generator = MatchAgentPromptGenerator(configs=self.configs, fragment_details=fragment_details)
 
         # Run the 6 semantic analyzer agents in parallel
         self.logger.info("Starting parallel execution of 6 semantic analyzer agents")
@@ -199,9 +193,7 @@ class MatchAgent:
             self.control_flow_agent.analyze(
                 prompt_generator, agent_name="match_agent", sub_agent_name="control_flow_agent"
             ),
-            self.data_flow_agent.analyze(
-                prompt_generator, agent_name="match_agent", sub_agent_name="data_flow_agent"
-            ),
+            self.data_flow_agent.analyze(prompt_generator, agent_name="match_agent", sub_agent_name="data_flow_agent"),
             self.io_agent.analyze(prompt_generator, agent_name="match_agent", sub_agent_name="io_agent"),
             self.library_equivalence_agent.analyze(
                 prompt_generator, agent_name="match_agent", sub_agent_name="library_equivalence_agent"
@@ -209,9 +201,7 @@ class MatchAgent:
             self.exception_error_agent.analyze(
                 prompt_generator, agent_name="match_agent", sub_agent_name="exception_error_agent"
             ),
-            self.spec_agent.analyze(
-                prompt_generator, agent_name="match_agent", sub_agent_name="spec_agent"
-            ),
+            self.spec_agent.analyze(prompt_generator, agent_name="match_agent", sub_agent_name="spec_agent"),
         ]
 
         semantic_analyzer_results = await asyncio.gather(*analysis_tasks)
@@ -322,22 +312,20 @@ if __name__ == "__main__":
             "        return ch == '@' || ch == ':' || ch == '%' || ch == '+' || ch == '#' || ch == '<'",
             "                || ch == '>' || ch == '*' || ch == '/' || ch == '!';",
             "    }",
-            ""
+            "",
         ],
         "target_function": [
             "    @staticmethod",
             "    def isValueCode(ch: str) -> bool:",
-            "        return ch in {'@', ':', '%', '+', '#', '<', '>', '*', '/', '!'}"
+            "        return ch in {'@', ':', '%', '+', '#', '<', '>', '*', '/', '!'}",
         ],
         "ground_truth_target_function": "",
         "source_language": "java",
         "target_language": "python",
-        "result": "success"
+        "result": "success",
     }
 
-    status, result = asyncio.run(
-        match_agent.run(fragment_details=fragment_details)
-    )
+    status, result = asyncio.run(match_agent.run(fragment_details=fragment_details))
 
     print("Status:", status)
     print("Result:", json.dumps(result, indent=2))

@@ -38,7 +38,9 @@ def main():
                     if isinstance(schema_data["classes"][class_]["methods"][method_]["graal_validation"], str):
                         validation_result = schema_data["classes"][class_]["methods"][method_]["graal_validation"]
                     elif isinstance(schema_data["classes"][class_]["methods"][method_]["graal_validation"], dict):
-                        validation_result = schema_data["classes"][class_]["methods"][method_]["graal_validation"]["outcome"]
+                        validation_result = schema_data["classes"][class_]["methods"][method_]["graal_validation"][
+                            "outcome"
+                        ]
                     else:
                         raise ValueError(
                             f"Unexpected type for graal_validation: {type(schema_data['classes'][class_]['methods'][method_]['graal_validation'])}"
@@ -50,18 +52,17 @@ def main():
                     file_path = formatted_schema_file.replace(".", "/").replace("_python_partial", "")
 
                     results = {}
-                    results['project'] = project
-                    results['source_path'] = file_path.replace("src/main/", "src/main/java/") + ".java"
-                    results['target_path'] = file_path + ".py"
-                    results['source_function'] = source_code.split("\n")
+                    results["project"] = project
+                    results["source_path"] = file_path.replace("src/main/", "src/main/java/") + ".java"
+                    results["target_path"] = file_path + ".py"
+                    results["source_function"] = source_code.split("\n")
                     results["target_function"] = target_code.split("\n")
-                    results['ground_truth_target_function'] = ''
-                    results['source_language'] = 'java'
-                    results['target_language'] = 'python'
-                    results["result"] = validation_result                    
-                    
-                    project_results.append(results)
+                    results["ground_truth_target_function"] = ""
+                    results["source_language"] = "java"
+                    results["target_language"] = "python"
+                    results["result"] = validation_result
 
+                    project_results.append(results)
 
         with open(f"{output_path}/{project}.json", "w") as f:
             json.dump(project_results, f, indent=4)

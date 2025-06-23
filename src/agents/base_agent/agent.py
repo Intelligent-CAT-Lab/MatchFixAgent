@@ -169,10 +169,7 @@ class BaseAgent:
             self.logger.error("No final response format found in agent output")
             return False, None, "Final response format not found in agent output"
 
-    async def run(
-        self,
-        fragment_details: dict
-    ) -> tuple[bool, dict]:
+    async def run(self, fragment_details: dict) -> tuple[bool, dict]:
         """
         Run the validator agent to check equivalence between source and target code.
 
@@ -193,10 +190,7 @@ class BaseAgent:
         """
         self.logger.info(f"Starting base agent for {fragment_details['source_path']}")
 
-        prompt_generator = BaseAgentPromptGenerator(
-            configs=self.configs,
-            fragment_details=fragment_details
-        )
+        prompt_generator = BaseAgentPromptGenerator(configs=self.configs, fragment_details=fragment_details)
         prompt = prompt_generator.generate_prompt()
 
         self.logger.debug("Generated prompt:")
@@ -333,19 +327,17 @@ if __name__ == "__main__":
             "        return ch == '@' || ch == ':' || ch == '%' || ch == '+' || ch == '#' || ch == '<'",
             "                || ch == '>' || ch == '*' || ch == '/' || ch == '!';",
             "    }",
-            ""
+            "",
         ],
         "target_function": [
             "    @staticmethod",
             "    def isValueCode(ch: str) -> bool:",
-            "        return ch in {'@', ':', '%', '+', '#', '<', '>', '*', '/', '!'}"
+            "        return ch in {'@', ':', '%', '+', '#', '<', '>', '*', '/', '!'}",
         ],
         "ground_truth_target_function": "",
         "source_language": "java",
         "target_language": "python",
-        "result": "success"
+        "result": "success",
     }
 
-    status, result = asyncio.run(
-        validator_agent.run(fragment_details=fragment_details)
-    )
+    status, result = asyncio.run(validator_agent.run(fragment_details=fragment_details))

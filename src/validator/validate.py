@@ -17,10 +17,7 @@ from src.agents.base_agent.agent import BaseAgent
 from src.agents.match_agent.agent import MatchAgent
 
 
-def validate_by_agent(
-    configs: dict,
-    fragment_details: dict
-) -> tuple[bool, dict]:
+def validate_by_agent(configs: dict, fragment_details: dict) -> tuple[bool, dict]:
     """
     Validate a single method translation using the ValidatorAgent.
 
@@ -42,9 +39,7 @@ def validate_by_agent(
     else:
         raise ValueError(f"Agent {configs['agent_name']} is not supported")
 
-    status, agent_output = asyncio.run(
-        validator_agent.run(fragment_details)
-    )
+    status, agent_output = asyncio.run(validator_agent.run(fragment_details))
 
     return status, agent_output
 
@@ -100,10 +95,7 @@ def main(args):
             if fragment_details[configs["agent_name"]]["status"]:
                 continue
 
-        status, agent_output = validate_by_agent(
-            configs,
-            fragment_details
-        )
+        status, agent_output = validate_by_agent(configs, fragment_details)
 
         fragment_details[configs["agent_name"]] = {
             "status": status,

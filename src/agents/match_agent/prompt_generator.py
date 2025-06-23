@@ -7,6 +7,9 @@ from jinja2 import Template
 
 from src.static_analysis.java.cfg_builder import CFGBuilder as JavaCFGBuilder
 from src.static_analysis.python.cfg_builder import CFGBuilder as PythonCFGBuilder
+from src.static_analysis.rust.cfg_builder import CFGBuilder as RustCFGBuilder
+from src.static_analysis.go.cfg_builder import CFGBuilder as GoCFGBuilder
+from src.static_analysis.c.cfg_builder import CFGBuilder as CCFGBuilder
 
 
 class MatchAgentPromptGenerator:
@@ -14,11 +17,7 @@ class MatchAgentPromptGenerator:
     Generates prompts for different match agent components based on templates.
     """
 
-    def __init__(
-        self,
-        configs: dict,
-        fragment_details: dict
-    ) -> None:
+    def __init__(self, configs: dict, fragment_details: dict) -> None:
         """
         Initialize the prompt generator.
 
@@ -61,6 +60,21 @@ class MatchAgentPromptGenerator:
                 cfg_builder = PythonCFGBuilder()
                 cfg = cfg_builder.build_from_file(method_name, code_path)
                 dot_file_path = f"{method_name}_python_cfg"
+                cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
+            elif language.lower() == "rust":
+                cfg_builder = RustCFGBuilder()
+                cfg = cfg_builder.build_from_file(method_name, code_path)
+                dot_file_path = f"{method_name}_rust_cfg"
+                cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
+            elif language.lower() == "go":
+                cfg_builder = GoCFGBuilder()
+                cfg = cfg_builder.build_from_file(method_name, code_path)
+                dot_file_path = f"{method_name}_go_cfg"
+                cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
+            elif language.lower() == "c":
+                cfg_builder = CCFGBuilder()
+                cfg = cfg_builder.build_from_file(method_name, code_path)
+                dot_file_path = f"{method_name}_c_cfg"
                 cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
             else:
                 return "Unsupported language for CFG generation"
@@ -125,6 +139,21 @@ class MatchAgentPromptGenerator:
                 cfg = cfg_builder.build_from_file(method_name, code_path)
                 dot_file_path = f"{method_name}_python_dfg"
                 cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
+            elif language.lower() == "rust":
+                cfg_builder = RustCFGBuilder()
+                cfg = cfg_builder.build_from_file(method_name, code_path)
+                dot_file_path = f"{method_name}_rust_dfg"
+                cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
+            elif language.lower() == "go":
+                cfg_builder = GoCFGBuilder()
+                cfg = cfg_builder.build_from_file(method_name, code_path)
+                dot_file_path = f"{method_name}_go_dfg"
+                cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
+            elif language.lower() == "c":
+                cfg_builder = CCFGBuilder()
+                cfg = cfg_builder.build_from_file(method_name, code_path)
+                dot_file_path = f"{method_name}_c_dfg"
+                cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
             else:
                 return "Unsupported language for DFG generation"
 
@@ -178,8 +207,8 @@ class MatchAgentPromptGenerator:
 
             # Generate CFG for control flow agent
             if agent_type == "control_flow_agent":
-                source_cfg = self.generate_cfg("java", self.source_method_implementation, '')
-                target_cfg = self.generate_cfg("python", self.target_method_implementation, '')
+                source_cfg = self.generate_cfg(self.configs["source_language"], self.source_method_implementation, "")
+                target_cfg = self.generate_cfg(self.configs["target_language"], self.target_method_implementation, "")
 
                 instruction = template.render(
                     {
@@ -191,8 +220,8 @@ class MatchAgentPromptGenerator:
                 )
             # Generate DFG for data flow agent
             elif agent_type == "data_flow_agent":
-                source_dfg = self.generate_dfg("java", self.source_method_implementation, '')
-                target_dfg = self.generate_dfg("python", self.target_method_implementation, '')
+                source_dfg = self.generate_dfg(self.configs["source_language"], self.source_method_implementation, "")
+                target_dfg = self.generate_dfg(self.configs["target_language"], self.target_method_implementation, "")
 
                 instruction = template.render(
                     {
@@ -252,12 +281,5 @@ class MatchAgentPromptGenerator:
         # trim leading indentation from source and target code (e.g., some languages like Python only parse when the indentation is correct)
         source_code = self.fragment_details["source_function"].copy()
         target_code = self.fragment_details["target_function"].copy()
-        for i in range(len(source_code)):
-            if source_code[i].startswith("    "):
-                source_code[i] = source_code[i][4:]
-        for i in range(len(target_code)):
-            if target_code[i].startswith("    "):
-                target_code[i] = target_code[i][4:]
-
         self.source_method_implementation = "\n".join(source_code)
         self.target_method_implementation = "\n".join(target_code)
