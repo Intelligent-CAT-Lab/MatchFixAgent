@@ -71,6 +71,40 @@ def cleanup():
             subprocess.run(["git", "restore", path], check=False)
 
 
+def insert_translation(item: dict):
+    """
+    Insert a translation item into the RustRepoTrans tool results.
+
+    This function adds a translation item to the RustRepoTrans tool results
+    by appending it to the existing JSON file.
+
+    Args:
+        item (dict): The translation item to insert, containing:
+            - source_language: Source language of the method
+            - target_language: Target language of the method
+            - source_code: Source code in the source language
+            - target_code: Target code in the target language
+            - tool_name: Name of the tool used for translation
+    """
+    rust_file_path = os.path.join("data", "tool_projects", "rustrepotrans", item["target_path"])
+    assert os.path.exists(rust_file_path), f"File {rust_file_path} does not exist"
+
+    content = ""
+    with open(rust_file_path, "r") as f:
+        content = f.read()
+
+    source_code = "\n".join(item["ground_truth_target_function"])
+    target_code = "\n".join(item["target_function"])
+
+    if source_code not in content:
+        raise ValueError(f"Source code not found in {rust_file_path}")
+
+    content = content.replace(source_code, "\n" + target_code + "\n")
+
+    with open(rust_file_path, "w") as f:
+        f.write(content)
+
+
 def main(args):
     """
     Main function to process all methods in a project file and validate translations.
@@ -100,6 +134,13 @@ def main(args):
         if configs["agent_name"] in fragment_details:
             if fragment_details[configs["agent_name"]]["status"]:
                 continue
+
+        if "rustrepotrans" == configs["tool_name"]:
+            try:
+                insert_translation(fragment_details)
+            except ValueError as e:
+                print(f"Error inserting translation: {e}")
+                raise
 
         status, agent_output = validate_by_agent(configs, fragment_details)
 
