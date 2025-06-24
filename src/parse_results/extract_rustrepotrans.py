@@ -147,7 +147,7 @@ def main():
                     "id": str(len(project_results) + 1),
                     "project": parsed["project"],
                     "source_path": parsed["source_path"],
-                    "target_path": parsed["target_path"],
+                    "target_path": parsed["target_path"].replace("/rust/", "/rust/src/") if parsed["project"] == "deltachat-core" else parsed["target_path"],
                     "source_function": parsed["source_function"],
                     "target_function": parsed["target_function"],
                     "ground_truth_target_function": parsed["ground_truth_target_function"],
