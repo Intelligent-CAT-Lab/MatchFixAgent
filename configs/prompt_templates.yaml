@@ -240,17 +240,15 @@ templates:
           You are an expert agent specializing in test generation and code repair. Based on the analysis from multiple expert agents regarding functional equivalence between {{ source_language }} and {{ target_language }} implementations of the given method/function, your task is to generate tests and repair the target implementation if necessary.
           
           <general_notes>
-            - Focus on analysis of all agents, specifically corner case scenario suggested by IO agent
-                1) If there is a corner case:
-                    - generate tests in both source and target languages assuming the corner case and expose the incorrect translation
-                    - generate a correct implementation in the target language that passes the tests
-                2) If there is no corner case:
-                    - generate tests in both source and target languages that demonstrate the functional equivalence of the implementations
-            - Execute your generated tests in both languages to verify correctness. If after 3 attempts you cannot expose the functional difference, consider the implementations equivalent
-            - If you find that the target implementation is not functionally equivalent, provide a correct implementation
-            - If you need to create files, use tempfile.NamedTemporaryFile() to create temporary files that will be automatically deleted after the program execution
-            - If you have created extra files, make sure to delete them after you finish your analysis
-            - Do not spend time on analyzing anything else and provide your response as soon as possible
+            - Please DO two things before making a decision:
+              1. Consider the semantic analysis results provided in the <semantic_analysis_results> section
+              2. Analyze the provided source and target code fragments to determine if they are functionally equivalent
+            - Your tests should be generated in target file path as standalone files and stored with other tests (see how existing tests are stored). Here is some guide on how to properly store tests for each language:
+              1. Rust: You can create a new test file inside the given <target_fragment_path> and then execute `cargo test --all-features`
+              2. Python: You can create a new test file which subclasses `unittest.TestCase` and includes your tests. Execute the tests with `python -m unittest` or `pytest`
+            - It is IMPORTANT to execute your generated tests in both languages to verify correctness. DO NOT give your response until you have executed the tests in both languages and captured the output.
+            - If you find that the target implementation is not functionally equivalent, provide a correct implementation in your response
+            - To fix the <target_fragment_method>, YOU MUST make edits in-place in the file given in <target_fragment_path>
           </general_notes>
 
         </instruction>
@@ -262,7 +260,9 @@ templates:
           "is_equivalent": "yes" / "no" / "need_more_context",
           "explanation": "<explanation>",
           "source_test_file_implementation": "<source_test_file_implementation>",
+          "source_test_execution_outcome": "<stdout/stderr output of the test execution in source language. This should be captured from terminal output after executing the test and should PASS in source language>",
           "target_test_file_implementation": "<target_test_file_implementation>",
+          "target_test_execution_outcome": "<stdout/stderr output of the test execution in target language. This should be captured from terminal output after executing the test and should FAIL in target language if is_equivalent is 'no', otherwise should PASS in target language>",
           "correct_target_method_implementation": "<correct_target_method_implementation if is_equivalent is 'no', otherwise empty. this should PASS on the previously failed tests in target language>"
         }
         </final_response_format>
@@ -289,9 +289,8 @@ templates:
 
           <general_notes>
             - You must only focus on provided analyses and DO NOT perform any additional analysis to determine functional equivalence
-            - If you need to create files, use tempfile.NamedTemporaryFile() to create temporary files that will be automatically deleted after the program execution
-            - If you have created extra files, make sure to delete them after you finish your analysis
             - You are expected to provide to provide a final verdict as soon as possible after reviewing all agent reports
+            - You MUST give more attention to the analyses of test generation and repair agent, as it provides concrete evidence of functional equivalence or differences through test generation and execution
           </general_notes>
         </instruction>
       response_format: |-
