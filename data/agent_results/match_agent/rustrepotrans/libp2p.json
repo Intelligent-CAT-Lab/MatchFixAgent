@@ -5,8 +5,8 @@
         "source_path": "projects/libp2p/python/libp2p/crypto/ed25519.py",
         "target_path": "projects/libp2p/rust/identity/src/ed25519.rs",
         "source_function": [
-            "def get_public_key(self) -> PublicKey:",
-            "    return Ed25519PublicKey(self.impl.public_key)"
+            "    def get_public_key(self) -> PublicKey:",
+            "        return Ed25519PublicKey(self.impl.public_key)"
         ],
         "target_function": [
             "pub fn public(&self) -> PublicKey {",
@@ -14,9 +14,9 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn public(&self) -> PublicKey {",
-            "    PublicKey(self.0.verifying_key())",
-            "}"
+            "    pub fn public(&self) -> PublicKey {",
+            "        PublicKey(self.0.verifying_key())",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -28,8 +28,8 @@
         "source_path": "projects/libp2p/python/libp2p/crypto/secp256k1.py",
         "target_path": "projects/libp2p/rust/identity/src/ecdsa.rs",
         "source_function": [
-            "def sign(self, data: bytes) -> bytes:",
-            "    return self.impl.sign(data)"
+            "    def sign(self, data: bytes) -> bytes:",
+            "        return self.impl.sign(data)"
         ],
         "target_function": [
             "pub fn sign(&self, msg: &[u8]) -> Vec<u8> {",
@@ -37,11 +37,11 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn sign(&self, msg: &[u8]) -> Vec<u8> {",
-            "    let signature: p256::ecdsa::DerSignature = self.0.sign(msg);",
+            "    pub fn sign(&self, msg: &[u8]) -> Vec<u8> {",
+            "        let signature: p256::ecdsa::DerSignature = self.0.sign(msg);",
             "",
-            "    signature.as_bytes().to_owned()",
-            "}"
+            "        signature.as_bytes().to_owned()",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -53,8 +53,8 @@
         "source_path": "projects/libp2p/python/libp2p/tools/async_service/abc.py",
         "target_path": "projects/libp2p/rust/protocols/kad/src/jobs.rs",
         "source_function": [
-            "def is_running(self) -> bool:",
-            "    return self.is_started and not self.is_finished"
+            "    def is_running(self) -> bool:",
+            "        return self.is_started and not self.is_finished"
         ],
         "target_function": [
             "fn is_running(&self) -> bool {",
@@ -62,12 +62,12 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "fn is_running(&self) -> bool {",
-            "    match self.state {",
-            "        PeriodicJobState::Running(..) => true,",
-            "        PeriodicJobState::Waiting(..) => false,",
-            "    }",
-            "}"
+            "    fn is_running(&self) -> bool {",
+            "        match self.state {",
+            "            PeriodicJobState::Running(..) => true,",
+            "            PeriodicJobState::Waiting(..) => false,",
+            "        }",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -79,13 +79,13 @@
         "source_path": "projects/libp2p/python/libp2p/crypto/ed25519.py",
         "target_path": "projects/libp2p/rust/identity/src/ed25519.rs",
         "source_function": [
-            "def verify(self, data: bytes, signature: bytes) -> bool:",
-            "    verify_key = VerifyKey(self.to_bytes())",
-            "    try:",
-            "        verify_key.verify(data, signature)",
-            "    except BadSignatureError:",
-            "        return False",
-            "    return True"
+            "    def verify(self, data: bytes, signature: bytes) -> bool:",
+            "        verify_key = VerifyKey(self.to_bytes())",
+            "        try:",
+            "            verify_key.verify(data, signature)",
+            "        except BadSignatureError:",
+            "            return False",
+            "        return True"
         ],
         "target_function": [
             "pub fn verify(&self, msg: &[u8], sig: &[u8]) -> bool {",
@@ -93,11 +93,11 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn verify(&self, msg: &[u8], sig: &[u8]) -> bool {",
-            "    ed25519::Signature::try_from(sig)",
-            "        .and_then(|s| self.0.verify(msg, &s))",
-            "        .is_ok()",
-            "}"
+            "    pub fn verify(&self, msg: &[u8], sig: &[u8]) -> bool {",
+            "        ed25519::Signature::try_from(sig)",
+            "            .and_then(|s| self.0.verify(msg, &s))",
+            "            .is_ok()",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -109,8 +109,8 @@
         "source_path": "projects/libp2p/python/libp2p/network/swarm.py",
         "target_path": "projects/libp2p/rust/swarm/src/dial_opts.rs",
         "source_function": [
-            "def get_connection_id(self):",
-            "    return self.connection_id"
+            "    def get_connection_id(self):",
+            "        return self.connection_id"
         ],
         "target_function": [
             "pub fn connection_id(&self) -> ConnectionId {",
@@ -118,9 +118,9 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn connection_id(&self) -> ConnectionId {",
-            "    self.connection_id",
-            "}"
+            "    pub fn connection_id(&self) -> ConnectionId {",
+            "        self.connection_id",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -132,22 +132,22 @@
         "source_path": "projects/libp2p/python/libp2p/pubsub/mcache.py",
         "target_path": "projects/libp2p/rust/protocols/gossipsub/src/mcache.rs",
         "source_function": [
-            "def shift(self) -> None:",
-            "    \"\"\"",
-            "    Shift the window over by 1 position, dropping the last element of the history.",
-            "    \"\"\"",
-            "    last_entries: List[CacheEntry] = self.history[len(self.history) - 1]",
+            "    def shift(self) -> None:",
+            "        \"\"\"",
+            "        Shift the window over by 1 position, dropping the last element of the history.",
+            "        \"\"\"",
+            "        last_entries: List[CacheEntry] = self.history[len(self.history) - 1]",
             "",
-            "    for entry in last_entries:",
-            "        self.msgs.pop(entry.mid)",
+            "        for entry in last_entries:",
+            "            self.msgs.pop(entry.mid)",
             "",
-            "    i: int = len(self.history) - 2",
+            "        i: int = len(self.history) - 2",
             "",
-            "    while i >= 0:",
-            "        self.history[i + 1] = self.history[i]",
-            "        i -= 1",
+            "        while i >= 0:",
+            "            self.history[i + 1] = self.history[i]",
+            "            i -= 1",
             "",
-            "    self.history[0] = []"
+            "        self.history[0] = []"
         ],
         "target_function": [
             "pub(crate) fn shift(&mut self) {",
@@ -167,27 +167,27 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub(crate) fn shift(&mut self) {",
-            "    for entry in self.history.pop().expect(\"history is always > 1\") {",
-            "        if let Some((msg, _)) = self.msgs.remove(&entry.mid) {",
-            "            if !msg.validated {",
-            "                // If GossipsubConfig::validate_messages is true, the implementing",
-            "                // application has to ensure that Gossipsub::validate_message gets called for",
-            "                // each received message within the cache timeout time.\"",
-            "                tracing::debug!(",
-            "                    message=%&entry.mid,",
-            "                    \"The message got removed from the cache without being validated.\"",
-            "                );",
+            "    pub(crate) fn shift(&mut self) {",
+            "        for entry in self.history.pop().expect(\"history is always > 1\") {",
+            "            if let Some((msg, _)) = self.msgs.remove(&entry.mid) {",
+            "                if !msg.validated {",
+            "                    // If GossipsubConfig::validate_messages is true, the implementing",
+            "                    // application has to ensure that Gossipsub::validate_message gets called for",
+            "                    // each received message within the cache timeout time.\"",
+            "                    tracing::debug!(",
+            "                        message=%&entry.mid,",
+            "                        \"The message got removed from the cache without being validated.\"",
+            "                    );",
+            "                }",
             "            }",
+            "            tracing::trace!(message=%&entry.mid, \"Remove message from the cache\");",
+            "",
+            "            self.iwant_counts.remove(&entry.mid);",
             "        }",
-            "        tracing::trace!(message=%&entry.mid, \"Remove message from the cache\");",
             "",
-            "        self.iwant_counts.remove(&entry.mid);",
-            "    }",
-            "",
-            "    // Insert an empty vec in position 0",
-            "    self.history.insert(0, Vec::new());",
-            "}"
+            "        // Insert an empty vec in position 0",
+            "        self.history.insert(0, Vec::new());",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -199,8 +199,8 @@
         "source_path": "projects/libp2p/python/libp2p/crypto/ed25519.py",
         "target_path": "projects/libp2p/rust/identity/src/ed25519.rs",
         "source_function": [
-            "def to_bytes(self) -> bytes:",
-            "    return bytes(self.impl)"
+            "    def to_bytes(self) -> bytes:",
+            "        return bytes(self.impl)"
         ],
         "target_function": [
             "pub fn to_bytes(&self) -> [u8; 32] {",
@@ -208,9 +208,9 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn to_bytes(&self) -> [u8; 32] {",
-            "    self.0.to_bytes()",
-            "}"
+            "    pub fn to_bytes(&self) -> [u8; 32] {",
+            "        self.0.to_bytes()",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -222,17 +222,17 @@
         "source_path": "projects/libp2p/python/libp2p/pubsub/mcache.py",
         "target_path": "projects/libp2p/rust/protocols/gossipsub/src/mcache.rs",
         "source_function": [
-            "def __init__(self, gossip_size: int, history_size: int) -> None:",
-            "    self.gossip_size = gossip_size",
+            "    def __init__(self, gossip_size: int, history_size: int) -> None:",
+            "        self.gossip_size = gossip_size",
             "",
-            "    # (seqno, from_id) -> rpc message",
-            "    self.msgs = dict()",
+            "        # (seqno, from_id) -> rpc message",
+            "        self.msgs = dict()",
             "",
-            "    self.iwant_counts = dict()",
-            "    ",
-            "    # max length of history_size. each item is a list of CacheEntry.",
-            "    # messages lost upon shift().",
-            "    self.history = [[] for _ in range(history_size)]"
+            "        self.iwant_counts = dict()",
+            "        ",
+            "        # max length of history_size. each item is a list of CacheEntry.",
+            "        # messages lost upon shift().",
+            "        self.history = [[] for _ in range(history_size)]"
         ],
         "target_function": [
             "pub(crate) fn new(gossip: usize, history_capacity: usize) -> Self {",
@@ -245,14 +245,14 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub(crate) fn new(gossip: usize, history_capacity: usize) -> Self {",
-            "    MessageCache {",
-            "        gossip,",
-            "        msgs: HashMap::default(),",
-            "        iwant_counts: HashMap::default(),",
-            "        history: vec![Vec::new(); history_capacity],",
-            "    }",
-            "}"
+            "    pub(crate) fn new(gossip: usize, history_capacity: usize) -> Self {",
+            "        MessageCache {",
+            "            gossip,",
+            "            msgs: HashMap::default(),",
+            "            iwant_counts: HashMap::default(),",
+            "            history: vec![Vec::new(); history_capacity],",
+            "        }",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -264,20 +264,20 @@
         "source_path": "projects/libp2p/python/libp2p/peer/peerstore_interface.py",
         "target_path": "projects/libp2p/rust/protocols/kad/src/record/store/memory.rs",
         "source_function": [
-            "def get(self, peer_id: ID, key: str) -> Any:",
-            "    \"\"\"",
-            "    :param peer_id: peer ID to get peer data for",
-            "    :param key: the key to search value for",
-            "    :return: value corresponding to the key",
-            "    :raise PeerStoreError: if peer ID or value not found",
-            "    \"\"\"",
-            "    if peer_id in self.peer_data_map:",
-            "        try:",
-            "            val = self.peer_data_map[peer_id].get_metadata(key)",
-            "        except PeerDataError as error:",
-            "            raise PeerStoreError() from error",
-            "        return val",
-            "    raise PeerStoreError(\"peer ID not found\")"
+            "    def get(self, peer_id: ID, key: str) -> Any:",
+            "        \"\"\"",
+            "        :param peer_id: peer ID to get peer data for",
+            "        :param key: the key to search value for",
+            "        :return: value corresponding to the key",
+            "        :raise PeerStoreError: if peer ID or value not found",
+            "        \"\"\"",
+            "        if peer_id in self.peer_data_map:",
+            "            try:",
+            "                val = self.peer_data_map[peer_id].get_metadata(key)",
+            "            except PeerDataError as error:",
+            "                raise PeerStoreError() from error",
+            "            return val",
+            "        raise PeerStoreError(\"peer ID not found\")"
         ],
         "target_function": [
             "fn get(&self, k: &Key) -> Option<Cow<'_, Record>> {",
@@ -285,9 +285,9 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "fn get(&self, k: &Key) -> Option<Cow<'_, Record>> {",
-            "    self.records.get(k).map(Cow::Borrowed)",
-            "}"
+            "    fn get(&self, k: &Key) -> Option<Cow<'_, Record>> {",
+            "        self.records.get(k).map(Cow::Borrowed)",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -299,11 +299,11 @@
         "source_path": "projects/libp2p/python/libp2p/peer/peerdata.py",
         "target_path": "projects/libp2p/rust/swarm/src/lib.rs",
         "source_function": [
-            "def add_addrs(self, addrs: Sequence[Multiaddr]) -> None:",
-            "    \"\"\"",
-            "    :param addrs: multiaddresses to add",
-            "    \"\"\"",
-            "    self.addrs.extend(addrs)"
+            "    def add_addrs(self, addrs: Sequence[Multiaddr]) -> None:",
+            "        \"\"\"",
+            "        :param addrs: multiaddresses to add",
+            "        \"\"\"",
+            "        self.addrs.extend(addrs)"
         ],
         "target_function": [
             "pub fn add_external_address(&mut self, a: Multiaddr) {",
@@ -317,13 +317,13 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn add_external_address(&mut self, a: Multiaddr) {",
-            "    self.behaviour",
-            "        .on_swarm_event(FromSwarm::ExternalAddrConfirmed(ExternalAddrConfirmed {",
-            "            addr: &a,",
-            "        }));",
-            "    self.confirmed_external_addr.insert(a);",
-            "}"
+            "    pub fn add_external_address(&mut self, a: Multiaddr) {",
+            "        self.behaviour",
+            "            .on_swarm_event(FromSwarm::ExternalAddrConfirmed(ExternalAddrConfirmed {",
+            "                addr: &a,",
+            "            }));",
+            "        self.confirmed_external_addr.insert(a);",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -335,8 +335,8 @@
         "source_path": "projects/libp2p/python/libp2p/tools/async_service/trio_service.py",
         "target_path": "projects/libp2p/rust/protocols/kad/src/query/peers/closest.rs",
         "source_function": [
-            "def is_finished(self) -> bool:",
-            "    return self._finished.is_set()"
+            "    def is_finished(self) -> bool:",
+            "        return self._finished.is_set()"
         ],
         "target_function": [
             "pub fn is_finished(&self) -> bool {",
@@ -344,9 +344,9 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn is_finished(&self) -> bool {",
-            "    self.state == State::Finished",
-            "}"
+            "    pub fn is_finished(&self) -> bool {",
+            "        self.state == State::Finished",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -358,8 +358,8 @@
         "source_path": "projects/libp2p/python/libp2p/host/basic_host.py",
         "target_path": "projects/libp2p/rust/swarm/src/lib.rs",
         "source_function": [
-            "async def disconnect(self, peer_id: ID) -> None:",
-            "    await self._network.close_peer(peer_id)"
+            "    async def disconnect(self, peer_id: ID) -> None:",
+            "        await self._network.close_peer(peer_id)"
         ],
         "target_function": [
             "pub fn disconnect_peer_id(&mut self, peer_id: PeerId) -> Result<(), ()> {",
@@ -372,16 +372,16 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn disconnect_peer_id(&mut self, peer_id: PeerId) -> Result<(), ()> {",
-            "    let was_connected = self.pool.is_connected(peer_id);",
-            "    self.pool.disconnect(peer_id);",
+            "    pub fn disconnect_peer_id(&mut self, peer_id: PeerId) -> Result<(), ()> {",
+            "        let was_connected = self.pool.is_connected(peer_id);",
+            "        self.pool.disconnect(peer_id);",
             "",
-            "    if was_connected {",
-            "        Ok(())",
-            "    } else {",
-            "        Err(())",
-            "    }",
-            "}"
+            "        if was_connected {",
+            "            Ok(())",
+            "        } else {",
+            "            Err(())",
+            "        }",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -393,16 +393,16 @@
         "source_path": "projects/libp2p/python/libp2p/pubsub/mcache.py",
         "target_path": "projects/libp2p/rust/protocols/gossipsub/src/mcache.rs",
         "source_function": [
-            "def put(self, msg: rpc_pb2.Message) -> None:",
-            "    \"\"\"",
-            "    Put a message into the mcache.",
+            "    def put(self, msg: rpc_pb2.Message) -> None:",
+            "        \"\"\"",
+            "        Put a message into the mcache.",
             "",
-            "    :param msg: The rpc message to put in. Should contain seqno and from_id",
-            "    \"\"\"",
-            "    mid: Tuple[bytes, bytes] = (msg.seqno, msg.from_id)",
-            "    self.msgs[mid] = msg",
+            "        :param msg: The rpc message to put in. Should contain seqno and from_id",
+            "        \"\"\"",
+            "        mid: Tuple[bytes, bytes] = (msg.seqno, msg.from_id)",
+            "        self.msgs[mid] = msg",
             "",
-            "    self.history[0].append(CacheEntry(mid, msg.topicIDs))"
+            "        self.history[0].append(CacheEntry(mid, msg.topicIDs))"
         ],
         "target_function": [
             "pub(crate) fn put(&mut self, message_id: &MessageId, msg: RawMessage) -> bool {",
@@ -420,25 +420,25 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub(crate) fn put(&mut self, message_id: &MessageId, msg: RawMessage) -> bool {",
-            "    match self.msgs.entry(message_id.clone()) {",
-            "        Entry::Occupied(_) => {",
-            "            // Don't add duplicate entries to the cache.",
-            "            false",
-            "        }",
-            "        Entry::Vacant(entry) => {",
-            "            let cache_entry = CacheEntry {",
-            "                mid: message_id.clone(),",
-            "                topic: msg.topic.clone(),",
-            "            };",
-            "            entry.insert((msg, HashSet::default()));",
-            "            self.history[0].push(cache_entry);",
+            "    pub(crate) fn put(&mut self, message_id: &MessageId, msg: RawMessage) -> bool {",
+            "        match self.msgs.entry(message_id.clone()) {",
+            "            Entry::Occupied(_) => {",
+            "                // Don't add duplicate entries to the cache.",
+            "                false",
+            "            }",
+            "            Entry::Vacant(entry) => {",
+            "                let cache_entry = CacheEntry {",
+            "                    mid: message_id.clone(),",
+            "                    topic: msg.topic.clone(),",
+            "                };",
+            "                entry.insert((msg, HashSet::default()));",
+            "                self.history[0].push(cache_entry);",
             "",
-            "            tracing::trace!(message=?message_id, \"Put message in mcache\");",
-            "            true",
+            "                tracing::trace!(message=?message_id, \"Put message in mcache\");",
+            "                true",
+            "            }",
             "        }",
-            "    }",
-            "}"
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -450,9 +450,9 @@
         "source_path": "projects/libp2p/python/libp2p/crypto/rsa.py",
         "target_path": "projects/libp2p/rust/identity/src/rsa.rs",
         "source_function": [
-            "def sign(self, data: bytes) -> bytes:",
-            "    h = SHA256.new(data)",
-            "    return pkcs1_15.new(self.impl).sign(h)"
+            "    def sign(self, data: bytes) -> bytes:",
+            "        h = SHA256.new(data)",
+            "        return pkcs1_15.new(self.impl).sign(h)"
         ],
         "target_function": [
             "pub fn sign(&self, data: &[u8]) -> Result<Vec<u8>, SigningError> {",
@@ -467,14 +467,14 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn sign(&self, data: &[u8]) -> Result<Vec<u8>, SigningError> {",
-            "    let mut signature = vec![0; self.0.public().modulus_len()];",
-            "    let rng = SystemRandom::new();",
-            "    match self.0.sign(&RSA_PKCS1_SHA256, &rng, data, &mut signature) {",
-            "        Ok(()) => Ok(signature),",
-            "        Err(e) => Err(SigningError::new(\"RSA\").source(e)),",
-            "    }",
-            "}"
+            "    pub fn sign(&self, data: &[u8]) -> Result<Vec<u8>, SigningError> {",
+            "        let mut signature = vec![0; self.0.public().modulus_len()];",
+            "        let rng = SystemRandom::new();",
+            "        match self.0.sign(&RSA_PKCS1_SHA256, &rng, data, &mut signature) {",
+            "            Ok(()) => Ok(signature),",
+            "            Err(e) => Err(SigningError::new(\"RSA\").source(e)),",
+            "        }",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -486,10 +486,10 @@
         "source_path": "projects/libp2p/python/libp2p/crypto/ed25519.py",
         "target_path": "projects/libp2p/rust/identity/src/ed25519.rs",
         "source_function": [
-            "def sign(self, data: bytes) -> bytes:",
-            "    h = SHA256.new(data)",
-            "    signing_key = SigningKey(self.to_bytes())",
-            "    return signing_key.sign(h.digest())"
+            "    def sign(self, data: bytes) -> bytes:",
+            "        h = SHA256.new(data)",
+            "        signing_key = SigningKey(self.to_bytes())",
+            "        return signing_key.sign(h.digest())"
         ],
         "target_function": [
             "pub fn sign(&self, msg: &[u8]) -> Vec<u8> {",
@@ -497,9 +497,9 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn sign(&self, msg: &[u8]) -> Vec<u8> {",
-            "    self.0.sign(msg).to_bytes().to_vec()",
-            "}"
+            "    pub fn sign(&self, msg: &[u8]) -> Vec<u8> {",
+            "        self.0.sign(msg).to_bytes().to_vec()",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -511,14 +511,14 @@
         "source_path": "projects/libp2p/python/libp2p/peer/peerdata.py",
         "target_path": "projects/libp2p/rust/identity/src/ecdsa.rs",
         "source_function": [
-            "def get_pubkey(self) -> PublicKey:",
-            "    \"\"\"",
-            "    :return: public key of the peer",
-            "    :raise PeerDataError: if public key not found",
-            "    \"\"\"",
-            "    if self.pubkey is None:",
-            "        raise PeerDataError(\"public key not found\")",
-            "    return self.pubkey"
+            "    def get_pubkey(self) -> PublicKey:",
+            "        \"\"\"",
+            "        :return: public key of the peer",
+            "        :raise PeerDataError: if public key not found",
+            "        \"\"\"",
+            "        if self.pubkey is None:",
+            "            raise PeerDataError(\"public key not found\")",
+            "        return self.pubkey"
         ],
         "target_function": [
             "pub fn public(&self) -> &PublicKey {",
@@ -526,9 +526,9 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn public(&self) -> &PublicKey {",
-            "    &self.public",
-            "}"
+            "    pub fn public(&self) -> &PublicKey {",
+            "        &self.public",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -540,8 +540,8 @@
         "source_path": "projects/libp2p/python/libp2p/peer/id.py",
         "target_path": "projects/libp2p/rust/identity/src/peer_id.rs",
         "source_function": [
-            "def to_base58(self) -> str:",
-            "    return base58.b58encode(self._bytes).decode()"
+            "    def to_base58(self) -> str:",
+            "        return base58.b58encode(self._bytes).decode()"
         ],
         "target_function": [
             "pub fn to_base58(&self) -> String {",
@@ -549,9 +549,9 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn to_base58(self) -> String {",
-            "    bs58::encode(self.to_bytes()).into_string()",
-            "}"
+            "    pub fn to_base58(self) -> String {",
+            "        bs58::encode(self.to_bytes()).into_string()",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -563,8 +563,8 @@
         "source_path": "projects/libp2p/python/libp2p/security/secio/transport.py",
         "target_path": "projects/libp2p/rust/transports/tls/src/certificate.rs",
         "source_function": [
-            "def calculate_peer_id(self) -> PeerID:",
-            "    return PeerID.from_pubkey(self.public_key)"
+            "    def calculate_peer_id(self) -> PeerID:",
+            "        return PeerID.from_pubkey(self.public_key)"
         ],
         "target_function": [
             "pub fn peer_id(&self) -> PeerId {",
@@ -572,9 +572,9 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn peer_id(&self) -> PeerId {",
-            "    self.extension.public_key.to_peer_id()",
-            "}"
+            "    pub fn peer_id(&self) -> PeerId {",
+            "        self.extension.public_key.to_peer_id()",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -586,8 +586,8 @@
         "source_path": "projects/libp2p/python/libp2p/pubsub/pubsub.py",
         "target_path": "projects/libp2p/rust/protocols/gossipsub/src/config.rs",
         "source_function": [
-            "def message_id(self, msg: rpc_pb2.Message):",
-            "    return self._msg_id_constructor(msg)"
+            "    def message_id(self, msg: rpc_pb2.Message):",
+            "        return self._msg_id_constructor(msg)"
         ],
         "target_function": [
             "pub fn message_id(&self, message: &Message) -> MessageId {",
@@ -595,9 +595,9 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn message_id(&self, message: &Message) -> MessageId {",
-            "    (self.message_id_fn)(message)",
-            "}"
+            "    pub fn message_id(&self, message: &Message) -> MessageId {",
+            "        (self.message_id_fn)(message)",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -609,13 +609,13 @@
         "source_path": "projects/libp2p/python/libp2p/crypto/rsa.py",
         "target_path": "projects/libp2p/rust/identity/src/ecdsa.rs",
         "source_function": [
-            "def verify(self, data: bytes, signature: bytes) -> bool:",
-            "    h = SHA256.new(data)",
-            "    try:",
-            "        pkcs1_15.new(self.impl).verify(h, signature)",
-            "    except (ValueError, TypeError):",
-            "        return False",
-            "    return True"
+            "    def verify(self, data: bytes, signature: bytes) -> bool:",
+            "        h = SHA256.new(data)",
+            "        try:",
+            "            pkcs1_15.new(self.impl).verify(h, signature)",
+            "        except (ValueError, TypeError):",
+            "            return False",
+            "        return True"
         ],
         "target_function": [
             "pub fn verify(&self, msg: &[u8], sig: &[u8]) -> bool {",
@@ -628,12 +628,12 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn verify(&self, msg: &[u8], sig: &[u8]) -> bool {",
-            "    let Ok(sig) = Signature::from_der(sig) else {",
-            "        return false;",
-            "    };",
-            "    self.0.verify(msg, &sig).is_ok()",
-            "}"
+            "    pub fn verify(&self, msg: &[u8], sig: &[u8]) -> bool {",
+            "        let Ok(sig) = Signature::from_der(sig) else {",
+            "            return false;",
+            "        };",
+            "        self.0.verify(msg, &sig).is_ok()",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -645,8 +645,8 @@
         "source_path": "projects/libp2p/python/libp2p/crypto/secp256k1.py",
         "target_path": "projects/libp2p/rust/identity/src/ecdsa.rs",
         "source_function": [
-            "def sign(self, data: bytes) -> bytes:",
-            "    return self.impl.sign(data)"
+            "    def sign(self, data: bytes) -> bytes:",
+            "        return self.impl.sign(data)"
         ],
         "target_function": [
             "pub fn sign(&self, msg: &[u8]) -> Vec<u8> {",
@@ -655,9 +655,9 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn sign(&self, msg: &[u8]) -> Vec<u8> {",
-            "    self.secret.sign(msg)",
-            "}"
+            "    pub fn sign(&self, msg: &[u8]) -> Vec<u8> {",
+            "        self.secret.sign(msg)",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -669,12 +669,12 @@
         "source_path": "projects/libp2p/python/libp2p/crypto/rsa.py",
         "target_path": "projects/libp2p/rust/identity/src/rsa.rs",
         "source_function": [
-            "def verify(self, data: bytes, signature: bytes) -> bool:",
-            "    try:",
-            "        pkcs1_15.new(self.impl).verify(data, signature)",
-            "    except (ValueError, TypeError):",
-            "        return False",
-            "    return True"
+            "    def verify(self, data: bytes, signature: bytes) -> bool:",
+            "        try:",
+            "            pkcs1_15.new(self.impl).verify(data, signature)",
+            "        except (ValueError, TypeError):",
+            "            return False",
+            "        return True"
         ],
         "target_function": [
             "pub fn verify(&self, msg: &[u8], sig: &[u8]) -> bool {",
@@ -688,10 +688,10 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn verify(&self, msg: &[u8], sig: &[u8]) -> bool {",
-            "    let key = signature::UnparsedPublicKey::new(&RSA_PKCS1_2048_8192_SHA256, &self.0);",
-            "    key.verify(msg, sig).is_ok()",
-            "}"
+            "    pub fn verify(&self, msg: &[u8], sig: &[u8]) -> bool {",
+            "        let key = signature::UnparsedPublicKey::new(&RSA_PKCS1_2048_8192_SHA256, &self.0);",
+            "        key.verify(msg, sig).is_ok()",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -703,15 +703,15 @@
         "source_path": "projects/libp2p/python/libp2p/peer/peerstore.py",
         "target_path": "projects/libp2p/rust/swarm/src/behaviour/peer_addresses.rs",
         "source_function": [
-            "def addrs(self, peer_id: ID) -> List[Multiaddr]:",
-            "    \"\"\"",
-            "    :param peer_id: peer ID to get addrs for",
-            "    :return: list of addrs",
-            "    :raise PeerStoreError: if peer ID not found",
-            "    \"\"\"",
-            "    if peer_id in self.peer_data_map:",
-            "        return self.peer_data_map[peer_id].get_addrs()",
-            "    raise PeerStoreError(\"peer ID not found\")"
+            "    def addrs(self, peer_id: ID) -> List[Multiaddr]:",
+            "        \"\"\"",
+            "        :param peer_id: peer ID to get addrs for",
+            "        :return: list of addrs",
+            "        :raise PeerStoreError: if peer ID not found",
+            "        \"\"\"",
+            "        if peer_id in self.peer_data_map:",
+            "            return self.peer_data_map[peer_id].get_addrs()",
+            "        raise PeerStoreError(\"peer ID not found\")"
         ],
         "target_function": [
             "pub fn get(&mut self, peer: &PeerId) -> impl Iterator<Item = Multiaddr> + '_ {",
@@ -722,13 +722,13 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn get(&mut self, peer: &PeerId) -> impl Iterator<Item = Multiaddr> + '_ {",
-            "    self.0",
-            "        .get(peer)",
-            "        .into_iter()",
-            "        .flat_map(|c| c.iter().map(|(m, ())| m))",
-            "        .cloned()",
-            "}"
+            "    pub fn get(&mut self, peer: &PeerId) -> impl Iterator<Item = Multiaddr> + '_ {",
+            "        self.0",
+            "            .get(peer)",
+            "            .into_iter()",
+            "            .flat_map(|c| c.iter().map(|(m, ())| m))",
+            "            .cloned()",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -740,17 +740,17 @@
         "source_path": "projects/libp2p/python/libp2p/pubsub/mcache.py",
         "target_path": "projects/libp2p/rust/protocols/gossipsub/src/mcache.rs",
         "source_function": [
-            "def get(self, mid: Tuple[bytes, bytes]) -> Optional[rpc_pb2.Message]:",
-            "    \"\"\"",
-            "    Get a message from the mcache.",
+            "    def get(self, mid: Tuple[bytes, bytes]) -> Optional[rpc_pb2.Message]:",
+            "        \"\"\"",
+            "        Get a message from the mcache.",
             "",
-            "    :param mid: (seqno, from_id) of the message to get.",
-            "    :return: The rpc message associated with this mid",
-            "    \"\"\"",
-            "    if mid in self.msgs:",
-            "        return self.msgs[mid]",
+            "        :param mid: (seqno, from_id) of the message to get.",
+            "        :return: The rpc message associated with this mid",
+            "        \"\"\"",
+            "        if mid in self.msgs:",
+            "            return self.msgs[mid]",
             "",
-            "    return None"
+            "        return None"
         ],
         "target_function": [
             "pub(crate) fn get(&self, message_id: &MessageId) -> Option<&RawMessage> {",
@@ -758,9 +758,9 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub(crate) fn get(&self, message_id: &MessageId) -> Option<&RawMessage> {",
-            "    self.msgs.get(message_id).map(|(message, _)| message)",
-            "}"
+            "    pub(crate) fn get(&self, message_id: &MessageId) -> Option<&RawMessage> {",
+            "        self.msgs.get(message_id).map(|(message, _)| message)",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -772,9 +772,9 @@
         "source_path": "projects/libp2p/python/libp2p/tools/async_service/base.py",
         "target_path": "projects/libp2p/rust/protocols/dcutr/src/behaviour.rs",
         "source_function": [
-            "def iter(self):",
-            "    for key in self.cache.keys():",
-            "        yield key"
+            "    def iter(self):",
+            "        for key in self.cache.keys():",
+            "            yield key"
         ],
         "target_function": [
             "fn iter(&self) -> impl Iterator<Item = &Multiaddr> {",
@@ -782,9 +782,9 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "fn iter(&self) -> impl Iterator<Item = &Multiaddr> {",
-            "    self.inner.iter().map(|(a, _)| a)",
-            "}"
+            "    fn iter(&self) -> impl Iterator<Item = &Multiaddr> {",
+            "        self.inner.iter().map(|(a, _)| a)",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -796,15 +796,15 @@
         "source_path": "projects/libp2p/python/libp2p/stream_muxer/mplex/mplex.py",
         "target_path": "projects/libp2p/rust/muxers/mplex/src/codec.rs",
         "source_function": [
-            "def _get_next_channel_id(self):",
-            "    \"\"\"",
-            "    Get next available stream id.",
+            "    def _get_next_channel_id(self):",
+            "        \"\"\"",
+            "        Get next available stream id.",
             "",
-            "    \"\"\"",
-            "    new_instance = self.__class__.__new__(self.__class__)",
-            "    new_instance.__dict__ = self.__dict__.copy()",
-            "    new_instance.channel_id += 1",
-            "    return new_instance"
+            "        \"\"\"",
+            "        new_instance = self.__class__.__new__(self.__class__)",
+            "        new_instance.__dict__ = self.__dict__.copy()",
+            "        new_instance.channel_id += 1",
+            "        return new_instance"
         ],
         "target_function": [
             "pub(crate) fn next(mut self) -> Self {",
@@ -817,15 +817,15 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub(crate) fn next(self) -> Self {",
-            "    Self {",
-            "        num: self",
-            "            .num",
-            "            .checked_add(1)",
-            "            .expect(\"Mplex substream ID overflowed\"),",
-            "        ..self",
-            "    }",
-            "}"
+            "    pub(crate) fn next(self) -> Self {",
+            "        Self {",
+            "            num: self",
+            "                .num",
+            "                .checked_add(1)",
+            "                .expect(\"Mplex substream ID overflowed\"),",
+            "            ..self",
+            "        }",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -837,8 +837,8 @@
         "source_path": "projects/libp2p/python/libp2p/network/swarm.py",
         "target_path": "projects/libp2p/rust/swarm/src/lib.rs",
         "source_function": [
-            "def get_peer_id(self) -> ID:",
-            "    return self.self_id"
+            "    def get_peer_id(self) -> ID:",
+            "        return self.self_id"
         ],
         "target_function": [
             "pub fn local_peer_id(&self) -> &PeerId {",
@@ -846,9 +846,9 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn local_peer_id(&self) -> &PeerId {",
-            "    &self.local_peer_id",
-            "}"
+            "    pub fn local_peer_id(&self) -> &PeerId {",
+            "        &self.local_peer_id",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -860,8 +860,8 @@
         "source_path": "projects/libp2p/python/libp2p/crypto/ed25519.py",
         "target_path": "projects/libp2p/rust/identity/src/ed25519.rs",
         "source_function": [
-            "def to_bytes(self) -> bytes:",
-            "    return bytes(self.impl)"
+            "    def to_bytes(self) -> bytes:",
+            "        return bytes(self.impl)"
         ],
         "target_function": [
             "pub fn to_bytes(&self) -> [u8; 64] {",
@@ -869,9 +869,9 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn to_bytes(&self) -> [u8; 64] {",
-            "    self.0.to_keypair_bytes()",
-            "}"
+            "    pub fn to_bytes(&self) -> [u8; 64] {",
+            "        self.0.to_keypair_bytes()",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -883,8 +883,8 @@
         "source_path": "projects/libp2p/python/libp2p/crypto/rsa.py",
         "target_path": "projects/libp2p/rust/identity/src/rsa.rs",
         "source_function": [
-            "def get_public_key(self) -> PublicKey:",
-            "    return RSAPublicKey(self.impl.publickey())"
+            "    def get_public_key(self) -> PublicKey:",
+            "        return RSAPublicKey(self.impl.publickey())"
         ],
         "target_function": [
             "pub fn public(&self) -> PublicKey {",
@@ -893,9 +893,9 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn public(&self) -> PublicKey {",
-            "    PublicKey(self.0.public_key().as_ref().to_vec())",
-            "}"
+            "    pub fn public(&self) -> PublicKey {",
+            "        PublicKey(self.0.public_key().as_ref().to_vec())",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -907,8 +907,8 @@
         "source_path": "projects/libp2p/python/libp2p/security/secio/transport.py",
         "target_path": "projects/libp2p/rust/identity/src/keypair.rs",
         "source_function": [
-            "def calculate_peer_id(self) -> PeerID:",
-            "    return PeerID.from_pubkey(self.public_key)"
+            "    def calculate_peer_id(self) -> PeerID:",
+            "        return PeerID.from_pubkey(self.public_key)"
         ],
         "target_function": [
             "pub fn to_peer_id(&self) -> crate::PeerId {",
@@ -916,9 +916,9 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn to_peer_id(&self) -> crate::PeerId {",
-            "    self.into()",
-            "}"
+            "    pub fn to_peer_id(&self) -> crate::PeerId {",
+            "        self.into()",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -930,15 +930,15 @@
         "source_path": "projects/libp2p/python/libp2p/network/swarm.py",
         "target_path": "projects/libp2p/rust/protocols/kad/src/record/store/memory.rs",
         "source_function": [
-            "def remove_conn(self, swarm_conn: SwarmConn) -> None:",
-            "    \"\"\"",
-            "    Simply remove the connection from Swarm's records, without closing",
-            "    the connection.",
-            "    \"\"\"",
-            "    peer_id = swarm_conn.muxed_conn.peer_id",
-            "    if peer_id not in self.connections:",
-            "        return",
-            "    del self.connections[peer_id]"
+            "    def remove_conn(self, swarm_conn: SwarmConn) -> None:",
+            "        \"\"\"",
+            "        Simply remove the connection from Swarm's records, without closing",
+            "        the connection.",
+            "        \"\"\"",
+            "        peer_id = swarm_conn.muxed_conn.peer_id",
+            "        if peer_id not in self.connections:",
+            "            return",
+            "        del self.connections[peer_id]"
         ],
         "target_function": [
             "fn remove(&mut self, k: &Key) {",
@@ -951,9 +951,9 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "fn remove(&mut self, k: &Key) {",
-            "    self.records.remove(k);",
-            "}"
+            "    fn remove(&mut self, k: &Key) {",
+            "        self.records.remove(k);",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",

@@ -141,8 +141,8 @@
         "source_path": "projects/charset-normalizer/python/models.py",
         "target_path": "projects/charset-normalizer/rust/src/entity.rs",
         "source_function": [
-            "def __len__(self) -> int:",
-            "    return len(self._results)"
+            "    def __len__(self) -> int:",
+            "        return len(self._results)"
         ],
         "target_function": [
             "pub fn len(&self) -> usize {",
@@ -150,9 +150,9 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn len(&self) -> usize {",
-            "    self.items.len()",
-            "}"
+            "    pub fn len(&self) -> usize {",
+            "        self.items.len()",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -164,8 +164,8 @@
         "source_path": "projects/charset-normalizer/python/models.py",
         "target_path": "projects/charset-normalizer/rust/src/entity.rs",
         "source_function": [
-            "def encoding(self) -> str:",
-            "    return self._encoding"
+            "    def encoding(self) -> str:",
+            "        return self._encoding"
         ],
         "target_function": [
             "pub fn encoding(&self) -> &str {",
@@ -173,9 +173,9 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn encoding(&self) -> &str {",
-            "    &self.encoding",
-            "}"
+            "    pub fn encoding(&self) -> &str {",
+            "        &self.encoding",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -187,8 +187,8 @@
         "source_path": "projects/charset-normalizer/python/models.py",
         "target_path": "projects/charset-normalizer/rust/src/entity.rs",
         "source_function": [
-            "def percent_coherence(self) -> float:",
-            "    return self.coherence * 100"
+            "    def percent_coherence(self) -> float:",
+            "        return self.coherence * 100"
         ],
         "target_function": [
             "pub fn coherence_percents(&self) -> f32 {",
@@ -196,9 +196,9 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn coherence_percents(&self) -> f32 {",
-            "    self.coherence() * 100.0",
-            "}"
+            "    pub fn coherence_percents(&self) -> f32 {",
+            "        self.coherence() * 100.0",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -346,15 +346,15 @@
         "source_path": "projects/charset-normalizer/python/models.py",
         "target_path": "projects/charset-normalizer/rust/src/entity.rs",
         "source_function": [
-            "def encoding_aliases(self) -> List[str]:",
-            "    \"\"\"",
-            "    Encoding name are known by many name, using this could help when searching for IBM855 when it's listed as CP855.",
-            "    \"\"\"",
-            "    also_known_as: List[str] = []",
-            "    for u, p in aliases.items():",
-            "        if self.encoding == u:",
-            "            also_known_as = p",
-            "    return also_known_as"
+            "    def encoding_aliases(self) -> List[str]:",
+            "        \"\"\"",
+            "        Encoding name are known by many name, using this could help when searching for IBM855 when it's listed as CP855.",
+            "        \"\"\"",
+            "        also_known_as: List[str] = []",
+            "        for u, p in aliases.items():",
+            "            if self.encoding == u:",
+            "                also_known_as = p",
+            "        return also_known_as"
         ],
         "target_function": [
             "pub fn encoding_aliases(&self) -> Vec<&'static str> {",
@@ -371,12 +371,12 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn encoding_aliases(&self) -> Vec<&'static str> {",
-            "    IANA_SUPPORTED_ALIASES",
-            "        .get(self.encoding.as_str())",
-            "        .cloned()",
-            "        .expect(\"Problem with static HashMap IANA_SUPPORTED_ALIASES\")",
-            "}"
+            "    pub fn encoding_aliases(&self) -> Vec<&'static str> {",
+            "        IANA_SUPPORTED_ALIASES",
+            "            .get(self.encoding.as_str())",
+            "            .cloned()",
+            "            .expect(\"Problem with static HashMap IANA_SUPPORTED_ALIASES\")",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -641,27 +641,27 @@
         "source_path": "projects/charset-normalizer/python/models.py",
         "target_path": "projects/charset-normalizer/rust/src/entity.rs",
         "source_function": [
-            "def __lt__(self, other: object) -> bool:",
-            "    \"\"\"",
-            "    Implemented to make sorted available upon CharsetMatches items.",
-            "    \"\"\"",
-            "    if not isinstance(other, CharsetMatch):",
-            "        raise ValueError",
+            "    def __lt__(self, other: object) -> bool:",
+            "        \"\"\"",
+            "        Implemented to make sorted available upon CharsetMatches items.",
+            "        \"\"\"",
+            "        if not isinstance(other, CharsetMatch):",
+            "            raise ValueError",
             "",
-            "    chaos_difference: float = abs(self.chaos - other.chaos)",
-            "    coherence_difference: float = abs(self.coherence - other.coherence)",
+            "        chaos_difference: float = abs(self.chaos - other.chaos)",
+            "        coherence_difference: float = abs(self.coherence - other.coherence)",
             "",
-            "    # Below 1% difference --> Use Coherence",
-            "    if chaos_difference < 0.01 and coherence_difference > 0.02:",
-            "        return self.coherence > other.coherence",
-            "    elif chaos_difference < 0.01 and coherence_difference <= 0.02:",
-            "        # When having a difficult decision, use the result that decoded as many multi-byte as possible.",
-            "        # preserve RAM usage!",
-            "        if len(self._payload) >= TOO_BIG_SEQUENCE:",
-            "            return self.chaos < other.chaos",
-            "        return self.multi_byte_usage > other.multi_byte_usage",
+            "        # Below 1% difference --> Use Coherence",
+            "        if chaos_difference < 0.01 and coherence_difference > 0.02:",
+            "            return self.coherence > other.coherence",
+            "        elif chaos_difference < 0.01 and coherence_difference <= 0.02:",
+            "            # When having a difficult decision, use the result that decoded as many multi-byte as possible.",
+            "            # preserve RAM usage!",
+            "            if len(self._payload) >= TOO_BIG_SEQUENCE:",
+            "                return self.chaos < other.chaos",
+            "            return self.multi_byte_usage > other.multi_byte_usage",
             "",
-            "    return self.chaos < other.chaos"
+            "        return self.chaos < other.chaos"
         ],
         "target_function": [
             "fn partial_cmp(&self, other: &Self) -> Option<Ordering> {",
@@ -685,26 +685,26 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "fn partial_cmp(&self, other: &Self) -> Option<Ordering> {",
-            "    let mess_difference = (self.mean_mess_ratio - other.mean_mess_ratio).abs();",
-            "    let coherence_a = self.coherence();",
-            "    let coherence_b = other.coherence();",
-            "    let coherence_difference = (coherence_a - coherence_b).abs();",
+            "    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {",
+            "        let mess_difference = (self.mean_mess_ratio - other.mean_mess_ratio).abs();",
+            "        let coherence_a = self.coherence();",
+            "        let coherence_b = other.coherence();",
+            "        let coherence_difference = (coherence_a - coherence_b).abs();",
             "",
-            "    // Below 1% difference --> Use Coherence",
-            "    if mess_difference < 0.01 {",
-            "        if coherence_difference > 0.02 {",
-            "            return coherence_b.partial_cmp(&coherence_a);",
+            "        // Below 1% difference --> Use Coherence",
+            "        if mess_difference < 0.01 {",
+            "            if coherence_difference > 0.02 {",
+            "                return coherence_b.partial_cmp(&coherence_a);",
+            "            }",
+            "            let multibyte_usage_a = self.multi_byte_usage();",
+            "            let multibyte_usage_b = other.multi_byte_usage();",
+            "            let multibyte_usage_delta = (multibyte_usage_a - multibyte_usage_b).abs();",
+            "            if multibyte_usage_delta > f32::EPSILON {",
+            "                return multibyte_usage_b.partial_cmp(&multibyte_usage_a);",
+            "            }",
             "        }",
-            "        let multibyte_usage_a = self.multi_byte_usage();",
-            "        let multibyte_usage_b = other.multi_byte_usage();",
-            "        let multibyte_usage_delta = (multibyte_usage_a - multibyte_usage_b).abs();",
-            "        if multibyte_usage_delta > f32::EPSILON {",
-            "            return multibyte_usage_b.partial_cmp(&multibyte_usage_a);",
-            "        }",
-            "    }",
-            "    self.mean_mess_ratio.partial_cmp(&other.mean_mess_ratio)",
-            "}"
+            "        self.mean_mess_ratio.partial_cmp(&other.mean_mess_ratio)",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -1025,8 +1025,8 @@
         "source_path": "projects/charset-normalizer/python/models.py",
         "target_path": "projects/charset-normalizer/rust/src/entity.rs",
         "source_function": [
-            "def __init__(self, results: Optional[List[CharsetMatch]] = None):",
-            "    self._results: List[CharsetMatch] = sorted(results) if results else []"
+            "    def __init__(self, results: Optional[List[CharsetMatch]] = None):",
+            "        self._results: List[CharsetMatch] = sorted(results) if results else []"
         ],
         "target_function": [
             "pub fn new(items: Option<Vec<CharsetMatch>>) -> Self {",
@@ -1036,11 +1036,11 @@
             "    }"
         ],
         "ground_truth_target_function": [
-            "pub fn new(items: Option<Vec<CharsetMatch>>) -> Self {",
-            "    let mut items = items.unwrap_or_default();",
-            "    CharsetMatches::resort(&mut items);",
-            "    CharsetMatches { items }",
-            "}"
+            "    pub fn new(items: Option<Vec<CharsetMatch>>) -> Self {",
+            "        let mut items = items.unwrap_or_default();",
+            "        CharsetMatches::resort(&mut items);",
+            "        CharsetMatches { items }",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -1052,8 +1052,8 @@
         "source_path": "projects/charset-normalizer/python/models.py",
         "target_path": "projects/charset-normalizer/rust/src/entity.rs",
         "source_function": [
-            "def __iter__(self) -> Iterator[CharsetMatch]:",
-            "    yield from self._results"
+            "    def __iter__(self) -> Iterator[CharsetMatch]:",
+            "        yield from self._results"
         ],
         "target_function": [
             "pub fn iter(&self) -> CharsetMatchesIter {",
@@ -1062,11 +1062,11 @@
             "    }"
         ],
         "ground_truth_target_function": [
-            "pub fn iter(&self) -> CharsetMatchesIter {",
-            "    CharsetMatchesIter {",
-            "        items: self.items.iter(),",
-            "    }",
-            "}"
+            "    pub fn iter(&self) -> CharsetMatchesIter {",
+            "        CharsetMatchesIter {",
+            "            items: self.items.iter(),",
+            "        }",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -1078,11 +1078,11 @@
         "source_path": "projects/charset-normalizer/python/models.py",
         "target_path": "projects/charset-normalizer/rust/src/entity.rs",
         "source_function": [
-            "def raw(self) -> bytes:",
-            "    \"\"\"",
-            "    Original untouched bytes.",
-            "    \"\"\"",
-            "    return self._payload"
+            "    def raw(self) -> bytes:",
+            "        \"\"\"",
+            "        Original untouched bytes.",
+            "        \"\"\"",
+            "        return self._payload"
         ],
         "target_function": [
             "pub fn raw(&self) -> &Vec<u8> {",
@@ -1090,9 +1090,9 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn raw(&self) -> &Vec<u8> {",
-            "    &self.payload",
-            "}"
+            "    pub fn raw(&self) -> &Vec<u8> {",
+            "        &self.payload",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -1104,12 +1104,12 @@
         "source_path": "projects/charset-normalizer/python/models.py",
         "target_path": "projects/charset-normalizer/rust/src/entity.rs",
         "source_function": [
-            "def languages(self) -> List[str]:",
-            "    \"\"\"",
-            "    Return the complete list of possible languages found in decoded sequence.",
-            "    Usually not really useful. Returned list may be empty even if 'language' property return something != 'Unknown'.",
-            "    \"\"\"",
-            "    return [e[0] for e in self._languages]"
+            "    def languages(self) -> List[str]:",
+            "        \"\"\"",
+            "        Return the complete list of possible languages found in decoded sequence.",
+            "        Usually not really useful. Returned list may be empty even if 'language' property return something != 'Unknown'.",
+            "        \"\"\"",
+            "        return [e[0] for e in self._languages]"
         ],
         "target_function": [
             "pub fn languages(&self) -> Vec<&'static Language> {",
@@ -1120,12 +1120,12 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn languages(&self) -> Vec<&'static Language> {",
-            "    self.coherence_matches",
-            "        .iter()",
-            "        .map(|cm| cm.language)",
-            "        .collect()",
-            "}"
+            "    pub fn languages(&self) -> Vec<&'static Language> {",
+            "        self.coherence_matches",
+            "            .iter()",
+            "            .map(|cm| cm.language)",
+            "            .collect()",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -1137,32 +1137,32 @@
         "source_path": "projects/charset-normalizer/python/models.py",
         "target_path": "projects/charset-normalizer/rust/src/entity.rs",
         "source_function": [
-            "def language(self) -> str:",
-            "    \"\"\"",
-            "    Most probable language found in decoded sequence. If none were detected or inferred, the property will return",
-            "    \"Unknown\".",
-            "    \"\"\"",
-            "    if not self._languages:",
-            "        # Trying to infer the language based on the given encoding",
-            "        # Its either English or we should not pronounce ourselves in certain cases.",
-            "        if \"ascii\" in self.could_be_from_charset:",
-            "            return \"English\"",
+            "    def language(self) -> str:",
+            "        \"\"\"",
+            "        Most probable language found in decoded sequence. If none were detected or inferred, the property will return",
+            "        \"Unknown\".",
+            "        \"\"\"",
+            "        if not self._languages:",
+            "            # Trying to infer the language based on the given encoding",
+            "            # Its either English or we should not pronounce ourselves in certain cases.",
+            "            if \"ascii\" in self.could_be_from_charset:",
+            "                return \"English\"",
             "",
-            "        # doing it there to avoid circular import",
-            "        from charset_normalizer.cd import encoding_languages, mb_encoding_languages",
+            "            # doing it there to avoid circular import",
+            "            from charset_normalizer.cd import encoding_languages, mb_encoding_languages",
             "",
-            "        languages = (",
-            "            mb_encoding_languages(self.encoding)",
-            "            if is_multi_byte_encoding(self.encoding)",
-            "            else encoding_languages(self.encoding)",
-            "        )",
+            "            languages = (",
+            "                mb_encoding_languages(self.encoding)",
+            "                if is_multi_byte_encoding(self.encoding)",
+            "                else encoding_languages(self.encoding)",
+            "            )",
             "",
-            "        if len(languages) == 0 or \"Latin Based\" in languages:",
-            "            return \"Unknown\"",
+            "            if len(languages) == 0 or \"Latin Based\" in languages:",
+            "                return \"Unknown\"",
             "",
-            "        return languages[0]",
+            "            return languages[0]",
             "",
-            "    return self._languages[0][0]"
+            "        return self._languages[0][0]"
         ],
         "target_function": [
             "pub fn most_probably_language(&self) -> &'static Language {",
@@ -1190,24 +1190,24 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn most_probably_language(&self) -> &'static Language {",
-            "    self.coherence_matches.first().map_or_else(",
-            "        // Default case: Trying to infer the language based on the given encoding",
-            "        || {",
-            "            if self.suitable_encodings().contains(&String::from(\"ascii\")) {",
-            "                &Language::English",
-            "            } else {",
-            "                let languages = if is_multi_byte_encoding(&self.encoding) {",
-            "                    mb_encoding_languages(&self.encoding)",
+            "    pub fn most_probably_language(&self) -> &'static Language {",
+            "        self.coherence_matches.first().map_or_else(",
+            "            // Default case: Trying to infer the language based on the given encoding",
+            "            || {",
+            "                if self.suitable_encodings().contains(&String::from(\"ascii\")) {",
+            "                    &Language::English",
             "                } else {",
-            "                    encoding_languages(self.encoding.clone())",
-            "                };",
-            "                languages.first().copied().unwrap_or(&Language::Unknown)",
-            "            }",
-            "        },",
-            "        |lang| lang.language,",
-            "    )",
-            "}"
+            "                    let languages = if is_multi_byte_encoding(&self.encoding) {",
+            "                        mb_encoding_languages(&self.encoding)",
+            "                    } else {",
+            "                        encoding_languages(self.encoding.clone())",
+            "                    };",
+            "                    languages.first().copied().unwrap_or(&Language::Unknown)",
+            "                }",
+            "            },",
+            "            |lang| lang.language,",
+            "        )",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -1316,8 +1316,8 @@
         "source_path": "projects/charset-normalizer/python/models.py",
         "target_path": "projects/charset-normalizer/rust/src/entity.rs",
         "source_function": [
-            "def bom(self) -> bool:",
-            "    return self._has_sig_or_bom"
+            "    def bom(self) -> bool:",
+            "        return self._has_sig_or_bom"
         ],
         "target_function": [
             "pub fn bom(&self) -> bool {",
@@ -1325,9 +1325,9 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn bom(&self) -> bool {",
-            "    self.has_sig_or_bom",
-            "}"
+            "    pub fn bom(&self) -> bool {",
+            "        self.has_sig_or_bom",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -1339,25 +1339,25 @@
         "source_path": "projects/charset-normalizer/python/models.py",
         "target_path": "projects/charset-normalizer/rust/src/entity.rs",
         "source_function": [
-            "def append(self, item: CharsetMatch) -> None:",
-            "    \"\"\"",
-            "    Insert a single match. Will be inserted accordingly to preserve sort.",
-            "    Can be inserted as a submatch.",
-            "    \"\"\"",
-            "    if not isinstance(item, CharsetMatch):",
-            "        raise ValueError(",
-            "            \"Cannot append instance '{}' to CharsetMatches\".format(",
-            "                str(item.__class__)",
+            "    def append(self, item: CharsetMatch) -> None:",
+            "        \"\"\"",
+            "        Insert a single match. Will be inserted accordingly to preserve sort.",
+            "        Can be inserted as a submatch.",
+            "        \"\"\"",
+            "        if not isinstance(item, CharsetMatch):",
+            "            raise ValueError(",
+            "                \"Cannot append instance '{}' to CharsetMatches\".format(",
+            "                    str(item.__class__)",
+            "                )",
             "            )",
-            "        )",
-            "    # We should disable the submatch factoring when the input file is too heavy (conserve RAM usage)",
-            "    if len(item.raw) <= TOO_BIG_SEQUENCE:",
-            "        for match in self._results:",
-            "            if match.fingerprint == item.fingerprint and match.chaos == item.chaos:",
-            "                match.add_submatch(item)",
-            "                return",
-            "    self._results.append(item)",
-            "    self._results = sorted(self._results)"
+            "        # We should disable the submatch factoring when the input file is too heavy (conserve RAM usage)",
+            "        if len(item.raw) <= TOO_BIG_SEQUENCE:",
+            "            for match in self._results:",
+            "                if match.fingerprint == item.fingerprint and match.chaos == item.chaos:",
+            "                    match.add_submatch(item)",
+            "                    return",
+            "        self._results.append(item)",
+            "        self._results = sorted(self._results)"
         ],
         "target_function": [
             "pub fn append(&mut self, item: CharsetMatch) {",
@@ -1374,22 +1374,22 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn append(&mut self, item: CharsetMatch) {",
-            "    // We should disable the submatch factoring when the input file is too heavy",
-            "    // (conserve RAM usage)",
-            "    if item.payload.len() <= TOO_BIG_SEQUENCE {",
-            "        for m in &mut self.items {",
-            "            if m.decoded_payload() == item.decoded_payload()",
-            "                && (m.mean_mess_ratio - item.mean_mess_ratio).abs() < f32::EPSILON",
-            "            {",
-            "                m.add_submatch(&item);",
-            "                return;",
+            "    pub fn append(&mut self, item: CharsetMatch) {",
+            "        // We should disable the submatch factoring when the input file is too heavy",
+            "        // (conserve RAM usage)",
+            "        if item.payload.len() <= TOO_BIG_SEQUENCE {",
+            "            for m in &mut self.items {",
+            "                if m.decoded_payload() == item.decoded_payload()",
+            "                    && (m.mean_mess_ratio - item.mean_mess_ratio).abs() < f32::EPSILON",
+            "                {",
+            "                    m.add_submatch(&item);",
+            "                    return;",
+            "                }",
             "            }",
             "        }",
-            "    }",
-            "    self.items.push(item);",
-            "    CharsetMatches::resort(&mut self.items);",
-            "}"
+            "        self.items.push(item);",
+            "        CharsetMatches::resort(&mut self.items);",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -1599,8 +1599,8 @@
         "source_path": "projects/charset-normalizer/python/models.py",
         "target_path": "projects/charset-normalizer/rust/src/entity.rs",
         "source_function": [
-            "def multi_byte_usage(self) -> float:",
-            "    return 1.0 - (len(str(self)) / len(self.raw))"
+            "    def multi_byte_usage(self) -> float:",
+            "        return 1.0 - (len(str(self)) / len(self.raw))"
         ],
         "target_function": [
             "pub fn multi_byte_usage(&self) -> f32 {",
@@ -1608,12 +1608,12 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn multi_byte_usage(&self) -> f32 {",
-            "    let decoded_chars = self.decoded_payload().unwrap_or_default().chars().count() as f32;",
-            "    let payload_len = self.payload.len() as f32;",
+            "    pub fn multi_byte_usage(&self) -> f32 {",
+            "        let decoded_chars = self.decoded_payload().unwrap_or_default().chars().count() as f32;",
+            "        let payload_len = self.payload.len() as f32;",
             "",
-            "    1.0 - (decoded_chars / payload_len)",
-            "}"
+            "        1.0 - (decoded_chars / payload_len)",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -1697,13 +1697,13 @@
         "source_path": "projects/charset-normalizer/python/models.py",
         "target_path": "projects/charset-normalizer/rust/src/entity.rs",
         "source_function": [
-            "def best(self) -> Optional[\"CharsetMatch\"]:",
-            "    \"\"\"",
-            "    Simply return the first match. Strict equivalent to matches[0].",
-            "    \"\"\"",
-            "    if not self._results:",
-            "        return None",
-            "    return self._results[0]"
+            "    def best(self) -> Optional[\"CharsetMatch\"]:",
+            "        \"\"\"",
+            "        Simply return the first match. Strict equivalent to matches[0].",
+            "        \"\"\"",
+            "        if not self._results:",
+            "            return None",
+            "        return self._results[0]"
         ],
         "target_function": [
             "pub fn get_best(&self) -> Option<&CharsetMatch> {",
@@ -1711,9 +1711,9 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn get_best(&self) -> Option<&CharsetMatch> {",
-            "    self.items.first()",
-            "}"
+            "    pub fn get_best(&self) -> Option<&CharsetMatch> {",
+            "        self.items.first()",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -1758,38 +1758,38 @@
         "source_path": "projects/charset-normalizer/python/models.py",
         "target_path": "projects/charset-normalizer/rust/src/entity.rs",
         "source_function": [
-            "def __init__(",
-            "    self,",
-            "    payload: bytes,",
-            "    guessed_encoding: str,",
-            "    mean_mess_ratio: float,",
-            "    has_sig_or_bom: bool,",
-            "    languages: \"CoherenceMatches\",",
-            "    decoded_payload: Optional[str] = None,",
-            "):",
-            "    self._payload: bytes = payload",
+            "    def __init__(",
+            "        self,",
+            "        payload: bytes,",
+            "        guessed_encoding: str,",
+            "        mean_mess_ratio: float,",
+            "        has_sig_or_bom: bool,",
+            "        languages: \"CoherenceMatches\",",
+            "        decoded_payload: Optional[str] = None,",
+            "    ):",
+            "        self._payload: bytes = payload",
             "",
-            "    self._encoding: str = guessed_encoding",
-            "    self._mean_mess_ratio: float = mean_mess_ratio",
-            "    self._languages: CoherenceMatches = languages",
-            "    self._has_sig_or_bom: bool = has_sig_or_bom",
-            "    self._unicode_ranges: Optional[List[str]] = None",
+            "        self._encoding: str = guessed_encoding",
+            "        self._mean_mess_ratio: float = mean_mess_ratio",
+            "        self._languages: CoherenceMatches = languages",
+            "        self._has_sig_or_bom: bool = has_sig_or_bom",
+            "        self._unicode_ranges: Optional[List[str]] = None",
             "",
-            "    self._leaves: List[CharsetMatch] = []",
+            "        self._leaves: List[CharsetMatch] = []",
             "",
-            "    if decoded_payload is not None:",
-            "        self._string: Optional[str] = decoded_payload",
-            "    else:",
-            "        try:",
-            "            # Attempt to decode the payload with the guessed encoding",
-            "            decoded_string = payload.decode(guessed_encoding, errors='strict')",
-            "            # Remove BOM if it exists at the beginning of the decoded string",
-            "            if decoded_string.startswith('\\ufeff'):",
-            "                decoded_string = decoded_string[1:]",
-            "            self._string = decoded_string",
-            "        except (UnicodeDecodeError, LookupError):",
-            "            # If decoding fails, _string will be None",
-            "            self._string = None"
+            "        if decoded_payload is not None:",
+            "            self._string: Optional[str] = decoded_payload",
+            "        else:",
+            "            try:",
+            "                # Attempt to decode the payload with the guessed encoding",
+            "                decoded_string = payload.decode(guessed_encoding, errors='strict')",
+            "                # Remove BOM if it exists at the beginning of the decoded string",
+            "                if decoded_string.startswith('\\ufeff'):",
+            "                    decoded_string = decoded_string[1:]",
+            "                self._string = decoded_string",
+            "            except (UnicodeDecodeError, LookupError):",
+            "                # If decoding fails, _string will be None",
+            "                self._string = None"
         ],
         "target_function": [
             "pub fn new(",
@@ -1812,28 +1812,28 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn new(",
-            "    payload: &[u8],",
-            "    encoding: &str,",
-            "    mean_mess_ratio: f32,",
-            "    has_sig_or_bom: bool,",
-            "    coherence_matches: &CoherenceMatches,",
-            "    decoded_payload: Option<&str>,",
-            ") -> Self {",
-            "    CharsetMatch {",
-            "        payload: Vec::from(payload),",
-            "        encoding: String::from(encoding),",
-            "        mean_mess_ratio,",
-            "        coherence_matches: coherence_matches.clone(),",
-            "        has_sig_or_bom,",
-            "        submatch: vec![],",
-            "        decoded_payload: decoded_payload.map(String::from).or_else(|| {",
-            "            decode(payload, encoding, DecoderTrap::Strict, false, true)",
-            "                .ok()",
-            "                .map(|res| res.strip_prefix('\\u{feff}').unwrap_or(&res).to_string())",
-            "        }),",
-            "    }",
-            "}"
+            "    pub fn new(",
+            "        payload: &[u8],",
+            "        encoding: &str,",
+            "        mean_mess_ratio: f32,",
+            "        has_sig_or_bom: bool,",
+            "        coherence_matches: &CoherenceMatches,",
+            "        decoded_payload: Option<&str>,",
+            "    ) -> Self {",
+            "        CharsetMatch {",
+            "            payload: Vec::from(payload),",
+            "            encoding: String::from(encoding),",
+            "            mean_mess_ratio,",
+            "            coherence_matches: coherence_matches.clone(),",
+            "            has_sig_or_bom,",
+            "            submatch: vec![],",
+            "            decoded_payload: decoded_payload.map(String::from).or_else(|| {",
+            "                decode(payload, encoding, DecoderTrap::Strict, false, true)",
+            "                    .ok()",
+            "                    .map(|res| res.strip_prefix('\\u{feff}').unwrap_or(&res).to_string())",
+            "            }),",
+            "        }",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
@@ -1845,8 +1845,8 @@
         "source_path": "projects/charset-normalizer/python/models.py",
         "target_path": "projects/charset-normalizer/rust/src/entity.rs",
         "source_function": [
-            "def percent_chaos(self) -> float:",
-            "    return round(self.chaos * 100, ndigits=3)"
+            "    def percent_chaos(self) -> float:",
+            "        return round(self.chaos * 100, ndigits=3)"
         ],
         "target_function": [
             "pub fn chaos_percents(&self) -> f32 {",
@@ -1854,9 +1854,9 @@
             "}"
         ],
         "ground_truth_target_function": [
-            "pub fn chaos_percents(&self) -> f32 {",
-            "    self.chaos() * 100.0",
-            "}"
+            "    pub fn chaos_percents(&self) -> f32 {",
+            "        self.chaos() * 100.0",
+            "    }"
         ],
         "source_language": "python",
         "target_language": "rust",
