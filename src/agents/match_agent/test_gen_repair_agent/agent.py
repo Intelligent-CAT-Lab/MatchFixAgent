@@ -98,29 +98,15 @@ class TestGenRepairAgent:
             # Use the dedicated utility function for command execution with 5-minute timeout
             from src.utils.cmd_utils import run_claude_command
 
-            # Set 5-minute (300 second) timeout
-            try:
-                # Create a task for the Claude CLI call
-                api_task = run_claude_command(
-                    prompt,
-                    "",
-                    self.model.model_name,
-                    self.configs,
-                    self.logger,
-                    agent_name=agent_name or "test_gen_repair_agent",
-                    sub_agent_name=sub_agent_name,
-                )
-
-                # Wait for the task to complete with a timeout of 300 seconds (5 minutes)
-                status, agent_output = await asyncio.wait_for(api_task, timeout=300)
-
-            except asyncio.TimeoutError:
-                self.logger.warning("Test generation timed out after 5 minutes, returning is_equivalent=yes")
-                # Create default success response on timeout
-                status = True
-                agent_output = {
-                    "result": '<final_response_format>{"is_equivalent": "yes", "explanation": "", "source_test_file_implementation": "", "target_test_file_implementation": "", "correct_target_method_implementation": ""}</final_response_format>'
-                }
+            status, agent_output = await run_claude_command(
+                prompt,
+                "",
+                self.model.model_name,
+                self.configs,
+                self.logger,
+                agent_name=agent_name or "test_gen_repair_agent",
+                sub_agent_name=sub_agent_name,
+            )
 
             agent_output = agent_output or {}
 
