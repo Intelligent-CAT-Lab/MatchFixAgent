@@ -16,12 +16,6 @@ def parse_translation_blocks(text: str, project: str) -> dict:
     # Determine which path is Rust and which is Python
     for path, func in zip(path_blocks, func_blocks):
 
-        # if first line of func has four spaces, remove the first four space from all func lines
-        if func.startswith("    "):
-            func = "\n".join(line[4:] for line in func.split("\n"))
-        # replace \t with four spaces
-        func = func.replace("\t", "    ")
-
         if path.endswith(".rs"):
             target_path = path
             target_func = func.split("\n")
@@ -147,7 +141,11 @@ def main():
                     "id": str(len(project_results) + 1),
                     "project": parsed["project"],
                     "source_path": parsed["source_path"],
-                    "target_path": parsed["target_path"].replace("/rust/", "/rust/src/") if parsed["project"] == "deltachat-core" else parsed["target_path"],
+                    "target_path": (
+                        parsed["target_path"].replace("/rust/", "/rust/src/")
+                        if parsed["project"] == "deltachat-core"
+                        else parsed["target_path"]
+                    ),
                     "source_function": parsed["source_function"],
                     "target_function": parsed["target_function"],
                     "ground_truth_target_function": parsed["ground_truth_target_function"],
