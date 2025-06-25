@@ -32,7 +32,7 @@ def get_agent_credentials(
     agent_name: str,
     sub_agent_name: Optional[str] = None,
     credential_file: str = "configs/aws_credentials.yaml",
-    config_file: str = None,
+    configs: dict = None,
 ) -> Tuple[Dict, str, str]:
     """
     Get credentials for a specific agent and sub-agent.
@@ -62,24 +62,22 @@ def get_agent_credentials(
     aws_regions = credentials.get("aws_regions", [])
 
     # If a config file is provided, check available_credentials and available_regions
-    if config_file:
+    if configs:
         try:
-            with open(config_file, "r") as f:
-                agent_config = yaml.safe_load(f)
 
             # Filter credentials based on available_credentials in config
-            available_creds = agent_config.get("available_credentials", [])
+            available_creds = configs.get("available_credentials", [])
             if available_creds:
                 aws_credentials = {k: v for k, v in aws_credentials.items() if k in available_creds}
 
             # Filter regions based on available_regions in config
-            available_regions = agent_config.get("available_regions", [])
+            available_regions = configs.get("available_regions", [])
             if available_regions:
                 aws_regions = [r for r in aws_regions if r in available_regions]
 
             logging.info(f"Using filtered credentials: {list(aws_credentials.keys())} and regions: {aws_regions}")
         except Exception as e:
-            logging.warning(f"Failed to load agent config from {config_file}: {str(e)}")
+            logging.warning(f"Failed to load agent config from {configs}: {str(e)}")
 
     if not aws_credentials:
         raise ValueError(f"No valid AWS credentials found for {agent_name}")
@@ -152,7 +150,7 @@ def setup_environment_for_agent(
     sub_agent_name: Optional[str] = None,
     model_name: str = "us.anthropic.claude-3-7-sonnet-20250219-v1:0",
     credential_file: str = "configs/aws_credentials.yaml",
-    config_file: str = None,
+    configs: dict = None,
 ) -> Tuple[Dict, str]:
     """
     Set up environment variables for a specific agent with appropriate AWS credentials.
@@ -175,16 +173,9 @@ def setup_environment_for_agent(
 
     env = os.environ.copy()
 
-    # Set default config file path based on agent_name if not provided
-    if not config_file and agent_name:
-        default_config_path = f"configs/{agent_name}.yaml"
-        if Path(default_config_path).exists():
-            config_file = default_config_path
-            logging.info(f"Using agent config file: {config_file}")
-
     # Get credentials and region for this agent - this will raise ValueError if credentials not available
     credential, region, credential_name = get_agent_credentials(
-        agent_name, sub_agent_name, credential_file, config_file
+        agent_name, sub_agent_name, credential_file, configs
     )
 
     # Set up environment variables

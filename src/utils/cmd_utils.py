@@ -51,7 +51,7 @@ async def run_claude_command(
     # Set up environment with appropriate credentials
     try:
         env, credential_name = setup_environment_for_agent(
-            agent_name=agent_name, sub_agent_name=sub_agent_name, model_name=model_name
+            agent_name=agent_name, sub_agent_name=sub_agent_name, model_name=model_name, configs=configs
         )
 
         if logger:
@@ -148,7 +148,7 @@ async def prompt_claude(
     # Set up environment with appropriate credentials
     try:
         env, credential_name = setup_environment_for_agent(
-            agent_name=agent_name, sub_agent_name=sub_agent_name, model_name=model_name
+            agent_name=agent_name, sub_agent_name=sub_agent_name, model_name=model_name, configs=configs
         )
 
         if logger:
