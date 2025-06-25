@@ -72,7 +72,7 @@ templates:
           You are an expert agent specializing in analyzing control flow in code fragments. Your task is to determine if the control flow of two code fragments in different programming languages ({{ source_language }} and {{ target_language }}) are functionally equivalent.
 
           <functional_equivalence_definition>
-          Two code fragments in different programming languages are considered functionally equivalent if, when executed on the same input, they always have identical program states at all corresponding points reachable by program execution, and they both produce the same output upon termination.
+            Two code fragments in different programming languages are considered functionally equivalent if, when executed on the same input, they always have identical program states at all corresponding points reachable by program execution, and they both produce the same output upon termination.
           </functional_equivalence_definition>
 
           <source_cfg>
@@ -103,7 +103,7 @@ templates:
           You are an expert agent specializing in analyzing data flow in code fragments. Your task is to determine if the data flow of two code fragments in different programming languages ({{ source_language }} and {{ target_language }}) are functionally equivalent.
 
           <functional_equivalence_definition>
-          Two code fragments in different programming languages are considered functionally equivalent if, when executed on the same input, they always have identical program states at all corresponding points reachable by program execution, and they both produce the same output upon termination.
+            Two code fragments in different programming languages are considered functionally equivalent if, when executed on the same input, they always have identical program states at all corresponding points reachable by program execution, and they both produce the same output upon termination.
           </functional_equivalence_definition>
 
           <source_dfg>
@@ -134,8 +134,17 @@ templates:
           You are an expert agent specializing in analyzing input/output behavior of code fragments. Your task is to determine if the input/output behavior of two code fragments in different programming languages ({{ source_language }} and {{ target_language }}) are functionally equivalent.
           
           <functional_equivalence_definition>
-          Two code fragments in different programming languages are considered functionally equivalent if, when executed on the same input, they always have identical program states at all corresponding points reachable by program execution, and they both produce the same output upon termination.
+            Two code fragments in different programming languages are considered functionally equivalent if, when executed on the same input, they always have identical program states at all corresponding points reachable by program execution, and they both produce the same output upon termination.
           </functional_equivalence_definition>
+
+          <io_equivalence_definition>
+            Two code fragments are considered to have equivalent input/output behavior if:
+            1. They accept semantically equivalent input parameters (considering type conversions and default parameters)
+            2. They produce semantically equivalent return values for all possible inputs (considering type conversions)
+            3. They have equivalent side effects (file operations, network calls, global state changes, etc.)
+            4. They handle edge cases (null/nil/None values, empty collections, boundary values) consistently
+            5. They maintain the same performance characteristics (time and space complexity) for critical operations
+          </io_equivalence_definition>
           
           <general_notes>
            - You only need to focus on the input/output behavior of the given method/function in both languages to determine if they are functionally equivalent.
@@ -160,9 +169,18 @@ templates:
           You are an expert agent specializing in analyzing library usage in code fragments. Your task is to determine if the library usage in two code fragments in different programming languages ({{ source_language }} and {{ target_language }}) are functionally equivalent.
           
           <functional_equivalence_definition>
-          Two code fragments in different programming languages are considered functionally equivalent if, when executed on the same input, they always have identical program states at all corresponding points reachable by program execution, and they both produce the same output upon termination.
+            Two code fragments in different programming languages are considered functionally equivalent if, when executed on the same input, they always have identical program states at all corresponding points reachable by program execution, and they both produce the same output upon termination.
           </functional_equivalence_definition>
-          
+
+          <library_equivalence_definition>
+            Two code fragments are considered to have equivalent library usage if:
+            1. The libraries used in both languages provide the same functionality, even if their APIs differ
+            2. The library functions/methods called in both languages have semantically equivalent behavior
+            3. The parameters passed to library functions are semantically equivalent
+            4. The handling of library function return values is consistent
+            5. The error/exception handling for library calls is equivalent
+          </library_equivalence_definition>
+
           <general_notes>
            - First fetch the API documentation of the library usage in source and target languages from the web.
            - Analyze both documentations and determine if they are functionally equivalent.
@@ -185,8 +203,17 @@ templates:
           You are an expert agent specializing in analyzing exception and error handling in code fragments. Your task is to determine if the exception and error handling in two code fragments in different programming languages ({{ source_language }} and {{ target_language }}) are functionally equivalent.
           
           <functional_equivalence_definition>
-          Two code fragments in different programming languages are considered functionally equivalent if, when executed on the same input, they always have identical program states at all corresponding points reachable by program execution, and they both produce the same output upon termination.
+            Two code fragments in different programming languages are considered functionally equivalent if, when executed on the same input, they always have identical program states at all corresponding points reachable by program execution, and they both produce the same output upon termination.
           </functional_equivalence_definition>
+
+          <exception_error_equivalence_definition>
+            Two code fragments are considered to have equivalent exception/error handling if:
+            1. Both implementations detect and handle the same error conditions
+            2. The types of exceptions/errors raised/thrown are semantically equivalent across languages
+            3. The error messages or error codes provided are semantically equivalent
+            4. The recovery mechanisms from errors maintain the same program state
+            5. Both implementations propagate exceptions/errors to calling code in semantically equivalent ways
+          </exception_error_equivalence_definition>
 
           <general_notes>
             - You only need to focus on the exception and error handling of the given method/function in both languages to determine if they are functionally equivalent.
@@ -209,8 +236,16 @@ templates:
           You are an expert agent specializing in analyzing specification adherence in code fragments. Your task is to determine if two code fragments in different programming languages ({{ source_language }} and {{ target_language }}) adhere to the same specifications and behavioral contracts.
 
           <functional_equivalence_definition>
-          Two code fragments in different programming languages are considered functionally equivalent if, when executed on the same input, they always have identical program states at all corresponding points reachable by program execution, and they both produce the same output upon termination.
+            Two code fragments in different programming languages are considered functionally equivalent if, when executed on the same input, they always have identical program states at all corresponding points reachable by program execution, and they both produce the same output upon termination.
           </functional_equivalence_definition>
+
+          <specification_equivalence_definition>
+            Two code fragments are considered to adhere to equivalent specifications if:
+            1. They implement the same documented or implied functional requirements
+            2. They satisfy the same pre-conditions and post-conditions
+            3. They maintain the same invariants throughout execution
+            4. They handle the same range of inputs correctly (including edge cases)
+          </specification_equivalence_definition>
 
           <general_notes>
             - You only need to focus on the specifications and behavioral contracts of the given method/function in both languages to determine if they are functionally equivalent.
@@ -271,7 +306,7 @@ templates:
         <instruction>
 
           <functional_equivalence_definition>
-          Two code fragments in different programming languages are considered functionally equivalent if, when executed on the same input, they always have identical program states at all corresponding points reachable by program execution, and they both produce the same output upon termination.
+            Two code fragments in different programming languages are considered functionally equivalent if, when executed on the same input, they always have identical program states at all corresponding points reachable by program execution, and they both produce the same output upon termination.
           </functional_equivalence_definition>
 
           You are the final verdict agent responsible for synthesizing the analyses from multiple specialized agents regarding the functional equivalence of method/function implementations in {{ source_language }} and {{ target_language }}.
