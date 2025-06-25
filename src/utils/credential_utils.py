@@ -174,9 +174,7 @@ def setup_environment_for_agent(
     env = os.environ.copy()
 
     # Get credentials and region for this agent - this will raise ValueError if credentials not available
-    credential, region, credential_name = get_agent_credentials(
-        agent_name, sub_agent_name, credential_file, configs
-    )
+    credential, region, credential_name = get_agent_credentials(agent_name, sub_agent_name, credential_file, configs)
 
     # Set up environment variables
     env["CLAUDE_CODE_USE_BEDROCK"] = "true"
