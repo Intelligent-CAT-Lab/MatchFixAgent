@@ -193,4 +193,7 @@ def setup_environment_for_agent(
     # Add maven to PATH
     env["PATH"] = f"{os.path.expanduser('~/apache-maven-3.9.9/bin')}:{env['PATH']}"
 
+    # Add cargo to PATH
+    env["PATH"] = f"{os.path.expanduser('~/.cargo/bin')}:{env['PATH']}"
+
     return env, credential_name
