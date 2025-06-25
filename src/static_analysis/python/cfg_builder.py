@@ -288,7 +288,12 @@ class CFGBuilder(ast.NodeVisitor):
             elif type(node) == ast.Str:
                 return node.s
             elif type(node) == ast.Subscript:
-                return node.value.id
+                # For subscript expressions, attempt to recursively
+                # retrieve the base object's name to avoid attribute
+                # errors when nested attributes are used.
+                if hasattr(node.value, 'id'):
+                    return node.value.id
+                return visit_func(node.value)
             else:
                 return type(node).__name__
 
