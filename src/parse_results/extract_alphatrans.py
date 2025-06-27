@@ -34,6 +34,9 @@ def main():
                     source_code = "".join(schema_data["classes"][class_]["methods"][method_]["body"])
                     target_code = "\n".join(schema_data["classes"][class_]["methods"][method_]["translation"])
 
+                    source_code = source_code.replace("\t", "    ")
+                    target_code = target_code.replace("\t", "    ")
+
                     validation_result = ""
                     if isinstance(schema_data["classes"][class_]["methods"][method_]["graal_validation"], str):
                         validation_result = schema_data["classes"][class_]["methods"][method_]["graal_validation"]
