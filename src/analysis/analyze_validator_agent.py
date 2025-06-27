@@ -20,14 +20,14 @@ import pandas as pd
 
 def get_agent_cost(agent_output):
 
-    cost = {'total_num_turns': 0, 'total_cost_usd': 0, 'duration_ms': 0, 'num_tool_calls': 0}
+    cost = {"total_num_turns": 0, "total_cost_usd": 0, "duration_ms": 0, "num_tool_calls": 0}
 
-    if agent_output['parsed_final_response']['is_equivalent'] == 'error':
+    if agent_output["parsed_final_response"]["is_equivalent"] == "error":
         return cost
 
-    cost['total_num_turns'] += agent_output["num_turns"]
-    cost['total_cost_usd'] += agent_output["total_cost_usd"]
-    cost['duration_ms'] += agent_output["duration_ms"]
+    cost["total_num_turns"] += agent_output["num_turns"]
+    cost["total_cost_usd"] += agent_output["total_cost_usd"]
+    cost["duration_ms"] += agent_output["duration_ms"]
 
     # Load and analyze agent trajectory files
     session_id = agent_output["session_id"]
@@ -52,7 +52,7 @@ def get_agent_cost(agent_output):
 
         for content in message["content"]:
             if content["type"] == "tool_use":
-                cost['num_tool_calls'] += 1
+                cost["num_tool_calls"] += 1
 
     return cost
 
@@ -182,9 +182,17 @@ if __name__ == "__main__":
     parser.add_argument("--results_dir", type=str, dest="results_dir", help="directory to results")
     parser.add_argument("--trajectory_dir", type=str, dest="trajectory_dir", help="directory to trajectories")
     parser.add_argument("--agent_name", type=str, dest="agent_name", help="name of the agent to analyze")
-    parser.add_argument("--print_tool_y_agent_n", action="store_true", dest="print_tool_y_agent_n",
-                        help="print tool validation success vs agent no equivalency")
-    parser.add_argument("--print_tool_n_agent_y", action="store_true", dest="print_tool_n_agent_y",
-                        help="print tool validation failure vs agent yes equivalency")
+    parser.add_argument(
+        "--print_tool_y_agent_n",
+        action="store_true",
+        dest="print_tool_y_agent_n",
+        help="print tool validation success vs agent no equivalency",
+    )
+    parser.add_argument(
+        "--print_tool_n_agent_y",
+        action="store_true",
+        dest="print_tool_n_agent_y",
+        help="print tool validation failure vs agent yes equivalency",
+    )
     args = parser.parse_args()
     main(args)
