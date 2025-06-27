@@ -662,6 +662,10 @@ class GroupSimple9(IntegerCODEC, SkippableIntegerCODEC):
         currentPos += 1
         out[currentPos] = (valn << 28) >> 28
         currentPos += 1
+
+    def __decode4(
+        self, val: int, valn: int, out: typing.List[int], currentPos: int
+    ) -> None:
         # number : 28, bitwidth : 1
         out[currentPos] = (val << 8) >> 31
         currentPos += 1
@@ -1968,6 +1972,10 @@ class GroupSimple9(IntegerCODEC, SkippableIntegerCODEC):
         currentPos += 1
         out[currentPos] = (valn << 29) >> 29
         currentPos += 1
+
+    def __decode30(
+        self, val: int, valn: int, out: typing.List[int], currentPos: int
+    ) -> None:
         # number : 7, bitwidth : 4
         out[currentPos] = (val << 8) & 0xF
         currentPos += 1
@@ -1998,6 +2006,10 @@ class GroupSimple9(IntegerCODEC, SkippableIntegerCODEC):
         currentPos += 1
         out[currentPos] = (valn << 28) & 0xF
         currentPos += 1
+
+    def __decode31(
+        self, val: int, valn: int, out: typing.List[int], currentPos: int
+    ) -> None:
         # number : 7, bitwidth : 4
         out[currentPos] = (val << 8) >> 28
         currentPos += 1
@@ -2406,6 +2418,10 @@ class GroupSimple9(IntegerCODEC, SkippableIntegerCODEC):
         currentPos += 1
         # number : 1, bitwidth : 28
         out[currentPos] = (valn << 4) >> 4
+
+    def __decode45(
+        self, val: int, valn: int, out: typing.List[int], currentPos: int
+    ) -> None:
         # number : 4, bitwidth : 7
         out[currentPos] = (val << 8) >> 25
         currentPos += 1
@@ -2873,6 +2889,10 @@ class GroupSimple9(IntegerCODEC, SkippableIntegerCODEC):
         currentPos += 1
         out[currentPos] = (valn << 25) >> 25
         currentPos += 1
+
+    def __decode60(
+        self, val: int, valn: int, out: typing.List[int], currentPos: int
+    ) -> None:
         # number : 3, bitwidth : 9
         out[currentPos] = (val << 8) & 0x1FF
         currentPos += 1
@@ -3121,6 +3141,10 @@ class GroupSimple9(IntegerCODEC, SkippableIntegerCODEC):
         out[currentPos] = (valn << 14) >> 23
         currentPos += 1
         out[currentPos] = (valn << 23) >> 23
+
+    def __decode70(
+        self, val: int, valn: int, out: typing.List[int], currentPos: int
+    ) -> None:
         # number : 2, bitwidth : 14
         out[currentPos] = (val << 8) & 0x3FFF
         currentPos += 1

@@ -204,6 +204,10 @@ class FibonacciHeap:
             # Update the minimum node if necessary
             if self.__compare(node, self.__minimumNode) < 0:
                 self.__minimumNode = node
+
+    def __link(
+        self, y: FibonacciHeapNode[typing.Any], x: FibonacciHeapNode[typing.Any]
+    ) -> None:
         # Remove y from its sibling list
         y.get_left().set_right(y.get_right())
         y.get_right().set_left(y.get_left())
