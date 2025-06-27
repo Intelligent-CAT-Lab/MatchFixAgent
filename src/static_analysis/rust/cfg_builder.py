@@ -225,13 +225,19 @@ class CFGBuilder:
         self.current_block = loop_guard
         self.add_statement(self.current_block, node)
         cond = node.child_by_field_name('condition')
-        cond_text = self.get_text(cond)
+        cond_text = self.get_text(cond) if cond else None
         self.curr_loop_guard_stack.append(loop_guard)
         while_block = self.new_block()
-        self.add_exit(self.current_block, while_block, cond_text)
-        after_while = self.new_block()
-        self.after_loop_block_stack.append(after_while)
-        self.add_exit(self.current_block, after_while, self.invert(cond_text))
+        if cond_text:
+            self.add_exit(self.current_block, while_block, cond_text)
+            after_while = self.new_block()
+            self.after_loop_block_stack.append(after_while)
+            self.add_exit(self.current_block, after_while, self.invert(cond_text))
+        else:
+            self.add_exit(self.current_block, while_block)
+            after_while = self.new_block()
+            self.after_loop_block_stack.append(after_while)
+            self.add_exit(self.current_block, after_while)
         self.current_block = while_block
         body = node.child_by_field_name('body')
         if body.type in ('block', 'compound_statement'):

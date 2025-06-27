@@ -78,10 +78,11 @@ class CFGBuilder:
                 method = child
                 break
         body = method.child_by_field_name('body') if method else root
-        if body.type == 'block':
-            self.visit_block(body)
-        else:
-            self.visit(body)
+        if body is not None:
+            if body.type == 'block':
+                self.visit_block(body)
+            else:
+                self.visit(body)
         self.clean_cfg(self.cfg.entryblock)
         return self.cfg
 
@@ -296,9 +297,12 @@ class CFGBuilder:
         self.cfg = CFG(name)
         self.current_id = 0
         lines = []
-        start = src.find("{") + 1
+        start = src.find("{")
         end = src.rfind("}")
-        body = src[start:end]
+        if start == -1 or end == -1:
+            body = ""
+        else:
+            body = src[start + 1:end]
         for ln, line in enumerate(body.splitlines()):
             stripped = line.strip()
             if stripped:
@@ -313,7 +317,11 @@ class CFGBuilder:
             if prev is not None:
                 self.add_exit(prev, block)
             prev = block
-        if prev is not None:
-            self.cfg.finalblocks.append(prev)
+        if prev is None:
+            # No statements, create a single empty block
+            block = self.new_block()
+            self.cfg.entryblock = block
+            prev = block
+        self.cfg.finalblocks.append(prev)
         return self.cfg
 
