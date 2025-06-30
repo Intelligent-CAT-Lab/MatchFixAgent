@@ -18,10 +18,10 @@ def parse_translation_blocks(text: str, project: str) -> dict:
 
         if path.endswith(".rs"):
             target_path = path
-            target_func = func.split("\n")
+            target_func = func.replace("\t", "    ").split("\n")
         else:
             source_path = path
-            source_func = func.split("\n")
+            source_func = func.replace("\t", "    ").split("\n")
 
     return {
         "project": project,
@@ -136,7 +136,7 @@ def main():
                     target_function = "[FIXTHIS] No target function found so delete this string manually."
                     parsed["result"] = "pending"
 
-                parsed["target_function"] = target_function.split("\n")
+                parsed["target_function"] = target_function.replace("\t", "    ").split("\n")
                 parsed = {
                     "id": str(len(project_results) + 1),
                     "project": parsed["project"],
