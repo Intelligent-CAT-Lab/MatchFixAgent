@@ -98,6 +98,9 @@ def execute_rust_tests(project: str) -> str:
 
     try:
         # Change to project directory and execute the test command
+        env = os.environ.copy()
+        env["RUST_LOG"] = "error"
+
         result = subprocess.run(
             test_command,
             shell=True,
@@ -105,7 +108,14 @@ def execute_rust_tests(project: str) -> str:
             capture_output=True,
             text=True,
             timeout=300,  # 5 minute timeout
+            env=env,
         )
+
+        stdout = result.stdout
+        stderr = result.stderr
+
+        if project == "deltachat-core" and stdout.strip() == "" and result.returncode == 0:
+            stdout = stderr or "All tests passed"
 
         # Format the output
         output_lines = [
@@ -115,10 +125,10 @@ def execute_rust_tests(project: str) -> str:
             f"Exit code: {result.returncode}",
             "",
             "=== STDOUT ===",
-            result.stdout if result.stdout else "(no stdout output)",
+            stdout if stdout else "(no stdout output)",
             "",
             "=== STDERR ===",
-            result.stderr if result.stderr else "(no stderr output)",
+            stderr if stderr and result.returncode != 0 else "(no stderr output)",
         ]
 
         return "\n".join(output_lines)
