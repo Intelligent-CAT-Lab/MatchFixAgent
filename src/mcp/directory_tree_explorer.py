@@ -4,7 +4,7 @@ mcp = FastMCP(name="DirectoryTreeExplorer")
 
 
 @mcp.tool
-def get_directory_tree(path: str) -> str:
+def get_directory_tree(path: str, print_dirs_only: bool) -> str:
     """Generate a visual tree representation of a directory structure.
 
     This tool recursively traverses the specified directory and creates
@@ -16,6 +16,9 @@ def get_directory_tree(path: str) -> str:
         path (str): The file system path to the directory to analyze.
                    Can be relative or absolute path. The path will be
                    converted to absolute path internally.
+        print_dirs_only (bool): If True, only directories will be shown
+                               in the tree structure, files will be excluded.
+                               This parameter is required.
 
     Returns:
         str: A formatted string containing the directory tree structure
@@ -38,11 +41,18 @@ def get_directory_tree(path: str) -> str:
         └── tests/
             └── test_main.py
 
+        >>> get_directory_tree("/home/user/project", print_dirs_only=True)
+        project/
+        ├── src/
+        │   └── utils/
+        └── tests/
+
     Note:
         - Directories are traversed recursively
         - Items are sorted alphabetically for consistent output
         - Permission errors are handled gracefully
         - Hidden files and directories (starting with '.') are excluded from output
+        - When print_dirs_only=True, only directories are shown in the tree
     """
     import os
 
@@ -61,6 +71,10 @@ def get_directory_tree(path: str) -> str:
             items = sorted(os.listdir(directory))
             # Filter out hidden directories (starting with '.')
             items = [item for item in items if not item.startswith(".")]
+
+            # Filter to only directories if print_dirs_only is True
+            if print_dirs_only:
+                items = [item for item in items if os.path.isdir(os.path.join(directory, item))]
 
             for i, item in enumerate(items):
                 item_path = os.path.join(directory, item)
