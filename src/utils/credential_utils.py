@@ -89,6 +89,9 @@ def get_agent_credentials(
     credential_names = list(aws_credentials.keys())
     available_regions = list(aws_regions)  # Make a copy we can modify
 
+    random.shuffle(available_regions)  # Shuffle regions to ensure randomness
+    random.shuffle(credential_names)  # Shuffle credentials to ensure randomness
+
     # Make sure we have enough combinations
     total_combinations = len(credential_names) * len(available_regions)
     global _used_credential_region_pairs
