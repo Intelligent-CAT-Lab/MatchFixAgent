@@ -95,18 +95,34 @@ class TestGenRepairAgent:
         self.conversation.add_message(role="user", content=prompt)
 
         try:
-            # Use the dedicated utility function for command execution with 5-minute timeout
+            # Use the dedicated utility function for command execution with 1000 seconds timeout
             from src.utils.cmd_utils import run_claude_command
 
-            status, agent_output = await run_claude_command(
-                prompt,
-                "",
-                self.model.model_name,
-                self.configs,
-                self.logger,
-                agent_name=agent_name or "test_gen_repair_agent",
-                sub_agent_name=sub_agent_name,
-            )
+            # Set 1000 seconds timeout
+            try:
+                # Create a task for the Claude CLI call
+                api_task = run_claude_command(
+                    prompt,
+                    "",
+                    self.model.model_name,
+                    self.configs,
+                    self.logger,
+                    agent_name=agent_name or "test_gen_repair_agent",
+                    sub_agent_name=sub_agent_name,
+                )
+
+                # Wait for the task to complete with a timeout of 1000 seconds
+                status, agent_output = await asyncio.wait_for(api_task, timeout=1000)
+
+            except asyncio.TimeoutError:
+                self.logger.warning(
+                    "Test generation timed out after 1000 seconds, returning is_equivalent=error with explanation"
+                )
+                # Create default success response on timeout
+                status = True
+                agent_output = {
+                    "result": '<final_response_format>{"is_equivalent": "error", "explanation": "timeout", "source_test_file_implementation": "", "source_test_execution_outcome": "", "target_test_file_implementation": "", "target_test_execution_outcome": "", "correct_target_method_implementation": ""}</final_response_format>'
+                }
 
             agent_output = agent_output or {}
 
