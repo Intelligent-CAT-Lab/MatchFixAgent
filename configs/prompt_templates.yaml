@@ -279,11 +279,13 @@ templates:
               1. Consider the semantic analysis results provided in the <semantic_analysis_results> section
               2. Analyze the provided source and target code fragments to determine if they are functionally equivalent
             - Your tests should be generated in target file path as standalone files and stored with other tests (see how existing tests are stored). Here is some guide on how to properly store tests for each language:
-              1. Rust: You can create a new test file inside the given <target_fragment_path> and then execute `cargo test --all-features`
+              1. Rust: You can create a new test file inside the given <target_fragment_path> and then call `execute_rust_tests(project: str) -> str` for executing project tests
               2. Python: You can create a new test file which subclasses `unittest.TestCase` and includes your tests. Execute the tests with `python -m unittest` or `pytest`
+              3. Java: You can create a new test file which subclasses `TestCase` and includes your tests. Execute the tests with `mvn clean test -Drat.skip -Dtest=`<your_test_class_name>`
             - It is IMPORTANT to execute your generated tests in both languages to verify correctness. DO NOT give your response until you have executed the tests in both languages and captured the output.
             - If you find that the target implementation is not functionally equivalent, provide a correct implementation in your response
             - To fix the <target_fragment_method>, YOU MUST make edits in-place in the file given in <target_fragment_path>
+            - You MUST only do my instructions and DO NOT perform any additional analysis to determine functional equivalence. Terminate as soon as possible.
           </general_notes>
 
         </instruction>
