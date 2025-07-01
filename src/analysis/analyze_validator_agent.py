@@ -57,6 +57,35 @@ def get_agent_cost(agent_output):
     return cost
 
 
+def reset_incomplete_responses(test_repair_error, verdict_error):
+    """
+    Reset incomplete responses by removing them from the results file.
+
+    This function takes lists of test repair and verdict errors, and removes
+    these entries from the results JSON file to ensure that they do not affect
+    future analyses.
+
+    Args:
+        test_repair_error (list): List of IDs with test repair errors.
+        verdict_error (list): List of IDs with verdict errors.
+    """
+    if not test_repair_error and not verdict_error:
+        return
+
+    results_file = os.path.join(args.results_dir, f"{args.project_name}.json")
+    with open(results_file, "r") as file:
+        data = json.load(file)
+
+    for item in data:
+        if args.agent_name not in item:
+            continue
+        if item["id"] in test_repair_error or item["id"] in verdict_error:
+            item[args.agent_name]["status"] = False
+
+    with open(results_file, "w") as file:
+        json.dump(data, file, indent=4)
+
+
 def main(args):
     """
     Analyze validator agent performance across a dataset of method translations.
@@ -88,6 +117,10 @@ def main(args):
     total_time = 0
     total_tool_calls = 0
 
+    # incomplete responses
+    test_repair_error = []
+    verdict_error = []
+
     # Define possible outcomes
     tool_outcomes = ["error", "failure", "not-exercised", "pending", "success"]
     llm_outcomes = ["yes", "no", "need_more_context"]
@@ -116,6 +149,12 @@ def main(args):
 
         # Get LLM prediction
         llm_prediction = item[args.agent_name]["output"][verdict]["parsed_final_response"]["is_equivalent"]
+
+        if item[args.agent_name]["output"]["test_repair"]["parsed_final_response"]["is_equivalent"] == "error":
+            test_repair_error.append(item["id"])
+
+        if item[args.agent_name]["output"]["verdict"]["parsed_final_response"]["is_equivalent"] == "error":
+            verdict_error.append(item["id"])
 
         if args.print_tool_y_agent_n and tool_validation == "success" and llm_prediction == "no":
             print("tool validation success but agent says no:", item["id"])
@@ -146,6 +185,8 @@ def main(args):
         equivalency_dist.values()
     ), "Total methods do not match the sum of equivalency distribution"
 
+    total_methods = max(total_methods, 1)  # Avoid division by zero
+
     # Print statistics
     print(f"---" * 50)
     print(f"Project: {args.project_name}")
@@ -165,6 +206,13 @@ def main(args):
     print(
         f"Tool Success Dist: {tool_validation_dist['success'] / total_methods:.2%} [Improvement: {equivalency_dist['yes'] / total_methods:.2%} - {tool_validation_dist['success'] / total_methods:.2%} = {equivalency_dist['yes'] / total_methods - tool_validation_dist['success'] / total_methods:.2%}]"
     )
+
+    print()
+    print(f"Total Tool (YES) vs Agent (NO) Validation Success: {confusion_df.loc['success', 'no']}")
+    print(f"Total Tool (NO) vs Agent (YES) Validation Failure: {confusion_df.loc['failure', 'yes']}")
+    print()
+    print("Total Test Repair Agent Errors:", len(test_repair_error))
+    print("Total Verdict Agent Errors:", len(verdict_error))
     print()
     print(f"Total turns: {total_num_turns} [Average: {total_num_turns / total_methods:.2f}]")
     print(f"Total cost: ${total_cost:.2f} [Average: ${total_cost / total_methods:.2f}]")
@@ -174,6 +222,8 @@ def main(args):
     # Print confusion matrix
     print("\nConfusion Matrix:")
     print(confusion_df)
+
+    reset_incomplete_responses(test_repair_error, verdict_error)
 
 
 if __name__ == "__main__":
