@@ -44,7 +44,7 @@ def validate_by_agent(configs: dict, fragment_details: dict) -> tuple[bool, dict
     return status, agent_output
 
 
-def cleanup():
+def cleanup(configs: dict):
     """
     Cleanup function to remove temporary files created during validation.
 
@@ -52,10 +52,26 @@ def cleanup():
     to ensure no residual data is left after validation.
     """
 
+    target_dir = ""
+    if configs["tool_name"] == "alphatrans":
+        target_dir = os.path.join(
+            "data",
+            "tool_projects",
+            "alphatrans",
+            "python_projects",
+            "gpt-4o-2024-11-20",
+            "body",
+            "0.0",
+            configs["project_name"],
+        )
+    else:
+        target_dir = os.path.join("data", "tool_projects", configs["tool_name"], "projects", configs["project_name"])
+
+    assert target_dir, f"Target directory {target_dir} does not exist"
+    assert os.path.exists(target_dir), f"Target directory {target_dir} does not exist"
+
     # Run `git status --porcelain data/tool_projects`
-    proc = subprocess.run(
-        ["git", "status", "--porcelain", "data/tool_projects"], capture_output=True, text=True, check=True
-    )
+    proc = subprocess.run(["git", "status", "--porcelain", target_dir], capture_output=True, text=True, check=True)
     for line in proc.stdout.splitlines():
         if not line.strip():
             continue
@@ -115,12 +131,11 @@ def main(args):
     Args:
         args (Namespace): Command-line arguments including:
             - config_file: Path to configuration file
-            - project_name: Name of the project to validate
     """
     configs = yaml.safe_load(open(args.config_file, "r"))
 
     results_path = configs["tool_results_path"]
-    with open(os.path.join(results_path, f"{args.project_name}.json"), "r") as f:
+    with open(os.path.join(results_path, f"{configs['project_name']}.json"), "r") as f:
         results = json.load(f)
 
     for fragment_details in results:
@@ -149,10 +164,10 @@ def main(args):
             "output": agent_output,
         }
 
-        with open(os.path.join(results_path, f"{args.project_name}.json"), "w") as f:
+        with open(os.path.join(results_path, f"{configs['project_name']}.json"), "w") as f:
             json.dump(results, f, indent=4)
 
-        cleanup()
+        cleanup(configs)
 
 
 if __name__ == "__main__":
@@ -163,7 +178,6 @@ if __name__ == "__main__":
     """
     parser = argparse.ArgumentParser(description="Validate existing translations using the Validator Agent")
     parser.add_argument("--config_file", type=str, required=True, help="Path to the config file")
-    parser.add_argument("--project_name", type=str, required=True, help="Name of the project")
     args = parser.parse_args()
 
     main(args)
