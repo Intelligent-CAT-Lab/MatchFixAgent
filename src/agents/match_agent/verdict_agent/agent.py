@@ -3,10 +3,12 @@ import json
 import logging
 import re
 import uuid
+import asyncio
 from pathlib import Path
 
 from src.utils.agent_utils import Model
 from src.utils.agent_utils import Conversation
+from src.utils.credential_utils import get_agent_credentials
 
 
 class VerdictAgent:
@@ -24,7 +26,6 @@ class VerdictAgent:
             session_id (str, optional): Session ID for logging. If None, a new UUID will be generated.
         """
         self.configs = configs
-        self.model = Model(self.configs["model"])
         self.conversation = Conversation()
         self.session_id = session_id or str(uuid.uuid4())
 
@@ -98,15 +99,32 @@ class VerdictAgent:
             # Use the dedicated utility function for command execution
             from src.utils.cmd_utils import run_claude_command
 
-            status, agent_output = await run_claude_command(
-                prompt,
-                "",
-                self.model.model_name,
-                self.configs,
-                self.logger,
-                agent_name=agent_name or "verdict_agent",
-                sub_agent_name=sub_agent_name,
-            )
+            # Set 300 seconds timeout
+            try:
+                # Create a task for the Claude CLI call
+                api_task = run_claude_command(
+                    prompt,
+                    "",
+                    self.configs,
+                    self.logger,
+                    agent_name=agent_name or "verdict_agent",
+                    sub_agent_name=sub_agent_name,
+                )
+
+                # Wait for the task to complete with a timeout of 300 seconds
+                status, agent_output = await asyncio.wait_for(api_task, timeout=300)
+
+            except asyncio.TimeoutError:
+                self.logger.warning(
+                    "Verdict agent timed out after 300 seconds, returning is_equivalent=error with explanation"
+                )
+                # Create default success response on timeout
+                status = True
+                agent_output = {
+                    "result": '<final_response_format>{"is_equivalent": "error", "confidence_level": "error", "explanation": "Timeout occurred while waiting for model response"}</final_response_format>'
+                }
+
+            agent_output = agent_output or {}
 
             if status:
                 self.logger.info("Verdict analysis completed successfully")

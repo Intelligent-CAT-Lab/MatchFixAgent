@@ -13,6 +13,7 @@ from typing import Dict, List, Any, Optional
 from src.utils.agent_utils import MCPConfig
 from src.utils.agent_utils import Model
 from src.utils.agent_utils import Conversation
+from src.utils.credential_utils import get_agent_credentials
 
 from src.agents.match_agent.prompt_generator import MatchAgentPromptGenerator
 from src.agents.match_agent.control_flow_agent.agent import ControlFlowAgent
@@ -106,7 +107,6 @@ class MatchAgent:
             configs (dict): Configuration settings
         """
         self.configs = configs
-        self.model = Model(self.configs["model"])
         self.mcp_config = MCPConfig(self.configs["mcp_config_file"])
         self.conversation = Conversation()
         self.session_id = str(uuid.uuid4())
@@ -139,7 +139,6 @@ class MatchAgent:
         self.logger.addHandler(console_handler)
 
         self.logger.info(f"match_agent initialized with session ID: {self.session_id}")
-        self.logger.info(f"Using model: {self.model.model_name}")
 
         # Initialize sub-agents with the same session ID and specialized configurations
         subagent_configs = {}

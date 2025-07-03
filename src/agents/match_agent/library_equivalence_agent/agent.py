@@ -7,6 +7,7 @@ from pathlib import Path
 
 from src.utils.agent_utils import Model
 from src.utils.agent_utils import Conversation
+from src.utils.credential_utils import get_agent_credentials
 
 
 class LibraryEquivalenceAgent:
@@ -24,7 +25,6 @@ class LibraryEquivalenceAgent:
             session_id (str, optional): Session ID for logging. If None, a new UUID will be generated.
         """
         self.configs = configs
-        self.model = Model(self.configs["model"])
         self.conversation = Conversation()
         self.session_id = session_id or str(uuid.uuid4())
 
@@ -87,7 +87,6 @@ class LibraryEquivalenceAgent:
             status, agent_output = await prompt_claude(
                 prompt,
                 "",
-                self.model.model_name,
                 self.configs,
                 self.logger,
                 agent_name=agent_name or "library_equivalence_agent",

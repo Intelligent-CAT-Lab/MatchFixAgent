@@ -13,7 +13,6 @@ from botocore.exceptions import ClientError
 async def run_claude_command(
     prompt: str,
     feedback: str,
-    model_name: str,
     configs: dict,
     logger=None,
     agent_name: str = None,
@@ -51,12 +50,13 @@ async def run_claude_command(
     # Set up environment with appropriate credentials
     try:
         env, credential_name = setup_environment_for_agent(
-            agent_name=agent_name, sub_agent_name=sub_agent_name, model_name=model_name, configs=configs
+            agent_name=agent_name, sub_agent_name=sub_agent_name, configs=configs
         )
 
         if logger:
             logger.info(f"Using credentials for agent: {agent_name}, sub-agent: {sub_agent_name or 'None'}")
             logger.info(f"Using credential: '{credential_name}' in region: {env.get('AWS_REGION', 'unknown')}")
+            logger.info(f"Using Claude model: {env.get('ANTHROPIC_MODEL', 'unknown')}")
     except Exception as e:
         if logger:
             logger.error(f"Failed to set up credentials: {str(e)}")
@@ -110,7 +110,6 @@ async def run_claude_command(
 async def prompt_claude(
     prompt: str,
     feedback: str,
-    model_name: str,
     configs: dict,
     logger=None,
     agent_name: str = None,
@@ -148,12 +147,13 @@ async def prompt_claude(
     # Set up environment with appropriate credentials
     try:
         env, credential_name = setup_environment_for_agent(
-            agent_name=agent_name, sub_agent_name=sub_agent_name, model_name=model_name, configs=configs
+            agent_name=agent_name, sub_agent_name=sub_agent_name, configs=configs
         )
 
         if logger:
             logger.info(f"Using credentials for agent: {agent_name}, sub-agent: {sub_agent_name or 'None'}")
             logger.info(f"Using credential: '{credential_name}' in region: {env.get('AWS_REGION', 'unknown')}")
+            logger.info(f"Using Claude model: {env.get('ANTHROPIC_MODEL', 'unknown')}")
     except Exception as e:
         if logger:
             logger.error(f"Failed to set up credentials: {str(e)}")
@@ -170,10 +170,9 @@ async def prompt_claude(
         # Initialize Bedrock client with environment credentials
         bedrock_runtime = boto3.client(
             service_name="bedrock-runtime",
-            region_name=env.get("AWS_REGION", "us-west-2"),
+            region_name=env.get("AWS_REGION"),
             aws_access_key_id=env.get("AWS_ACCESS_KEY_ID"),
             aws_secret_access_key=env.get("AWS_SECRET_ACCESS_KEY"),
-            aws_session_token=env.get("AWS_SESSION_TOKEN"),
         )
 
         # Create system prompt - use empty string if not provided in configs
@@ -196,7 +195,7 @@ async def prompt_claude(
         )
 
         # Invoke model
-        response = bedrock_runtime.invoke_model(body=body, modelId=model_name)
+        response = bedrock_runtime.invoke_model(body=body, modelId=env["ANTHROPIC_MODEL"])
         response_body = json.loads(response.get("body").read())
 
         result = response_body.get("content", [{}])[0].get("text", "")

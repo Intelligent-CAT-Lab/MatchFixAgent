@@ -29,7 +29,7 @@ from src.utils.agent_utils import Conversation
 
 from src.agents.base_agent.prompt_generator import BaseAgentPromptGenerator
 from src.utils.cmd_utils import run_claude_command
-from src.utils.credential_utils import setup_environment_for_agent
+from src.utils.credential_utils import setup_environment_for_agent, get_agent_credentials
 
 
 class BaseAgent:
@@ -55,7 +55,6 @@ class BaseAgent:
             mcp_config (MCPConfig): Configuration for the model control plane
         """
         self.configs = configs
-        self.model = Model(self.configs["model"])
         self.mcp_config = MCPConfig(self.configs["mcp_config_file"])
         self.conversation = Conversation()
         self.session_id = str(uuid.uuid4())
@@ -88,7 +87,6 @@ class BaseAgent:
         self.logger.addHandler(console_handler)
 
         self.logger.info(f"base_agent initialized with session ID: {self.session_id}")
-        self.logger.info(f"Using model: {self.model.model_name}")
 
     async def run_cmd(self, prompt: str, feedback: str) -> tuple[bool, dict]:
         """
@@ -109,7 +107,6 @@ class BaseAgent:
         return await run_claude_command(
             prompt=prompt,
             feedback=feedback,
-            model_name=self.model.model_name,
             configs=self.configs,
             logger=self.logger,
             agent_name=self.configs["agent_name"],
