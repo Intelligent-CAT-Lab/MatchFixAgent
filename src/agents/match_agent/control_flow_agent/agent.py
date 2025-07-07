@@ -3,11 +3,19 @@ import json
 import logging
 import re
 import uuid
+import tempfile
 from pathlib import Path
 
 from src.utils.agent_utils import Model
 from src.utils.agent_utils import Conversation
 from src.utils.credential_utils import get_agent_credentials
+from src.static_analysis.utils import sim_cfg
+
+from src.static_analysis.python.cfg_builder import CFGBuilder as PythonCFGBuilder
+from src.static_analysis.rust.cfg_builder import CFGBuilder as RustCFGBuilder
+from src.static_analysis.go.cfg_builder import CFGBuilder as GoCFGBuilder
+from src.static_analysis.c.cfg_builder import CFGBuilder as CCFGBuilder
+from src.static_analysis.java.cfg_builder import CFGBuilder as JavaCFGBuilder
 
 
 class ControlFlowAgent:
@@ -57,6 +65,44 @@ class ControlFlowAgent:
 
         self.logger.info("Control Flow Agent initialized")
 
+    def get_cfg_dot_file(self, code, method_name, language):
+
+        try:
+            # Generate CFG based on language
+            if language.lower() == "java":
+                cfg_builder = JavaCFGBuilder()
+                cfg = cfg_builder.build_from_src(method_name, code)
+                dot_file_path = f"{method_name}_java_cfg.dot"
+                cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
+            elif language.lower() == "python":
+                cfg_builder = PythonCFGBuilder()
+                cfg = cfg_builder.build_from_src(method_name, code)
+                dot_file_path = f"{method_name}_python_cfg.dot"
+                cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
+            elif language.lower() == "rust":
+                cfg_builder = RustCFGBuilder()
+                cfg = cfg_builder.build_from_src(method_name, code)
+                dot_file_path = f"{method_name}_rust_cfg.dot"
+                cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
+            elif language.lower() == "go":
+                cfg_builder = GoCFGBuilder()
+                cfg = cfg_builder.build_from_src(method_name, code)
+                dot_file_path = f"{method_name}_go_cfg.dot"
+                cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
+            elif language.lower() == "c":
+                cfg_builder = CCFGBuilder()
+                cfg = cfg_builder.build_from_src(method_name, code)
+                dot_file_path = f"{method_name}_c_cfg.dot"
+                cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
+            else:
+                return "Unsupported language for CFG generation"
+
+            return dot_file_path
+
+        except Exception as e:
+            self.logger.error(f"Error generating CFG for {language}: {str(e)}")
+            return None
+
     async def analyze(self, prompt_generator, agent_name=None, sub_agent_name=None):
         """
         Analyze the control flow of source and target code fragments.
@@ -71,6 +117,57 @@ class ControlFlowAgent:
         """
         self.logger.info("Analyzing control flow equivalence")
 
+        try:
+
+            source_cfg_dot_file = self.get_cfg_dot_file(
+                prompt_generator.source_method_implementation,
+                "",
+                self.configs["source_language"],
+            )
+
+            target_cfg_dot_file = self.get_cfg_dot_file(
+                prompt_generator.target_method_implementation,
+                "",
+                self.configs["target_language"],
+            )
+
+            similarity = sim_cfg.compute_cfg_similarity(source_cfg_dot_file, target_cfg_dot_file)
+
+            try:
+                os.unlink(source_cfg_dot_file)
+                os.unlink(source_cfg_dot_file + ".pdf")
+                os.unlink(target_cfg_dot_file)
+                os.unlink(target_cfg_dot_file + ".pdf")
+            except:
+                self.logger.warning(f"Failed to delete temporary file: {source_cfg_dot_file}")
+
+            # Calculate similarity using sim_cfg.py
+
+            self.logger.info(f"Computed CFG similarity: {similarity:.4f}")
+
+            # If similarity score is over 0.7, return non-LLM response
+            if similarity >= 0.7:
+                self.logger.info("CFG similarity is over threshold, returning non-LLM response")
+                response = {
+                    "parsed_final_response": {
+                        "is_equivalent": "yes",
+                        "explanation": "non-LLM response",
+                        "cfg_similarity_score": similarity,
+                    },
+                    "result": '<final_response_format>{"is_equivalent": "yes", "explanation": "non-LLM response", "cfg_similarity_score": '
+                    + str(similarity)
+                    + "}</final_response_format>",
+                }
+                return response
+
+            else:
+                self.logger.info("CFG similarity is below threshold, proceeding with LLM-based analysis")
+
+        except Exception as e:
+            self.logger.error(f"Error calculating CFG similarity: {str(e)}")
+            # Continue with LLM-based approach if similarity calculation fails
+
+        # If similarity is below threshold or calculation failed, continue with LLM approach
         # Generate the prompt using the template for control_flow_agent
         prompt = prompt_generator.generate_prompt("control_flow_agent")
 
