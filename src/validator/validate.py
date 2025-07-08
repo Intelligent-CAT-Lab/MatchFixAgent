@@ -140,6 +140,8 @@ def main(args):
 
     for fragment_details in results:
 
+        cleanup(configs)
+
         if (
             fragment_details["source_language"] != configs["source_language"]
             or fragment_details["target_language"] != configs["target_language"]
@@ -151,6 +153,15 @@ def main(args):
                 continue
 
         if "rustrepotrans" == configs["tool_name"]:
+            try:
+                decoded_ground_truth_target_function = [
+                    l.encode("latin1").decode("utf-8") for l in fragment_details["ground_truth_target_function"]
+                ]
+                fragment_details["ground_truth_target_function"] = decoded_ground_truth_target_function
+            except UnicodeDecodeError as e:
+                print(f"Error decoding ground truth target function: {e}")
+                continue
+
             try:
                 insert_translation(fragment_details)
             except ValueError as e:
