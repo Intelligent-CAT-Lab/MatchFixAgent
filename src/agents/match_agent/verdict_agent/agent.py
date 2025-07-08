@@ -102,13 +102,15 @@ class VerdictAgent:
             # Set 300 seconds timeout
             try:
                 # Create a task for the Claude CLI call
-                api_task = run_claude_command(
-                    prompt,
-                    "",
-                    self.configs,
-                    self.logger,
-                    agent_name=agent_name or "verdict_agent",
-                    sub_agent_name=sub_agent_name,
+                api_task = asyncio.create_task(
+                    run_claude_command(
+                        prompt,
+                        "",
+                        self.configs,
+                        self.logger,
+                        agent_name=agent_name or "verdict_agent",
+                        sub_agent_name=sub_agent_name,
+                    )
                 )
 
                 # Wait for the task to complete with a timeout of 300 seconds
@@ -118,6 +120,15 @@ class VerdictAgent:
                 self.logger.warning(
                     "Verdict agent timed out after 300 seconds, returning is_equivalent=error with explanation"
                 )
+                # Cancel the task to ensure proper cleanup
+                if not api_task.done():
+                    api_task.cancel()
+                    try:
+                        # Give it a moment to clean up
+                        await asyncio.wait_for(api_task, timeout=1.0)
+                    except (asyncio.TimeoutError, asyncio.CancelledError):
+                        pass
+
                 # Create default success response on timeout
                 status = True
                 agent_output = {

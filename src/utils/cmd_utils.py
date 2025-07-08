@@ -66,6 +66,7 @@ async def run_claude_command(
         logger.info(f"Feedback provided: {feedback}")
         prompt += f"\n\nFeedback: {feedback}"
 
+    process = None
     try:
         if logger:
             logger.info("Executing Claude CLI command...")
@@ -101,9 +102,31 @@ async def run_claude_command(
                 logger.debug(f"Raw output: {output}")
             return False, None
 
+    except asyncio.CancelledError:
+        # Properly handle task cancellation (e.g., due to timeout)
+        if process and process.returncode is None:
+            try:
+                # Try to terminate the process gracefully
+                process.terminate()
+                # Wait a short time for it to terminate
+                await asyncio.sleep(0.5)
+                # Force kill if still running
+                if process.returncode is None:
+                    process.kill()
+            except Exception as e:
+                if logger:
+                    logger.error(f"Error terminating subprocess during cancellation: {str(e)}")
+        raise  # Re-raise the CancelledError
+
     except Exception as e:
         if logger:
             logger.error(f"Error executing Claude: {str(e)}")
+        # Ensure process is cleaned up on any exception
+        if process and process.returncode is None:
+            try:
+                process.terminate()
+            except:
+                pass
         return False, None
 
 
