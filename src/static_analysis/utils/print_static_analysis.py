@@ -6,6 +6,7 @@ from collections import defaultdict, deque
 from tree_sitter import Language, Parser
 import tree_sitter_python as tspython
 import tree_sitter_java as tsjava
+import tree_sitter_javascript as tsjs
 import tree_sitter_rust as tsrust
 import tree_sitter_go as tsgo
 import tree_sitter_c as tsc
@@ -517,6 +518,38 @@ def get_c_variables(root):
     return variables
 
 
+def get_js_variables(root):
+    variables = {"local_vars": [], "parameters": []}
+
+    def extract_parameters(node):
+        if node.type == "formal_parameters":
+            for param in node.named_children:
+                ident = param.child_by_field_name("name") or param.child_by_field_name("left") or param.child_by_field_name("pattern")
+                if ident is None and param.type == "identifier":
+                    ident = param
+                if ident and ident.type == "identifier":
+                    variables["parameters"].append(ident.text.decode("utf-8"))
+            return
+        for child in node.children:
+            extract_parameters(child)
+
+    def extract_local_vars(node):
+        if node.type in ("variable_declarator",):
+            name = node.child_by_field_name("name")
+            if name and name.type == "identifier":
+                variables["local_vars"].append(name.text.decode("utf-8"))
+        for child in node.children:
+            extract_local_vars(child)
+
+    try:
+        extract_parameters(root)
+        extract_local_vars(root)
+    except Exception:
+        pass
+
+    return variables
+
+
 def get_variables_from_source(args):
 
     LANGUAGE = None
@@ -524,6 +557,8 @@ def get_variables_from_source(args):
         LANGUAGE = Language(tsjava.language())
     elif args.language == "python":
         LANGUAGE = Language(tspython.language())
+    elif args.language == "javascript":
+        LANGUAGE = Language(tsjs.language())
     elif args.language == "rust" and tsrust is not None:
         LANGUAGE = Language(tsrust.language())
     elif args.language == "go" and tsgo is not None:
@@ -549,6 +584,8 @@ def get_variables_from_source(args):
         variables = get_java_variables(root)
     elif args.language == "python":
         variables = get_python_variables(root)
+    elif args.language == "javascript":
+        variables = get_js_variables(root)
     elif args.language == "rust":
         variables = get_rust_variables(root)
     elif args.language == "go":
@@ -566,7 +603,7 @@ def main():
     parser.add_argument(
         "--language",
         default="python",
-        help="Programming language for parsing (python, java, rust, go, c)",
+        help="Programming language for parsing (python, java, javascript, rust, go, c)",
     )
     parser.add_argument("--dataflow", action="store_true", help="Enable data flow analysis")
     args = parser.parse_args()
