@@ -4,6 +4,9 @@
 - For Rust tests, make sure you call `execute_rust_tests(project: str) -> str`.
 - For Python tests, make sure you execute tests using `python -m unittest` or `pytest`.
 - For Java tests, make sure you execute tests using `mvn clean test -Drat.skip`.
+- For JavaScript tests, make sure you execute tests using `node`.
+- For Go tests, make sure you execute tests using `go`.
+- For C tests, make sure you compile and run tests using `gcc`.
 - To fix the <target_fragment_method>, YOU MUST make edits in-place in the file given in <target_fragment_path>.
 
 # MCP Servers
