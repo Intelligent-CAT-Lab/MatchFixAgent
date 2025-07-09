@@ -57,8 +57,8 @@ def main():
                     results = {}
                     results["id"] = str(len(project_results) + 1)
                     results["project"] = project
-                    results["source_path"] = file_path.replace("src/main/", "src/main/java/") + ".java"
-                    results["target_path"] = file_path + ".py"
+                    results["source_path"] = file_path.replace(f"{project}/", f"projects/{project}/java/").replace("src/main/", "src/main/java/") + ".java"
+                    results["target_path"] = file_path.replace(f"{project}/", f"projects/{project}/python/") + ".py"
                     results["source_function"] = source_code.split("\n")
                     results["target_function"] = target_code.split("\n")
                     results["ground_truth_target_function"] = ""
