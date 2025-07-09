@@ -3,6 +3,7 @@ import json
 import logging
 import re
 import uuid
+import yaml
 from pathlib import Path
 
 from src.utils.agent_utils import Model
@@ -27,6 +28,7 @@ class SpecAgent:
         self.configs = configs
         self.conversation = Conversation()
         self.session_id = session_id or str(uuid.uuid4())
+        self.errors = yaml.safe_load(open("configs/errors.yaml", "r"))
 
         # Set up logging
         log_dir = Path(f"logs/match_agent")
@@ -107,7 +109,7 @@ class SpecAgent:
 
                 if match:
                     try:
-                        spec_analysis = json.loads(match.group(1))
+                        spec_analysis = json.loads(match.group(1), strict=False)
                         self.logger.info(
                             f"Specification adherence equivalence: {spec_analysis.get('is_equivalent', 'unknown')}"
                         )
@@ -115,31 +117,21 @@ class SpecAgent:
                         agent_output["parsed_final_response"] = spec_analysis
                         return agent_output
                     except json.JSONDecodeError as e:
-                        self.logger.error(f"Failed to parse specification analysis response as JSON: {e}")
-                        agent_output["parsed_final_response"] = {
-                            "is_equivalent": "error",
-                            "explanation": f"Failed to parse response: {e}",
-                        }
+                        agent_output["parsed_final_response"] = self.errors["json_parsing"]
+                        agent_output["parsed_final_response"]["explanation"] += f" - {str(e)}"
+                        self.logger.error(agent_output["parsed_final_response"]["explanation"])
                         return agent_output
                 else:
-                    self.logger.error("No final response format found in specification analysis output")
-                    agent_output["parsed_final_response"] = {
-                        "is_equivalent": "error",
-                        "explanation": "No response format found",
-                    }
+                    self.logger.error(self.errors["no_response_format"]["explanation"])
+                    agent_output["parsed_final_response"] = self.errors["no_response_format"]
                     return agent_output
             else:
-                self.logger.error("Specification analysis failed")
-                agent_output["parsed_final_response"] = {
-                    "is_equivalent": "error",
-                    "explanation": "Analysis execution failed",
-                }
+                self.logger.error(self.errors["no_response"]["explanation"])
+                agent_output["parsed_final_response"] = self.errors["no_response"]
                 return agent_output
 
         except Exception as e:
-            self.logger.error(f"Error in specification analysis: {str(e)}")
-            agent_output["parsed_final_response"] = {
-                "is_equivalent": "error",
-                "explanation": f"Exception: {str(e)}",
-            }
+            agent_output["parsed_final_response"] = self.errors["unexpected_behavior"]
+            agent_output["parsed_final_response"]["explanation"] += f" - {str(e)}"
+            self.logger.error(agent_output["parsed_final_response"]["explanation"])
             return agent_output

@@ -4,6 +4,7 @@ import logging
 import re
 import uuid
 import tempfile
+import yaml
 from pathlib import Path
 
 from src.utils.agent_utils import Model
@@ -35,6 +36,7 @@ class ControlFlowAgent:
         self.configs = configs
         self.conversation = Conversation()
         self.session_id = session_id or str(uuid.uuid4())
+        self.errors = yaml.safe_load(open("configs/errors.yaml", "r"))
 
         # Set up logging
         log_dir = Path(f"logs/match_agent")
@@ -205,39 +207,29 @@ class ControlFlowAgent:
 
                 if match:
                     try:
-                        control_flow_analysis = json.loads(match.group(1))
+                        control_flow_analysis = json.loads(match.group(1), strict=False)
                         self.logger.info(
-                            f"Control flow equivalence: {control_flow_analysis.get('is_equivalent', 'unknown')}"
+                            f"Control flow equivalence: {control_flow_analysis.get('is_equivalent', 'error')}"
                         )
                         # Return the entire agent_output with the parsed result
                         agent_output["parsed_final_response"] = control_flow_analysis
                         return agent_output
                     except json.JSONDecodeError as e:
-                        self.logger.error(f"Failed to parse control flow analysis response as JSON: {e}")
-                        agent_output["parsed_final_response"] = {
-                            "is_equivalent": "error",
-                            "explanation": f"Failed to parse model response as JSON: {str(e)}",
-                        }
+                        agent_output["parsed_final_response"] = self.errors["json_parsing"]
+                        agent_output["parsed_final_response"]["explanation"] += f" - {str(e)}"
+                        self.logger.error(agent_output["parsed_final_response"]["explanation"])
                         return agent_output
                 else:
-                    self.logger.error("No final response format found in control flow analysis output")
-                    agent_output["parsed_final_response"] = {
-                        "is_equivalent": "error",
-                        "explanation": "No final response format found in control flow analysis output",
-                    }
+                    self.logger.error(self.errors["no_response_format"]["explanation"])
+                    agent_output["parsed_final_response"] = self.errors["no_response_format"]
                     return agent_output
             else:
-                self.logger.error("Control flow analysis failed")
-                agent_output["parsed_final_response"] = {
-                    "is_equivalent": "error",
-                    "explanation": "Control flow analysis did not complete successfully",
-                }
+                self.logger.error(self.errors["no_response"]["explanation"])
+                agent_output["parsed_final_response"] = self.errors["no_response"]
                 return agent_output
 
         except Exception as e:
-            self.logger.error(f"Error in control flow analysis: {str(e)}")
-            agent_output["parsed_final_response"] = {
-                "is_equivalent": "error",
-                "explanation": f"An error occurred during control flow analysis: {str(e)}",
-            }
+            agent_output["parsed_final_response"] = self.errors["unexpected_behavior"]
+            agent_output["parsed_final_response"]["explanation"] += f" - {str(e)}"
+            self.logger.error(agent_output["parsed_final_response"]["explanation"])
             return agent_output

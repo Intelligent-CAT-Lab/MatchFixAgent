@@ -4,6 +4,7 @@ import logging
 import re
 import uuid
 import asyncio
+import yaml
 from pathlib import Path
 
 from src.utils.agent_utils import Model
@@ -28,6 +29,7 @@ class VerdictAgent:
         self.configs = configs
         self.conversation = Conversation()
         self.session_id = session_id or str(uuid.uuid4())
+        self.errors = yaml.safe_load(open("configs/errors.yaml", "r"))
 
         # Set up logging
         log_dir = Path(f"logs/match_agent")
@@ -132,7 +134,7 @@ class VerdictAgent:
                 # Create default success response on timeout
                 status = True
                 agent_output = {
-                    "result": '<final_response_format>{"is_equivalent": "error", "confidence_level": "error", "explanation": "Timeout occurred while waiting for model response"}</final_response_format>'
+                    "result": f'<final_response_format>{json.dumps(self.errors["timeout"])}</final_response_format>'
                 }
 
             agent_output = agent_output or {}
@@ -149,44 +151,29 @@ class VerdictAgent:
 
                 if match:
                     try:
-                        verdict_analysis = json.loads(match.group(1))
+                        verdict_analysis = json.loads(match.group(1), strict=False)
                         self.logger.info(
-                            f"Final verdict on functional equivalence: {verdict_analysis.get('is_equivalent', 'unknown')}"
+                            f"Final verdict on functional equivalence: {verdict_analysis.get('is_equivalent', 'other')}"
                         )
-                        self.logger.info(f"Confidence level: {verdict_analysis.get('confidence_level', 'unknown')}")
-                        # Return the entire agent_output with the parsed result
+                        self.logger.info(f"Confidence level: {verdict_analysis.get('confidence_level', 'other')}")
                         agent_output["parsed_final_response"] = verdict_analysis
                         return agent_output
                     except json.JSONDecodeError as e:
-                        self.logger.error(f"Failed to parse verdict analysis response as JSON: {e}")
-                        agent_output["parsed_final_response"] = {
-                            "is_equivalent": "error",
-                            "confidence_level": "error",
-                            "explanation": "Failed to parse response",
-                        }
+                        agent_output["parsed_final_response"] = self.errors["json_parsing"]
+                        agent_output["parsed_final_response"]["explanation"] += f" - {str(e)}"
+                        self.logger.error(agent_output["parsed_final_response"]["explanation"])
                         return agent_output
                 else:
-                    self.logger.error("No final response format found in verdict analysis output")
-                    agent_output["parsed_final_response"] = {
-                        "is_equivalent": "error",
-                        "confidence_level": "error",
-                        "explanation": "No response format found",
-                    }
+                    self.logger.error(self.errors["no_response_format"]["explanation"])
+                    agent_output["parsed_final_response"] = self.errors["no_response_format"]
                     return agent_output
             else:
-                self.logger.error("Verdict analysis failed")
-                agent_output["parsed_final_response"] = {
-                    "is_equivalent": "error",
-                    "confidence_level": "error",
-                    "explanation": "Model execution failed",
-                }
+                self.logger.error(self.errors["no_response"]["explanation"])
+                agent_output["parsed_final_response"] = self.errors["no_response"]
                 return agent_output
 
         except Exception as e:
-            self.logger.error(f"Error in verdict analysis: {str(e)}")
-            agent_output["parsed_final_response"] = {
-                "is_equivalent": "error",
-                "confidence_level": "error",
-                "explanation": f"Exception: {str(e)}",
-            }
+            agent_output["parsed_final_response"] = self.errors["unexpected_behavior"]
+            agent_output["parsed_final_response"]["explanation"] += f" - {str(e)}"
+            self.logger.error(agent_output["parsed_final_response"]["explanation"])
             return agent_output

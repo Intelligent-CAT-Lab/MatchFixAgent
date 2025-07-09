@@ -142,7 +142,7 @@ class BaseAgent:
             final_response = match.group(1)
             try:
                 # Attempt to parse the final response as JSON
-                parsed_response = json.loads(final_response)
+                parsed_response = json.loads(final_response, strict=False)
 
                 if (
                     len(parsed_response) != 5

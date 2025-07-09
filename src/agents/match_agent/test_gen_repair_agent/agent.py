@@ -4,6 +4,7 @@ import logging
 import re
 import uuid
 import asyncio
+import yaml
 from pathlib import Path
 
 from src.utils.agent_utils import Model
@@ -28,6 +29,7 @@ class TestGenRepairAgent:
         self.configs = configs
         self.conversation = Conversation()
         self.session_id = session_id or str(uuid.uuid4())
+        self.errors = yaml.safe_load(open("configs/errors.yaml", "r"))
 
         # Set up logging
         log_dir = Path(f"logs/match_agent")
@@ -130,9 +132,7 @@ class TestGenRepairAgent:
 
                 # Create default success response on timeout
                 status = True
-                agent_output = {
-                    "result": '<final_response_format>{"is_equivalent": "error", "explanation": "timeout", "source_test_file_implementation": "", "source_test_execution_outcome": "", "target_test_file_implementation": "", "target_test_execution_outcome": "", "correct_target_method_implementation": ""}</final_response_format>'
-                }
+                agent_output = {"result": f"<final_response_format>{json.dumps(self.errors['timeout'])}</final_response_format>"}
 
             agent_output = agent_output or {}
 
@@ -148,37 +148,26 @@ class TestGenRepairAgent:
 
                 if match:
                     try:
-                        test_repair_results = json.loads(match.group(1))
+                        test_repair_results = json.loads(match.group(1), strict=False)
                         self.logger.info(f"Generated test cases and repairs")
-                        # Return the entire agent_output with the parsed result
                         agent_output["parsed_final_response"] = test_repair_results
                         return agent_output
                     except json.JSONDecodeError as e:
-                        self.logger.error(f"Failed to parse test generation and repair response as JSON: {e}")
-                        agent_output["parsed_final_response"] = {
-                            "is_equivalent": "error",
-                            "explanation": f"JSON parsing error: {str(e)}",
-                        }
+                        agent_output["parsed_final_response"] = self.errors["json_parsing"]
+                        agent_output["parsed_final_response"]["explanation"] += f" - {str(e)}"
+                        self.logger.error(agent_output["parsed_final_response"]["explanation"])
                         return agent_output
                 else:
-                    self.logger.error("No final response format found in test generation and repair output")
-                    agent_output["parsed_final_response"] = {
-                        "is_equivalent": "error",
-                        "explanation": "No final response format found in output",
-                    }
+                    self.logger.error(self.errors["no_response_format"]["explanation"])
+                    agent_output["parsed_final_response"] = self.errors["no_response_format"]
                     return agent_output
             else:
-                self.logger.error("Test generation and repair failed")
-                agent_output["parsed_final_response"] = {
-                    "is_equivalent": "error",
-                    "explanation": "Test generation and repair failed",
-                }
+                self.logger.error(self.errors["no_response"]["explanation"])
+                agent_output["parsed_final_response"] = self.errors["no_response"]
                 return agent_output
 
         except Exception as e:
-            self.logger.error(f"Error in test generation and repair: {str(e)}")
-            agent_output["parsed_final_response"] = {
-                "is_equivalent": "error",
-                "explanation": f"Exception: {str(e)}",
-            }
+            agent_output["parsed_final_response"] = self.errors["unexpected_behavior"]
+            agent_output["parsed_final_response"]["explanation"] += f" - {str(e)}"
+            self.logger.error(agent_output["parsed_final_response"]["explanation"])
             return agent_output
