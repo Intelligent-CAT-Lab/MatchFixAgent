@@ -34,27 +34,27 @@ class MatchAgent:
         """
         # Define log file paths
         log_dir = Path(f"logs/match_agent")
-        
+
         # Extract components from session_id
         if "." in self.session_id and len(self.session_id.split(".")) >= 5:
             parts = self.session_id.split(".")
             tool_name, project_name, source_lang, target_lang, fragment_id = parts[:5]
-            
+
             # Create a directory with the same naming pattern
             target_dir = log_dir / f"{tool_name}.{project_name}.{source_lang}.{target_lang}.{fragment_id}"
             target_dir.mkdir(exist_ok=True)
-            
+
             # Dictionary to track all agent types and their log files
             agent_logs = {}
             agent_types = ["match_agent"] + self.sub_agents
-            
+
             # First, handle the main match_agent log file
             for log_file in log_dir.glob("match_agent_*-*-*-*-*.log"):
                 # Create the new name for the match_agent log
                 new_name = f"match_agent.{project_name}.{source_lang}.{target_lang}.{fragment_id}.log"
                 agent_logs["match_agent"] = (log_file, target_dir / new_name)
                 self.logger.info(f"Will move main log file {log_file} to {target_dir / new_name}")
-            
+
             # Now find all subagent log files with UUID pattern
             for agent_type in self.sub_agents:
                 # Look for UUID-style log files
@@ -62,13 +62,13 @@ class MatchAgent:
                     new_name = f"{agent_type}.{project_name}.{source_lang}.{target_lang}.{fragment_id}.log"
                     agent_logs[agent_type] = (log_file, target_dir / new_name)
                     self.logger.info(f"Will move subagent log file {log_file} to {target_dir / new_name}")
-            
+
             # Now perform the actual file operations
             # First close all logger handlers
             for handler in self.logger.handlers[:]:
                 handler.close()
                 self.logger.removeHandler(handler)
-            
+
             # Close all subagent logger handlers if they have them
             # This is important to ensure all log data is flushed to disk before moving files
             subagent_map = {
@@ -81,13 +81,13 @@ class MatchAgent:
                 self.test_gen_repair_agent: "test_gen_repair_agent",
                 self.verdict_agent: "verdict_agent",
             }
-            
+
             for subagent, agent_type in subagent_map.items():
                 if hasattr(subagent, "logger") and subagent.logger and subagent.logger.handlers:
                     for handler in subagent.logger.handlers[:]:
                         handler.close()
                         subagent.logger.removeHandler(handler)
-            
+
             # Now move all log files
             for agent_type, (src_file, dst_file) in agent_logs.items():
                 if src_file.exists():
@@ -95,7 +95,7 @@ class MatchAgent:
                     shutil.copy2(src_file, dst_file)
                     src_file.unlink(missing_ok=True)
                     print(f"Moved log file {src_file} to {dst_file}")
-            
+
             # Finally, move any already-created log files with the new naming pattern
             for log_file in log_dir.glob(f"*.{project_name}.{source_lang}.{target_lang}.{fragment_id}.log"):
                 if log_file.parent != target_dir:
@@ -103,10 +103,10 @@ class MatchAgent:
                     shutil.copy2(log_file, target_file)
                     log_file.unlink(missing_ok=True)
                     print(f"Moved log file {log_file} to {target_file}")
-                    
+
             print(f"Organized all logs into directory: {target_dir}")
             return target_dir
-    
+
     def _rename_log_file(self, old_session_id: str, new_session_id: str, agent_name: str) -> None:
         """
         Rename a log file from using old_session_id to new_session_id in the filename.
@@ -433,7 +433,7 @@ class MatchAgent:
             self.logger.error(f"Error parsing verdict results: {str(e)}")
 
         self.logger.info(f"Match agent analysis completed with success={success}")
-        
+
         # Organize logs into a directory with the same naming pattern as log files
         self._organize_logs()
         self.logger.info(f"Log files have been organized into a directory")
