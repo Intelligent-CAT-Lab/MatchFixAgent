@@ -10,6 +10,7 @@ from src.static_analysis.python.cfg_builder import CFGBuilder as PythonCFGBuilde
 from src.static_analysis.rust.cfg_builder import CFGBuilder as RustCFGBuilder
 from src.static_analysis.go.cfg_builder import CFGBuilder as GoCFGBuilder
 from src.static_analysis.c.cfg_builder import CFGBuilder as CCFGBuilder
+from src.static_analysis.javascript.cfg_builder import CFGBuilder as JavaScriptCFGBuilder
 
 
 class MatchAgentPromptGenerator:
@@ -75,6 +76,11 @@ class MatchAgentPromptGenerator:
                 cfg_builder = CCFGBuilder()
                 cfg = cfg_builder.build_from_file(method_name, code_path)
                 dot_file_path = f"{method_name}_c_cfg"
+                cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
+            elif language.lower() == "javascript":
+                cfg_builder = JavaScriptCFGBuilder()
+                cfg = cfg_builder.build_from_file(method_name, code_path)
+                dot_file_path = f"{method_name}_javascript_cfg"
                 cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
             else:
                 return "Unsupported language for CFG generation"
@@ -153,6 +159,11 @@ class MatchAgentPromptGenerator:
                 cfg_builder = CCFGBuilder()
                 cfg = cfg_builder.build_from_file(method_name, code_path)
                 dot_file_path = f"{method_name}_c_dfg"
+                cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
+            elif language.lower() == "javascript":
+                cfg_builder = JavaScriptCFGBuilder()
+                cfg = cfg_builder.build_from_file(method_name, code_path)
+                dot_file_path = f"{method_name}_javascript_dfg"
                 cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
             else:
                 return "Unsupported language for DFG generation"
