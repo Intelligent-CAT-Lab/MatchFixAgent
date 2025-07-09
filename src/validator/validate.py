@@ -52,20 +52,7 @@ def cleanup(configs: dict):
     to ensure no residual data is left after validation.
     """
 
-    target_dir = ""
-    if configs["tool_name"] == "alphatrans":
-        target_dir = os.path.join(
-            "data",
-            "tool_projects",
-            "alphatrans",
-            "python_projects",
-            "gpt-4o-2024-11-20",
-            "body",
-            "0.0",
-            configs["project_name"],
-        )
-    else:
-        target_dir = os.path.join("data", "tool_projects", configs["tool_name"], "projects", configs["project_name"])
+    target_dir = os.path.join("data", "tool_projects", configs["tool_name"], "projects", configs["project_name"])
 
     assert target_dir, f"Target directory {target_dir} does not exist"
     assert os.path.exists(target_dir), f"Target directory {target_dir} does not exist"

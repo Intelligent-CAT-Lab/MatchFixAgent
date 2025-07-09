@@ -72,11 +72,13 @@ async def run_claude_command(
             logger.info("Executing Claude CLI command...")
         # Use asyncio.create_subprocess_exec for true async operation
         cmd = ["claude", "-p", prompt] + configs["extra_agent_args"]
+        working_dir = f"data/tool_projects/{configs['tool_name']}/projects/{configs['project_name']}"
         process = await asyncio.create_subprocess_exec(
             *cmd,
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,
             env=env,
+            cwd=working_dir if working_dir else None,
         )
 
         stdout, stderr = await process.communicate()

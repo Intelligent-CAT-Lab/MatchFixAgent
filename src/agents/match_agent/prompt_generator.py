@@ -272,11 +272,12 @@ class MatchAgentPromptGenerator:
         """
         Format the details of the source and target code fragments.
         """
-        tool_source_projects_path = self.configs["tool_source_projects_path"]
-        self.source_file_path = f"{tool_source_projects_path}/{self.fragment_details['source_path']}"
-
-        tool_target_projects_path = self.configs["tool_target_projects_path"]
-        self.target_file_path = f"{tool_target_projects_path}/{self.fragment_details['target_path']}"
+        self.source_file_path = self.fragment_details["source_path"].replace(
+            f"projects/{self.configs['project_name']}/", ""
+        )
+        self.target_file_path = self.fragment_details["target_path"].replace(
+            f"projects/{self.configs['project_name']}/", ""
+        )
 
         # trim leading indentation from source and target code (e.g., some languages like Python only parse when the indentation is correct)
         source_code = self.fragment_details["source_function"].copy()
