@@ -132,7 +132,9 @@ class TestGenRepairAgent:
 
                 # Create default success response on timeout
                 status = True
-                agent_output = {"result": f"<final_response_format>{json.dumps(self.errors['timeout'])}</final_response_format>"}
+                agent_output = {
+                    "result": f"<final_response_format>{json.dumps(self.errors['timeout'])}</final_response_format>"
+                }
 
             agent_output = agent_output or {}
 
