@@ -18,6 +18,15 @@ import time
 import pandas as pd
 
 
+def find_trajectory_file(session_id):
+    trajectory_dir = os.path.expanduser("~/.claude/projects")
+    for root, dirs, files in os.walk(trajectory_dir):
+        for file in files:
+            if file.startswith(session_id) and file.endswith(".jsonl"):
+                return os.path.join(root, file)
+    raise FileNotFoundError(f"Trajectory file for session {session_id} not found in {trajectory_dir}.")
+
+
 def get_agent_cost(agent_output):
 
     cost = {"total_num_turns": 0, "total_cost_usd": 0, "duration_ms": 0, "num_tool_calls": 0}
@@ -31,10 +40,7 @@ def get_agent_cost(agent_output):
 
     # Load and analyze agent trajectory files
     session_id = agent_output["session_id"]
-    trajectory_file = os.path.join(args.trajectory_dir, f"{session_id}.jsonl")
-    assert os.path.exists(
-        trajectory_file
-    ), f"Trajectory file {trajectory_file} does not exist. Please check the session ID."
+    trajectory_file = find_trajectory_file(session_id)
 
     agent_trajectory = []
     with open(trajectory_file, "r") as f:
@@ -111,7 +117,7 @@ def main(args):
     total = 0
     total_methods = 0
     tool_validation_dist = {"error": 0, "failure": 0, "not-exercised": 0, "pending": 0, "success": 0}
-    equivalency_dist = {"yes": 0, "no": 0, "need_more_context": 0}
+    equivalency_dist = {"yes": 0, "no": 0, "other": 0}
     total_num_turns = 0
     total_cost = 0
     total_time = 0
@@ -123,7 +129,7 @@ def main(args):
 
     # Define possible outcomes
     tool_outcomes = ["error", "failure", "not-exercised", "pending", "success"]
-    llm_outcomes = ["yes", "no", "need_more_context"]
+    llm_outcomes = ["yes", "no", "other"]
 
     # Initialize confusion matrix with zeros
     confusion_df = pd.DataFrame(0, index=tool_outcomes, columns=llm_outcomes)
@@ -201,7 +207,7 @@ def main(args):
     print(
         f"Agent Equivalency Dist: [yes: {equivalency_dist['yes']} ({equivalency_dist['yes'] / total_methods:.2%}), "
         f"no: {equivalency_dist['no']} ({equivalency_dist['no'] / total_methods:.2%}), "
-        f"need_more_context: {equivalency_dist['need_more_context']} ({equivalency_dist['need_more_context'] / total_methods:.2%})]"
+        f"other: {equivalency_dist['other']} ({equivalency_dist['other'] / total_methods:.2%})]"
     )
     print(
         f"Tool Success Dist: {tool_validation_dist['success'] / total_methods:.2%} [Improvement: {equivalency_dist['yes'] / total_methods:.2%} - {tool_validation_dist['success'] / total_methods:.2%} = {equivalency_dist['yes'] / total_methods - tool_validation_dist['success'] / total_methods:.2%}]"
@@ -230,7 +236,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Analyze Validator Agent")
     parser.add_argument("--project_name", type=str, dest="project_name", help="project name to translate")
     parser.add_argument("--results_dir", type=str, dest="results_dir", help="directory to results")
-    parser.add_argument("--trajectory_dir", type=str, dest="trajectory_dir", help="directory to trajectories")
     parser.add_argument("--agent_name", type=str, dest="agent_name", help="name of the agent to analyze")
     parser.add_argument(
         "--print_tool_y_agent_n",
