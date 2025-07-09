@@ -2,6 +2,7 @@ import yaml
 import os
 import tempfile
 import subprocess
+import uuid
 from pathlib import Path
 from jinja2 import Template
 
@@ -55,32 +56,38 @@ class MatchAgentPromptGenerator:
             if language.lower() == "java":
                 cfg_builder = JavaCFGBuilder()
                 cfg = cfg_builder.build_from_file(method_name, code_path)
-                dot_file_path = f"{method_name}_java_cfg"
+                unique_id = str(uuid.uuid4().hex[:8])
+                dot_file_path = os.path.join(tempfile.gettempdir(), f"{method_name}_java_cfg_{unique_id}")
                 cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
             elif language.lower() == "python":
                 cfg_builder = PythonCFGBuilder()
                 cfg = cfg_builder.build_from_file(method_name, code_path)
-                dot_file_path = f"{method_name}_python_cfg"
+                unique_id = str(uuid.uuid4().hex[:8])
+                dot_file_path = os.path.join(tempfile.gettempdir(), f"{method_name}_python_cfg_{unique_id}")
                 cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
             elif language.lower() == "rust":
                 cfg_builder = RustCFGBuilder()
                 cfg = cfg_builder.build_from_file(method_name, code_path)
-                dot_file_path = f"{method_name}_rust_cfg"
+                unique_id = str(uuid.uuid4().hex[:8])
+                dot_file_path = os.path.join(tempfile.gettempdir(), f"{method_name}_rust_cfg_{unique_id}")
                 cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
             elif language.lower() == "go":
                 cfg_builder = GoCFGBuilder()
                 cfg = cfg_builder.build_from_file(method_name, code_path)
-                dot_file_path = f"{method_name}_go_cfg"
+                unique_id = str(uuid.uuid4().hex[:8])
+                dot_file_path = os.path.join(tempfile.gettempdir(), f"{method_name}_go_cfg_{unique_id}")
                 cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
             elif language.lower() == "c":
                 cfg_builder = CCFGBuilder()
                 cfg = cfg_builder.build_from_file(method_name, code_path)
-                dot_file_path = f"{method_name}_c_cfg"
+                unique_id = str(uuid.uuid4().hex[:8])
+                dot_file_path = os.path.join(tempfile.gettempdir(), f"{method_name}_c_cfg_{unique_id}")
                 cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
             elif language.lower() == "javascript":
                 cfg_builder = JavaScriptCFGBuilder()
                 cfg = cfg_builder.build_from_file(method_name, code_path)
-                dot_file_path = f"{method_name}_javascript_cfg"
+                unique_id = str(uuid.uuid4().hex[:8])
+                dot_file_path = os.path.join(tempfile.gettempdir(), f"{method_name}_javascript_cfg_{unique_id}")
                 cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
             else:
                 return "Unsupported language for CFG generation"
@@ -138,32 +145,38 @@ class MatchAgentPromptGenerator:
             if language.lower() == "java":
                 cfg_builder = JavaCFGBuilder()
                 cfg = cfg_builder.build_from_file(method_name, code_path)
-                dot_file_path = f"{method_name}_java_dfg"
+                unique_id = str(uuid.uuid4().hex[:8])
+                dot_file_path = os.path.join(tempfile.gettempdir(), f"{method_name}_java_dfg_{unique_id}")
                 cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
             elif language.lower() == "python":
                 cfg_builder = PythonCFGBuilder()
                 cfg = cfg_builder.build_from_file(method_name, code_path)
-                dot_file_path = f"{method_name}_python_dfg"
+                unique_id = str(uuid.uuid4().hex[:8])
+                dot_file_path = os.path.join(tempfile.gettempdir(), f"{method_name}_python_dfg_{unique_id}")
                 cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
             elif language.lower() == "rust":
                 cfg_builder = RustCFGBuilder()
                 cfg = cfg_builder.build_from_file(method_name, code_path)
-                dot_file_path = f"{method_name}_rust_dfg"
+                unique_id = str(uuid.uuid4().hex[:8])
+                dot_file_path = os.path.join(tempfile.gettempdir(), f"{method_name}_rust_dfg_{unique_id}")
                 cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
             elif language.lower() == "go":
                 cfg_builder = GoCFGBuilder()
                 cfg = cfg_builder.build_from_file(method_name, code_path)
-                dot_file_path = f"{method_name}_go_dfg"
+                unique_id = str(uuid.uuid4().hex[:8])
+                dot_file_path = os.path.join(tempfile.gettempdir(), f"{method_name}_go_dfg_{unique_id}")
                 cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
             elif language.lower() == "c":
                 cfg_builder = CCFGBuilder()
                 cfg = cfg_builder.build_from_file(method_name, code_path)
-                dot_file_path = f"{method_name}_c_dfg"
+                unique_id = str(uuid.uuid4().hex[:8])
+                dot_file_path = os.path.join(tempfile.gettempdir(), f"{method_name}_c_dfg_{unique_id}")
                 cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
             elif language.lower() == "javascript":
                 cfg_builder = JavaScriptCFGBuilder()
                 cfg = cfg_builder.build_from_file(method_name, code_path)
-                dot_file_path = f"{method_name}_javascript_dfg"
+                unique_id = str(uuid.uuid4().hex[:8])
+                dot_file_path = os.path.join(tempfile.gettempdir(), f"{method_name}_javascript_dfg_{unique_id}")
                 cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
             else:
                 return "Unsupported language for DFG generation"

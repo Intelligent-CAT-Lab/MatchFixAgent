@@ -43,7 +43,19 @@ class DataFlowAgent:
         log_dir = Path(f"logs/match_agent")
         log_dir.mkdir(parents=True, exist_ok=True)
 
-        log_file = log_dir / f"data_flow_agent_{self.session_id}.log"
+        # Check if session_id already has the proper format (contains dots)
+        if "." in self.session_id and len(self.session_id.split(".")) >= 5:
+            # Extract components from session_id
+            parts = self.session_id.split(".")
+            if len(parts) >= 5:
+                # Use the proper naming format: data_flow_agent.project_name.source_lang.target_lang.fragment_id
+                project_name, source_lang, target_lang, fragment_id = parts[1:5]
+                log_file = log_dir / f"data_flow_agent.{project_name}.{source_lang}.{target_lang}.{fragment_id}.log"
+            else:
+                log_file = log_dir / f"data_flow_agent.{'.'.join(self.session_id.split('.')[1:])}.log"
+        else:
+            # Use the old UUID format
+            log_file = log_dir / f"data_flow_agent_{self.session_id}.log"
 
         self.logger = logging.getLogger(f"data_flow_agent.{self.session_id}")
         self.logger.setLevel(logging.DEBUG)
@@ -74,32 +86,38 @@ class DataFlowAgent:
             if language.lower() == "java":
                 cfg_builder = JavaCFGBuilder()
                 cfg = cfg_builder.build_from_src(method_name, code)
-                dot_file_path = f"{method_name}_java_dfg.dot"
+                unique_id = str(uuid.uuid4().hex[:8])
+                dot_file_path = os.path.join(tempfile.gettempdir(), f"{method_name}_java_dfg_{unique_id}_{self.session_id}.dot")
                 cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
             elif language.lower() == "python":
                 cfg_builder = PythonCFGBuilder()
                 cfg = cfg_builder.build_from_src(method_name, code)
-                dot_file_path = f"{method_name}_python_dfg.dot"
+                unique_id = str(uuid.uuid4().hex[:8])
+                dot_file_path = os.path.join(tempfile.gettempdir(), f"{method_name}_python_dfg_{unique_id}_{self.session_id}.dot")
                 cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
             elif language.lower() == "rust":
                 cfg_builder = RustCFGBuilder()
                 cfg = cfg_builder.build_from_src(method_name, code)
-                dot_file_path = f"{method_name}_rust_dfg.dot"
+                unique_id = str(uuid.uuid4().hex[:8])
+                dot_file_path = os.path.join(tempfile.gettempdir(), f"{method_name}_rust_dfg_{unique_id}_{self.session_id}.dot")
                 cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
             elif language.lower() == "go":
                 cfg_builder = GoCFGBuilder()
                 cfg = cfg_builder.build_from_src(method_name, code)
-                dot_file_path = f"{method_name}_go_dfg.dot"
+                unique_id = str(uuid.uuid4().hex[:8])
+                dot_file_path = os.path.join(tempfile.gettempdir(), f"{method_name}_go_dfg_{unique_id}_{self.session_id}.dot")
                 cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
             elif language.lower() == "c":
                 cfg_builder = CCFGBuilder()
                 cfg = cfg_builder.build_from_src(method_name, code)
-                dot_file_path = f"{method_name}_c_dfg.dot"
+                unique_id = str(uuid.uuid4().hex[:8])
+                dot_file_path = os.path.join(tempfile.gettempdir(), f"{method_name}_c_dfg_{unique_id}_{self.session_id}.dot")
                 cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
             elif language.lower() == "javascript":
                 cfg_builder = JavaScriptCFGBuilder()
                 cfg = cfg_builder.build_from_src(method_name, code)
-                dot_file_path = f"{method_name}_javascript_dfg.dot"
+                unique_id = str(uuid.uuid4().hex[:8])
+                dot_file_path = os.path.join(tempfile.gettempdir(), f"{method_name}_javascript_dfg_{unique_id}_{self.session_id}.dot")
                 cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
             else:
                 return "Unsupported language for DFG generation"
