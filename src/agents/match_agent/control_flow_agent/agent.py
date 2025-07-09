@@ -17,6 +17,7 @@ from src.static_analysis.rust.cfg_builder import CFGBuilder as RustCFGBuilder
 from src.static_analysis.go.cfg_builder import CFGBuilder as GoCFGBuilder
 from src.static_analysis.c.cfg_builder import CFGBuilder as CCFGBuilder
 from src.static_analysis.java.cfg_builder import CFGBuilder as JavaCFGBuilder
+from src.static_analysis.javascript.cfg_builder import CFGBuilder as JavaScriptCFGBuilder
 
 
 class ControlFlowAgent:
@@ -95,6 +96,11 @@ class ControlFlowAgent:
                 cfg_builder = CCFGBuilder()
                 cfg = cfg_builder.build_from_src(method_name, code)
                 dot_file_path = f"{method_name}_c_cfg.dot"
+                cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
+            elif language.lower() == "javascript":
+                cfg_builder = JavaScriptCFGBuilder()
+                cfg = cfg_builder.build_from_src(method_name, code)
+                dot_file_path = f"{method_name}_javascript_cfg.dot"
                 cfg.build_visual(dot_file_path, "pdf", calls=False, show=False)
             else:
                 return "Unsupported language for CFG generation"
