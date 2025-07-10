@@ -298,6 +298,7 @@ async def prompt_claude(
             region_name=env.get("AWS_REGION"),
             aws_access_key_id=env.get("AWS_ACCESS_KEY_ID"),
             aws_secret_access_key=env.get("AWS_SECRET_ACCESS_KEY"),
+            aws_session_token=env.get("AWS_SESSION_TOKEN"),
         )
 
         # Create system prompt - use empty string if not provided in configs
