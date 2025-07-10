@@ -249,30 +249,26 @@ class MatchAgent:
         except Exception as e:
             self.logger.error(f"Error parsing verdict results: {str(e)}")
 
-        self.logger.info(f"Match agent analysis completed with success={success}")
+        final_session_id = f"{self.configs['tool_name']}.{self.configs['project_name']}.{self.configs['source_language']}.{self.configs['target_language']}.{fragment_details['id']}"
 
-        if success:
-            # Get the final session ID from verdict results
-            final_session_id = verdict_results.get("session_id", self.session_id)
+        # Rename match_agent log file
+        self._rename_log_file(self.session_id, final_session_id, "match_agent")
 
-            # Rename match_agent log file
-            self._rename_log_file(self.session_id, final_session_id, "match_agent")
+        # List of all sub-agents
+        sub_agents = [
+            "control_flow_agent",
+            "data_flow_agent",
+            "io_agent",
+            "library_equivalence_agent",
+            "exception_error_agent",
+            "spec_agent",
+            "test_gen_repair_agent",
+            "verdict_agent",
+        ]
 
-            # List of all sub-agents
-            sub_agents = [
-                "control_flow_agent",
-                "data_flow_agent",
-                "io_agent",
-                "library_equivalence_agent",
-                "exception_error_agent",
-                "spec_agent",
-                "test_gen_repair_agent",
-                "verdict_agent",
-            ]
-
-            # Rename log files for all sub-agents
-            for sub_agent in sub_agents:
-                self._rename_log_file(self.session_id, final_session_id, sub_agent)
+        # Rename log files for all sub-agents
+        for sub_agent in sub_agents:
+            self._rename_log_file(self.session_id, final_session_id, sub_agent)
 
         return success, all_results
 

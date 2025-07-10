@@ -97,51 +97,41 @@ class TestGenRepairAgent:
         self.conversation.add_message(role="user", content=prompt)
 
         try:
-            # Use the dedicated utility function for command execution with 1000 seconds timeout
+            # Use the dedicated utility function for command execution with built-in timeout
             from src.utils.cmd_utils import run_claude_command
 
-            # Set 1000 seconds timeout
-            try:
-                # Create a task for the Claude CLI call
-                api_task = asyncio.create_task(
-                    run_claude_command(
-                        prompt,
-                        "",
-                        self.configs,
-                        self.logger,
-                        agent_name=agent_name or "test_gen_repair_agent",
-                        sub_agent_name=sub_agent_name,
-                    )
-                )
+            # Call run_claude_command with 1000 seconds timeout
+            status, agent_output = await run_claude_command(
+                prompt,
+                "",
+                self.configs,
+                self.logger,
+                agent_name=agent_name or "test_gen_repair_agent",
+                sub_agent_name=sub_agent_name,
+                timeout=1000,  # Set 1000 seconds timeout
+            )
 
-                # Wait for the task to complete with a timeout of 1000 seconds
-                status, agent_output = await asyncio.wait_for(api_task, timeout=1000)
-
-            except asyncio.TimeoutError:
+            # Handle timeout case - check explicit timeout flag
+            if agent_output.get("timeout", False):
                 self.logger.warning(
-                    "Test generation timed out after 1000 seconds, returning is_equivalent=error with explanation"
+                    "Test generation timed out after 1000 seconds, returning is_equivalent=other with explanation"
                 )
-                # Cancel the task to ensure proper cleanup
-                if not api_task.done():
-                    api_task.cancel()
-                    try:
-                        # Give it a moment to clean up
-                        await asyncio.wait_for(api_task, timeout=1.0)
-                    except (asyncio.TimeoutError, asyncio.CancelledError):
-                        pass
-
-                # Create default success response on timeout
-                status = True
-                agent_output = {
-                    "result": f"<final_response_format>{json.dumps(self.errors['timeout'])}</final_response_format>"
-                }
+                # Create default response for timeout
+                agent_output["result"] = (
+                    f"<final_response_format>{json.dumps(self.errors['timeout'])}</final_response_format>"
+                )
 
             agent_output = agent_output or {}
 
             if status:
                 self.logger.info("Test generation and repair completed successfully")
-                # Extract the final response format
-                result = agent_output.get("result", "")
+                # Extract the final response format - check both last_json and result for backward compatibility
+                result = ""
+                if "last_json" in agent_output and "result" in agent_output["last_json"]:
+                    result = agent_output["last_json"]["result"]
+                elif "result" in agent_output:
+                    result = agent_output["result"]
+
                 self.logger.debug("Raw response from model:")
                 self.logger.debug(result)
 

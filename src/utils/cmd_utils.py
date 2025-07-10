@@ -17,12 +17,13 @@ async def run_claude_command(
     logger=None,
     agent_name: str = None,
     sub_agent_name: str = None,
+    timeout: int = None,
 ) -> tuple[bool, dict]:
     """
-    Execute Claude CLI command with the given prompt.
+    Execute Claude CLI command with the given prompt and optional timeout.
 
-    Runs Claude via CLI subprocess and parses the JSON output.
-    Utility function that can be imported by different agents.
+    Runs Claude via CLI subprocess with stream-json output format, intercepts and parses
+    the streamed JSONs. Utility function that can be imported by different agents.
 
     Args:
         prompt (str): The prompt to send to Claude
@@ -32,11 +33,15 @@ async def run_claude_command(
         logger (logging.Logger, optional): Logger to use. If None, logs to console only.
         agent_name (str): The name of the agent running the command
         sub_agent_name (str, optional): The name of the sub-agent running the command
+        timeout (int, optional): Maximum time in seconds to wait for Claude's response.
+                               If None, no timeout will be applied.
 
     Returns:
-        tuple[bool, dict]: (success_status, parsed_output)
-            - success_status: True if command executed successfully and output was valid JSON
-            - parsed_output: The parsed JSON output from Claude, or None if unsuccessful
+        tuple[bool, dict]: (success_status, captured_output)
+            - success_status: True for both normal completions and timeouts
+            - captured_output: A dictionary containing:
+                - For normal completions: first and last intercepted JSONs in 'first_json' and 'last_json'
+                - For timeouts or errors: only the first intercepted JSON in 'first_json'
 
     Raises:
         ValueError: If agent_name is not provided or credentials are not available
@@ -67,9 +72,10 @@ async def run_claude_command(
         prompt += f"\n\nFeedback: {feedback}"
 
     process = None
+    captured_jsons = []
     try:
         if logger:
-            logger.info("Executing Claude CLI command...")
+            logger.info(f"Executing Claude CLI command{' with timeout: ' + str(timeout) + 's' if timeout else ''}...")
         # Use asyncio.create_subprocess_exec for true async operation
         cmd = ["claude", "-p", prompt] + configs["extra_agent_args"]
         working_dir = f"data/tool_projects/{configs['tool_name']}/projects/{configs['project_name']}"
@@ -81,28 +87,108 @@ async def run_claude_command(
             cwd=working_dir if working_dir else None,
         )
 
-        stdout, stderr = await process.communicate()
+        # Process the output stream
+        async def process_stream():
+            # Read and process the stdout stream
+            while True:
+                line = await process.stdout.readline()
+                if not line:
+                    break  # End of stream
 
+                line_str = line.decode("utf-8").strip()
+                if not line_str:
+                    continue
+
+                try:
+                    json_obj = json.loads(line_str)
+                    captured_jsons.append(json_obj)
+                    if logger:
+                        logger.debug(f"Captured JSON: {json_obj}")
+                        logger.debug(f"Captured JSON stream: {len(captured_jsons)} items so far")
+                except json.JSONDecodeError as e:
+                    if logger:
+                        logger.warning(f"Failed to parse stream JSON: {e}")
+                        logger.debug(f"Raw line: {line_str}")
+
+        # Run with or without timeout
+        if timeout is not None:
+            try:
+                # Create a task for stream processing
+                stream_task = asyncio.create_task(process_stream())
+                # Wait for the task to complete with timeout
+                await asyncio.wait_for(stream_task, timeout=timeout)
+                # Wait for process to finish
+                await process.wait()  # Don't need to store return code, using process.returncode later
+            except asyncio.TimeoutError:
+                # Timeout occurred
+                if logger:
+                    logger.warning(f"Claude command timed out after {timeout} seconds")
+
+                # Cancel the stream processing task
+                stream_task.cancel()
+                try:
+                    await asyncio.wait_for(stream_task, timeout=1.0)
+                except (asyncio.TimeoutError, asyncio.CancelledError):
+                    pass
+
+                # Try to terminate the process gracefully
+                if process and process.returncode is None:
+                    try:
+                        process.terminate()
+                        # Wait a short time for it to terminate
+                        await asyncio.sleep(0.5)
+                        # Force kill if still running
+                        if process.returncode is None:
+                            process.kill()
+                    except Exception as e:
+                        if logger:
+                            logger.error(f"Error terminating subprocess during timeout: {str(e)}")
+
+                # Return the first captured JSON if available with timeout flag
+                result = {"timeout": True}  # Add explicit timeout flag
+                if captured_jsons:
+                    result["first_json"] = captured_jsons[0]
+                    if logger:
+                        logger.info(
+                            f"Returning first captured JSON from {len(captured_jsons)} total received before timeout"
+                        )
+
+                # Return with success=True as requested
+                return True, result
+        else:
+            # No timeout, process the entire stream
+            await process_stream()
+            # Wait for process to finish
+            await process.wait()  # Don't need to store return code, using process.returncode later
+
+        # Handle process completion
         if process.returncode != 0:
+            stderr_content = await process.stderr.read()
             if logger:
                 logger.error(f"Claude failed with exit code {process.returncode}")
-                logger.error(f"Error details: {stderr.decode()}")
-            return False, None
+                logger.error(f"Error details: {stderr_content.decode()}")
 
-        output = stdout.decode("utf-8")
+            # Return the first captured JSON if available, with success=True
+            result = {"timeout": False}  # Not a timeout, but process error
+            if captured_jsons:
+                result["first_json"] = captured_jsons[0]
+            return True, result
+
+        # Normal completion
         if logger:
-            logger.debug("Raw output received from Claude")
+            logger.info(f"Claude command completed successfully. Captured {len(captured_jsons)} JSON objects")
 
-        try:
-            parsed_output = json.loads(output)
-            if logger:
-                logger.info("Successfully parsed Claude output as JSON")
-            return True, parsed_output
-        except json.JSONDecodeError as e:
-            if logger:
-                logger.error(f"Failed to parse Claude output as JSON: {e}")
-                logger.debug(f"Raw output: {output}")
-            return False, None
+        # Return first and last JSON for normal termination
+        result = {"timeout": False}  # Explicitly mark as not timeout
+        if captured_jsons:
+            result["first_json"] = captured_jsons[0]
+            result["last_json"] = captured_jsons[-1]
+
+            # Store the result for compatibility with older code
+            if "result" in captured_jsons[-1]:
+                result["result"] = captured_jsons[-1]["result"]
+
+        return True, result
 
     except asyncio.CancelledError:
         # Properly handle task cancellation (e.g., due to timeout)
@@ -118,7 +204,14 @@ async def run_claude_command(
             except Exception as e:
                 if logger:
                     logger.error(f"Error terminating subprocess during cancellation: {str(e)}")
-        raise  # Re-raise the CancelledError
+
+        # Return the first captured JSON if available, with success=True
+        result = {"timeout": True}  # Cancellation is usually due to timeout
+        if captured_jsons:
+            result["first_json"] = captured_jsons[0]
+            if logger:
+                logger.info(f"Returning first captured JSON from cancellation")
+        return True, result  # Return True as requested instead of re-raising
 
     except Exception as e:
         if logger:
@@ -129,7 +222,14 @@ async def run_claude_command(
                 process.terminate()
             except:
                 pass
-        return False, None
+
+        # Return the first captured JSON if available, with success=True
+        result = {"timeout": False}  # Not a timeout, but an exception
+        if captured_jsons:
+            result["first_json"] = captured_jsons[0]
+            if logger:
+                logger.info(f"Returning first captured JSON from exception handler")
+        return True, result  # Return True as requested
 
 
 async def prompt_claude(
