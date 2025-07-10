@@ -34,19 +34,7 @@ class IOAgent:
         log_dir = Path(f"logs/match_agent")
         log_dir.mkdir(parents=True, exist_ok=True)
 
-        # Check if session_id already has the proper format (contains dots)
-        if "." in self.session_id and len(self.session_id.split(".")) >= 5:
-            # Extract components from session_id
-            parts = self.session_id.split(".")
-            if len(parts) >= 5:
-                # Use the proper naming format: io_agent.project_name.source_lang.target_lang.fragment_id
-                project_name, source_lang, target_lang, fragment_id = parts[1:5]
-                log_file = log_dir / f"io_agent.{project_name}.{source_lang}.{target_lang}.{fragment_id}.log"
-            else:
-                log_file = log_dir / f"io_agent.{'.'.join(self.session_id.split('.')[1:])}.log"
-        else:
-            # Use the old UUID format
-            log_file = log_dir / f"io_agent_{self.session_id}.log"
+        log_file = log_dir / f"io_agent_{self.session_id}.log"
 
         self.logger = logging.getLogger(f"io_agent.{self.session_id}")
         self.logger.setLevel(logging.DEBUG)
