@@ -330,7 +330,6 @@ def main(args):
     global_error_rate = (global_test_repair_errors + global_verdict_errors) / global_total_methods
     global_timeout_percentage = (global_timeout_count / global_total_methods) * 100
 
-    print("Global Metrics:")
     print("MatchFixAgent: {")
     print(
         f"    yes:   {{ total: {global_equivalency_dist['yes']}, %: {global_equivalency_dist['yes'] / global_total_methods:.2%} }},"
@@ -359,15 +358,16 @@ def main(args):
         f"    error:         {{ total: {global_tool_validation_dist['error']}, %: {global_tool_validation_dist['error'] / global_total_methods:.2%} }}"
     )
     print("}")
+    print()
+    print(f"Total Methods: {global_equivalency_dist['yes'] + global_equivalency_dist['no'] + global_equivalency_dist['other']} [{global_total_methods / global_total:.2%}]")
     print(f"Total turns: {global_total_num_turns} [Average: {global_total_num_turns / global_total_methods:.2f}]")
     print(f"Total cost: ${global_total_cost:.2f} [Average: ${global_total_cost / global_total_methods:.2f}]")
     print(f"Total time: {global_total_time // 1e3}s [Average: {global_total_time // 1e3 / global_total_methods:.2f}s]")
     print(
         f"Total tool calls: {global_total_tool_calls} [Average: {global_total_tool_calls / global_total_methods:.2f}]"
     )
-    print(f"Error Rate: {global_error_rate:.2%} [Test Repair Errors: {global_test_repair_errors}, Verdict Errors: {global_verdict_errors}]")
+    print(f"API Error Rate: {global_error_rate:.2%} [Test Repair Errors: {global_test_repair_errors}, Verdict Errors: {global_verdict_errors}]")
     print(f"Global Timeout Cases: {global_timeout_count} [{global_timeout_percentage:.2f}%]")
-    print("---" * 50)
 
 
 if __name__ == "__main__":
