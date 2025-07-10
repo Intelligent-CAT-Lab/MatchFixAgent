@@ -87,28 +87,30 @@ async def run_claude_command(
             cwd=working_dir if working_dir else None,
         )
 
-        # Process the output stream
+        # Process the output stream in fixed‐size chunks to avoid 64 KiB readline limit
         async def process_stream():
-            # Read and process the stdout stream
+            buffer = b""
+            chunk_size = 32_768  # 32 KiB
             while True:
-                line = await process.stdout.readline()
-                if not line:
+                chunk = await process.stdout.read(chunk_size)
+                if not chunk:
                     break  # End of stream
-
-                line_str = line.decode("utf-8").strip()
-                if not line_str:
-                    continue
-
-                try:
-                    json_obj = json.loads(line_str)
-                    captured_jsons.append(json_obj)
-                    if logger:
-                        logger.debug(f"Captured JSON: {json_obj}")
-                        logger.debug(f"Captured JSON stream: {len(captured_jsons)} items so far")
-                except json.JSONDecodeError as e:
-                    if logger:
-                        logger.warning(f"Failed to parse stream JSON: {e}")
-                        logger.debug(f"Raw line: {line_str}")
+                buffer += chunk
+                while b"\n" in buffer:
+                    line, buffer = buffer.split(b"\n", 1)
+                    line_str = line.decode("utf-8").strip()
+                    if not line_str:
+                        continue
+                    try:
+                        json_obj = json.loads(line_str)
+                        captured_jsons.append(json_obj)
+                        if logger:
+                            logger.debug(f"Captured JSON: {json_obj}")
+                            logger.debug(f"Captured JSON stream: {len(captured_jsons)} items so far")
+                    except json.JSONDecodeError as e:
+                        if logger:
+                            logger.warning(f"Failed to parse stream JSON: {e}")
+                            logger.debug(f"Raw line: {line_str}")
 
         # Run with or without timeout
         if timeout is not None:
@@ -166,7 +168,7 @@ async def run_claude_command(
             stderr_content = await process.stderr.read()
             if logger:
                 logger.error(f"Claude failed with exit code {process.returncode}")
-                logger.error(f"Error details: {stderr_content.decode()}")
+                logger.error(f"Error details: {stderr_content.decode(errors='ignore')}")
 
             # Return the first captured JSON if available, with success=True
             result = {"timeout": False}  # Not a timeout, but process error
