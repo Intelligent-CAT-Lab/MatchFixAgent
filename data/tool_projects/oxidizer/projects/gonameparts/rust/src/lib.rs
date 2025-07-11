@@ -1,3 +1,5 @@
+#![allow(warnings)]
+mod careful;mod interoperation_utils;
 pub mod nameparts;
 pub mod namestring;
-mod __synthetic;
+pub mod __synthetic;

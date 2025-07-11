@@ -1,3 +1,5 @@
+#![allow(warnings)]
+mod careful;mod interoperation_utils;
 pub mod cosine;
 pub mod hamming;
 pub mod internal;
@@ -9,4 +11,4 @@ pub mod qgram;
 pub mod shingle;
 pub mod sorensen_dice;
 pub mod string_analysis;
-mod __synthetic;
+pub mod __synthetic;

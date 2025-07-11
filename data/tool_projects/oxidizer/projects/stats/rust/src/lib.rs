@@ -1,3 +1,5 @@
+#![allow(warnings)]
+mod careful;mod interoperation_utils;
 pub mod correlation;
 pub mod cumulative_sum;
 pub mod data;
@@ -25,4 +27,4 @@ pub mod softmax;
 pub mod sum;
 pub mod util;
 pub mod variance;
-mod __synthetic;
+pub mod __synthetic;

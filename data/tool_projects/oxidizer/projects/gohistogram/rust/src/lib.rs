@@ -1,5 +1,7 @@
+#![allow(warnings)]
+mod careful;mod interoperation_utils;
 pub mod example;
 pub mod histogram;
 pub mod numerichistogram;
 pub mod weightedhistogram;
-mod __synthetic;
+pub mod __synthetic;

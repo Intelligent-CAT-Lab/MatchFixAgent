@@ -1,3 +1,5 @@
+#![allow(warnings)]
+mod careful;mod interoperation_utils;
 pub mod algorithm;
 pub mod builder;
 pub mod examples;
@@ -11,4 +13,4 @@ pub mod stop_word;
 pub mod text;
 pub mod textrank;
 pub mod tokenizer;
-mod __synthetic;
+pub mod __synthetic;
