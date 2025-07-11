@@ -26,14 +26,15 @@ def find_trajectory_file(session_id):
                 return os.path.join(root, file)
     raise FileNotFoundError(f"Trajectory file for session {session_id} not found in {trajectory_dir}.")
 
+
 def copy_trajectory_file(session_id, destination_dir):
     """
     Copy the trajectory file for a given session ID to the specified destination directory.
-    
+
     Args:
         session_id (str): The session ID to search for.
         destination_dir (str): The directory where the trajectory file should be copied.
-    
+
     Returns:
         str: The path to the copied trajectory file.
     """
@@ -43,6 +44,7 @@ def copy_trajectory_file(session_id, destination_dir):
     with open(trajectory_file, "r") as src_file, open(destination_path, "w") as dest_file:
         dest_file.write(src_file.read())
     return destination_path
+
 
 def get_agent_cost(agent_output):
 
