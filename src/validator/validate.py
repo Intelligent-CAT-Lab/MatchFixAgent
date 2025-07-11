@@ -74,7 +74,7 @@ def cleanup(configs: dict):
             subprocess.run(["git", "restore", path], check=False)
 
 
-def insert_translation(item: dict):
+def insert_translation(configs: dict, item: dict):
     """
     Insert a translation item into the RustRepoTrans tool results.
 
@@ -89,22 +89,22 @@ def insert_translation(item: dict):
             - target_code: Target code in the target language
             - tool_name: Name of the tool used for translation
     """
-    rust_file_path = os.path.join("data", "tool_projects", "rustrepotrans", item["target_path"])
-    assert os.path.exists(rust_file_path), f"File {rust_file_path} does not exist"
+    target_file_path = os.path.join("data", "tool_projects", configs["tool_name"], item["target_path"])
+    assert os.path.exists(target_file_path), f"File {target_file_path} does not exist"
 
     content = ""
-    with open(rust_file_path, "r") as f:
+    with open(target_file_path, "r") as f:
         content = f.read()
 
     source_code = "\n".join(item["ground_truth_target_function"])
     target_code = "\n".join(item["target_function"])
 
     if source_code not in content:
-        raise ValueError(f"Source code not found in {rust_file_path}")
+        raise ValueError(f"Source code not found in {target_file_path}")
 
     content = content.replace(source_code, "\n" + target_code + "\n")
 
-    with open(rust_file_path, "w") as f:
+    with open(target_file_path, "w") as f:
         f.write(content)
 
 
@@ -149,8 +149,9 @@ def main(args):
                 print(f"Error decoding ground truth target function: {e}")
                 continue
 
+        if configs["tool_name"] in ["rustrepotrans", "skel"]:
             try:
-                insert_translation(fragment_details)
+                insert_translation(configs, fragment_details)
             except ValueError as e:
                 print(f"Error inserting translation: {e}")
                 raise
