@@ -26,6 +26,23 @@ def find_trajectory_file(session_id):
                 return os.path.join(root, file)
     raise FileNotFoundError(f"Trajectory file for session {session_id} not found in {trajectory_dir}.")
 
+def copy_trajectory_file(session_id, destination_dir):
+    """
+    Copy the trajectory file for a given session ID to the specified destination directory.
+    
+    Args:
+        session_id (str): The session ID to search for.
+        destination_dir (str): The directory where the trajectory file should be copied.
+    
+    Returns:
+        str: The path to the copied trajectory file.
+    """
+    trajectory_file = find_trajectory_file(session_id)
+    os.makedirs(destination_dir, exist_ok=True)
+    destination_path = os.path.join(destination_dir, os.path.basename(trajectory_file))
+    with open(trajectory_file, "r") as src_file, open(destination_path, "w") as dest_file:
+        dest_file.write(src_file.read())
+    return destination_path
 
 def get_agent_cost(agent_output):
 
@@ -34,6 +51,8 @@ def get_agent_cost(agent_output):
     if agent_output["parsed_final_response"]["is_equivalent"] in ["error", "other"]:
         return cost
 
+    agent_output = agent_output["last_json"] or agent_output["first_json"]
+
     cost["total_num_turns"] += agent_output["num_turns"]
     cost["total_cost_usd"] += agent_output["total_cost_usd"]
     cost["duration_ms"] += agent_output["duration_ms"]
@@ -41,6 +60,7 @@ def get_agent_cost(agent_output):
     # Load and analyze agent trajectory files
     session_id = agent_output["session_id"]
     trajectory_file = find_trajectory_file(session_id)
+    copy_trajectory_file(session_id, "data/agent_trajectories")
 
     agent_trajectory = []
     with open(trajectory_file, "r") as f:
@@ -201,14 +221,17 @@ def main(args):
 
                 # Check for timeout cases
                 if (
-                    item[args.agent_name]["output"]["test_repair"]["parsed_final_response"].get("is_equivalent") == "other"
-                    and item[args.agent_name]["output"]["test_repair"]["parsed_final_response"].get("explanation") == "500: timeout"
+                    item[args.agent_name]["output"]["test_repair"]["parsed_final_response"].get("is_equivalent")
+                    == "other"
+                    and item[args.agent_name]["output"]["test_repair"]["parsed_final_response"].get("explanation")
+                    == "500: timeout"
                 ):
                     project_timeout_count += 1
 
                 if (
                     item[args.agent_name]["output"]["verdict"]["parsed_final_response"].get("is_equivalent") == "other"
-                    and item[args.agent_name]["output"]["verdict"]["parsed_final_response"].get("explanation") == "500: timeout"
+                    and item[args.agent_name]["output"]["verdict"]["parsed_final_response"].get("explanation")
+                    == "500: timeout"
                 ):
                     project_timeout_count += 1
 
@@ -359,14 +382,18 @@ def main(args):
     )
     print("}")
     print()
-    print(f"Total Methods: {global_equivalency_dist['yes'] + global_equivalency_dist['no'] + global_equivalency_dist['other']} [{global_total_methods / global_total:.2%}]")
+    print(
+        f"Total Methods: {global_equivalency_dist['yes'] + global_equivalency_dist['no'] + global_equivalency_dist['other']} [{global_total_methods / global_total:.2%}]"
+    )
     print(f"Total turns: {global_total_num_turns} [Average: {global_total_num_turns / global_total_methods:.2f}]")
     print(f"Total cost: ${global_total_cost:.2f} [Average: ${global_total_cost / global_total_methods:.2f}]")
     print(f"Total time: {global_total_time // 1e3}s [Average: {global_total_time // 1e3 / global_total_methods:.2f}s]")
     print(
         f"Total tool calls: {global_total_tool_calls} [Average: {global_total_tool_calls / global_total_methods:.2f}]"
     )
-    print(f"API Error Rate: {global_error_rate:.2%} [Test Repair Errors: {global_test_repair_errors}, Verdict Errors: {global_verdict_errors}]")
+    print(
+        f"API Error Rate: {global_error_rate:.2%} [Test Repair Errors: {global_test_repair_errors}, Verdict Errors: {global_verdict_errors}]"
+    )
     print(f"Global Timeout Cases: {global_timeout_count} [{global_timeout_percentage:.2f}%]")
 
 
