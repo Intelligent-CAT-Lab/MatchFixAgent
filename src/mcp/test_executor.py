@@ -1,9 +1,27 @@
 from fastmcp import FastMCP
 import os
+import json
 import subprocess
 from pathlib import Path
 
 mcp = FastMCP(name="TestExecutor")
+
+
+def get_oxidizer_test_command(project: str) -> str:
+    if not os.path.exists(f"memory/{project}.json"):
+        return "cargo test unit_test"
+
+    fragment_id = json.load(open(f"memory/{project}.json"))["id"]
+
+    fragments = []
+    with open(f"data/tool_results/oxidizer/processed_results/{project}.json", "r") as f:
+        fragments = json.load(f)
+
+    for fragment in fragments:
+        if fragment["id"] == fragment_id and fragment["test_name"]:
+            return f"cargo test {fragment['test_name']}"
+
+    return "cargo test unit_test"
 
 
 @mcp.tool
@@ -12,18 +30,20 @@ def execute_rust_tests(project: str) -> str:
 
     This tool runs test commands for Rust projects that have been translated
     from other languages. Each project may have different test execution
-    commands based on their build system and test setup.
+    commands based on their build system and test setup. The tool also supports
+    custom test commands for specific projects and allows skipping certain tests
+    using predefined skip flags.
 
     Args:
         project (str): The name of the project to test. Supported projects
                       include "iceberg", "deltachat-core", "incubator-milagro-crypto",
-                      "libp2p", and "charset-normalizer". Each project has its own
-                      directory path and test command configuration.
+                      "libp2p", "charset-normalizer", "checkdigit", "go-edlib",
+                      "gohistogram", "gonameparts", "stats", and "TextRank".
 
     Returns:
         str: The output from the test execution, including both stdout and stderr.
-             Returns error message if the project directory doesn't exist or
-             if the test command fails to execute.
+             Returns error messages if the project directory doesn't exist,
+             if the test command fails to execute, or if an unexpected error occurs.
 
     Raises:
         No exceptions are raised directly. All errors are caught and
@@ -37,16 +57,15 @@ def execute_rust_tests(project: str) -> str:
         test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 
     Note:
-        - Supports multiple projects with different test commands:
-          * iceberg: make unit-test
-          * deltachat-core: cargo nextest run
-          * incubator-milagro-crypto: cargo test --all --all-features --release
-          * libp2p: cargo test
-          * charset-normalizer: cargo test
-        - Each project has its own directory path configuration
-        - Test execution happens in the project's specific rust directory
-        - Both successful and failed test results are captured
-        - Some projects have specific tests that are skipped using --skip flags
+        - Each project has its own directory path and test command configuration.
+        - Test execution happens in the project's specific Rust directory.
+        - Both successful and failed test results are captured.
+        - Some projects have specific tests that are skipped using --skip flags.
+        - For projects like "checkdigit", "go-edlib", "gohistogram", "gonameparts",
+          "stats", and "TextRank", the test command is dynamically determined
+          using the `get_oxidizer_test_command` function.
+        - Environment variables such as `RUST_LOG` are set to control logging levels.
+        - A timeout of 5 minutes is enforced for test execution to prevent hanging.
     """
 
     # Define project-specific test commands
@@ -56,6 +75,12 @@ def execute_rust_tests(project: str) -> str:
         "incubator-milagro-crypto": "cargo test --all --all-features --release",
         "libp2p": "cargo test",
         "charset-normalizer": "cargo test",
+        "checkdigit": "cargo test unit_test",
+        "go-edlib": "cargo test unit_test",
+        "gohistogram": "cargo test unit_test",
+        "gonameparts": "cargo test unit_test",
+        "stats": "cargo test unit_test",
+        "TextRank": "cargo test unit_test",
     }
 
     PROJECTS_PATHS = {
@@ -64,12 +89,18 @@ def execute_rust_tests(project: str) -> str:
         "incubator-milagro-crypto": Path("data/tool_projects/rustrepotrans/projects/incubator-milagro-crypto/rust"),
         "libp2p": Path("data/tool_projects/rustrepotrans/projects/libp2p/rust"),
         "charset-normalizer": Path("data/tool_projects/rustrepotrans/projects/charset-normalizer/rust"),
+        "checkdigit": Path("data/tool_projects/oxidizer/projects/checkdigit/rust"),
+        "go-edlib": Path("data/tool_projects/oxidizer/projects/go-edlib/rust"),
+        "gohistogram": Path("data/tool_projects/oxidizer/projects/gohistogram/rust"),
+        "gonameparts": Path("data/tool_projects/oxidizer/projects/gonameparts/rust"),
+        "stats": Path("data/tool_projects/oxidizer/projects/stats/rust"),
+        "TextRank": Path("data/tool_projects/oxidizer/projects/TextRank/rust"),
     }
 
     SKIP_TESTS = {
         "libp2p": [
-            "basic_resolve",
-            "given_periodic_bootstrap_when_routing_table_updated_then_wont_bootstrap_until_next_interval",
+            "basic_resolve",  # this test reqires IPv6 support
+            "given_periodic_bootstrap_when_routing_table_updated_then_wont_bootstrap_until_next_interval",  # this test is flaky
         ]
     }
 
@@ -90,6 +121,9 @@ def execute_rust_tests(project: str) -> str:
 
     # Get the test command for this project
     test_command = PROJECT_COMMANDS[project]
+
+    if project in ["checkdigit", "go-edlib", "gohistogram", "gonameparts", "stats", "TextRank"]:
+        test_command = get_oxidizer_test_command(project)
 
     # Add skip flags if there are tests to skip for this project
     if project in SKIP_TESTS:

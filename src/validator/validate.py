@@ -73,6 +73,32 @@ def cleanup(configs: dict):
         else:
             subprocess.run(["git", "restore", path], check=False)
 
+    # delete memory file
+    memory_file = os.path.join("memory", configs["project_name"] + ".json")
+    if os.path.exists(memory_file):
+        os.remove(memory_file)
+
+
+def update_memory(fragment_details: dict):
+    """
+    Update the memory of the ValidatorAgent with the current method details.
+
+    This function updates the ValidatorAgent's memory with the details of the
+    method being validated, including source and target languages, code snippets,
+    and other relevant information.
+
+    Args:
+        fragment_details (dict): Details of the method to validate, including:
+            - source_language: Source language of the method
+            - target_language: Target language of the method
+            - source_code: Source code in the source language
+            - target_code: Target code in the target language
+    """
+    # This function is a placeholder for any future memory update logic.
+    os.makedirs("memory", exist_ok=True)
+    with open(f"memory/{fragment_details['project']}.json", "w") as f:
+        json.dump({"id": fragment_details["id"]}, f, indent=4)
+
 
 def insert_translation(configs: dict, item: dict):
     """
@@ -128,6 +154,8 @@ def main(args):
     for fragment_details in results:
 
         cleanup(configs)
+
+        update_memory(fragment_details)
 
         if (
             fragment_details["source_language"] != configs["source_language"]
