@@ -85,7 +85,7 @@ def get_agent_cost(agent_output):
     return cost
 
 
-def reset_incomplete_responses(test_repair_error, verdict_error, result_file):
+def reset_incomplete_responses(test_repair_error, verdict_error, project_timeout, result_file):
     """
     Reset incomplete responses by removing them from the results file.
 
@@ -97,17 +97,15 @@ def reset_incomplete_responses(test_repair_error, verdict_error, result_file):
         test_repair_error (list): List of IDs with test repair errors.
         verdict_error (list): List of IDs with verdict errors.
     """
-    if not test_repair_error and not verdict_error:
-        return
-
     with open(result_file, "r") as file:
         data = json.load(file)
 
     for item in data:
         if args.agent_name not in item:
             continue
-        if item["id"] in test_repair_error or item["id"] in verdict_error:
-            item[args.agent_name]["status"] = False
+        if item["id"] in test_repair_error or item["id"] in verdict_error or item["id"] in project_timeout:
+            if args.agent_name in item:
+                del item[args.agent_name]
 
     with open(result_file, "w") as file:
         json.dump(data, file, indent=4)
@@ -147,208 +145,245 @@ def main(args):
     global_test_repair_errors = 0
     global_verdict_errors = 0
 
+    project_language_map = {}
     for tool in ["alphatrans", "oxidizer", "skel", "rustrepotrans"]:
         for project in os.listdir(os.path.join("data", "agent_results", args.agent_name, tool)):
-
-            os.makedirs(os.path.join(report_dir, args.agent_name, tool), exist_ok=True)
+            project_name = project.split(".")[0]
+            project_language_map.setdefault(project_name, [])
 
             result_file = os.path.join("data", "agent_results", args.agent_name, tool, project)
             with open(result_file, "r") as file:
                 data = json.load(file)
 
-            total = 0
-            total_methods = 0
-            tool_validation_dist = {"error": 0, "failure": 0, "not-exercised": 0, "pending": 0, "success": 0}
-            equivalency_dist = {"yes": 0, "no": 0, "other": 0}
-            total_num_turns = 0
-            total_cost = 0
-            total_time = 0
-            total_tool_calls = 0
-
-            # incomplete responses
-            test_repair_error = []
-            verdict_error = []
-
-            disagreements = []
-
-            # Count timeout cases for the project
-            project_timeout_count = 0
-
-            # Define possible outcomes
-            tool_outcomes = ["error", "failure", "not-exercised", "pending", "success"]
-            llm_outcomes = ["yes", "no", "other"]
-
-            # Initialize confusion matrix with zeros
-            confusion_df = pd.DataFrame(0, index=tool_outcomes, columns=llm_outcomes)
-
             for item in data:
+                source_language = item.get("source_language", "unknown")
+                target_language = item.get("target_language", "unknown")
+                if [source_language, target_language] not in project_language_map[project_name]:
+                    project_language_map[project_name].append([source_language, target_language])
 
-                total += 1
+    for tool in ["alphatrans", "oxidizer", "skel", "rustrepotrans"]:
+        if args.tool_name and tool != args.tool_name:
+            continue
+        for project in os.listdir(os.path.join("data", "agent_results", args.agent_name, tool)):
 
-                if args.agent_name not in item:
-                    continue
+            if args.project_name and project.split(".")[0] != args.project_name:
+                continue
 
-                if not item[args.agent_name]["status"]:
-                    continue
+            for source_language, target_language in project_language_map[project.split(".")[0]]:
 
-                verdict = "test_repair"
-                if item[args.agent_name]["output"][verdict]["parsed_final_response"]["is_equivalent"] in [
-                    "error",
-                    "other",
-                ]:
-                    verdict = "verdict"
+                os.makedirs(os.path.join(report_dir, args.agent_name, tool), exist_ok=True)
 
-                total_methods += 1
+                result_file = os.path.join("data", "agent_results", args.agent_name, tool, project)
+                with open(result_file, "r") as file:
+                    data = json.load(file)
 
-                # Get tool validation outcome
-                tool_validation = item["result"]
+                total = 0
+                total_methods = 0
+                tool_validation_dist = {"error": 0, "failure": 0, "not-exercised": 0, "pending": 0, "success": 0}
+                equivalency_dist = {"yes": 0, "no": 0, "other": 0}
+                total_num_turns = 0
+                total_cost = 0
+                total_time = 0
+                total_tool_calls = 0
 
-                # Get LLM prediction
-                llm_prediction = item[args.agent_name]["output"][verdict]["parsed_final_response"]["is_equivalent"]
+                # incomplete responses
+                test_repair_error = []
+                verdict_error = []
 
-                if item[args.agent_name]["output"]["test_repair"]["parsed_final_response"]["is_equivalent"] == "error":
-                    test_repair_error.append(item["id"])
+                disagreements = []
 
-                if item[args.agent_name]["output"]["verdict"]["parsed_final_response"]["is_equivalent"] == "error":
-                    verdict_error.append(item["id"])
+                # Count timeout cases for the project
+                project_timeout_count = []
 
-                if tool_validation == "success" and llm_prediction == "no":
-                    disagreements.append(f"Tool (YES) vs Agent (NO): ID - {item['id']}")
+                # Define possible outcomes
+                tool_outcomes = ["error", "failure", "not-exercised", "pending", "success"]
+                llm_outcomes = ["yes", "no", "other"]
 
-                if tool_validation == "failure" and llm_prediction == "yes":
-                    disagreements.append(f"Tool (NO) vs Agent (YES): ID - {item['id']}")
+                # Initialize confusion matrix with zeros
+                confusion_df = pd.DataFrame(0, index=tool_outcomes, columns=llm_outcomes)
 
-                # Update confusion matrix
-                confusion_df.loc[tool_validation, llm_prediction] += 1
+                for item in data:
 
-                # Check for timeout cases
-                if (
-                    item[args.agent_name]["output"]["test_repair"]["parsed_final_response"].get("is_equivalent")
-                    == "other"
-                    and item[args.agent_name]["output"]["test_repair"]["parsed_final_response"].get("explanation")
-                    == "500: timeout"
-                ):
-                    project_timeout_count += 1
+                    if item.get("source_language") != source_language or item.get("target_language") != target_language:
+                        continue
 
-                if (
-                    item[args.agent_name]["output"]["verdict"]["parsed_final_response"].get("is_equivalent") == "other"
-                    and item[args.agent_name]["output"]["verdict"]["parsed_final_response"].get("explanation")
-                    == "500: timeout"
-                ):
-                    project_timeout_count += 1
+                    total += 1
 
-                # Continue with your existing stats collection
-                tool_validation_dist[tool_validation] += 1
-                equivalency_dist[llm_prediction] += 1
+                    if args.agent_name not in item:
+                        continue
 
-                test_repair_agent = item[args.agent_name]["output"]["test_repair"]
-                verdict_agent = item[args.agent_name]["output"]["verdict"]
+                    if not item[args.agent_name]["status"]:
+                        continue
 
-                test_repair_cost = get_agent_cost(test_repair_agent)
-                verdict_cost = get_agent_cost(verdict_agent)
+                    verdict = "test_repair"
+                    if item[args.agent_name]["output"][verdict]["parsed_final_response"]["is_equivalent"] in [
+                        "error",
+                        "other",
+                    ]:
+                        verdict = "verdict"
 
-                total_num_turns += test_repair_cost["total_num_turns"] + verdict_cost["total_num_turns"]
-                total_cost += test_repair_cost["total_cost_usd"] + verdict_cost["total_cost_usd"]
-                total_time += test_repair_cost["duration_ms"] + verdict_cost["duration_ms"]
-                total_tool_calls += test_repair_cost["num_tool_calls"] + verdict_cost["num_tool_calls"]
+                    total_methods += 1
 
-            # Verify data consistency
-            assert total_methods == sum(
-                equivalency_dist.values()
-            ), "Total methods do not match the sum of equivalency distribution"
+                    # Get tool validation outcome
+                    tool_validation = item["result"]
 
-            total_methods = max(total_methods, 1)  # Avoid division by zero
+                    # Get LLM prediction
+                    llm_prediction = item[args.agent_name]["output"][verdict]["parsed_final_response"]["is_equivalent"]
 
-            # Prepare the report content
-            report_content = []
-            report_content.append(f"Project: {project.split('.')[0]}")
-            report_content.append(f"Agent: {args.agent_name}")
-            report_content.append(f"Progress: {total_methods}/{total} [{total_methods / total:.2%}]")
-            last_modified_time = os.path.getmtime(result_file)
-            seconds_ago = time.time() - last_modified_time
-            report_content.append(
-                f"Results last modified: {seconds_ago // 3600}h, {(seconds_ago % 3600) // 60}m, {seconds_ago % 60:.2f}s ago"
-            )
-            report_content.append("---" * 50)
-            report_content.append("MatchFixAgent: {")
-            report_content.append(
-                f"    yes:   {{ total: {equivalency_dist['yes']}, %: {equivalency_dist['yes'] / total_methods:.2%} }},"
-            )
-            report_content.append(
-                f"    no:    {{ total: {equivalency_dist['no']}, %: {equivalency_dist['no'] / total_methods:.2%} }},"
-            )
-            report_content.append(
-                f"    other: {{ total: {equivalency_dist['other']}, %: {equivalency_dist['other'] / total_methods:.2%} }}"
-            )
-            report_content.append("}")
-            report_content.append("")
-            report_content.append("Tool: {")
-            report_content.append(
-                f"    success:       {{ total: {tool_validation_dist['success']}, %: {tool_validation_dist['success'] / total_methods:.2%} }},"
-            )
-            report_content.append(
-                f"    failure:       {{ total: {tool_validation_dist['failure']}, %: {tool_validation_dist['failure'] / total_methods:.2%} }},"
-            )
-            report_content.append(
-                f"    not-exercised: {{ total: {tool_validation_dist['not-exercised']}, %: {tool_validation_dist['not-exercised'] / total_methods:.2%} }},"
-            )
-            report_content.append(
-                f"    pending:       {{ total: {tool_validation_dist['pending']}, %: {tool_validation_dist['pending'] / total_methods:.2%} }},"
-            )
-            report_content.append(
-                f"    error:         {{ total: {tool_validation_dist['error']}, %: {tool_validation_dist['error'] / total_methods:.2%} }}"
-            )
-            report_content.append("}")
-            report_content.append("---" * 50)
-            report_content.append(f"Total Tool (YES) vs Agent (NO): {confusion_df.loc['success', 'no']}")
-            report_content.append(f"Total Tool (NO) vs Agent (YES): {confusion_df.loc['failure', 'yes']}")
-            report_content.append("---" * 50)
-            report_content.append(f"Total Test Repair Agent Errors: {len(test_repair_error)}")
-            report_content.append(f"Total Verdict Agent Errors: {len(verdict_error)}")
-            report_content.append(f"Timeout Cases: {project_timeout_count}")
-            report_content.append("---" * 50)
-            report_content.append(f"Total turns: {total_num_turns} [Average: {total_num_turns / total_methods:.2f}]")
-            report_content.append(f"Total cost: ${total_cost:.2f} [Average: ${total_cost / total_methods:.2f}]")
-            report_content.append(
-                f"Total time: {total_time // 1e3}s [Average: {total_time // 1e3 / total_methods:.2f}s]"
-            )
-            report_content.append(
-                f"Total tool calls: {total_tool_calls} [Average: {total_tool_calls / total_methods:.2f}]"
-            )
-            report_content.append("---" * 50)
-            report_content.append("Confusion Matrix:")
-            report_content.append(confusion_df.to_string())
-            report_content.append("---" * 50)
-            report_content.append("Disagreements:")
-            report_content.extend(disagreements)
-            report_content.append("---" * 50)
+                    if (
+                        item[args.agent_name]["output"]["test_repair"]["parsed_final_response"]["is_equivalent"]
+                        == "error"
+                    ):
+                        test_repair_error.append(item["id"])
 
-            # Write the report to a .txt file
-            report_file_path = os.path.join(report_dir, args.agent_name, tool, f"{project.split('.')[0]}.txt")
-            with open(report_file_path, "w") as report_file:
-                report_file.write("\n".join(report_content))
+                    if item[args.agent_name]["output"]["verdict"]["parsed_final_response"]["is_equivalent"] == "error":
+                        verdict_error.append(item["id"])
 
-            if args.reset_incomplete:
-                reset_incomplete_responses(test_repair_error, verdict_error, result_file)
+                    if tool_validation == "success" and llm_prediction == "no":
+                        disagreements.append(f"Tool (YES) vs Agent (NO): ID - {item['id']}")
 
-            # Accumulate global metrics
-            global_total += total
-            global_total_methods += total_methods
-            for key in global_tool_validation_dist:
-                global_tool_validation_dist[key] += tool_validation_dist[key]
-            for key in global_equivalency_dist:
-                global_equivalency_dist[key] += equivalency_dist[key]
-            global_total_num_turns += total_num_turns
-            global_total_cost += total_cost
-            global_total_time += total_time
-            global_total_tool_calls += total_tool_calls
+                    if tool_validation == "failure" and llm_prediction == "yes":
+                        disagreements.append(f"Tool (NO) vs Agent (YES): ID - {item['id']}")
 
-            # Accumulate global error counts
-            global_test_repair_errors += len(test_repair_error)
-            global_verdict_errors += len(verdict_error)
+                    # Update confusion matrix
+                    confusion_df.loc[tool_validation, llm_prediction] += 1
 
-            # Accumulate global timeout count
-            global_timeout_count += project_timeout_count
+                    # Check for timeout cases
+                    if (
+                        item[args.agent_name]["output"]["test_repair"]["parsed_final_response"].get("is_equivalent")
+                        == "other"
+                        and item[args.agent_name]["output"]["test_repair"]["parsed_final_response"].get("explanation")
+                        == "500: timeout"
+                    ):
+                        project_timeout_count.append(item["id"])
+
+                    if (
+                        item[args.agent_name]["output"]["verdict"]["parsed_final_response"].get("is_equivalent")
+                        == "other"
+                        and item[args.agent_name]["output"]["verdict"]["parsed_final_response"].get("explanation")
+                        == "500: timeout"
+                    ):
+                        project_timeout_count.append(item["id"])
+
+                    # Continue with your existing stats collection
+                    tool_validation_dist[tool_validation] += 1
+                    equivalency_dist[llm_prediction] += 1
+
+                    test_repair_agent = item[args.agent_name]["output"]["test_repair"]
+                    verdict_agent = item[args.agent_name]["output"]["verdict"]
+
+                    test_repair_cost = get_agent_cost(test_repair_agent)
+                    verdict_cost = get_agent_cost(verdict_agent)
+
+                    total_num_turns += test_repair_cost["total_num_turns"] + verdict_cost["total_num_turns"]
+                    total_cost += test_repair_cost["total_cost_usd"] + verdict_cost["total_cost_usd"]
+                    total_time += test_repair_cost["duration_ms"] + verdict_cost["duration_ms"]
+                    total_tool_calls += test_repair_cost["num_tool_calls"] + verdict_cost["num_tool_calls"]
+
+                # Verify data consistency
+                assert total_methods == sum(
+                    equivalency_dist.values()
+                ), "Total methods do not match the sum of equivalency distribution"
+
+                total_methods = max(total_methods, 1)  # Avoid division by zero
+
+                # Prepare the report content
+                report_content = []
+                report_content.append(f"Project: {project.split('.')[0]}")
+                report_content.append(f"Agent: {args.agent_name}")
+                report_content.append(f"Progress: {total_methods}/{total} [{total_methods / total:.2%}]")
+                last_modified_time = os.path.getmtime(result_file)
+                seconds_ago = time.time() - last_modified_time
+                report_content.append(
+                    f"Results last modified: {seconds_ago // 3600}h, {(seconds_ago % 3600) // 60}m, {seconds_ago % 60:.2f}s ago"
+                )
+                report_content.append("---" * 50)
+                report_content.append("MatchFixAgent: {")
+                report_content.append(
+                    f"    yes:   {{ total: {equivalency_dist['yes']}, %: {equivalency_dist['yes'] / total_methods:.2%} }},"
+                )
+                report_content.append(
+                    f"    no:    {{ total: {equivalency_dist['no']}, %: {equivalency_dist['no'] / total_methods:.2%} }},"
+                )
+                report_content.append(
+                    f"    other: {{ total: {equivalency_dist['other']}, %: {equivalency_dist['other'] / total_methods:.2%} }}"
+                )
+                report_content.append("}")
+                report_content.append("")
+                report_content.append("Tool: {")
+                report_content.append(
+                    f"    success:       {{ total: {tool_validation_dist['success']}, %: {tool_validation_dist['success'] / total_methods:.2%} }},"
+                )
+                report_content.append(
+                    f"    failure:       {{ total: {tool_validation_dist['failure']}, %: {tool_validation_dist['failure'] / total_methods:.2%} }},"
+                )
+                report_content.append(
+                    f"    not-exercised: {{ total: {tool_validation_dist['not-exercised']}, %: {tool_validation_dist['not-exercised'] / total_methods:.2%} }},"
+                )
+                report_content.append(
+                    f"    pending:       {{ total: {tool_validation_dist['pending']}, %: {tool_validation_dist['pending'] / total_methods:.2%} }},"
+                )
+                report_content.append(
+                    f"    error:         {{ total: {tool_validation_dist['error']}, %: {tool_validation_dist['error'] / total_methods:.2%} }}"
+                )
+                report_content.append("}")
+                report_content.append("---" * 50)
+                report_content.append(f"Total Tool (YES) vs Agent (NO): {confusion_df.loc['success', 'no']}")
+                report_content.append(f"Total Tool (NO) vs Agent (YES): {confusion_df.loc['failure', 'yes']}")
+                report_content.append("---" * 50)
+                report_content.append(f"Total Test Repair Agent Errors: {len(test_repair_error)}")
+                report_content.append(f"Total Verdict Agent Errors: {len(verdict_error)}")
+                report_content.append(f"Timeout Cases: {len(project_timeout_count)}")
+                report_content.append("---" * 50)
+                report_content.append(
+                    f"Total turns: {total_num_turns} [Average: {total_num_turns / total_methods:.2f}]"
+                )
+                report_content.append(f"Total cost: ${total_cost:.2f} [Average: ${total_cost / total_methods:.2f}]")
+                report_content.append(
+                    f"Total time: {total_time // 1e3}s [Average: {total_time // 1e3 / total_methods:.2f}s]"
+                )
+                report_content.append(
+                    f"Total tool calls: {total_tool_calls} [Average: {total_tool_calls / total_methods:.2f}]"
+                )
+                report_content.append("---" * 50)
+                report_content.append("Confusion Matrix:")
+                report_content.append(confusion_df.to_string())
+                report_content.append("---" * 50)
+                report_content.append("Disagreements:")
+                report_content.extend(disagreements)
+                report_content.append("---" * 50)
+
+                # Write the report to a .txt file
+                report_file_path = os.path.join(
+                    report_dir,
+                    args.agent_name,
+                    tool,
+                    f"{source_language}_{target_language}_{project.split('.')[0]}.txt",
+                )
+                with open(report_file_path, "w") as report_file:
+                    report_file.write("\n".join(report_content))
+
+                if args.reset_incomplete:
+                    reset_incomplete_responses(test_repair_error, verdict_error, project_timeout_count, result_file)
+
+                # Accumulate global metrics
+                global_total += total
+                global_total_methods += total_methods
+                for key in global_tool_validation_dist:
+                    global_tool_validation_dist[key] += tool_validation_dist[key]
+                for key in global_equivalency_dist:
+                    global_equivalency_dist[key] += equivalency_dist[key]
+                global_total_num_turns += total_num_turns
+                global_total_cost += total_cost
+                global_total_time += total_time
+                global_total_tool_calls += total_tool_calls
+
+                # Accumulate global error counts
+                global_test_repair_errors += len(test_repair_error)
+                global_verdict_errors += len(verdict_error)
+
+                # Accumulate global timeout count
+                global_timeout_count += len(project_timeout_count)
 
     # Calculate global metrics
     global_total_methods = max(global_total_methods, 1)  # Avoid division by zero
@@ -402,6 +437,13 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Analyze Agent Results")
     parser.add_argument("--agent_name", type=str, dest="agent_name", help="name of the agent to analyze")
+    parser.add_argument(
+        "--tool_name",
+        type=str,
+        dest="tool_name",
+        help="name of the tool to analyze (e.g., alphatrans, oxidizer, skel, rustrepotrans)",
+    )
+    parser.add_argument("--project_name", type=str, dest="project_name", help="name of the project to analyze")
     parser.add_argument(
         "--reset_incomplete", action="store_true", dest="reset_incomplete", help="reset incomplete responses"
     )
