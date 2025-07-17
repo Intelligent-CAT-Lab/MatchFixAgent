@@ -15,6 +15,7 @@ import os
 import argparse
 import json
 import time
+import random
 import pandas as pd
 
 
@@ -111,6 +112,56 @@ def reset_incomplete_responses(test_repair_error, verdict_error, project_timeout
         json.dump(data, file, indent=4)
 
 
+def reset_disagreements(disagreement_ids, result_file):
+    """
+    Reset disagreements by removing entries from the results file.
+
+    This function takes a list of disagreement IDs and removes these entries
+    from the results JSON file to ensure that they do not affect future analyses.
+
+    Args:
+        disagreement_ids (list): List of IDs with disagreements.
+        result_file (str): Path to the results JSON file.
+    """
+    with open(result_file, "r") as file:
+        data = json.load(file)
+
+    for item in data:
+        if args.agent_name not in item:
+            continue
+        if item["id"] in disagreement_ids:
+            if args.agent_name in item:
+                del item[args.agent_name]
+
+    with open(result_file, "w") as file:
+        json.dump(data, file, indent=4)
+
+
+def reset_timeouts(project_timeout, result_file):
+    """
+    Reset timeout cases by removing entries from the results file.
+
+    This function takes a list of project timeout IDs and removes these entries
+    from the results JSON file to ensure that they do not affect future analyses.
+
+    Args:
+        project_timeout (list): List of IDs with timeout cases.
+        result_file (str): Path to the results JSON file.
+    """
+    with open(result_file, "r") as file:
+        data = json.load(file)
+
+    for item in data:
+        if args.agent_name not in item:
+            continue
+        if item["id"] in project_timeout:
+            if args.agent_name in item:
+                del item[args.agent_name]
+
+    with open(result_file, "w") as file:
+        json.dump(data, file, indent=4)
+
+
 def main(args):
     """
     Analyze validator agent performance across a dataset of method translations.
@@ -144,6 +195,7 @@ def main(args):
     # Initialize global error counts
     global_test_repair_errors = 0
     global_verdict_errors = 0
+    global_disagreements = []
 
     project_language_map = {}
     for tool in ["alphatrans", "oxidizer", "skel", "rustrepotrans"]:
@@ -191,6 +243,7 @@ def main(args):
                 verdict_error = []
 
                 disagreements = []
+                disagreement_ids = []
 
                 # Count timeout cases for the project
                 project_timeout_count = []
@@ -241,9 +294,17 @@ def main(args):
 
                     if tool_validation == "success" and llm_prediction == "no":
                         disagreements.append(f"Tool (YES) vs Agent (NO): ID - {item['id']}")
+                        disagreement_ids.append(item["id"])
+                        global_disagreements.append(
+                            f'{tool},{project.split(".")[0]},{source_language},{target_language},{item["id"]},D1'
+                        )
 
                     if tool_validation == "failure" and llm_prediction == "yes":
                         disagreements.append(f"Tool (NO) vs Agent (YES): ID - {item['id']}")
+                        disagreement_ids.append(item["id"])
+                        global_disagreements.append(
+                            f'{tool},{project.split(".")[0]},{source_language},{target_language},{item["id"]},D2'
+                        )
 
                     # Update confusion matrix
                     confusion_df.loc[tool_validation, llm_prediction] += 1
@@ -366,6 +427,12 @@ def main(args):
                 if args.reset_incomplete:
                     reset_incomplete_responses(test_repair_error, verdict_error, project_timeout_count, result_file)
 
+                if args.reset_disagreements:
+                    reset_disagreements(disagreement_ids, result_file)
+
+                if args.reset_timeouts:
+                    reset_timeouts(project_timeout_count, result_file)
+
                 # Accumulate global metrics
                 global_total += total
                 global_total_methods += total_methods
@@ -433,6 +500,19 @@ def main(args):
     )
     print(f"Global Timeout Cases: {global_timeout_count} [{global_timeout_percentage:.2f}%]")
 
+    global_disagreements = list(set(global_disagreements))  # Remove duplicates
+    random.shuffle(global_disagreements)
+    sampled_disagreements = random.sample(global_disagreements, min(100, len(global_disagreements)))
+    union = []
+    for disagreement in global_disagreements:
+        if disagreement in sampled_disagreements:
+            union.append(f"{disagreement},Sampled")
+        else:
+            union.append(f"{disagreement},Original")
+
+    with open(f"reports/{args.agent_name}/disagreements.txt", "w") as f:
+        f.writelines("\n".join(union))
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Analyze Agent Results")
@@ -447,5 +527,9 @@ if __name__ == "__main__":
     parser.add_argument(
         "--reset_incomplete", action="store_true", dest="reset_incomplete", help="reset incomplete responses"
     )
+    parser.add_argument(
+        "--reset_disagreements", action="store_true", dest="reset_disagreements", help="reset disagreements"
+    )
+    parser.add_argument("--reset_timeouts", action="store_true", dest="reset_timeouts", help="reset timeout cases")
     args = parser.parse_args()
     main(args)
