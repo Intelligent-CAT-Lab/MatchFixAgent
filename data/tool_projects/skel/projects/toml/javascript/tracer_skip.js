@@ -1,6 +1,6 @@
 const fs = require('fs');
 function get_input(test_case_name){
-    let decode_input = fs.readFileSync('./benchmarks_new/toml/example.toml', 'utf8');
+    let decode_input = fs.readFileSync('./example.toml', 'utf8');
 
     decode_input = decode_input.split('################################################################################\n');
     
