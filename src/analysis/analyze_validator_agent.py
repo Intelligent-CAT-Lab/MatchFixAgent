@@ -219,7 +219,14 @@ def main(args):
         for project in os.listdir(os.path.join("data", "agent_results", args.agent_name, tool)):
 
             # skipped for now
-            if tool == "alphatrans" and project.split(".")[0] in ["jansi", "JavaFastPFOR",  "commons-codec", "commons-graph", "commons-exec", "commons-pool"]:
+            if tool == "alphatrans" and project.split(".")[0] in [
+                "jansi",
+                "JavaFastPFOR",
+                "commons-codec",
+                "commons-graph",
+                "commons-exec",
+                "commons-pool",
+            ]:
                 continue
 
             if args.project_name and project.split(".")[0] != args.project_name:
