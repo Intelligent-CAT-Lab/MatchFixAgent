@@ -65,6 +65,8 @@ def cleanup(configs: dict):
         status, path = line[:2], line[3:]
         # Untracked files (“??”) → delete
         if status.strip() == "??":
+            if "package-lock.json" in path or "package.json" in path or "node_modules" in path:
+                continue
             if os.path.isdir(path):
                 shutil.rmtree(path)
             elif os.path.isfile(path):
@@ -167,15 +169,15 @@ def main(args):
             if fragment_details[configs["agent_name"]]["status"]:
                 continue
 
-        if "rustrepotrans" == configs["tool_name"]:
-            try:
-                decoded_ground_truth_target_function = [
-                    l.encode("latin1").decode("utf-8") for l in fragment_details["ground_truth_target_function"]
-                ]
-                fragment_details["ground_truth_target_function"] = decoded_ground_truth_target_function
-            except UnicodeDecodeError as e:
-                print(f"Error decoding ground truth target function: {e}")
-                continue
+        # if "rustrepotrans" == configs["tool_name"]:
+        #     try:
+        #         decoded_ground_truth_target_function = [
+        #             l.encode("latin1").decode("utf-8") for l in fragment_details["ground_truth_target_function"]
+        #         ]
+        #         fragment_details["ground_truth_target_function"] = decoded_ground_truth_target_function
+        #     except UnicodeDecodeError as e:
+        #         print(f"Error decoding ground truth target function: {e}")
+        #         continue
 
         if configs["tool_name"] in ["rustrepotrans", "skel"]:
             try:

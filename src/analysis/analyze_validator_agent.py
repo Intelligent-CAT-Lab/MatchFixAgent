@@ -218,6 +218,10 @@ def main(args):
             continue
         for project in os.listdir(os.path.join("data", "agent_results", args.agent_name, tool)):
 
+            # skipped for now
+            if tool == "alphatrans" and project.split(".")[0] in ["jansi", "JavaFastPFOR",  "commons-codec", "commons-graph", "commons-exec", "commons-pool"]:
+                continue
+
             if args.project_name and project.split(".")[0] != args.project_name:
                 continue
 
@@ -442,7 +446,7 @@ def main(args):
                     global_equivalency_dist[key] += equivalency_dist[key]
                 global_total_num_turns += total_num_turns
                 global_total_cost += total_cost
-                global_total_time += total_time
+                global_total_time += total_time // 1e3
                 global_total_tool_calls += total_tool_calls
 
                 # Accumulate global error counts
@@ -491,7 +495,7 @@ def main(args):
     )
     print(f"Total turns: {global_total_num_turns} [Average: {global_total_num_turns / global_total_methods:.2f}]")
     print(f"Total cost: ${global_total_cost:.2f} [Average: ${global_total_cost / global_total_methods:.2f}]")
-    print(f"Total time: {global_total_time // 1e3}s [Average: {global_total_time // 1e3 / global_total_methods:.2f}s]")
+    print(f"Total time: {global_total_time}s [Average: {global_total_time / global_total_methods:.2f}s]")
     print(
         f"Total tool calls: {global_total_tool_calls} [Average: {global_total_tool_calls / global_total_methods:.2f}]"
     )
