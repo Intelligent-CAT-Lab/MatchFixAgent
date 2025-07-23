@@ -170,110 +170,129 @@ def plot_confusion_matrix(semantic_analyzer_alignment):
     import numpy as np
 
     # Set publication-quality styling
-    plt.style.use('default')  # Reset to clean default style
-    plt.rcParams.update({
-        'font.family': 'serif',
-        'font.serif': ['Times New Roman', 'Times', 'Liberation Serif', 'DejaVu Serif', 'serif'],
-        'font.size': 12,
-        'axes.linewidth': 1.2,
-        'axes.spines.top': False,
-        'axes.spines.right': False,
-        'xtick.direction': 'out',
-        'ytick.direction': 'out',
-        'xtick.major.size': 6,
-        'ytick.major.size': 6,
-        'xtick.minor.size': 3,
-        'ytick.minor.size': 3,
-        'legend.frameon': False,
-        'figure.dpi': 300,
-        'savefig.dpi': 300,
-        'savefig.bbox': 'tight',
-        'savefig.pad_inches': 0.1
-    })
-    
+    plt.style.use("default")  # Reset to clean default style
+    plt.rcParams.update(
+        {
+            "font.family": "serif",
+            "font.serif": ["Times New Roman", "Times", "Liberation Serif", "DejaVu Serif", "serif"],
+            "font.size": 12,
+            "axes.linewidth": 1.2,
+            "axes.spines.top": False,
+            "axes.spines.right": False,
+            "xtick.direction": "out",
+            "ytick.direction": "out",
+            "xtick.major.size": 6,
+            "ytick.major.size": 6,
+            "xtick.minor.size": 3,
+            "ytick.minor.size": 3,
+            "legend.frameon": False,
+            "figure.dpi": 300,
+            "savefig.dpi": 300,
+            "savefig.bbox": "tight",
+            "savefig.pad_inches": 0.1,
+        }
+    )
+
     # Create figure with optimal size for publication
-    fig, axes = plt.subplots(2, 3, figsize=(16, 10))
-    fig.patch.set_facecolor('white')
-    
+    fig, axes = plt.subplots(2, 3, figsize=(14, 8))
+    fig.patch.set_facecolor("white")
+
     # Define tools and improved titles
     tools = ["cfg", "dfg", "io", "api", "error", "spec"]
     subfigure_titles = [
         "Control Flow",
-        "Data Flow Path", 
+        "Data Flow Path",
         "Input/Output Mapping",
         "Library API Equivalence",
         "Exception/Error Handling",
-        "Specifications"
+        "Specifications",
     ]
-    
+
     # Custom colormap for better contrast and readability
     custom_cmap = sns.light_palette("seagreen", as_cmap=True)
-    
+
     for i, tool in enumerate(tools):
         ax = axes[i // 3, i % 3]
-        
+
         if not semantic_analyzer_alignment[tool]:
             # Handle empty data gracefully
-            ax.text(0.5, 0.5, 'No Data Available', 
-                   horizontalalignment='center', verticalalignment='center',
-                   transform=ax.transAxes, fontsize=14, style='italic',
-                   bbox=dict(boxstyle="round,pad=0.3", facecolor='lightgray', alpha=0.5))
+            ax.text(
+                0.5,
+                0.5,
+                "No Data Available",
+                horizontalalignment="center",
+                verticalalignment="center",
+                transform=ax.transAxes,
+                fontsize=14,
+                style="italic",
+                bbox=dict(boxstyle="round,pad=0.3", facecolor="lightgray", alpha=0.5),
+            )
             ax.set_xticks([])
             ax.set_yticks([])
-            ax.set_title(f"{subfigure_titles[i]}", fontsize=16, fontweight='bold', pad=20)
+            ax.set_title(f"{subfigure_titles[i]}", fontsize=16, fontweight="bold", pad=20)
             continue
-            
+
         y_true = [x[0] for x in semantic_analyzer_alignment[tool]]
         y_pred = [x[1] for x in semantic_analyzer_alignment[tool]]
         cm = confusion_matrix(y_true, y_pred, labels=["yes", "no", "other"])
-        
+
         # Calculate percentages for better interpretation
-        cm_percent = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis] * 100
-        
+        cm_percent = cm.astype("float") / cm.sum(axis=1)[:, np.newaxis] * 100
+
         # Create annotations with both counts and percentages
         annot_text = np.empty_like(cm, dtype=object)
         for row in range(cm.shape[0]):
             for col in range(cm.shape[1]):
                 count = cm[row, col]
                 percent = cm_percent[row, col] if not np.isnan(cm_percent[row, col]) else 0
-                annot_text[row, col] = f'{count}\n({percent:.1f}%)'
-        
+                annot_text[row, col] = f"{count}\n({percent:.1f}%)"
+
         # Create heatmap with enhanced styling
-        sns.heatmap(cm, annot=annot_text, fmt='', cmap=custom_cmap, ax=ax, 
-                   cbar=True, square=True, linewidths=0.5, linecolor='white',
-                   xticklabels=["Yes", "No", "Other"], 
-                   yticklabels=["Yes", "No", "Other"],
-                   annot_kws={"size": 12, "fontweight": "bold", "color": "black", "fontfamily": "monospace"},
-                   cbar_kws={"shrink": 0.8, "aspect": 20})
+        sns.heatmap(
+            cm,
+            annot=annot_text,
+            fmt="",
+            cmap=custom_cmap,
+            ax=ax,
+            cbar=True,
+            square=True,
+            linewidths=0.5,
+            linecolor="white",
+            xticklabels=["Yes", "No", "Other"],
+            yticklabels=["Yes", "No", "Other"],
+            annot_kws={"size": 12, "fontweight": "bold", "color": "black", "fontfamily": "monospace"},
+            cbar_kws={"shrink": 0.8, "aspect": 20},
+            vmin=0,
+            vmax=1500,
+        )
 
         # Enhanced title with better positioning
-        ax.set_title(f"{subfigure_titles[i]}", fontsize=16, fontweight='bold', pad=10)
-        
+        ax.set_title(f"{subfigure_titles[i]}", fontsize=16, fontweight="bold", pad=10)
+
         # Improved axis labels
-        ax.set_xlabel("MatchFixAgent", fontsize=14, fontweight='medium', labelpad=10)
-        ax.set_ylabel("Semantic Analyzer", fontsize=14, fontweight='medium', labelpad=10)
-        
+        ax.set_xlabel("MatchFixAgent", fontsize=14, fontweight="medium", labelpad=2)
+        ax.set_ylabel("Semantic Analyzer", fontsize=14, fontweight="medium", labelpad=2)
+
         # Rotate tick labels for better readability
-        ax.tick_params(axis='x', rotation=0, labelsize=12)
-        ax.tick_params(axis='y', rotation=0, labelsize=12)
+        ax.tick_params(axis="x", rotation=0, labelsize=12)
+        ax.tick_params(axis="y", rotation=0, labelsize=12)
 
         # Add subtle grid for better readability
         ax.grid(False)  # Remove default grid
-        
+
         # Ensure tick labels use proper font
         for label in ax.get_xticklabels():
             label.set_fontfamily("serif")
-            label.set_fontweight('medium')
+            label.set_fontweight("medium")
         for label in ax.get_yticklabels():
             label.set_fontfamily("serif")
-            label.set_fontweight('medium')
-    
+            label.set_fontweight("medium")
+
     # Optimize layout with professional spacing
     plt.tight_layout(rect=[0, 0.03, 1, 0.94])
-    plt.subplots_adjust(hspace=0.1, wspace=0.35)
-    
-    plt.savefig("alignment.pdf", dpi=300, bbox_inches='tight', 
-                facecolor='white', edgecolor='none')
+    plt.subplots_adjust(hspace=0.35, wspace=0.35)
+
+    plt.savefig("interpretability.pdf", dpi=300, bbox_inches="tight", facecolor="white", edgecolor="none")
 
 
 def main(args):
@@ -411,12 +430,54 @@ def main(args):
                     # Get LLM prediction
                     llm_prediction = item[args.agent_name]["output"][verdict]["parsed_final_response"]["is_equivalent"]
 
-                    semantic_analyzer_alignment["cfg"].append([item[args.agent_name]["output"]["semantic_analyzer_analyses"]["control_flow"]["parsed_final_response"]["is_equivalent"], llm_prediction])
-                    semantic_analyzer_alignment["dfg"].append([item[args.agent_name]["output"]["semantic_analyzer_analyses"]["data_flow"]["parsed_final_response"]["is_equivalent"], llm_prediction])
-                    semantic_analyzer_alignment["io"].append([item[args.agent_name]["output"]["semantic_analyzer_analyses"]["io"]["parsed_final_response"]["is_equivalent"], llm_prediction])
-                    semantic_analyzer_alignment["spec"].append([item[args.agent_name]["output"]["semantic_analyzer_analyses"]["spec"]["parsed_final_response"]["is_equivalent"], llm_prediction])
-                    semantic_analyzer_alignment["error"].append([item[args.agent_name]["output"]["semantic_analyzer_analyses"]["exception_error"]["parsed_final_response"]["is_equivalent"], llm_prediction])
-                    semantic_analyzer_alignment["api"].append([item[args.agent_name]["output"]["semantic_analyzer_analyses"]["library_equivalence"]["parsed_final_response"]["is_equivalent"], llm_prediction])
+                    semantic_analyzer_alignment["cfg"].append(
+                        [
+                            item[args.agent_name]["output"]["semantic_analyzer_analyses"]["control_flow"][
+                                "parsed_final_response"
+                            ]["is_equivalent"],
+                            llm_prediction,
+                        ]
+                    )
+                    semantic_analyzer_alignment["dfg"].append(
+                        [
+                            item[args.agent_name]["output"]["semantic_analyzer_analyses"]["data_flow"][
+                                "parsed_final_response"
+                            ]["is_equivalent"],
+                            llm_prediction,
+                        ]
+                    )
+                    semantic_analyzer_alignment["io"].append(
+                        [
+                            item[args.agent_name]["output"]["semantic_analyzer_analyses"]["io"][
+                                "parsed_final_response"
+                            ]["is_equivalent"],
+                            llm_prediction,
+                        ]
+                    )
+                    semantic_analyzer_alignment["spec"].append(
+                        [
+                            item[args.agent_name]["output"]["semantic_analyzer_analyses"]["spec"][
+                                "parsed_final_response"
+                            ]["is_equivalent"],
+                            llm_prediction,
+                        ]
+                    )
+                    semantic_analyzer_alignment["error"].append(
+                        [
+                            item[args.agent_name]["output"]["semantic_analyzer_analyses"]["exception_error"][
+                                "parsed_final_response"
+                            ]["is_equivalent"],
+                            llm_prediction,
+                        ]
+                    )
+                    semantic_analyzer_alignment["api"].append(
+                        [
+                            item[args.agent_name]["output"]["semantic_analyzer_analyses"]["library_equivalence"][
+                                "parsed_final_response"
+                            ]["is_equivalent"],
+                            llm_prediction,
+                        ]
+                    )
 
                     if (
                         item[args.agent_name]["output"]["test_repair"]["parsed_final_response"]["is_equivalent"]
@@ -658,7 +719,7 @@ def main(args):
 
     with open(f"reports/{args.agent_name}/disagreements.txt", "w") as f:
         f.writelines("\n".join(sampled))
-    
+
     plot_confusion_matrix(semantic_analyzer_alignment)
 
 
