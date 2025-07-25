@@ -139,7 +139,7 @@ def sanitize_oxidizer_patch(target_function: str, patch: str) -> str:
     return sanitized_patch
 
 
-def execute_oxidizer_tests(configs: dict, fragment_details: dict) -> bool:
+def execute_oxidizer_tests(configs: dict, fragment_details: dict, patch: str = "") -> bool:
     """
     Execute tests using the Oxidizer tool.
 
@@ -170,7 +170,7 @@ def execute_oxidizer_tests(configs: dict, fragment_details: dict) -> bool:
     return True
 
 
-def execute_skel_tests(configs: dict, fragment_details: dict) -> bool:
+def execute_skel_tests(configs: dict, fragment_details: dict, patch: str = "") -> bool:
     """
     Execute tests using the Skel tool.
 
@@ -201,7 +201,7 @@ def execute_skel_tests(configs: dict, fragment_details: dict) -> bool:
     return True
 
 
-def execute_rustrepotrans_tests(configs: dict, fragment_details: dict) -> bool:
+def execute_rustrepotrans_tests(configs: dict, fragment_details: dict, patch: str = "") -> bool:
     """
     Execute tests using the RustRepotrans tool.
 
@@ -254,7 +254,45 @@ def execute_rustrepotrans_tests(configs: dict, fragment_details: dict) -> bool:
     return True
 
 
-def execute_tests(configs: dict, fragment_details: dict) -> bool:
+def execute_alphatrans_tests(configs: dict, fragment_details: dict, patch: str = "") -> bool:
+    """
+    AlphaTrans GraalVM has major issues that cannot reliably validate the patch.
+    This function is used by a user to manually verify the correctness of the patch.
+    """
+
+    if args.run_agent_tests:
+        print("### AGENT GENERATED TESTS ###")
+        print(
+            fragment_details[configs["agent_name"]]["output"]["test_repair"]["parsed_final_response"][
+                "target_test_file_implementation"
+            ]
+        )
+        input()  # Wait for user input to proceed
+        return True
+
+    print("---" * 20)
+    print("SOURCE CODE:")
+    print("\n".join(fragment_details["source_function"]))
+    print("---" * 20)
+    print("TARGET FUNCTION:")
+    print("\n".join(fragment_details["target_function"]))
+    print("---" * 20)
+    print("PATCH:")
+    print(patch)
+    print("---" * 20)
+    print("Explanation:")
+    print(fragment_details[configs["agent_name"]]["output"]["test_repair"]["parsed_final_response"]["explanation"])
+
+    user_decision = input("Is the patch correct? (yes/no): ").strip().lower()
+    if user_decision != "yes":
+        print(f"User determined patch is not correct for {fragment_details['id']}.")
+        return False
+
+    print(f"User determined patch is correct for {fragment_details['id']}.")
+    return True
+
+
+def execute_tests(configs: dict, fragment_details: dict, patch: str) -> bool:
 
     if configs["tool_name"] == "oxidizer":
         return execute_oxidizer_tests(configs, fragment_details)
@@ -262,6 +300,8 @@ def execute_tests(configs: dict, fragment_details: dict) -> bool:
         return execute_skel_tests(configs, fragment_details)
     elif configs["tool_name"] == "rustrepotrans":
         return execute_rustrepotrans_tests(configs, fragment_details)
+    elif configs["tool_name"] == "alphatrans":
+        return execute_alphatrans_tests(configs, fragment_details, patch=patch)
     else:
         raise NotImplementedError(f"Tool {configs['tool_name']} is not supported for test execution.")
 
@@ -280,7 +320,7 @@ def validate_patch(fragment_details: dict, configs: dict, target_file: str, targ
     with open(os.path.join(configs["tool_target_projects_path"], fragment_details["target_path"]), "w") as f:
         f.write(target_file)
 
-    return execute_tests(configs, fragment_details)
+    return execute_tests(configs, fragment_details, patch)
 
 
 def main(args):
@@ -320,6 +360,8 @@ def main(args):
             target_function = "\n".join(
                 [x for x in fragment_details["target_function"] if x.strip() and not x.strip().startswith("//")]
             )
+        elif configs["tool_name"] == "alphatrans":
+            target_function = "\n".join(fragment_details["target_function"])
         else:
             raise NotImplementedError(f"Tool {configs['tool_name']} is not supported for target function extraction.")
 
@@ -331,7 +373,7 @@ def main(args):
         with open(os.path.join(configs["tool_target_projects_path"], fragment_details["target_path"]), "r") as f:
             target_file = f.read()
 
-        if target_function not in target_file:
+        if target_function not in target_file and configs["tool_name"] != "alphatrans":
             print(f'Could not find the target function in the target file for fragment {fragment_details["id"]}')
             continue
 
