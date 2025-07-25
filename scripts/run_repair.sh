@@ -3,4 +3,4 @@
 CONFIG_FILE_PATH=$1
 
 export PYTHONPATH=$(pwd):$PYTHONPATH
-python3 src/core/repair.py --config_file=$CONFIG_FILE_PATH
+python3 src/evaluate/repair.py --config_file=$CONFIG_FILE_PATH
