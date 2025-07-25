@@ -384,6 +384,7 @@ def main(args):
                 total_cost = 0
                 total_time = 0
                 total_tool_calls = 0
+                total_newly_covered_fragments = 0
 
                 # incomplete responses
                 test_repair_error = []
@@ -508,6 +509,9 @@ def main(args):
                             "D2"
                         ].append(item["id"])
 
+                    if tool_validation in ["not-exercised", "pending"] and llm_prediction != "other":
+                        total_newly_covered_fragments += 1
+
                     # Update confusion matrix
                     confusion_df.loc[tool_validation, llm_prediction] += 1
 
@@ -597,6 +601,8 @@ def main(args):
                 report_content.append(f"Total Test Repair Agent Errors: {len(test_repair_error)}")
                 report_content.append(f"Total Verdict Agent Errors: {len(verdict_error)}")
                 report_content.append(f"Timeout Cases: {len(project_timeout_count)}")
+                report_content.append("---" * 50)
+                report_content.append(f"Total newly covered fragments: {total_newly_covered_fragments}")
                 report_content.append("---" * 50)
                 report_content.append(
                     f"Total turns: {total_num_turns} [Average: {total_num_turns / total_methods:.2f}]"
