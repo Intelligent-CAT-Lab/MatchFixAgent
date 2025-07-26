@@ -271,6 +271,9 @@ def execute_alphatrans_tests(configs: dict, fragment_details: dict, patch: str =
         return True
 
     print("---" * 20)
+    print("### MANUAL PATCH VALIDATION REQUIRED ###")
+    print("ID:", fragment_details["id"])
+    print("---" * 20)
     print("SOURCE CODE:")
     print("\n".join(fragment_details["source_function"]))
     print("---" * 20)
@@ -280,8 +283,9 @@ def execute_alphatrans_tests(configs: dict, fragment_details: dict, patch: str =
     print("PATCH:")
     print(patch)
     print("---" * 20)
-    print("Explanation:")
+    print("EXPLANATION:")
     print(fragment_details[configs["agent_name"]]["output"]["test_repair"]["parsed_final_response"]["explanation"])
+    print("---" * 20)
 
     user_decision = input("Is the patch correct? (yes/no): ").strip().lower()
     if user_decision != "yes":
