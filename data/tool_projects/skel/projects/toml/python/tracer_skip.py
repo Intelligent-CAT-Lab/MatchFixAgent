@@ -1,6 +1,6 @@
 def get_input(test_case_name = None):
     decode_input = ""
-    with open("./benchmarks_new/toml/example.toml") as f:
+    with open("./example.toml") as f:
         decode_input = f.read()
     
     decode_input = decode_input.split("################################################################################\n")
