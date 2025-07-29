@@ -1,0 +1,18 @@
+agent_name: "match_agent"
+mcp_config_file: ""
+credential_file: "configs/aws_credentials.yaml"
+project_name: "commons-fileupload"
+source_language: "java"
+target_language: "python"
+tool_name: "alphatrans"
+tool_source_projects_path: "data/tool_projects/alphatrans"
+tool_target_projects_path: "data/tool_projects/alphatrans"
+tool_results_path: "data/agent_results/match_agent/alphatrans"
+max_retries: 3
+extra_agent_args: ["--output-format", "stream-json", "--verbose", "--dangerously-skip-permissions"]
+available_credentials: ["one", "two", "three", "four", "five", "six", "prod1", "prod2", "prod3"]
+sub_agents:
+  test_gen_repair_agent:
+    extra_agent_args: ["--output-format", "stream-json", "--verbose", "--dangerously-skip-permissions"]
+  verdict_agent:
+    extra_agent_args: ["--output-format", "stream-json", "--verbose", "--dangerously-skip-permissions"]
