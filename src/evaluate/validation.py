@@ -176,8 +176,7 @@ def main(args):
             continue
 
         if configs["agent_name"] in fragment_details:
-            if fragment_details[configs["agent_name"]]["status"]:
-                continue
+            continue
 
         # if "rustrepotrans" == configs["tool_name"]:
         #     try:
@@ -207,6 +206,8 @@ def main(args):
             json.dump(results, f, indent=4)
 
         cleanup(configs)
+
+        break
 
 
 if __name__ == "__main__":

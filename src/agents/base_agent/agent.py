@@ -110,6 +110,7 @@ class BaseAgent:
             configs=self.configs,
             logger=self.logger,
             agent_name=self.configs["agent_name"],
+            timeout=300,
         )
 
     async def validate_agent_output(self, agent_output: dict) -> tuple[bool, dict, str]:
