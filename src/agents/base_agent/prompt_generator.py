@@ -49,12 +49,13 @@ class BaseAgentPromptGenerator:
 
         return self.prompt
 
-    def format_fragment_details(self) -> None:
-        tool_source_projects_path = self.configs["tool_source_projects_path"]
-        self.source_file_path = f"{tool_source_projects_path}/{self.fragment_details['source_path']}"
-
-        tool_target_projects_path = self.configs["tool_target_projects_path"]
-        self.target_file_path = f"{tool_target_projects_path}/{self.fragment_details['target_path']}"
+    def format_fragment_details(self) -> None:    
+        self.source_file_path = self.fragment_details["source_path"].replace(
+            f"projects/{self.configs['project_name']}/", ""
+        )
+        self.target_file_path = self.fragment_details["target_path"].replace(
+            f"projects/{self.configs['project_name']}/", ""
+        )
 
         self.source_method_implementation = "\n".join(self.fragment_details["source_function"]).strip()
         self.target_method_implementation = "\n".join(self.fragment_details["target_function"]).strip()

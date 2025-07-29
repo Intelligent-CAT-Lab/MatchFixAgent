@@ -145,12 +145,9 @@ class BaseAgent:
                 parsed_response = json.loads(final_response, strict=False)
 
                 if (
-                    len(parsed_response) != 5
+                    len(parsed_response) != 2
                     or "is_equivalent" not in parsed_response
                     or "explanation" not in parsed_response
-                    or "source_test_class" not in parsed_response
-                    or "target_test_class" not in parsed_response
-                    or "correct_target_method_implementation" not in parsed_response
                 ):
                     self.logger.error("Parsed response does not match expected response format")
                     return False, None, "Parsed response does not match expected response format"
@@ -247,7 +244,11 @@ class BaseAgent:
 
             # Original and new log file paths
             original_log_file = Path(f"logs/base_agent") / f"{self.session_id}.log"
-            new_log_file = Path(f"logs/base_agent") / f"{agent_output['session_id']}.log"
+            final_session_id = f"{self.configs['tool_name']}.{self.configs['project_name']}.{self.configs['source_language']}.{self.configs['target_language']}.{fragment_details['id']}"
+            new_log_file = Path(f"logs/base_agent") / final_session_id / f"{final_session_id}.log"
+            logger_name = f"base_agent.{final_session_id}"
+
+            os.makedirs(new_log_file.parent, exist_ok=True)
 
             # Only rename if the paths are different
             if original_log_file != new_log_file:
@@ -258,7 +259,7 @@ class BaseAgent:
                 original_log_file.unlink(missing_ok=True)
 
                 # Create a new logger with the new session ID
-                new_logger = logging.getLogger(f"base_agent.{agent_output['session_id']}")
+                new_logger = logging.getLogger(logger_name)
                 new_logger.setLevel(logging.INFO)
                 new_logger.propagate = False
 
