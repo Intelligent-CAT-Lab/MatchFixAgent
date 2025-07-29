@@ -207,8 +207,6 @@ def main(args):
 
         cleanup(configs)
 
-        break
-
 
 if __name__ == "__main__":
     """
