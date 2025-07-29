@@ -49,7 +49,7 @@ class BaseAgentPromptGenerator:
 
         return self.prompt
 
-    def format_fragment_details(self) -> None:    
+    def format_fragment_details(self) -> None:
         self.source_file_path = self.fragment_details["source_path"].replace(
             f"projects/{self.configs['project_name']}/", ""
         )
