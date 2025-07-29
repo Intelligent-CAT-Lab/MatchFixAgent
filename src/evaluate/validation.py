@@ -152,8 +152,15 @@ def main(args):
     results_path = configs["tool_results_path"]
     with open(os.path.join(results_path, f"{configs['project_name']}.json"), "r") as f:
         results = json.load(f)
+    
+    pool = []
+    with open(os.path.join("data", "ablation_study", "pool.json"), "r") as f:
+        pool = json.load(f)
 
     for fragment_details in results:
+
+        if configs["agent_name"] in ["base_agent"] and [fragment_details["id"], fragment_details["project"], configs["tool_name"]] not in pool:
+            continue
 
         cleanup(configs)
 
