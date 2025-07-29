@@ -22,6 +22,7 @@ import logging
 import shutil
 import uuid
 from pathlib import Path
+from typing import Dict, List, Any, Optional, Tuple
 
 from src.utils.agent_utils import MCPConfig
 from src.utils.agent_utils import Model
@@ -58,6 +59,7 @@ class BaseAgent:
         self.mcp_config = MCPConfig(self.configs["mcp_config_file"])
         self.conversation = Conversation()
         self.session_id = str(uuid.uuid4())
+        self.errors = yaml.safe_load(open("configs/errors.yaml", "r"))
 
         # Set up logging
         log_dir = Path(f"logs/base_agent")
@@ -88,7 +90,7 @@ class BaseAgent:
 
         self.logger.info(f"base_agent initialized with session ID: {self.session_id}")
 
-    async def run_cmd(self, prompt: str, feedback: str) -> tuple[bool, dict]:
+    async def run_cmd(self, prompt: str, feedback: str) -> Tuple[bool, Dict[str, Any]]:
         """
         Execute Claude CLI command with the given prompt.
 
@@ -113,58 +115,7 @@ class BaseAgent:
             timeout=300,
         )
 
-    async def validate_agent_output(self, agent_output: dict) -> tuple[bool, dict, str]:
-        """
-        Validate and parse the agent's output.
-
-        Extracts the final response format from the agent output and parses it as JSON.
-
-        Args:
-            agent_output (dict): The raw output from the agent
-
-        Returns:
-            tuple[bool, dict, str]: (validation_status, parsed_output, feedback)
-                - validation_status: True if the output was successfully validated
-                - parsed_output: The original output with the parsed final response added,
-                  or None if validation failed
-                - feedback: A message indicating the validation result
-        """
-        # extract the <final_response_format> </final_response_format> from the agent output
-        result = agent_output.get("result", None)
-        if result is None:
-            self.logger.error("No result found in agent output")
-            return False, None, "No result found in agent output"
-
-        self.logger.info("Extracting final response format from agent output")
-        pattern = r"<final_response_format>(.*?)</final_response_format>"
-        match = re.search(pattern, result, re.DOTALL)
-
-        if match:
-            final_response = match.group(1)
-            try:
-                # Attempt to parse the final response as JSON
-                parsed_response = json.loads(final_response, strict=False)
-
-                if (
-                    len(parsed_response) != 2
-                    or "is_equivalent" not in parsed_response
-                    or "explanation" not in parsed_response
-                ):
-                    self.logger.error("Parsed response does not match expected response format")
-                    return False, None, "Parsed response does not match expected response format"
-
-                agent_output["parsed_final_response"] = parsed_response
-                self.logger.info("Successfully parsed final response as JSON")
-                return True, agent_output, "Final response format validated successfully"
-            except json.JSONDecodeError as e:
-                self.logger.error(f"Final response is not valid JSON: {e}")
-                self.logger.debug(f"Invalid JSON: {final_response}")
-                return False, None, "Final response is not valid JSON"
-        else:
-            self.logger.error("No final response format found in agent output")
-            return False, None, "Final response format not found in agent output"
-
-    async def run(self, fragment_details: dict) -> tuple[bool, dict]:
+    async def run(self, fragment_details: Dict[str, Any]) -> Tuple[bool, Dict[str, Any]]:
         """
         Run the validator agent to check equivalence between source and target code.
 
@@ -193,95 +144,143 @@ class BaseAgent:
 
         self.conversation.add_message(role="user", content=prompt)
 
-        max_retries = self.configs["max_retries"]
-        self.logger.info(f"Maximum retries: {max_retries}")
+        try:
+            self.logger.info("Executing command")
+            status, agent_output = await self.run_cmd(prompt, "")
 
-        agent_output = None
-        status = False
-        feedback = ""
+            # Handle timeout case
+            if agent_output and agent_output.get("timeout", False):
+                self.logger.warning(
+                    "Execution timed out after 300 seconds, returning is_equivalent=other with explanation"
+                )
+                # Create default response for timeout
+                agent_output["result"] = (
+                    f"<final_response_format>{json.dumps(self.errors['timeout'])}</final_response_format>"
+                )
 
-        for attempt in range(max_retries + 1):
-            self.logger.info(f"Execution attempt {attempt+1}/{max_retries}")
-
-            status, agent_output = await self.run_cmd(prompt, feedback)
+            agent_output = agent_output or {}
 
             if status:
-                self.logger.info("Command execution successful, validating output...")
-                validation_status, agent_output, feedback = await self.validate_agent_output(agent_output)
-                if validation_status:
-                    self.logger.info("Agent output validation successful")
-                    break
+                self.logger.info("Command execution successful")
+                # Extract the final response format - check both last_json and result for backward compatibility
+                result = ""
+                if "last_json" in agent_output and "result" in agent_output["last_json"]:
+                    result = agent_output["last_json"]["result"]
+                elif "result" in agent_output:
+                    result = agent_output["result"]
+
+                self.logger.debug("Raw response from model:")
+                self.logger.debug(result)
+
+                pattern = r"<final_response_format>(.*?)</final_response_format>"
+                match = re.search(pattern, result, re.DOTALL)
+
+                if match:
+                    try:
+                        parsed_response = json.loads(match.group(1), strict=False)
+                        self.logger.info("Successfully parsed final response as JSON")
+
+                        # Validate the expected keys are present
+                        if (
+                            len(parsed_response) != 2
+                            or "is_equivalent" not in parsed_response
+                            or "explanation" not in parsed_response
+                        ):
+                            agent_output["parsed_final_response"] = self.errors["invalid_format"]
+                            status = False
+                            self.logger.error("Parsed response does not match expected response format")
+                        else:
+                            agent_output["parsed_final_response"] = parsed_response
+                            # Determine success based on parsed response
+                            is_equivalent = parsed_response.get("is_equivalent")
+                            status = is_equivalent is not None and is_equivalent != "error"
+                    except json.JSONDecodeError as e:
+                        agent_output["parsed_final_response"] = self.errors["json_parsing"]
+                        agent_output["parsed_final_response"]["explanation"] += f" - {str(e)}"
+                        self.logger.error(agent_output["parsed_final_response"]["explanation"])
+                        status = False
                 else:
-                    self.logger.warning("Agent output validation failed")
-                    if attempt == max_retries:
-                        self.logger.error("Max retries reached. Exiting.")
-                        break
-                    self.logger.info("Retrying...")
+                    self.logger.error(self.errors["no_response_format"]["explanation"])
+                    agent_output["parsed_final_response"] = self.errors["no_response_format"]
+                    status = False
             else:
-                self.logger.warning("Command execution failed")
-                if attempt == max_retries:
-                    self.logger.error("Max retries reached. Exiting.")
-                    break
-                self.logger.info("Retrying command execution...")
+                self.logger.error(self.errors["no_response"]["explanation"])
+                agent_output["parsed_final_response"] = self.errors["no_response"]
+                status = False
+        except Exception as e:
+            agent_output = {}
+            agent_output["parsed_final_response"] = self.errors["unexpected_behavior"]
+            agent_output["parsed_final_response"]["explanation"] += f" - {str(e)}"
+            self.logger.error(agent_output["parsed_final_response"]["explanation"])
+            status = False
 
-        if status:
-            self.logger.info("Agent execution completed successfully")
-            self.logger.debug("Agent output:")
-            for key, value in agent_output.items():
-                self.logger.debug(f"{key}: {value}")
-        else:
-            self.logger.error("Agent execution failed")
-
+        # Log the final status
         if status:
             self.logger.info("Validation successful")
-            self.logger.debug("Validation result:")
-            for key, value in agent_output.items():
-                self.logger.debug(f"{key}: {value}")
-
-            # Close the current log handlers to release the file
-            for handler in self.logger.handlers[:]:
-                handler.close()
-                self.logger.removeHandler(handler)
-
-            # Original and new log file paths
-            original_log_file = Path(f"logs/base_agent") / f"{self.session_id}.log"
-            final_session_id = f"{self.configs['tool_name']}.{self.configs['project_name']}.{self.configs['source_language']}.{self.configs['target_language']}.{fragment_details['id']}"
-            new_log_file = Path(f"logs/base_agent") / final_session_id / f"{final_session_id}.log"
-            logger_name = f"base_agent.{final_session_id}"
-
-            os.makedirs(new_log_file.parent, exist_ok=True)
-
-            # Only rename if the paths are different
-            if original_log_file != new_log_file:
-                # Use shutil.copy2 and then remove the original instead of rename
-                # This avoids issues if the files are on different filesystems
-
-                shutil.copy2(original_log_file, new_log_file)
-                original_log_file.unlink(missing_ok=True)
-
-                # Create a new logger with the new session ID
-                new_logger = logging.getLogger(logger_name)
-                new_logger.setLevel(logging.INFO)
-                new_logger.propagate = False
-
-                # Add handlers to the new logger
-                file_handler = logging.FileHandler(new_log_file)
-                file_handler.setLevel(logging.DEBUG)
-                console_handler = logging.StreamHandler()
-                console_handler.setLevel(logging.INFO)
-                formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-                file_handler.setFormatter(formatter)
-                console_handler.setFormatter(formatter)
-                new_logger.addHandler(file_handler)
-                new_logger.addHandler(console_handler)
-
-                # Log the file rename operation using the new logger
-                new_logger.info(f"Log file renamed from {original_log_file} to {new_log_file}")
-
         else:
-            logging.getLogger().error("Validation failed")
+            self.logger.error("Validation failed or incomplete")
+
+        # Generate the final session ID for log files
+        final_session_id = f"{self.configs['tool_name']}.{self.configs['project_name']}.{self.configs['source_language']}.{self.configs['target_language']}.{fragment_details['id']}"
+
+        # Use the helper method to rename the log file
+        self._rename_log_file(self.session_id, final_session_id)
 
         return status, agent_output
+
+    def _rename_log_file(self, old_session_id: str, new_session_id: str) -> None:
+        """
+        Rename a log file from using old_session_id to new_session_id in the filename.
+
+        Args:
+            old_session_id (str): The original session ID in the filename
+            new_session_id (str): The new session ID to use in the filename
+        """
+        # Skip if session IDs are the same
+        if old_session_id == new_session_id:
+            return
+
+        # Define log file paths
+        log_dir = Path(f"logs/base_agent")
+        original_log_file = log_dir / f"{old_session_id}.log"
+        new_log_file = log_dir / new_session_id / f"{new_session_id}.log"
+        logger_name = f"base_agent"
+
+        # Only proceed if the original file exists
+        if not original_log_file.exists():
+            return
+
+        os.makedirs(new_log_file.parent, exist_ok=True)
+
+        # Close logger handlers first
+        logger = logging.getLogger(f"{logger_name}.{old_session_id}")
+        for handler in logger.handlers[:]:
+            handler.close()
+            logger.removeHandler(handler)
+
+        # Use shutil.copy2 and then remove the original instead of rename
+        # This avoids issues if the files are on different filesystems
+        shutil.copy2(original_log_file, new_log_file)
+        original_log_file.unlink(missing_ok=True)
+
+        # Create a new logger with the new session ID
+        new_logger = logging.getLogger(f"{logger_name}.{new_session_id}")
+        new_logger.setLevel(logging.INFO)
+        new_logger.propagate = False
+
+        # Add handlers to the new logger
+        file_handler = logging.FileHandler(new_log_file)
+        file_handler.setLevel(logging.DEBUG)
+        console_handler = logging.StreamHandler()
+        console_handler.setLevel(logging.INFO)
+        formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+        file_handler.setFormatter(formatter)
+        console_handler.setFormatter(formatter)
+        new_logger.addHandler(file_handler)
+        new_logger.addHandler(console_handler)
+
+        # Log the file rename operation
+        new_logger.info(f"Log file renamed from {original_log_file} to {new_log_file}")
 
 
 if __name__ == "__main__":
@@ -340,3 +339,6 @@ if __name__ == "__main__":
     }
 
     status, result = asyncio.run(validator_agent.run(fragment_details=fragment_details))
+
+    print("Status:", status)
+    print("Result:", json.dumps(result, indent=2))
