@@ -2,13 +2,12 @@ templates:
   base_agent:
     instruction: |-
       <instruction>
-        You are an expert agent that can judge if two code fragments in different programming languages (PLs) are functionally equivalent. Here equivalence means: two code fragments in different PLs are considered equivalent if, when executed on the same input, they always have identical program states at all corresponding points reachable by program execution, and they both produce the same output upon termination.
-        Use the given source and target fragment file paths to analyze whether the method/function implementation is functionally equivalent. Only determine the functional correctness of the given method/function in isolation and DO NOT consider bugs in its dependencies. All dependencies will be prompted separately for functional equivalence. You can explore other files in the project to make your decision.
+        Use the given definition of functional equivalence to determine if the two code fragments are functionally equivalent.
 
-        If you think the given code fragments are NOT functionally equivalent, please provide:
-        1. A clear explanation of why they are not equivalent.
-        2. Generate a standalone test file in both source and target languages that demonstrates the functional difference between the two implementations. Your generated tests should be the same in both languages, it should PASS in source language and FAIL in target language. You must create and execute files to test your generated tests.
-        3. The correct implementation of the target fragment in target language that is functionally equivalent to the source method in source language. The correct implementation should PASS on the generated tests in target language.
+        <functional_equivalence_definition>
+          Two code fragments in different programming languages are considered functionally equivalent if, when executed on the same input, they always have identical program states at all corresponding points reachable by program execution, and they both produce the same output upon termination.
+        </functional_equivalence_definition>
+
       </instruction>
     fragment_details: |-
       <fragment_details>
@@ -36,34 +35,12 @@ templates:
       <final_response_format>
       {
         "is_equivalent": "yes" / "no" / "other",
-        "explanation": "<explanation>",
-        "source_test_class": {
-          "source_test_relative_path": "<source_test_relative_path>",
-          "source_test_class_name": "<source_test_class_name>",
-          "source_test_method_name": "<source_test_method_name>",          
-          "source_test_file_implementation": "<source_test_file_implementation>",
-          "test_execution_outcome": "stdout/stderr output of the test execution in source language. This should be captured from terminal output after executing the test file using Maven. Your test should PASS in source language."
-        },
-        "target_test_class": {
-          "target_test_relative_path": "<target_test_relative_path>",
-          "target_test_class_name": "<target_test_class_name>",
-          "target_test_method_name": "<target_test_method_name>",
-          "target_test_file_implementation": "<target_test_file_implementation>",
-          "test_execution_outcome": "stdout/stderr output of the test execution in target language. This should be captured from terminal output after executing the test file using pytest. Your test should FAIL in target language."
-        },
-        "correct_target_method_implementation": "<correct_target_method_implementation if is_equivalent is 'no', otherwise empty>"
+        "explanation": "<explanation>"
       }
       </final_response_format>
     general_notes: |-
       <general_notes>
-        - If you need more context to make a decision, please indicate that in your response so I could provide you with more context.
         - Always write an explanation in natural language to justify your decision.
-        - Please THINK HARD to make sure your answer is correct.
-        - Please follow the provided response format strictly and DO NOT include any additional text outside the JSON response.
-        - If the given method implementation has dependencies, DO NOT include them in your analysis and focus only on the correctness of the given method. A separate analysis will be done for the dependencies.
-        - Save your generated test classes properly among other existing tests (see existing tests for extracting relative paths and how to write test classes) and execute both source language tests (e.g., `mvn clean test -Drat.skip -Dtest=`<your_test_class_name>` if language is Java) and target language tests (`pytest <your_test_file_name>.py` if language is Python) to verify the correctness of your generated tests.
-        - Never edit files which has `src/main` in their absolute path.
-        - Delete all your created files after you verify the correctness of your generated tests.
       </general_notes>
   match_agent:
     control_flow_agent:
