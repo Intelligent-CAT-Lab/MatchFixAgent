@@ -509,7 +509,7 @@ def main(args):
                             "D2"
                         ].append(item["id"])
 
-                    if tool_validation in ["not-exercised", "pending"] and llm_prediction != "other":
+                    if tool_validation in ["not-exercised", "pending"] and item[args.agent_name]["output"]["test_repair"]["parsed_final_response"]["is_equivalent"] in ["yes", "no"]:
                         total_newly_covered_fragments += 1
 
                     # Update confusion matrix
