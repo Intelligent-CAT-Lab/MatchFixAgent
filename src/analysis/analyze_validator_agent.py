@@ -318,7 +318,7 @@ def main(args):
     global_total = 0
     global_total_methods = 0
     global_tool_validation_dist = {"error": 0, "failure": 0, "not-exercised": 0, "pending": 0, "success": 0}
-    global_equivalency_dist = {"yes": 0, "no": 0, "other": 0}
+    global_equivalency_dist = {"yes": 0, "no": 0, "other": 0, "error": 0}
     global_total_num_turns = 0
     global_total_cost = 0
     global_total_time = 0
@@ -379,7 +379,7 @@ def main(args):
                 total = 0
                 total_methods = 0
                 tool_validation_dist = {"error": 0, "failure": 0, "not-exercised": 0, "pending": 0, "success": 0}
-                equivalency_dist = {"yes": 0, "no": 0, "other": 0}
+                equivalency_dist = {"yes": 0, "no": 0, "other": 0, "error": 0}
                 total_num_turns = 0
                 total_cost = 0
                 total_time = 0
@@ -398,7 +398,7 @@ def main(args):
 
                 # Define possible outcomes
                 tool_outcomes = ["error", "failure", "not-exercised", "pending", "success"]
-                llm_outcomes = ["yes", "no", "other"]
+                llm_outcomes = ["yes", "no", "other", "error"]
 
                 # Initialize confusion matrix with zeros
                 confusion_df = pd.DataFrame(0, index=tool_outcomes, columns=llm_outcomes)
@@ -413,15 +413,18 @@ def main(args):
                     if args.agent_name not in item:
                         continue
 
-                    if not item[args.agent_name]["status"]:
-                        continue
+                    # if not item[args.agent_name]["status"]:
+                    #     continue
 
-                    verdict = "test_repair"
-                    if item[args.agent_name]["output"][verdict]["parsed_final_response"]["is_equivalent"] in [
-                        "error",
-                        "other",
-                    ]:
-                        verdict = "verdict"
+                    agent_output = item[args.agent_name]["output"]
+                    if args.agent_name == "match_agent":
+                        if item[args.agent_name]["output"]["test_repair"]["parsed_final_response"]["is_equivalent"] in [
+                            "error",
+                            "other",
+                        ]:
+                            agent_output = item[args.agent_name]["output"]["verdict"]
+                        else:
+                            agent_output = item[args.agent_name]["output"]["test_repair"]
 
                     total_methods += 1
 
@@ -429,65 +432,97 @@ def main(args):
                     tool_validation = item["result"]
 
                     # Get LLM prediction
-                    llm_prediction = item[args.agent_name]["output"][verdict]["parsed_final_response"]["is_equivalent"]
+                    llm_prediction = agent_output["parsed_final_response"]["is_equivalent"]
 
-                    semantic_analyzer_alignment["cfg"].append(
-                        [
-                            item[args.agent_name]["output"]["semantic_analyzer_analyses"]["control_flow"][
-                                "parsed_final_response"
-                            ]["is_equivalent"],
-                            llm_prediction,
-                        ]
-                    )
-                    semantic_analyzer_alignment["dfg"].append(
-                        [
-                            item[args.agent_name]["output"]["semantic_analyzer_analyses"]["data_flow"][
-                                "parsed_final_response"
-                            ]["is_equivalent"],
-                            llm_prediction,
-                        ]
-                    )
-                    semantic_analyzer_alignment["io"].append(
-                        [
-                            item[args.agent_name]["output"]["semantic_analyzer_analyses"]["io"][
-                                "parsed_final_response"
-                            ]["is_equivalent"],
-                            llm_prediction,
-                        ]
-                    )
-                    semantic_analyzer_alignment["spec"].append(
-                        [
-                            item[args.agent_name]["output"]["semantic_analyzer_analyses"]["spec"][
-                                "parsed_final_response"
-                            ]["is_equivalent"],
-                            llm_prediction,
-                        ]
-                    )
-                    semantic_analyzer_alignment["error"].append(
-                        [
-                            item[args.agent_name]["output"]["semantic_analyzer_analyses"]["exception_error"][
-                                "parsed_final_response"
-                            ]["is_equivalent"],
-                            llm_prediction,
-                        ]
-                    )
-                    semantic_analyzer_alignment["api"].append(
-                        [
-                            item[args.agent_name]["output"]["semantic_analyzer_analyses"]["library_equivalence"][
-                                "parsed_final_response"
-                            ]["is_equivalent"],
-                            llm_prediction,
-                        ]
-                    )
+                    if args.agent_name == "match_agent":
+                        semantic_analyzer_alignment["cfg"].append(
+                            [
+                                item[args.agent_name]["output"]["semantic_analyzer_analyses"]["control_flow"][
+                                    "parsed_final_response"
+                                ]["is_equivalent"],
+                                llm_prediction,
+                            ]
+                        )
+                        semantic_analyzer_alignment["dfg"].append(
+                            [
+                                item[args.agent_name]["output"]["semantic_analyzer_analyses"]["data_flow"][
+                                    "parsed_final_response"
+                                ]["is_equivalent"],
+                                llm_prediction,
+                            ]
+                        )
+                        semantic_analyzer_alignment["io"].append(
+                            [
+                                item[args.agent_name]["output"]["semantic_analyzer_analyses"]["io"][
+                                    "parsed_final_response"
+                                ]["is_equivalent"],
+                                llm_prediction,
+                            ]
+                        )
+                        semantic_analyzer_alignment["spec"].append(
+                            [
+                                item[args.agent_name]["output"]["semantic_analyzer_analyses"]["spec"][
+                                    "parsed_final_response"
+                                ]["is_equivalent"],
+                                llm_prediction,
+                            ]
+                        )
+                        semantic_analyzer_alignment["error"].append(
+                            [
+                                item[args.agent_name]["output"]["semantic_analyzer_analyses"]["exception_error"][
+                                    "parsed_final_response"
+                                ]["is_equivalent"],
+                                llm_prediction,
+                            ]
+                        )
+                        semantic_analyzer_alignment["api"].append(
+                            [
+                                item[args.agent_name]["output"]["semantic_analyzer_analyses"]["library_equivalence"][
+                                    "parsed_final_response"
+                                ]["is_equivalent"],
+                                llm_prediction,
+                            ]
+                        )
 
-                    if (
-                        item[args.agent_name]["output"]["test_repair"]["parsed_final_response"]["is_equivalent"]
-                        == "error"
-                    ):
-                        test_repair_error.append(item["id"])
+                        if (
+                            item[args.agent_name]["output"]["test_repair"]["parsed_final_response"]["is_equivalent"]
+                            == "error"
+                        ):
+                            test_repair_error.append(item["id"])
 
-                    if item[args.agent_name]["output"]["verdict"]["parsed_final_response"]["is_equivalent"] == "error":
-                        verdict_error.append(item["id"])
+                        if (
+                            item[args.agent_name]["output"]["verdict"]["parsed_final_response"]["is_equivalent"]
+                            == "error"
+                        ):
+                            verdict_error.append(item["id"])
+
+                        # Check for timeout cases
+                        if (
+                            item[args.agent_name]["output"]["test_repair"]["parsed_final_response"].get("is_equivalent")
+                            == "other"
+                            and item[args.agent_name]["output"]["test_repair"]["parsed_final_response"].get(
+                                "explanation"
+                            )
+                            == "500: timeout"
+                        ):
+                            project_timeout_count.append(item["id"])
+
+                        if (
+                            item[args.agent_name]["output"]["verdict"]["parsed_final_response"].get("is_equivalent")
+                            == "other"
+                            and item[args.agent_name]["output"]["verdict"]["parsed_final_response"].get("explanation")
+                            == "500: timeout"
+                        ):
+                            project_timeout_count.append(item["id"])
+                    else:
+                        if agent_output["parsed_final_response"]["is_equivalent"] == "error":
+                            verdict_error.append(item["id"])
+
+                        if (
+                            agent_output["parsed_final_response"].get("is_equivalent") == "other"
+                            and agent_output["parsed_final_response"].get("explanation") == "500: timeout"
+                        ):
+                            project_timeout_count.append(item["id"])
 
                     global_disagreements.setdefault(tool, {})
                     global_disagreements[tool].setdefault(project.split(".")[0], {})
@@ -517,37 +552,27 @@ def main(args):
                     # Update confusion matrix
                     confusion_df.loc[tool_validation, llm_prediction] += 1
 
-                    # Check for timeout cases
-                    if (
-                        item[args.agent_name]["output"]["test_repair"]["parsed_final_response"].get("is_equivalent")
-                        == "other"
-                        and item[args.agent_name]["output"]["test_repair"]["parsed_final_response"].get("explanation")
-                        == "500: timeout"
-                    ):
-                        project_timeout_count.append(item["id"])
-
-                    if (
-                        item[args.agent_name]["output"]["verdict"]["parsed_final_response"].get("is_equivalent")
-                        == "other"
-                        and item[args.agent_name]["output"]["verdict"]["parsed_final_response"].get("explanation")
-                        == "500: timeout"
-                    ):
-                        project_timeout_count.append(item["id"])
-
                     # Continue with your existing stats collection
                     tool_validation_dist[tool_validation] += 1
                     equivalency_dist[llm_prediction] += 1
 
-                    test_repair_agent = item[args.agent_name]["output"]["test_repair"]
-                    verdict_agent = item[args.agent_name]["output"]["verdict"]
+                    if args.agent_name == "match_agent":
+                        test_repair_agent = item[args.agent_name]["output"]["test_repair"]
+                        verdict_agent = item[args.agent_name]["output"]["verdict"]
 
-                    test_repair_cost = get_agent_cost(test_repair_agent)
-                    verdict_cost = get_agent_cost(verdict_agent)
+                        test_repair_cost = get_agent_cost(test_repair_agent)
+                        verdict_cost = get_agent_cost(verdict_agent)
 
-                    total_num_turns += test_repair_cost["total_num_turns"] + verdict_cost["total_num_turns"]
-                    total_cost += test_repair_cost["total_cost_usd"] + verdict_cost["total_cost_usd"]
-                    total_time += test_repair_cost["duration_ms"] + verdict_cost["duration_ms"]
-                    total_tool_calls += test_repair_cost["num_tool_calls"] + verdict_cost["num_tool_calls"]
+                        total_num_turns += test_repair_cost["total_num_turns"] + verdict_cost["total_num_turns"]
+                        total_cost += test_repair_cost["total_cost_usd"] + verdict_cost["total_cost_usd"]
+                        total_time += test_repair_cost["duration_ms"] + verdict_cost["duration_ms"]
+                        total_tool_calls += test_repair_cost["num_tool_calls"] + verdict_cost["num_tool_calls"]
+                    else:
+                        agent_cost = get_agent_cost(agent_output)
+                        total_num_turns += agent_cost["total_num_turns"]
+                        total_cost += agent_cost["total_cost_usd"]
+                        total_time += agent_cost["duration_ms"]
+                        total_tool_calls += agent_cost["num_tool_calls"]
 
                 # Verify data consistency
                 assert total_methods == sum(
@@ -577,6 +602,9 @@ def main(args):
                 report_content.append(
                     f"    other: {{ total: {equivalency_dist['other']}, %: {equivalency_dist['other'] / total_methods:.2%} }}"
                 )
+                report_content.append(
+                    f"    error: {{ total: {equivalency_dist['error']}, %: {equivalency_dist['error'] / total_methods:.2%} }}"
+                )
                 report_content.append("}")
                 report_content.append("")
                 report_content.append("Tool: {")
@@ -605,6 +633,9 @@ def main(args):
                 report_content.append(f"Timeout Cases: {len(project_timeout_count)}")
                 report_content.append("---" * 50)
                 report_content.append(f"Total newly covered fragments: {total_newly_covered_fragments}")
+                report_content.append(
+                    f"Confusion Matrix Accuracy (Success + Failure): {confusion_df.loc['success', 'yes'] + confusion_df.loc['failure', 'no']}/{total_methods} [{(confusion_df.loc['success', 'yes'] + confusion_df.loc['failure', 'no']) / total_methods:.2%}]"
+                )
                 report_content.append("---" * 50)
                 report_content.append(
                     f"Total turns: {total_num_turns} [Average: {total_num_turns / total_methods:.2f}]"
@@ -677,6 +708,9 @@ def main(args):
     print(
         f"    other: {{ total: {global_equivalency_dist['other']}, %: {global_equivalency_dist['other'] / global_total_methods:.2%} }}"
     )
+    print(
+        f"    error: {{ total: {global_equivalency_dist['error']}, %: {global_equivalency_dist['error'] / global_total_methods:.2%} }}"
+    )
     print("}")
     print("Tool: {")
     print(
@@ -697,7 +731,7 @@ def main(args):
     print("}")
     print()
     print(
-        f"Total Methods: {global_equivalency_dist['yes'] + global_equivalency_dist['no'] + global_equivalency_dist['other']} [{global_total_methods / global_total:.2%}]"
+        f"Total Methods: {global_equivalency_dist['yes'] + global_equivalency_dist['no'] + global_equivalency_dist['other'] + global_equivalency_dist['error']} [{global_total_methods / global_total:.2%}]"
     )
     print(f"Total turns: {global_total_num_turns} [Average: {global_total_num_turns / global_total_methods:.2f}]")
     print(f"Total cost: ${global_total_cost:.2f} [Average: ${global_total_cost / global_total_methods:.2f}]")

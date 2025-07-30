@@ -175,18 +175,18 @@ def main(args):
         ):
             continue
 
-        if configs["agent_name"] in fragment_details:
+        if configs["agent_name"] in fragment_details and fragment_details[configs["agent_name"]]["status"]:
             continue
 
-        # if "rustrepotrans" == configs["tool_name"]:
-        #     try:
-        #         decoded_ground_truth_target_function = [
-        #             l.encode("latin1").decode("utf-8") for l in fragment_details["ground_truth_target_function"]
-        #         ]
-        #         fragment_details["ground_truth_target_function"] = decoded_ground_truth_target_function
-        #     except UnicodeDecodeError as e:
-        #         print(f"Error decoding ground truth target function: {e}")
-        #         continue
+        if "rustrepotrans" == configs["tool_name"] and "deltachat-core" == configs["project_name"]:
+            try:
+                decoded_ground_truth_target_function = [
+                    l.encode("latin1").decode("utf-8") for l in fragment_details["ground_truth_target_function"]
+                ]
+                fragment_details["ground_truth_target_function"] = decoded_ground_truth_target_function
+            except UnicodeDecodeError as e:
+                print(f"Error decoding ground truth target function: {e}")
+                continue
 
         if configs["tool_name"] in ["rustrepotrans", "skel"]:
             try:
