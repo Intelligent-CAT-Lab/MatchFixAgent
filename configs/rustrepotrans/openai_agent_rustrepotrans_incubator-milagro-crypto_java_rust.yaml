@@ -1,0 +1,19 @@
+agent_name: "openai_agent"
+mcp_config_file: ""
+credential_file: "configs/openai_credentials.yaml"
+project_name: "incubator-milagro-crypto"
+source_language: "java"
+target_language: "rust"
+tool_name: "rustrepotrans"
+tool_source_projects_path: "data/tool_projects/rustrepotrans"
+tool_target_projects_path: "data/tool_projects/rustrepotrans"
+tool_results_path: "data/agent_results/openai_agent/rustrepotrans"
+max_retries: 1
+extra_agent_args: ["--config",  "model_reasoning_effort='medium'", "--dangerously-bypass-approvals-and-sandbox", "--json"]
+available_credentials: ["one"]
+sub_agents:
+  test_gen_repair_agent:
+    extra_agent_args: ["--config",  "model_reasoning_effort='medium'", "--dangerously-bypass-approvals-and-sandbox", "--json"]
+  verdict_agent:
+    extra_agent_args: ["--config",  "model_reasoning_effort='medium'", "--dangerously-bypass-approvals-and-sandbox", "--json"]
+vendor: "openai"
