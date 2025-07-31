@@ -1,0 +1,851 @@
+[
+    {
+        "id": "1",
+        "project": "bst",
+        "source_path": "projects/bst/python/source.py",
+        "target_path": "projects/bst/javascript/translated.js",
+        "source_function": [
+            "        if class_var.root is None:",
+            "            raise Exception(\"Binary search tree is empty\")",
+            "        node = class_var.root",
+            "        while node.right is not None:",
+            "            node = node.right",
+            "        return node.label"
+        ],
+        "target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 13",
+            "if (class_var.root === null) {",
+            "    throw new Exception(\"Binary search tree is empty\");",
+            "}",
+            "var node = class_var.root;",
+            "while (node.right !== null) {",
+            "    node = node.right;",
+            "}",
+            "return node.label;",
+            "",
+            "        /// --- BLOCK END 13"
+        ],
+        "ground_truth_target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 13",
+            "if (class_var.root === null) {",
+            "    throw new Exception(\"Binary search tree is empty\");",
+            "}",
+            "var node = class_var.root;",
+            "while (node.right !== null) {",
+            "    node = node.right;",
+            "}",
+            "return node.label;    ",
+            "        /// --- BLOCK END 13"
+        ],
+        "source_language": "python",
+        "target_language": "javascript",
+        "result": "success"
+    },
+    {
+        "id": "2",
+        "project": "bst",
+        "source_path": "projects/bst/python/source.py",
+        "target_path": "projects/bst/javascript/translated.js",
+        "source_function": [
+            "        if node is None:",
+            "            msg = f\"Node with label {label} does not exist\"",
+            "            raise Exception(msg)",
+            "        else:",
+            "            if label < node.label:",
+            "                node = class_var._search(node.left, label)",
+            "            elif label > node.label:",
+            "                node = class_var._search(node.right, label)",
+            "        return node"
+        ],
+        "target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 8",
+            "        if (node === null) {",
+            "            var msg = \"Node with label \" + label + \" does not exist\";",
+            "            throw new Exception(msg);",
+            "        } else {",
+            "            if (label < node.label) {",
+            "                node = class_var._search(node.left, label);",
+            "            } else if (label > node.label) {",
+            "                node = class_var._search(node.right, label);",
+            "            }",
+            "        }",
+            "        return node;",
+            "",
+            "        /// --- BLOCK END 8"
+        ],
+        "ground_truth_target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 8",
+            "        if (node === null) {",
+            "            var msg = \"Node with label \" + label + \" does not exist\";",
+            "            throw new Exception(msg);",
+            "        } else {",
+            "            if (label < node.label) {",
+            "                node = class_var._search(node.left, label);",
+            "            } else if (label > node.label) {",
+            "                node = class_var._search(node.right, label);",
+            "            }",
+            "        }",
+            "        return node;    ",
+            "        /// --- BLOCK END 8"
+        ],
+        "source_language": "python",
+        "target_language": "javascript",
+        "result": "success"
+    },
+    {
+        "id": "3",
+        "project": "bst",
+        "source_path": "projects/bst/python/source.py",
+        "target_path": "projects/bst/javascript/translated.js",
+        "source_function": [
+            "        node = class_var.search(label)",
+            "        if node.right and node.left:",
+            "            lowest_node = class_var._get_lowest_node(node.right)",
+            "            lowest_node.left = node.left",
+            "            lowest_node.right = node.right",
+            "            node.left.parent = lowest_node",
+            "            if node.right:",
+            "                node.right.parent = lowest_node",
+            "            class_var._reassign_nodes(node, lowest_node)",
+            "        elif not node.right and node.left:",
+            "            class_var._reassign_nodes(node, node.left)",
+            "        elif node.right and not node.left:",
+            "            class_var._reassign_nodes(node, node.right)",
+            "        else:",
+            "            class_var._reassign_nodes(node, None)"
+        ],
+        "target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 9",
+            "var node = class_var.search(label);",
+            "if (node.right && node.left) {",
+            "    var lowest_node = class_var._get_lowest_node(node.right);",
+            "    lowest_node.left = node.left;",
+            "    lowest_node.right = node.right;",
+            "    node.left.parent = lowest_node;",
+            "    if (node.right) {",
+            "        node.right.parent = lowest_node;",
+            "    }",
+            "    class_var._reassign_nodes(node, lowest_node);",
+            "} else if (!node.right && node.left) {",
+            "    class_var._reassign_nodes(node, node.left);",
+            "} else if (node.right && !node.left) {",
+            "    class_var._reassign_nodes(node, node.right);",
+            "} else {",
+            "    class_var._reassign_nodes(node, null);",
+            "}",
+            "",
+            "        /// --- BLOCK END 9"
+        ],
+        "ground_truth_target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 9",
+            "var node = class_var.search(label);",
+            "if (node.right && node.left) {",
+            "    var lowest_node = class_var._get_lowest_node(node.right);",
+            "    lowest_node.left = node.left;",
+            "    lowest_node.right = node.right;",
+            "    node.left.parent = lowest_node;",
+            "    if (node.right) {",
+            "        node.right.parent = lowest_node;",
+            "    }",
+            "    class_var._reassign_nodes(node, lowest_node);",
+            "} else if (!node.right && node.left) {",
+            "    class_var._reassign_nodes(node, node.left);",
+            "} else if (node.right && !node.left) {",
+            "    class_var._reassign_nodes(node, node.right);",
+            "} else {",
+            "    class_var._reassign_nodes(node, null);",
+            "}    ",
+            "        /// --- BLOCK END 9"
+        ],
+        "source_language": "python",
+        "target_language": "javascript",
+        "result": "success"
+    },
+    {
+        "id": "4",
+        "project": "bst",
+        "source_path": "projects/bst/python/source.py",
+        "target_path": "projects/bst/javascript/translated.js",
+        "source_function": [
+            "        if class_var.root is None:",
+            "            raise Exception(\"Binary search tree is empty\")",
+            "        node = class_var.root",
+            "        while node.left is not None:",
+            "            node = node.left",
+            "        return node.label"
+        ],
+        "target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 14",
+            "if (class_var.root === null) {",
+            "    throw new Error(\"Binary search tree is empty\");",
+            "}",
+            "var node = class_var.root;",
+            "while (node.left !== null) {",
+            "    node = node.left;",
+            "}",
+            "return node.label;",
+            "",
+            "",
+            "        /// --- BLOCK END 14"
+        ],
+        "ground_truth_target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 14",
+            "if (class_var.root === null) {",
+            "    throw new Error(\"Binary search tree is empty\");",
+            "}",
+            "var node = class_var.root;",
+            "while (node.left !== null) {",
+            "    node = node.left;",
+            "}",
+            "return node.label;",
+            "    ",
+            "        /// --- BLOCK END 14"
+        ],
+        "source_language": "python",
+        "target_language": "javascript",
+        "result": "success"
+    },
+    {
+        "id": "5",
+        "project": "bst",
+        "source_path": "projects/bst/python/source.py",
+        "target_path": "projects/bst/javascript/translated.js",
+        "source_function": [
+            "        return class_var._preorder_traversal(class_var.root)"
+        ],
+        "target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 17",
+            "return class_var._preorder_traversal(class_var.root);",
+            "",
+            "        /// --- BLOCK END 17"
+        ],
+        "ground_truth_target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 17",
+            "return class_var._preorder_traversal(class_var.root);    ",
+            "        /// --- BLOCK END 17"
+        ],
+        "source_language": "python",
+        "target_language": "javascript",
+        "result": "success"
+    },
+    {
+        "id": "6",
+        "project": "bst",
+        "source_path": "projects/bst/python/source.py",
+        "target_path": "projects/bst/javascript/translated.js",
+        "source_function": [
+            "test()"
+        ],
+        "target_function": [
+            "",
+            "",
+            "/// --- BLOCK BEGIN 0",
+            "test();",
+            "",
+            "",
+            "",
+            "/// --- BLOCK END 0"
+        ],
+        "ground_truth_target_function": [
+            "",
+            "",
+            "/// --- BLOCK BEGIN 0",
+            "test();",
+            "/// --- BLOCK END 0"
+        ],
+        "source_language": "python",
+        "target_language": "javascript",
+        "result": "success"
+    },
+    {
+        "id": "7",
+        "project": "bst",
+        "source_path": "projects/bst/python/source.py",
+        "target_path": "projects/bst/javascript/translated.js",
+        "source_function": [
+            "        try:",
+            "            class_var.search(label)",
+            "            return True",
+            "        except Exception:",
+            "            return False"
+        ],
+        "target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 12",
+            "try {",
+            "    class_var.search(label);",
+            "    return true;",
+            "} catch (exception) {",
+            "    return false;",
+            "}",
+            "",
+            "        /// --- BLOCK END 12"
+        ],
+        "ground_truth_target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 12",
+            "try {",
+            "    class_var.search(label);",
+            "    return true;",
+            "} catch (exception) {",
+            "    return false;",
+            "}    ",
+            "        /// --- BLOCK END 12"
+        ],
+        "source_language": "python",
+        "target_language": "javascript",
+        "result": "success"
+    },
+    {
+        "id": "8",
+        "project": "bst",
+        "source_path": "projects/bst/python/source.py",
+        "target_path": "projects/bst/javascript/translated.js",
+        "source_function": [
+            "        class_var.root = None"
+        ],
+        "target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 3",
+            "class_var.root = null;",
+            "return null;",
+            "",
+            "        /// --- BLOCK END 3"
+        ],
+        "ground_truth_target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 3",
+            "class_var.root = null;",
+            "return null;    ",
+            "        /// --- BLOCK END 3"
+        ],
+        "source_language": "python",
+        "target_language": "javascript",
+        "result": "success"
+    },
+    {
+        "id": "9",
+        "project": "bst",
+        "source_path": "projects/bst/python/source.py",
+        "target_path": "projects/bst/javascript/translated.js",
+        "source_function": [
+            "    t = BinarySearchTree()",
+            "    t.put(8)",
+            "    t.put(3)",
+            "    t.put(6)",
+            "    t.put(1)",
+            "    t.put(10)",
+            "    t.put(14)",
+            "    t.put(13)",
+            "    t.put(4)",
+            "    t.put(7)",
+            "    t.put(5)",
+            "    return t"
+        ],
+        "target_function": [
+            "",
+            "    /// --- BLOCK BEGIN 19",
+            "var t = new BinarySearchTree();",
+            "    t.put(8);",
+            "    t.put(3);",
+            "    t.put(6);",
+            "    t.put(1);",
+            "    t.put(10);",
+            "    t.put(14);",
+            "    t.put(13);",
+            "    t.put(4);",
+            "    t.put(7);",
+            "    t.put(5);",
+            "    return t;",
+            "",
+            "",
+            "    /// --- BLOCK END 19"
+        ],
+        "ground_truth_target_function": [
+            "",
+            "    /// --- BLOCK BEGIN 19",
+            "var t = new BinarySearchTree();",
+            "    t.put(8);",
+            "    t.put(3);",
+            "    t.put(6);",
+            "    t.put(1);",
+            "    t.put(10);",
+            "    t.put(14);",
+            "    t.put(13);",
+            "    t.put(4);",
+            "    t.put(7);",
+            "    t.put(5);",
+            "    return t;",
+            "",
+            "    /// --- BLOCK END 19"
+        ],
+        "source_language": "python",
+        "target_language": "javascript",
+        "result": "success"
+    },
+    {
+        "id": "10",
+        "project": "bst",
+        "source_path": "projects/bst/python/source.py",
+        "target_path": "projects/bst/javascript/translated.js",
+        "source_function": [
+            "        class_var.root = class_var._put(class_var.root, label, None)"
+        ],
+        "target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 5",
+            "class_var.root = class_var._put(class_var.root, label, null);",
+            "",
+            "        /// --- BLOCK END 5"
+        ],
+        "ground_truth_target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 5",
+            "class_var.root = class_var._put(class_var.root, label, null);    ",
+            "        /// --- BLOCK END 5"
+        ],
+        "source_language": "python",
+        "target_language": "javascript",
+        "result": "success"
+    },
+    {
+        "id": "11",
+        "project": "bst",
+        "source_path": "projects/bst/python/source.py",
+        "target_path": "projects/bst/javascript/translated.js",
+        "source_function": [
+            "        return class_var._search(class_var.root, label)"
+        ],
+        "target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 7",
+            "return class_var._search(class_var.root, label);",
+            "",
+            "        /// --- BLOCK END 7"
+        ],
+        "ground_truth_target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 7",
+            "return class_var._search(class_var.root, label);    ",
+            "        /// --- BLOCK END 7"
+        ],
+        "source_language": "python",
+        "target_language": "javascript",
+        "result": "success"
+    },
+    {
+        "id": "12",
+        "project": "bst",
+        "source_path": "projects/bst/python/source.py",
+        "target_path": "projects/bst/javascript/translated.js",
+        "source_function": [
+            "        return class_var.root is None"
+        ],
+        "target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 4",
+            "return class_var.root === null;",
+            "",
+            "        /// --- BLOCK END 4"
+        ],
+        "ground_truth_target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 4",
+            "return class_var.root === null;    ",
+            "        /// --- BLOCK END 4"
+        ],
+        "source_language": "python",
+        "target_language": "javascript",
+        "result": "success"
+    },
+    {
+        "id": "13",
+        "project": "bst",
+        "source_path": "projects/bst/python/source.py",
+        "target_path": "projects/bst/javascript/translated.js",
+        "source_function": [
+            "        class_var.label = label",
+            "        class_var.parent = parent",
+            "        class_var.left = None",
+            "        class_var.right = None"
+        ],
+        "target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 1",
+            "class_var.label = label;",
+            "class_var.parent = parent;",
+            "class_var.left = null;",
+            "class_var.right = null;",
+            "",
+            "        /// --- BLOCK END 1"
+        ],
+        "ground_truth_target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 1",
+            "class_var.label = label;",
+            "class_var.parent = parent;",
+            "class_var.left = null;",
+            "class_var.right = null;    ",
+            "        /// --- BLOCK END 1"
+        ],
+        "source_language": "python",
+        "target_language": "javascript",
+        "result": "success"
+    },
+    {
+        "id": "14",
+        "project": "bst",
+        "source_path": "projects/bst/python/source.py",
+        "target_path": "projects/bst/javascript/translated.js",
+        "source_function": [
+            "        return class_var._inorder_traversal(class_var.root)"
+        ],
+        "target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 15",
+            "return class_var._inorder_traversal(class_var.root);",
+            "",
+            "        /// --- BLOCK END 15"
+        ],
+        "ground_truth_target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 15",
+            "return class_var._inorder_traversal(class_var.root);    ",
+            "        /// --- BLOCK END 15"
+        ],
+        "source_language": "python",
+        "target_language": "javascript",
+        "result": "success"
+    },
+    {
+        "id": "15",
+        "project": "bst",
+        "source_path": "projects/bst/python/source.py",
+        "target_path": "projects/bst/javascript/translated.js",
+        "source_function": [
+            "        if node.left:",
+            "            lowest_node = class_var._get_lowest_node(node.left)",
+            "        else:",
+            "            lowest_node = node",
+            "            class_var._reassign_nodes(node, node.right)",
+            "        return lowest_node"
+        ],
+        "target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 11",
+            "        var lowest_node;",
+            "        if (node.left) {",
+            "            lowest_node = class_var._get_lowest_node(node.left);",
+            "        } else {",
+            "            lowest_node = node;",
+            "            class_var._reassign_nodes(node, node.right);",
+            "        }",
+            "        return lowest_node;",
+            "",
+            "        /// --- BLOCK END 11"
+        ],
+        "ground_truth_target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 11",
+            "        var lowest_node;",
+            "        if (node.left) {",
+            "            lowest_node = class_var._get_lowest_node(node.left);",
+            "        } else {",
+            "            lowest_node = node;",
+            "            class_var._reassign_nodes(node, node.right);",
+            "        }",
+            "        return lowest_node;    ",
+            "        /// --- BLOCK END 11"
+        ],
+        "source_language": "python",
+        "target_language": "javascript",
+        "result": "success"
+    },
+    {
+        "id": "16",
+        "project": "bst",
+        "source_path": "projects/bst/python/source.py",
+        "target_path": "projects/bst/javascript/translated.js",
+        "source_function": [
+            "        if node is not None:",
+            "            yield from class_var._inorder_traversal(node.left)",
+            "            yield node",
+            "            yield from class_var._inorder_traversal(node.right)"
+        ],
+        "target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 16",
+            "if (node !== null) {",
+            "    yield* class_var._inorder_traversal(node.left);",
+            "    yield node;",
+            "    yield* class_var._inorder_traversal(node.right);",
+            "}",
+            "",
+            "        /// --- BLOCK END 16"
+        ],
+        "ground_truth_target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 16",
+            "if (node !== null) {",
+            "    yield* class_var._inorder_traversal(node.left);",
+            "    yield node;",
+            "    yield* class_var._inorder_traversal(node.right);",
+            "}    ",
+            "        /// --- BLOCK END 16"
+        ],
+        "source_language": "python",
+        "target_language": "javascript",
+        "result": "success"
+    },
+    {
+        "id": "17",
+        "project": "bst",
+        "source_path": "projects/bst/python/source.py",
+        "target_path": "projects/bst/javascript/translated.js",
+        "source_function": [
+            "        if node is not None:",
+            "            yield node",
+            "            yield from class_var._preorder_traversal(node.left)",
+            "            yield from class_var._preorder_traversal(node.right)"
+        ],
+        "target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 18",
+            "if (node !== null) {",
+            "    yield node;",
+            "    yield* class_var._preorder_traversal(node.left);",
+            "    yield* class_var._preorder_traversal(node.right);",
+            "}",
+            "",
+            "        /// --- BLOCK END 18"
+        ],
+        "ground_truth_target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 18",
+            "if (node !== null) {",
+            "    yield node;",
+            "    yield* class_var._preorder_traversal(node.left);",
+            "    yield* class_var._preorder_traversal(node.right);",
+            "}    ",
+            "        /// --- BLOCK END 18"
+        ],
+        "source_language": "python",
+        "target_language": "javascript",
+        "result": "success"
+    },
+    {
+        "id": "18",
+        "project": "bst",
+        "source_path": "projects/bst/python/source.py",
+        "target_path": "projects/bst/javascript/translated.js",
+        "source_function": [
+            "        if node is None:",
+            "            node = Node(label, parent)",
+            "        else:",
+            "            if label < node.label:",
+            "                node.left = class_var._put(node.left, label, node)",
+            "            elif label > node.label:",
+            "                node.right = class_var._put(node.right, label, node)",
+            "            else:",
+            "                msg = f\"Node with label {label} already exists\"",
+            "                raise Exception(msg)",
+            "        return node"
+        ],
+        "target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 6",
+            "        if (node === null) {",
+            "            node = new Node(label, parent);",
+            "        } else {",
+            "            if (label < node.label) {",
+            "                node.left = class_var._put(node.left, label, node);",
+            "            } else if (label > node.label) {",
+            "                node.right = class_var._put(node.right, label, node);",
+            "            } else {",
+            "                var msg = \"Node with label \" + label + \" already exists\";",
+            "                throw new Exception(msg);",
+            "            }",
+            "        }",
+            "        return node;",
+            "",
+            "        /// --- BLOCK END 6"
+        ],
+        "ground_truth_target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 6",
+            "        if (node === null) {",
+            "            node = new Node(label, parent);",
+            "        } else {",
+            "            if (label < node.label) {",
+            "                node.left = class_var._put(node.left, label, node);",
+            "            } else if (label > node.label) {",
+            "                node.right = class_var._put(node.right, label, node);",
+            "            } else {",
+            "                var msg = \"Node with label \" + label + \" already exists\";",
+            "                throw new Exception(msg);",
+            "            }",
+            "        }",
+            "        return node;    ",
+            "        /// --- BLOCK END 6"
+        ],
+        "source_language": "python",
+        "target_language": "javascript",
+        "result": "success"
+    },
+    {
+        "id": "19",
+        "project": "bst",
+        "source_path": "projects/bst/python/source.py",
+        "target_path": "projects/bst/javascript/translated.js",
+        "source_function": [
+            "    binary_search_tree_example()",
+            "    test_put()",
+            "    test_search()",
+            "    test_remove()",
+            "    test_remove_2()",
+            "    test_is_empty()",
+            "    test_empty()",
+            "    test_exists()",
+            "    test_get_max_label()",
+            "    test_get_min_label()",
+            "    test_inorder_traversal()",
+            "    test_preorder_traversal()"
+        ],
+        "target_function": [
+            "",
+            "    /// --- BLOCK BEGIN 32",
+            "binary_search_tree_example();",
+            "test_put();",
+            "test_search();",
+            "test_remove();",
+            "test_remove_2();",
+            "test_is_empty();",
+            "test_empty();",
+            "test_exists();",
+            "test_get_max_label();",
+            "test_get_min_label();",
+            "test_inorder_traversal();",
+            "test_preorder_traversal();",
+            "",
+            "",
+            "    /// --- BLOCK END 32"
+        ],
+        "ground_truth_target_function": [
+            "",
+            "    /// --- BLOCK BEGIN 32",
+            "binary_search_tree_example();",
+            "test_put();",
+            "test_search();",
+            "test_remove();",
+            "test_remove_2();",
+            "test_is_empty();",
+            "test_empty();",
+            "test_exists();",
+            "test_get_max_label();",
+            "test_get_min_label();",
+            "test_inorder_traversal();",
+            "test_preorder_traversal();",
+            "",
+            "    /// --- BLOCK END 32"
+        ],
+        "source_language": "python",
+        "target_language": "javascript",
+        "result": "success"
+    },
+    {
+        "id": "20",
+        "project": "bst",
+        "source_path": "projects/bst/python/source.py",
+        "target_path": "projects/bst/javascript/translated.js",
+        "source_function": [
+            "        if new_children:",
+            "            new_children.parent = node.parent",
+            "        if node.parent:",
+            "            if node.parent.right == node:",
+            "                node.parent.right = new_children",
+            "            else:",
+            "                node.parent.left = new_children",
+            "        else:",
+            "            class_var.root = new_children"
+        ],
+        "target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 10",
+            "if (new_children !== null) {",
+            "    new_children.parent = node.parent;",
+            "}",
+            "if (node.parent !== null) {",
+            "    if (node.parent.right === node) {",
+            "        node.parent.right = new_children;",
+            "    } else {",
+            "        node.parent.left = new_children;",
+            "    }",
+            "} else {",
+            "    class_var.root = new_children;",
+            "}",
+            "return null;",
+            "",
+            "",
+            "        /// --- BLOCK END 10"
+        ],
+        "ground_truth_target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 10",
+            "if (new_children !== null) {",
+            "    new_children.parent = node.parent;",
+            "}",
+            "if (node.parent !== null) {",
+            "    if (node.parent.right === node) {",
+            "        node.parent.right = new_children;",
+            "    } else {",
+            "        node.parent.left = new_children;",
+            "    }",
+            "} else {",
+            "    class_var.root = new_children;",
+            "}",
+            "return null;",
+            "    ",
+            "        /// --- BLOCK END 10"
+        ],
+        "source_language": "python",
+        "target_language": "javascript",
+        "result": "success"
+    },
+    {
+        "id": "21",
+        "project": "bst",
+        "source_path": "projects/bst/python/source.py",
+        "target_path": "projects/bst/javascript/translated.js",
+        "source_function": [
+            "        class_var.root = None"
+        ],
+        "target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 2",
+            "class_var.root = null;",
+            "return null;",
+            "",
+            "        /// --- BLOCK END 2"
+        ],
+        "ground_truth_target_function": [
+            "",
+            "        /// --- BLOCK BEGIN 2",
+            "class_var.root = null;",
+            "return null;    ",
+            "        /// --- BLOCK END 2"
+        ],
+        "source_language": "python",
+        "target_language": "javascript",
+        "result": "success"
+    }
+]
