@@ -9,12 +9,13 @@ from typing import Dict, List, Tuple, Optional, Set
 _used_credentials: Set[str] = set()
 
 
-def load_credentials(credential_file: str) -> Dict:
+def load_credentials(credential_file: str, vendor: str = "anthropic") -> Dict:
     """
-    Load credentials from the credential file.
+    Load credentials from the credential file based on vendor.
 
     Args:
-        credential_file (str): Path to the credentials YAML file
+        credential_file (str): Path to the credentials YAML file or directory containing credential files
+        vendor (str): The vendor to load credentials for (anthropic or openai)
 
     Returns:
         Dict: The loaded credentials dictionary
@@ -24,7 +25,7 @@ def load_credentials(credential_file: str) -> Dict:
             credentials = yaml.safe_load(f)
         return credentials
     except Exception as e:
-        logging.error(f"Error loading credentials: {str(e)}")
+        logging.error(f"Error loading credentials for {vendor}: {str(e)}")
         return {}
 
 
@@ -60,18 +61,21 @@ def get_agent_credentials(
     configs: dict,
 ) -> Tuple[Dict, str, str, str]:
     """
-    Get credentials for a specific agent and sub-agent.
+    Get credentials for a specific agent and sub-agent based on vendor.
     Uses a deterministic but distributed approach to assign different credentials
     to different agents and sub-agents to prevent hitting quotas.
 
     Args:
         agent_name (str): The name of the main agent
         sub_agent_name (Optional[str]): The name of the sub-agent, if applicable
-        credential_file (str): Path to the credentials YAML file
-        configs (dict): Configuration dictionary
+        configs (dict): Configuration dictionary containing vendor information
 
     Returns:
-        Tuple[Dict, str, str, str]: A tuple containing the credential dictionary, the region, the credential name, and the model
+        Tuple[Dict, str, str, str]: A tuple containing:
+            - credential dictionary
+            - region (for AWS/Anthropic) or empty string (for OpenAI)
+            - credential name
+            - model name
 
     Raises:
         ValueError: If no valid agent_name is provided or credentials are not available
@@ -79,12 +83,29 @@ def get_agent_credentials(
     if not agent_name:
         raise ValueError("Agent name must be provided to get credentials")
 
-    credentials = load_credentials(configs["credential_file"])
+    # Determine which vendor to use (default to anthropic)
+    vendor = configs.get("vendor", "anthropic").lower()
+
+    # Load credentials for the specified vendor
+    credentials = load_credentials(configs.get("credential_file", ""), vendor)
 
     if not credentials:
-        raise ValueError(f"No credentials found in {configs['credential_file']}")
+        raise ValueError(f"No credentials found for vendor: {vendor}")
 
-    aws_credentials = credentials.get("aws_credentials", {})
+    # Get the credentials key based on vendor
+    if vendor == "anthropic":
+        creds_key = "aws_credentials"
+        default_region = "us-west-2"
+        default_model = "us.anthropic.claude-3-7-sonnet-20250219-v1:0"
+    elif vendor == "openai":
+        creds_key = "openai_credentials"
+        default_region = ""  # OpenAI doesn't need region
+        default_model = "o4-mini"
+    else:
+        raise ValueError(f"Unsupported vendor: {vendor}")
+
+    # Get credentials for the specific vendor
+    vendor_credentials = credentials.get(creds_key, {})
 
     # If a config file is provided, check available_credentials
     if configs:
@@ -92,17 +113,17 @@ def get_agent_credentials(
             # Filter credentials based on available_credentials in config
             available_creds = configs.get("available_credentials", [])
             if available_creds:
-                aws_credentials = {k: v for k, v in aws_credentials.items() if k in available_creds}
+                vendor_credentials = {k: v for k, v in vendor_credentials.items() if k in available_creds}
 
-            logging.info(f"Using filtered credentials: {list(aws_credentials.keys())}")
+            logging.info(f"Using filtered credentials for {vendor}: {list(vendor_credentials.keys())}")
         except Exception as e:
             logging.warning(f"Failed to load agent config from {configs}: {str(e)}")
 
-    if not aws_credentials:
-        raise ValueError(f"No valid AWS credentials found for {agent_name}")
+    if not vendor_credentials:
+        raise ValueError(f"No valid {vendor} credentials found for {agent_name}")
 
     # Get available credential names
-    credential_names = list(aws_credentials.keys())
+    credential_names = list(vendor_credentials.keys())
     random.shuffle(credential_names)  # Shuffle credentials to ensure randomness
 
     # Make sure we have enough credentials
@@ -137,7 +158,7 @@ def get_agent_credentials(
             # Found an unused credential
             found_unused_credential = True
             _used_credentials.add(credential_name)
-            logging.info(f"Selected unused credential: {credential_name}")
+            logging.info(f"Selected unused {vendor} credential: {credential_name}")
             break
 
         attempts += 1
@@ -146,50 +167,64 @@ def get_agent_credentials(
         if attempts >= max_attempts:
             credential_name = credential_names[cred_index]
             logging.warning(
-                f"Could not find unused credential after {max_attempts} attempts. Reusing: {credential_name}"
+                f"Could not find unused {vendor} credential after {max_attempts} attempts. Reusing: {credential_name}"
             )
             _used_credentials.add(credential_name)
 
-    credential_data = aws_credentials.get(credential_name, {})
+    credential_data = vendor_credentials.get(credential_name, {})
 
-    # Extract region and model from the credential data
-    region = credential_data.get("region", "us-west-2")  # Default fallback
-    model = credential_data.get("model", "us.anthropic.claude-3-7-sonnet-20250219-v1:0")  # Default fallback
+    # Handle credential data based on vendor
+    if vendor == "anthropic":
+        # Extract region and model from the credential data
+        region = credential_data.get("region", default_region)
+        model = credential_data.get("model", default_model)
 
-    # Create the credential dict with just the AWS keys
-    credential = {
-        "AWS_ACCESS_KEY_ID": credential_data.get("AWS_ACCESS_KEY_ID"),
-        "AWS_SECRET_ACCESS_KEY": credential_data.get("AWS_SECRET_ACCESS_KEY"),
-    }
+        # Create the credential dict with just the AWS keys
+        credential = {
+            "AWS_ACCESS_KEY_ID": credential_data.get("AWS_ACCESS_KEY_ID"),
+            "AWS_SECRET_ACCESS_KEY": credential_data.get("AWS_SECRET_ACCESS_KEY"),
+        }
 
-    # For prod1, prod2, or prod3 credentials, try to get temporary session tokens
-    if credential_name in ["prod1", "prod2", "prod3"]:
-        try:
-            logging.info(f"Retrieving temporary session tokens for {credential_name}")
-            retrieved_credentials = get_temporary_credentials()
-            credential["AWS_ACCESS_KEY_ID"] = retrieved_credentials["AccessKeyId"]
-            credential["AWS_SECRET_ACCESS_KEY"] = retrieved_credentials["SecretAccessKey"]
-            credential["AWS_SESSION_TOKEN"] = retrieved_credentials["SessionToken"]
-        except Exception as e:
-            logging.error(f"Failed to retrieve temporary credentials for {credential_name}: {str(e)}")
-            # Fall back to credential 'one'
-            logging.warning("Falling back to credential 'one'")
-            fallback_credential_name = "one"
+        # For prod1, prod2, or prod3 credentials, try to get temporary session tokens
+        if credential_name in ["prod1", "prod2", "prod3"]:
+            try:
+                logging.info(f"Retrieving temporary session tokens for {credential_name}")
+                retrieved_credentials = get_temporary_credentials()
+                credential["AWS_ACCESS_KEY_ID"] = retrieved_credentials["AccessKeyId"]
+                credential["AWS_SECRET_ACCESS_KEY"] = retrieved_credentials["SecretAccessKey"]
+                credential["AWS_SESSION_TOKEN"] = retrieved_credentials["SessionToken"]
+            except Exception as e:
+                logging.error(f"Failed to retrieve temporary credentials for {credential_name}: {str(e)}")
+                # Fall back to credential 'one'
+                logging.warning("Falling back to credential 'one'")
+                fallback_credential_name = "one"
 
-            # Make sure 'one' exists in aws_credentials
-            if fallback_credential_name not in aws_credentials:
-                logging.error(f"Fallback credential '{fallback_credential_name}' not found")
-                raise ValueError(f"Failed to retrieve credentials and fallback not available")
+                # Make sure 'one' exists in aws_credentials
+                if fallback_credential_name not in vendor_credentials:
+                    logging.error(f"Fallback credential '{fallback_credential_name}' not found")
+                    raise ValueError(f"Failed to retrieve credentials and fallback not available")
 
-            # Use credential 'one' instead
-            fallback_credential_data = aws_credentials.get(fallback_credential_name, {})
-            credential["AWS_ACCESS_KEY_ID"] = fallback_credential_data.get("AWS_ACCESS_KEY_ID")
-            credential["AWS_SECRET_ACCESS_KEY"] = fallback_credential_data.get("AWS_SECRET_ACCESS_KEY")
+                # Use credential 'one' instead
+                fallback_credential_data = vendor_credentials.get(fallback_credential_name, {})
+                credential["AWS_ACCESS_KEY_ID"] = fallback_credential_data.get("AWS_ACCESS_KEY_ID")
+                credential["AWS_SECRET_ACCESS_KEY"] = fallback_credential_data.get("AWS_SECRET_ACCESS_KEY")
 
-            # Update credential name, region and model for return values
-            credential_name = fallback_credential_name
-            region = fallback_credential_data.get("region", region)
-            model = fallback_credential_data.get("model", model)
+                # Update credential name, region and model for return values
+                credential_name = fallback_credential_name
+                region = fallback_credential_data.get("region", region)
+                model = fallback_credential_data.get("model", model)
+
+    elif vendor == "openai":
+        # Extract model from the credential data
+        model = credential_data.get("model", default_model)
+        region = ""  # No region for OpenAI
+
+        # Create the credential dict with OpenAI API key
+        credential = {
+            "OPENAI_API_KEY": credential_data.get("OPENAI_API_KEY"),
+        }
+
+        # No temporary credentials for OpenAI
 
     return credential, region, credential_name, model
 
@@ -200,17 +235,15 @@ def setup_environment_for_agent(
     configs: dict,
 ) -> Tuple[Dict, str]:
     """
-    Set up environment variables for a specific agent with appropriate AWS credentials.
+    Set up environment variables for a specific agent with appropriate credentials based on vendor.
 
     Args:
         agent_name (str): The name of the main agent
         sub_agent_name (Optional[str]): The name of the sub-agent, if applicable
-        model_name (Optional[str]): The model name to use (if None, uses model from credential)
-        credential_file (str): Path to the credentials YAML file
-        configs (dict): Configuration dictionary
+        configs (dict): Configuration dictionary containing vendor information
 
     Returns:
-        Tuple[Dict, str]: The environment dictionary with appropriate AWS credentials and settings,
+        Tuple[Dict, str]: The environment dictionary with appropriate credentials and settings,
                          and the credential name being used
 
     Raises:
@@ -221,23 +254,38 @@ def setup_environment_for_agent(
 
     env = os.environ.copy()
 
+    # Determine vendor from configs
+    vendor = configs.get("vendor", "anthropic").lower()
+
     # Get credentials, region, and model for this agent - this will raise ValueError if credentials not available
     credential, region, credential_name, credential_model = get_agent_credentials(agent_name, sub_agent_name, configs)
 
-    # Set up environment variables
-    env["CLAUDE_CODE_USE_BEDROCK"] = "true"
-    # Use provided model_name if available, otherwise use model from credential
-    env["ANTHROPIC_MODEL"] = credential_model
-    env["AWS_REGION"] = region
+    # Set up environment variables based on vendor
+    if vendor == "anthropic":
+        # Anthropic/AWS specific environment variables
+        env["CLAUDE_CODE_USE_BEDROCK"] = "true"
+        env["ANTHROPIC_MODEL"] = credential_model
+        env["AWS_REGION"] = region
 
-    # Set AWS credentials - both must be available
-    if "AWS_ACCESS_KEY_ID" not in credential or "AWS_SECRET_ACCESS_KEY" not in credential:
-        raise ValueError(f"Incomplete AWS credentials for agent {agent_name}")
+        # Set AWS credentials - both must be available
+        if "AWS_ACCESS_KEY_ID" not in credential or "AWS_SECRET_ACCESS_KEY" not in credential:
+            raise ValueError(f"Incomplete AWS credentials for agent {agent_name}")
 
-    env["AWS_ACCESS_KEY_ID"] = credential["AWS_ACCESS_KEY_ID"]
-    env["AWS_SECRET_ACCESS_KEY"] = credential["AWS_SECRET_ACCESS_KEY"]
-    env["AWS_SESSION_TOKEN"] = credential["AWS_SESSION_TOKEN"] if "AWS_SESSION_TOKEN" in credential else ""
+        env["AWS_ACCESS_KEY_ID"] = credential["AWS_ACCESS_KEY_ID"]
+        env["AWS_SECRET_ACCESS_KEY"] = credential["AWS_SECRET_ACCESS_KEY"]
+        env["AWS_SESSION_TOKEN"] = credential["AWS_SESSION_TOKEN"] if "AWS_SESSION_TOKEN" in credential else ""
 
+    elif vendor == "openai":
+        # OpenAI specific environment variables
+        env["OPENAI_API_KEY"] = credential.get("OPENAI_API_KEY", "")
+        env["OPENAI_MODEL"] = credential_model
+
+        if not env["OPENAI_API_KEY"]:
+            raise ValueError(f"OPENAI_API_KEY is missing for agent {agent_name}")
+    else:
+        raise ValueError(f"Unsupported vendor: {vendor}")
+
+    # Add common build tools to PATH for all vendors
     # Add maven to PATH
     env["PATH"] = f"{os.path.expanduser('~/apache-maven-3.9.9/bin')}:{env['PATH']}"
 

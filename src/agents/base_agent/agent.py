@@ -24,13 +24,8 @@ import uuid
 from pathlib import Path
 from typing import Dict, List, Any, Optional, Tuple
 
-from src.utils.agent_utils import MCPConfig
-from src.utils.agent_utils import Model
-from src.utils.agent_utils import Conversation
-
 from src.agents.base_agent.prompt_generator import BaseAgentPromptGenerator
-from src.utils.cmd_utils import run_claude_command
-from src.utils.credential_utils import setup_environment_for_agent, get_agent_credentials
+from src.utils.model_utils import ModelUtils
 
 
 class BaseAgent:
@@ -56,8 +51,7 @@ class BaseAgent:
             mcp_config (MCPConfig): Configuration for the model control plane
         """
         self.configs = configs
-        self.mcp_config = MCPConfig(self.configs["mcp_config_file"])
-        self.conversation = Conversation()
+        self.mcp_config = self.configs["mcp_config_file"]
         self.session_id = str(uuid.uuid4())
         self.errors = yaml.safe_load(open("configs/errors.yaml", "r"))
 
@@ -90,31 +84,6 @@ class BaseAgent:
 
         self.logger.info(f"base_agent initialized with session ID: {self.session_id}")
 
-    async def run_cmd(self, prompt: str, feedback: str) -> Tuple[bool, Dict[str, Any]]:
-        """
-        Execute Claude CLI command with the given prompt.
-
-        Runs Claude via CLI subprocess and parses the JSON output.
-
-        Args:
-            prompt (str): The prompt to send to Claude
-            feedback (str): Optional feedback to append to the prompt for retries
-
-        Returns:
-            tuple[bool, dict]: (success_status, parsed_output)
-                - success_status: True if command executed successfully and output was valid JSON
-                - parsed_output: The parsed JSON output from Claude, or None if unsuccessful
-        """
-        # Use shared command utility for consistent credential handling
-        return await run_claude_command(
-            prompt=prompt,
-            feedback=feedback,
-            configs=self.configs,
-            logger=self.logger,
-            agent_name=self.configs["agent_name"],
-            timeout=300,
-        )
-
     async def run(self, fragment_details: Dict[str, Any]) -> Tuple[bool, Dict[str, Any]]:
         """
         Run the validator agent to check equivalence between source and target code.
@@ -142,11 +111,15 @@ class BaseAgent:
         self.logger.debug("Generated prompt:")
         self.logger.debug(prompt)
 
-        self.conversation.add_message(role="user", content=prompt)
-
         try:
             self.logger.info("Executing command")
-            status, agent_output = await self.run_cmd(prompt, "")
+            model_utils = ModelUtils(configs=self.configs, logger=self.logger)
+            status, agent_output = await model_utils.prompt_agent(
+                prompt=prompt,
+                feedback="",
+                agent_name=self.configs["agent_name"],
+                timeout=300,
+            )
 
             # Handle timeout case
             if agent_output and agent_output.get("timeout", False):

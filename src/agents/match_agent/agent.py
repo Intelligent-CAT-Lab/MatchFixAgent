@@ -8,12 +8,6 @@ import logging
 import shutil
 import uuid
 from pathlib import Path
-from typing import Dict, List, Any, Optional
-
-from src.utils.agent_utils import MCPConfig
-from src.utils.agent_utils import Model
-from src.utils.agent_utils import Conversation
-from src.utils.credential_utils import get_agent_credentials
 
 from src.agents.match_agent.prompt_generator import MatchAgentPromptGenerator
 from src.agents.match_agent.control_flow_agent.agent import ControlFlowAgent
@@ -27,72 +21,6 @@ from src.agents.match_agent.verdict_agent.agent import VerdictAgent
 
 
 class MatchAgent:
-    def _rename_log_file(self, old_session_id: str, new_session_id: str, agent_name: str) -> None:
-        """
-        Rename a log file from using old_session_id to new_session_id in the filename.
-
-        Args:
-            old_session_id (str): The original session ID in the filename
-            new_session_id (str): The new session ID to use in the filename
-            agent_name (str): Name of the agent (used in filename and logger name)
-        """
-        # Skip if session IDs are the same
-        if old_session_id == new_session_id:
-            return
-
-        # Define log file paths
-        log_dir = Path(f"logs/match_agent")
-
-        # For match_agent itself, the filename is just the session ID
-        if agent_name == "match_agent":
-            original_log_file = log_dir / f"{old_session_id}.log"
-            new_log_file = log_dir / new_session_id / f"{new_session_id}.log"
-            logger_name = f"match_agent"
-        else:
-            # For sub-agents, the filename includes the agent name
-            original_log_file = log_dir / f"{agent_name}_{old_session_id}.log"
-            new_log_file = log_dir / new_session_id / f"{agent_name}_{new_session_id}.log"
-            logger_name = agent_name
-
-        # Only proceed if the original file exists
-        if not original_log_file.exists():
-            return
-
-        os.makedirs(new_log_file.parent, exist_ok=True)
-
-        # For match_agent, close its logger handlers first
-        if agent_name == "match_agent":
-            logger = logging.getLogger(f"{logger_name}.{old_session_id}")
-            for handler in logger.handlers[:]:
-                handler.close()
-                logger.removeHandler(handler)
-
-        # Use shutil.copy2 and then remove the original instead of rename
-        # This avoids issues if the files are on different filesystems
-        shutil.copy2(original_log_file, new_log_file)
-        original_log_file.unlink(missing_ok=True)
-
-        # Create a new logger with the new session ID for match_agent only
-        # We don't need to recreate loggers for sub-agents as they're finished executing
-        if agent_name == "match_agent":
-            new_logger = logging.getLogger(f"{logger_name}.{new_session_id}")
-            new_logger.setLevel(logging.INFO)
-            new_logger.propagate = False
-
-            # Add handlers to the new logger
-            file_handler = logging.FileHandler(new_log_file)
-            file_handler.setLevel(logging.DEBUG)
-            console_handler = logging.StreamHandler()
-            console_handler.setLevel(logging.INFO)
-            formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-            file_handler.setFormatter(formatter)
-            console_handler.setFormatter(formatter)
-            new_logger.addHandler(file_handler)
-            new_logger.addHandler(console_handler)
-
-            # Log the file rename operation
-            new_logger.info(f"Log file renamed from {original_log_file} to {new_log_file}")
-
     """
     Orchestrates multiple semantic analyzer agents to analyze code equivalence.
     Follows the architecture in overview.jpg with 6 parallel semantic analyzer agents,
@@ -107,17 +35,16 @@ class MatchAgent:
             configs (dict): Configuration settings
         """
         self.configs = configs
-        self.mcp_config = MCPConfig(self.configs["mcp_config_file"])
-        self.conversation = Conversation()
+        self.mcp_config = self.configs["mcp_config_file"]
         self.session_id = str(uuid.uuid4())
 
         # Set up logging
-        log_dir = Path(f"logs/match_agent")
+        log_dir = Path(f"logs/{self.configs['agent_name']}")
         log_dir.mkdir(parents=True, exist_ok=True)
 
         log_file = log_dir / f"{self.session_id}.log"
 
-        self.logger = logging.getLogger(f"match_agent.{self.session_id}")
+        self.logger = logging.getLogger(f"{self.configs['agent_name']}.{self.session_id}")
         self.logger.setLevel(logging.DEBUG)  # Set to DEBUG to allow all messages
         self.logger.propagate = False  # Prevent propagation to parent loggers
 
@@ -138,7 +65,7 @@ class MatchAgent:
         self.logger.addHandler(file_handler)
         self.logger.addHandler(console_handler)
 
-        self.logger.info(f"match_agent initialized with session ID: {self.session_id}")
+        self.logger.info(f"{self.configs['agent_name']} initialized with session ID: {self.session_id}")
 
         # Initialize sub-agents with the same session ID and specialized configurations
         subagent_configs = {}
@@ -192,17 +119,23 @@ class MatchAgent:
 
         analysis_tasks = [
             self.control_flow_agent.analyze(
-                prompt_generator, agent_name="match_agent", sub_agent_name="control_flow_agent"
+                prompt_generator, agent_name=f"{self.configs['agent_name']}", sub_agent_name="control_flow_agent"
             ),
-            self.data_flow_agent.analyze(prompt_generator, agent_name="match_agent", sub_agent_name="data_flow_agent"),
-            self.io_agent.analyze(prompt_generator, agent_name="match_agent", sub_agent_name="io_agent"),
+            self.data_flow_agent.analyze(
+                prompt_generator, agent_name=f"{self.configs['agent_name']}", sub_agent_name="data_flow_agent"
+            ),
+            self.io_agent.analyze(
+                prompt_generator, agent_name=f"{self.configs['agent_name']}", sub_agent_name="io_agent"
+            ),
             self.library_equivalence_agent.analyze(
-                prompt_generator, agent_name="match_agent", sub_agent_name="library_equivalence_agent"
+                prompt_generator, agent_name=f"{self.configs['agent_name']}", sub_agent_name="library_equivalence_agent"
             ),
             self.exception_error_agent.analyze(
-                prompt_generator, agent_name="match_agent", sub_agent_name="exception_error_agent"
+                prompt_generator, agent_name=f"{self.configs['agent_name']}", sub_agent_name="exception_error_agent"
             ),
-            self.spec_agent.analyze(prompt_generator, agent_name="match_agent", sub_agent_name="spec_agent"),
+            self.spec_agent.analyze(
+                prompt_generator, agent_name=f"{self.configs['agent_name']}", sub_agent_name="spec_agent"
+            ),
         ]
 
         semantic_analyzer_results = await asyncio.gather(*analysis_tasks)
@@ -223,7 +156,7 @@ class MatchAgent:
         test_repair_results = await self.test_gen_repair_agent.analyze(
             prompt_generator,
             all_analysis_results,
-            agent_name="match_agent",
+            agent_name=f"{self.configs['agent_name']}",
             sub_agent_name="test_gen_repair_agent",
         )
 
@@ -233,7 +166,7 @@ class MatchAgent:
         # Run the verdict agent for final decision
         self.logger.info("Starting verdict agent for final decision")
         verdict_results = await self.verdict_agent.analyze(
-            prompt_generator, all_results, agent_name="match_agent", sub_agent_name="verdict_agent"
+            prompt_generator, all_results, agent_name=f"{self.configs['agent_name']}", sub_agent_name="verdict_agent"
         )
 
         # Add verdict to final results
@@ -252,7 +185,7 @@ class MatchAgent:
         final_session_id = f"{self.configs['tool_name']}.{self.configs['project_name']}.{self.configs['source_language']}.{self.configs['target_language']}.{fragment_details['id']}"
 
         # Rename match_agent log file
-        self._rename_log_file(self.session_id, final_session_id, "match_agent")
+        self._rename_log_file(self.session_id, final_session_id, self.configs["agent_name"])
 
         # List of all sub-agents
         sub_agents = [
@@ -271,6 +204,72 @@ class MatchAgent:
             self._rename_log_file(self.session_id, final_session_id, sub_agent)
 
         return success, all_results
+
+    def _rename_log_file(self, old_session_id: str, new_session_id: str, agent_name: str) -> None:
+        """
+        Rename a log file from using old_session_id to new_session_id in the filename.
+
+        Args:
+            old_session_id (str): The original session ID in the filename
+            new_session_id (str): The new session ID to use in the filename
+            agent_name (str): Name of the agent (used in filename and logger name)
+        """
+        # Skip if session IDs are the same
+        if old_session_id == new_session_id:
+            return
+
+        # Define log file paths
+        log_dir = Path(f"logs/{self.configs['agent_name']}")
+
+        # For match_agent itself, the filename is just the session ID
+        if agent_name in ["match_agent", "openai_agent"]:
+            original_log_file = log_dir / f"{old_session_id}.log"
+            new_log_file = log_dir / new_session_id / f"{new_session_id}.log"
+            logger_name = agent_name
+        else:
+            # For sub-agents, the filename includes the agent name
+            original_log_file = log_dir / f"{agent_name}_{old_session_id}.log"
+            new_log_file = log_dir / new_session_id / f"{agent_name}_{new_session_id}.log"
+            logger_name = agent_name
+
+        # Only proceed if the original file exists
+        if not original_log_file.exists():
+            return
+
+        os.makedirs(new_log_file.parent, exist_ok=True)
+
+        # For match_agent, close its logger handlers first
+        if agent_name in ["match_agent", "openai_agent"]:
+            logger = logging.getLogger(f"{logger_name}.{old_session_id}")
+            for handler in logger.handlers[:]:
+                handler.close()
+                logger.removeHandler(handler)
+
+        # Use shutil.copy2 and then remove the original instead of rename
+        # This avoids issues if the files are on different filesystems
+        shutil.copy2(original_log_file, new_log_file)
+        original_log_file.unlink(missing_ok=True)
+
+        # Create a new logger with the new session ID for match_agent only
+        # We don't need to recreate loggers for sub-agents as they're finished executing
+        if agent_name in ["match_agent", "openai_agent"]:
+            new_logger = logging.getLogger(f"{logger_name}.{new_session_id}")
+            new_logger.setLevel(logging.INFO)
+            new_logger.propagate = False
+
+            # Add handlers to the new logger
+            file_handler = logging.FileHandler(new_log_file)
+            file_handler.setLevel(logging.DEBUG)
+            console_handler = logging.StreamHandler()
+            console_handler.setLevel(logging.INFO)
+            formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+            file_handler.setFormatter(formatter)
+            console_handler.setFormatter(formatter)
+            new_logger.addHandler(file_handler)
+            new_logger.addHandler(console_handler)
+
+            # Log the file rename operation
+            new_logger.info(f"Log file renamed from {original_log_file} to {new_log_file}")
 
 
 if __name__ == "__main__":

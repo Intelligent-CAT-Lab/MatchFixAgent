@@ -36,6 +36,8 @@ def validate_by_agent(configs: dict, fragment_details: dict) -> tuple[bool, dict
         validator_agent = BaseAgent(configs=configs)
     elif configs["agent_name"] == "match_agent":
         validator_agent = MatchAgent(configs=configs)
+    elif configs["agent_name"] == "openai_agent":
+        validator_agent = MatchAgent(configs=configs)
     else:
         raise ValueError(f"Agent {configs['agent_name']} is not supported")
 
@@ -153,15 +155,15 @@ def main(args):
     with open(os.path.join(results_path, f"{configs['project_name']}.json"), "r") as f:
         results = json.load(f)
 
-    pool = []
-    with open(os.path.join("data", "ablation_study", "pool.json"), "r") as f:
-        pool = json.load(f)
+    ablation_study = []
+    with open(os.path.join("data", "samples", "ablation_study.json"), "r") as f:
+        ablation_study = json.load(f)
 
     for fragment_details in results:
 
         if (
             configs["agent_name"] in ["base_agent"]
-            and [fragment_details["id"], fragment_details["project"], configs["tool_name"]] not in pool
+            and [fragment_details["id"], fragment_details["project"], configs["tool_name"]] not in ablation_study
         ):
             continue
 
@@ -206,6 +208,8 @@ def main(args):
             json.dump(results, f, indent=4)
 
         cleanup(configs)
+
+        break
 
 
 if __name__ == "__main__":

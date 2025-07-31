@@ -7,9 +7,7 @@ import asyncio
 import yaml
 from pathlib import Path
 
-from src.utils.agent_utils import Model
-from src.utils.agent_utils import Conversation
-from src.utils.credential_utils import get_agent_credentials
+from src.utils.model_utils import ModelUtils
 
 
 class VerdictAgent:
@@ -27,12 +25,11 @@ class VerdictAgent:
             session_id (str, optional): Session ID for logging. If None, a new UUID will be generated.
         """
         self.configs = configs
-        self.conversation = Conversation()
         self.session_id = session_id or str(uuid.uuid4())
         self.errors = yaml.safe_load(open("configs/errors.yaml", "r"))
 
         # Set up logging
-        log_dir = Path(f"logs/match_agent")
+        log_dir = Path(f"logs/{self.configs['agent_name']}")
         log_dir.mkdir(parents=True, exist_ok=True)
 
         log_file = log_dir / f"verdict_agent_{self.session_id}.log"
@@ -95,18 +92,14 @@ class VerdictAgent:
         self.logger.debug("Generated verdict prompt:")
         self.logger.debug(prompt)
 
-        self.conversation.add_message(role="user", content=prompt)
-
         try:
-            # Use the dedicated utility function for command execution with built-in timeout
-            from src.utils.cmd_utils import run_claude_command
+            # Use the model utility wrapper with timeout
+            model_utils = ModelUtils(configs=self.configs, logger=self.logger)
 
-            # Call run_claude_command with 300 seconds timeout
-            status, agent_output = await run_claude_command(
-                prompt,
-                "",
-                self.configs,
-                self.logger,
+            # Call prompt_agent with 300 seconds timeout
+            status, agent_output = await model_utils.prompt_agent(
+                prompt=prompt,
+                feedback="",
                 agent_name=agent_name or "verdict_agent",
                 sub_agent_name=sub_agent_name,
                 timeout=300,  # Set 300 seconds timeout
