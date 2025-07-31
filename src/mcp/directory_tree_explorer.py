@@ -115,4 +115,4 @@ def get_directory_tree(path: str, print_dirs_only: bool) -> str:
 
 
 if __name__ == "__main__":
-    mcp.run(transport="sse", port=8000)
+    mcp.run(transport="stdio")

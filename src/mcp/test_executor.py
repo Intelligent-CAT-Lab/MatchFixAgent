@@ -176,4 +176,4 @@ def execute_rust_tests(project: str) -> str:
 
 
 if __name__ == "__main__":
-    mcp.run(transport="sse", port=8001)
+    mcp.run(transport="stdio")
