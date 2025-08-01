@@ -573,7 +573,7 @@ def main(args):
                         total_cost += agent_cost["total_cost_usd"]
                         total_time += agent_cost["duration_ms"]
                         total_tool_calls += agent_cost["num_tool_calls"]
-                    else: # skip cost calculation for openai_agent because the returned JSONs have limited information
+                    else:  # skip cost calculation for openai_agent because the returned JSONs have limited information
                         continue
 
                 # Verify data consistency
