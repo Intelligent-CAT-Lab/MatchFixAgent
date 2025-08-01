@@ -63,7 +63,7 @@ def get_agent_cost(agent_output):
     # Load and analyze agent trajectory files
     session_id = agent_output["session_id"]
     trajectory_file = find_trajectory_file(session_id)
-    copy_trajectory_file(session_id, "data/agent_trajectories")
+    copy_trajectory_file(session_id, "data/agent_trajectories/claude")
 
     agent_trajectory = []
     with open(trajectory_file, "r") as f:
