@@ -159,11 +159,28 @@ def main(args):
     with open(os.path.join("data", "samples", "ablation_study.json"), "r") as f:
         ablation_study = json.load(f)
 
+    openai_study = []
+    with open(os.path.join("data", "samples", "openai_study.json"), "r") as f:
+        openai_study = json.load(f)
+
     for fragment_details in results:
 
         if (
             configs["agent_name"] in ["base_agent"]
             and [fragment_details["id"], fragment_details["project"], configs["tool_name"]] not in ablation_study
+        ):
+            continue
+
+        if (
+            configs["agent_name"] in ["openai_agent"]
+            and [
+                fragment_details["id"],
+                fragment_details["project"],
+                configs["tool_name"],
+                f"{fragment_details['source_language']}-{fragment_details['target_language']}",
+                fragment_details["result"],
+            ]
+            not in openai_study
         ):
             continue
 
@@ -208,8 +225,6 @@ def main(args):
             json.dump(results, f, indent=4)
 
         cleanup(configs)
-
-        break
 
 
 if __name__ == "__main__":

@@ -12,7 +12,12 @@ def main(args):
     for tool in os.listdir(os.path.join("data", "agent_results", args.agent_name)):
         for project in os.listdir(os.path.join("data", "agent_results", args.agent_name, tool)):
 
-            if tool == "alphatrans" and project.split(".")[0] not in ["commons-cli", "commons-csv", "commons-fileupload", "commons-validator"]:
+            if tool == "alphatrans" and project.split(".")[0] not in [
+                "commons-cli",
+                "commons-csv",
+                "commons-fileupload",
+                "commons-validator",
+            ]:
                 continue
 
             result_file = os.path.join("data", "agent_results", args.agent_name, tool, project)
@@ -38,9 +43,7 @@ def main(args):
                 ]:
                     continue
 
-                if (
-                    item["result"] == "success"
-                ):
+                if item["result"] == "success":
                     positive_pool[item["project"]][language_pair]["success"].append(
                         [
                             item["id"],
@@ -49,9 +52,7 @@ def main(args):
                         ]
                     )
 
-                if (
-                    item["result"] == "failure"
-                ):
+                if item["result"] == "failure":
                     negative_pool[item["project"]][language_pair]["failure"].append(
                         [
                             item["id"],
