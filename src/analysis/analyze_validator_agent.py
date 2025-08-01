@@ -417,7 +417,7 @@ def main(args):
                     #     continue
 
                     agent_output = item[args.agent_name]["output"]
-                    if args.agent_name == "match_agent":
+                    if args.agent_name in ["match_agent", "openai_agent"]:
                         if item[args.agent_name]["output"]["test_repair"]["parsed_final_response"]["is_equivalent"] in [
                             "error",
                             "other",
@@ -434,7 +434,7 @@ def main(args):
                     # Get LLM prediction
                     llm_prediction = agent_output["parsed_final_response"]["is_equivalent"]
 
-                    if args.agent_name == "match_agent":
+                    if args.agent_name in ["match_agent", "openai_agent"]:
                         semantic_analyzer_alignment["cfg"].append(
                             [
                                 item[args.agent_name]["output"]["semantic_analyzer_analyses"]["control_flow"][
@@ -567,12 +567,14 @@ def main(args):
                         total_cost += test_repair_cost["total_cost_usd"] + verdict_cost["total_cost_usd"]
                         total_time += test_repair_cost["duration_ms"] + verdict_cost["duration_ms"]
                         total_tool_calls += test_repair_cost["num_tool_calls"] + verdict_cost["num_tool_calls"]
-                    else:
+                    elif args.agent_name == "base_agent":
                         agent_cost = get_agent_cost(agent_output)
                         total_num_turns += agent_cost["total_num_turns"]
                         total_cost += agent_cost["total_cost_usd"]
                         total_time += agent_cost["duration_ms"]
                         total_tool_calls += agent_cost["num_tool_calls"]
+                    else: # skip cost calculation for openai_agent because the returned JSONs have limited information
+                        continue
 
                 # Verify data consistency
                 assert total_methods == sum(
