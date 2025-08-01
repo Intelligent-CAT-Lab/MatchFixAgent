@@ -61,8 +61,8 @@ def main(args):
     for project, count in project_counts.items():
         print(f"{project}: {count}")
 
-    os.makedirs("data/ablation_study", exist_ok=True)
-    with open("data/ablation_study/pool.json", "w") as file:
+    os.makedirs("data/samples", exist_ok=True)
+    with open("data/samples/ablation_study.json", "w") as file:
         json.dump(pool, file, indent=4)
 
 
