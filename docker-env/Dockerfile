@@ -7,18 +7,55 @@ ENV NODE_PATH=/usr/local/lib/node_modules
 # Install required system packages
 RUN apt-get update && apt-get install -y \
     curl \
+    wget \
+    build-essential \
     && rm -rf /var/lib/apt/lists/*
+
+# Install Go 1.24.4
+RUN wget https://go.dev/dl/go1.24.4.linux-amd64.tar.gz \
+    && tar -C /usr/local -xzf go1.24.4.linux-amd64.tar.gz \
+    && rm go1.24.4.linux-amd64.tar.gz
+
+# Install Rust 1.87.0
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.87.0 \
+    && . ~/.cargo/env \
+    && rustup default 1.87.0
+
+# Install Java 21 (Amazon Corretto)
+RUN wget https://corretto.aws/downloads/latest/amazon-corretto-21-x64-linux-jdk.tar.gz \
+    && tar -C /usr/local -xzf amazon-corretto-21-x64-linux-jdk.tar.gz \
+    && rm amazon-corretto-21-x64-linux-jdk.tar.gz \
+    && mv /usr/local/amazon-corretto-* /usr/local/java
+
+# Install Maven 3.9.9
+RUN wget https://archive.apache.org/dist/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz \
+    && tar -C /usr/local -xzf apache-maven-3.9.9-bin.tar.gz \
+    && rm apache-maven-3.9.9-bin.tar.gz \
+    && mv /usr/local/apache-maven-3.9.9 /usr/local/maven
 
 # Download & unpack exactly Node.js v22.16.0
 RUN curl -fsSL https://nodejs.org/dist/v22.16.0/node-v22.16.0-linux-x64.tar.xz \
      | tar -xJ -C /usr/local --strip-components=1 \
      && npm install -g npm@11.4.0
 
-# Ensure the global node modules directory is in the PATH
-ENV PATH="${NODE_PATH}/.bin:${PATH}"
+# Update PATH to include all tools
+ENV PATH="/usr/local/go/bin:/root/.cargo/bin:/usr/local/java/bin:/usr/local/maven/bin:${NODE_PATH}/.bin:${PATH}"
+ENV JAVA_HOME="/usr/local/java"
+ENV MAVEN_HOME="/usr/local/maven"
+ENV GOPATH="/go"
+ENV GOROOT="/usr/local/go"
 
-# Verify Node.js and npm installation
-RUN node -v && npm -v
+# Create Go workspace
+RUN mkdir -p /go/bin /go/src /go/pkg
+
+# Verify installations
+RUN node -v && npm -v \
+    && go version \
+    && rustc --version \
+    && java -version \
+    && mvn -version \
+    && python --version \
+    && gcc --version
 
 # Install Node.js packages globally
 RUN npm install -g \
