@@ -285,17 +285,4 @@ def setup_environment_for_agent(
     else:
         raise ValueError(f"Unsupported vendor: {vendor}")
 
-    # Add common build tools to PATH for all vendors
-    # Add maven to PATH
-    env["PATH"] = f"{os.path.expanduser('~/apache-maven-3.9.9/bin')}:{env['PATH']}"
-
-    # Add cargo to PATH
-    env["PATH"] = f"{os.path.expanduser('~/.cargo/bin')}:{env['PATH']}"
-
-    # Add go to PATH
-    env["PATH"] = f"{os.path.expanduser('/usr/local/go/bin')}:{env['PATH']}"
-
-    # Add node to PATH
-    env["PATH"] = f"{os.path.expanduser('~/.nvm/versions/node/v22.16.0/bin')}:{env['PATH']}"
-
     return env, credential_name

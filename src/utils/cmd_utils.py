@@ -669,12 +669,6 @@ async def prompt_gpt(
         # Create system prompt - use empty string if not provided in configs
         system_prompt = "You are a helpful assistant."
 
-        # Prepare message format for OpenAI
-        messages = [{"role": "system", "content": system_prompt}, {"role": "user", "content": prompt}]
-
-        # Set max tokens - use default if not in configs
-        max_tokens = configs.get("max_tokens", 4096)
-
         # Make the API call
         response = openai.responses.create(
             model=model,

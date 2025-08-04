@@ -28,7 +28,7 @@ def find_trajectory_file(session_id):
     raise FileNotFoundError(f"Trajectory file for session {session_id} not found in {trajectory_dir}.")
 
 
-def copy_trajectory_file(session_id, destination_dir):
+def copy_trajectory_file(trajectory_file, destination_dir):
     """
     Copy the trajectory file for a given session ID to the specified destination directory.
 
@@ -39,7 +39,6 @@ def copy_trajectory_file(session_id, destination_dir):
     Returns:
         str: The path to the copied trajectory file.
     """
-    trajectory_file = find_trajectory_file(session_id)
     os.makedirs(destination_dir, exist_ok=True)
     destination_path = os.path.join(destination_dir, os.path.basename(trajectory_file))
     with open(trajectory_file, "r") as src_file, open(destination_path, "w") as dest_file:
@@ -62,9 +61,12 @@ def get_agent_cost(agent_output):
 
     # Load and analyze agent trajectory files
     session_id = agent_output["session_id"]
-    trajectory_file = find_trajectory_file(session_id)
-    copy_trajectory_file(session_id, "data/agent_trajectories/claude")
+    try:
+        trajectory_file = find_trajectory_file(session_id)
+    except FileNotFoundError as e:
+        return cost
 
+    copy_trajectory_file(trajectory_file, "data/agent_trajectories/claude")
     agent_trajectory = []
     with open(trajectory_file, "r") as f:
         agent_trajectory = [json.loads(line) for line in f]
