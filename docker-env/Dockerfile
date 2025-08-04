@@ -9,6 +9,10 @@ RUN apt-get update && apt-get install -y \
     curl \
     wget \
     build-essential \
+    git \
+    vim \
+    nano \
+    less \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Go 1.24.4
@@ -76,7 +80,21 @@ RUN pip install --no-cache-dir \
     tree-sitter-rust==0.23.2 \
     tree-sitter-java==0.23.5 \
     openai==1.98.0 \
-    boto3==1.38.20
+    boto3==1.38.20 \
+    pandas==2.2.3 \
+    fastmcp==2.8.0 \
+    graphviz==0.20.3 \
+    matplotlib==3.10.5 \
+    networkx==3.5 \
+    seaborn==0.13.2 \
+    scikit-learn==1.7.1
+
+# Configure shell with basic coloring
+RUN echo 'export TERM=xterm-256color' >> /root/.bashrc \
+    && echo 'alias ls="ls --color=auto"' >> /root/.bashrc \
+    && echo 'alias grep="grep --color=auto"' >> /root/.bashrc \
+    && echo 'PS1="\[\033[1;36m\]\u\[\033[1;31m\]@\[\033[1;32m\]\h:\[\033[1;35m\]\w\[\033[1;31m\]\$\[\033[0m\] "' >> /root/.bashrc
+
 
 # Set working directory
 WORKDIR /app
