@@ -42,25 +42,11 @@ aws_credentials:
     model: us.anthropic.claude-3-7-sonnet-20250219-v1:0
 ```
 
-This assumes you have enabled access to `us.anthropic.claude-3-7-sonnet-20250219-v1:0` in region `us-west-2`. Please see [AWS Amazon Bedrock](https://aws.amazon.com/bedrock/) on more information on how to get AWS credentials and enable model access.
-
-> [!NOTE]
-> MatchFixAgent supports dynamic selection of credentials to avoid quota problems. Please add more credentials similar to `one`, and make sure to extend `available_credentials` in experiment configurations. Here is a sample [configuration](./configs/oxidizer/match_agent_oxidizer_checkdigit_go_rust.yaml).
+This assumes you have enabled access to `us.anthropic.claude-3-7-sonnet-20250219-v1:0` in region `us-west-2`. Please see [AWS Amazon Bedrock](https://aws.amazon.com/bedrock/) on more information on how to get AWS credentials and enable model access. MatchFixAgent supports dynamic selection of credentials to avoid quota problems. Please add more credentials similar to `one`, and make sure to extend `available_credentials` in experiment configurations. Here is a sample [configuration](./configs/oxidizer/match_agent_oxidizer_checkdigit_go_rust.yaml).
 
 ### Codex
 
 MatchFixAgent can be configured with other LLM agents and models. In our experiments, we show the adaptability of MatchFixAgent with OpenAI Codex agent and model. Please configure your credentials in [`openai_credentials.yaml`](./configs/openai_credentials.yaml) by pasting your `OPENAI_API_KEY` and `model` information. A sample OpenAI credential is shown below:
-
-```yaml
-aws_credentials:
-  one:
-    AWS_ACCESS_KEY_ID: <PASTE_YOUR_AWS_ACCESS_KEY_ID>
-    AWS_SECRET_ACCESS_KEY: <PASTE_YOUR_AWS_SECRET_ACCESS_KEY>
-    region: us-west-2
-    model: us.anthropic.claude-3-7-sonnet-20250219-v1:0
-```
-
-This assumes you have enabled access to `us.anthropic.claude-3-7-sonnet-20250219-v1:0` in region `us-west-2`. Please see [AWS Amazon Bedrock](https://aws.amazon.com/bedrock/) on more information on how to get AWS credentials and enable model access.
 
 ```yaml
 openai_credentials:
