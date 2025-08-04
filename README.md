@@ -31,11 +31,7 @@ bash docker_rmi.sh      # delete docker image
 
 ### Claude Code
 
-The main experiments in MatchFixAgent uses [Claude Code](https://github.com/anthropics/claude-code) as its LLM agent powered by [Claude Sonnet](https://www.anthropic.com/claude/sonnet) model. We use [AWS Amazon Bedrock](https://aws.amazon.com/bedrock/) as provider to interact with the Claude model. To reproduce our results, you are required to make sure your AWS account has Claude model enabled in your desired region. Please configure your credentials in [`aws_credentials.yaml`](./configs/aws_credentials.yaml) by pasting your `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `region`, and `model` information.
-
-<details>
-<summary><strong>See sample AWS credentials</strong></summary>
-<br>
+The main experiments in MatchFixAgent uses [Claude Code](https://github.com/anthropics/claude-code) as its LLM agent powered by [Claude Sonnet](https://www.anthropic.com/claude/sonnet) model. We use [AWS Amazon Bedrock](https://aws.amazon.com/bedrock/) as provider to interact with the Claude model. To reproduce our results, you are required to make sure your AWS account has Claude model enabled in your desired region. Please configure your credentials in [`aws_credentials.yaml`](./configs/aws_credentials.yaml) by pasting your `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `region`, and `model` information. A sample AWS credential is shown below:
 
 ```yaml
 aws_credentials:
@@ -51,15 +47,9 @@ This assumes you have enabled access to `us.anthropic.claude-3-7-sonnet-20250219
 > [!NOTE]
 > MatchFixAgent supports dynamic selection of credentials to avoid quota problems. Please add more credentials similar to `one`, and make sure to extend `available_credentials` in experiment configurations. Here is a sample [configuration](./configs/oxidizer/match_agent_oxidizer_checkdigit_go_rust.yaml).
 
-</details>
-
 ### Codex
 
-MatchFixAgent can be configured with other LLM agents and models. In our experiments, we show the adaptability of MatchFixAgent with OpenAI Codex agent and model. Please configure your credentials in [`openai_credentials.yaml`](./configs/openai_credentials.yaml) by pasting your `OPENAI_API_KEY` and `model` information.
-
-<details>
-<summary><strong>See sample AWS credentials</strong></summary>
-<br>
+MatchFixAgent can be configured with other LLM agents and models. In our experiments, we show the adaptability of MatchFixAgent with OpenAI Codex agent and model. Please configure your credentials in [`openai_credentials.yaml`](./configs/openai_credentials.yaml) by pasting your `OPENAI_API_KEY` and `model` information. A sample OpenAI credential is shown below:
 
 ```yaml
 aws_credentials:
