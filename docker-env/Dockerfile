@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     vim \
     nano \
     less \
+    graphviz \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Go 1.24.4
@@ -92,6 +93,10 @@ RUN pip install --no-cache-dir \
     jinja2==3.1.6 \
     astor==0.8.1 \
     pydot==3.0.4
+
+# Create .codex directory and copy configuration
+RUN mkdir -p /root/.codex
+COPY configs/codex_mcp_config.toml /root/.codex/
 
 # Configure shell with basic coloring
 RUN echo 'export TERM=xterm-256color' >> /root/.bashrc \
