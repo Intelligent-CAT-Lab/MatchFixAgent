@@ -779,7 +779,9 @@ if __name__ == "__main__":
         help="name of the tool to analyze (e.g., alphatrans, oxidizer, skel, rustrepotrans)",
     )
     parser.add_argument("--project_name", type=str, dest="project_name", help="name of the project to analyze")
-    parser.add_argument("--trajectory_dir", type=str, dest="trajectory_dir", help="directory containing agent trajectories")
+    parser.add_argument(
+        "--trajectory_dir", type=str, dest="trajectory_dir", help="directory containing agent trajectories"
+    )
     parser.add_argument(
         "--reset_incomplete", action="store_true", dest="reset_incomplete", help="reset incomplete responses"
     )
