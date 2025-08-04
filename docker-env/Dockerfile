@@ -87,7 +87,11 @@ RUN pip install --no-cache-dir \
     matplotlib==3.10.5 \
     networkx==3.5 \
     seaborn==0.13.2 \
-    scikit-learn==1.7.1
+    scikit-learn==1.7.1 \
+    pyyaml==6.0.2 \
+    jinja2==3.1.6 \
+    astor==0.8.1 \
+    pydot==3.0.4
 
 # Configure shell with basic coloring
 RUN echo 'export TERM=xterm-256color' >> /root/.bashrc \
