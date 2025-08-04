@@ -67,8 +67,6 @@ def cleanup(configs: dict):
         status, path = line[:2], line[3:]
         # Untracked files (“??”) → delete
         if status.strip() == "??":
-            if "package-lock.json" in path or "package.json" in path or "node_modules" in path:
-                continue
             if os.path.isdir(path):
                 shutil.rmtree(path)
             elif os.path.isfile(path):
