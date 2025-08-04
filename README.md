@@ -42,7 +42,7 @@ aws_credentials:
     model: us.anthropic.claude-3-7-sonnet-20250219-v1:0
 ```
 
-This assumes you have enabled access to `us.anthropic.claude-3-7-sonnet-20250219-v1:0` in region `us-west-2`. Please see [AWS Amazon Bedrock](https://aws.amazon.com/bedrock/) on more information on how to get AWS credentials and enable model access. MatchFixAgent supports dynamic selection of credentials to avoid quota problems. Please add more credentials similar to `one`, and make sure to extend `available_credentials` in experiment configurations. Here is a sample [configuration](./configs/oxidizer/match_agent_oxidizer_checkdigit_go_rust.yaml).
+This assumes you have enabled access to `us.anthropic.claude-3-7-sonnet-20250219-v1:0` in region `us-west-2`. Please see [AWS Amazon Bedrock](https://aws.amazon.com/bedrock/) on more information on how to get AWS credentials and enable model access. Moreover, MatchFixAgent supports dynamic selection of credentials to avoid quota problems. Please add more credentials similar to `one`, and make sure to extend `available_credentials` in experiment configurations. Here is a sample [configuration](./configs/oxidizer/match_agent_oxidizer_checkdigit_go_rust.yaml).
 
 ### Codex
 
@@ -55,12 +55,66 @@ openai_credentials:
     model: o4-mini-2025-04-16
 ```
 
-</details>
+Furthermore, Codex supports other LLMs, specifically open-source LLMs from [Open Router](https://openrouter.ai/). Please refer to [Codex README](https://github.com/openai/codex/blob/main/README.md) for more information on how to configure open-source LLMs.
 
 ## Reproducing Results
 
+MatchFixAgent depends on well-defined configuaration files to run properly. We provide all configuration files required for reproducing MatchFixAgent results in [configs](./configs).
+
 ### RQ1
+
+To run the experiment for translation validation, please execute the following script with the configuration file of your agent, tool and project. For instance, the following runs the experiment for `tool=oxidizer`, `project=checkdigit`, and `agent=match_agent`.
+
+```bash
+bash scripts/run_validation.sh configs/oxidizer/match_agent_oxidizer_checkdigit_go_rust.yaml
+```
+
+To check the effectiveness of MatchFixAgent, execute the following script to save results under `reports`:
+
+```bash
+bash scripts/analyze_validator_agent.sh match_agent oxidizer checkdigit
+```
+
 ### RQ2
+
+MatchFixAgent generates patches for incorrect translations. Please execute the following script with the configuration file of your agent, tool and project. For instance, the following runs the experiment for `tool=oxidizer`, `project=checkdigit`, and `agent=match_agent`.
+
+```bash
+bash scripts/run_repair.sh configs/oxidizer/match_agent_oxidizer_checkdigit_go_rust.yaml
+```
+
 ### RQ3
+
+To show the adaptability of MatchFixAgent with other LLM agents and models, we use OpenAI Codex and `o4-mini-2025-04-16`. Please execute the following script with the configuration file of your agent, tool and project. For instance, the following runs the experiment for `tool=oxidizer`, `project=checkdigit`, and `agent=openai_agent`.
+
+```bash
+bash scripts/run_validation.sh configs/oxidizer/openai_agent_oxidizer_checkdigit_go_rust.yaml
+```
+
+This experiment only focus on up to 4 samples from every project. If you need to run the experiment on all samples, please make necessary changes in [`sample_openai_study`](./src/analysis/sample_openai_study.py) file.
+
 ### RQ4
 
+To evaluate the impact of different components in MatchFixAgent, we perform an ablation study and run the Claude agent by itself without semantic analyses and targeted test generation. Please execute the following script with the configuration file of your agent, tool and project. For instance, the following runs the experiment for `tool=oxidizer`, `project=checkdigit`, and `agent=base_agent`.
+
+```bash
+bash scripts/run_validation.sh configs/oxidizer/base_agent_oxidizer_checkdigit_go_rust.yaml
+```
+
+## Building on MatchFixAgent
+
+### Evaluating More Projects
+
+You can evaluate MatchFixAgent on other projects. Please make sure you have:
+
+- Well-defined experiment configuration files
+- Store your fragments properly under [`data/agent_results`](./data/agent_results)
+- Store your codebases properly under [`data/tool_projects`](./data/tool_projects)
+
+### Extending Supported Languages
+
+If you need to experiment with other programming languages not supported by MatchFixAgent, please add necessary scripts under [`src/static_analysis`](./src/static_analysis). You are only required to define the `CFGBuilder` class and decide on semantics of branching statements.
+
+### MCP Servers
+
+MatchFixAgent by default uses two MCP servers, namely `DirectoryTreeExplorer` and `TestExecutor`. If you need to add more MCP servers, please add them under [`src/mcp`](./src/mcp) and configure them in [`claude_mcp_config.json`](./configs/claude_mcp_config.json) and [`codex_mcp_config.toml`](./configs/codex_mcp_config.toml).

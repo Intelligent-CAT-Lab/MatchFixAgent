@@ -2,12 +2,12 @@
 
 export PYTHONPATH=$(pwd):$PYTHONPATH
 
-PROJECT_NAME=$1
-RESULTS_DIR=$2
-TRAJECTORY_DIR=$3
-AGENT_NAME=$4
+AGENT_NAME=$1
+TOOL_NAME=$2
+PROJECT_NAME=$3
+TRAJECTORY_DIR="$HOME/.claude/projects"
 
-python3 src/analysis/analyze_validator_agent.py --project_name=$PROJECT_NAME \
-                                                --results_dir=$RESULTS_DIR \
-                                                --trajectory_dir=$TRAJECTORY_DIR \
-                                                --agent_name=$AGENT_NAME \
+python3 src/analysis/analyze_validator_agent.py --agent_name=$AGENT_NAME \
+                                                --project_name=$PROJECT_NAME \
+                                                --tool_name=$TOOL_NAME \
+                                                --trajectory_dir=$TRAJECTORY_DIR
