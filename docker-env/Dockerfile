@@ -96,7 +96,7 @@ RUN pip install --no-cache-dir \
 
 # Create .codex directory and copy configuration
 RUN mkdir -p /root/.codex
-COPY configs/codex_mcp_config.toml /root/.codex/
+COPY configs/codex_mcp_config.toml /root/.codex/config.toml
 
 # Configure shell with basic coloring
 RUN echo 'export TERM=xterm-256color' >> /root/.bashrc \
@@ -104,9 +104,26 @@ RUN echo 'export TERM=xterm-256color' >> /root/.bashrc \
     && echo 'alias grep="grep --color=auto"' >> /root/.bashrc \
     && echo 'PS1="\[\033[1;36m\]\u\[\033[1;31m\]@\[\033[1;32m\]\h:\[\033[1;35m\]\w\[\033[1;31m\]\$\[\033[0m\] "' >> /root/.bashrc
 
-
 # Set working directory
-WORKDIR /app
+WORKDIR /workspace
+
+# Create startup script for git initialization
+RUN echo '#!/bin/bash' > /usr/local/bin/init-git.sh \
+    && echo 'cd /workspace' >> /usr/local/bin/init-git.sh \
+    && echo 'if [ ! -d ".git" ]; then' >> /usr/local/bin/init-git.sh \
+    && echo '  echo "Initializing git repository..."' >> /usr/local/bin/init-git.sh \
+    && echo '  git init --initial-branch=main' >> /usr/local/bin/init-git.sh \
+    && echo '  git config user.email "ci-bot@example.com"' >> /usr/local/bin/init-git.sh \
+    && echo '  git config user.name "CI Bot"' >> /usr/local/bin/init-git.sh \
+    && echo '  git add .' >> /usr/local/bin/init-git.sh \
+    && echo '  git commit -m "Initial commit with mounted workspace"' >> /usr/local/bin/init-git.sh \
+    && echo 'fi' >> /usr/local/bin/init-git.sh \
+    && chmod +x /usr/local/bin/init-git.sh
+
+# Update bashrc to run git initialization on shell start
+RUN echo '' >> /root/.bashrc \
+    && echo '# Initialize git repository if needed' >> /root/.bashrc \
+    && echo '/usr/local/bin/init-git.sh' >> /root/.bashrc
 
 # Default command
 CMD ["/bin/bash"]
