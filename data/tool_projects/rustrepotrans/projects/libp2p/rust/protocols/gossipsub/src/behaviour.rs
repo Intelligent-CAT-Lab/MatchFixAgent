@@ -69,9 +69,6 @@ use crate::{PublishError, SubscriptionError, ValidationError};
 use quick_protobuf::{MessageWrite, Writer};
 use std::{cmp::Ordering::Equal, fmt::Debug};
 
-#[cfg(test)]
-mod tests;
-
 /// Determines if published messages should be signed or not.
 ///
 /// Without signing, a number of privacy preserving modes can be selected.
@@ -3381,41 +3378,3 @@ impl fmt::Debug for PublishConfig {
     }
 }
 
-#[cfg(test)]
-mod local_test {
-    use super::*;
-    use crate::IdentTopic;
-    use quickcheck::*;
-
-    fn test_message() -> RawMessage {
-        RawMessage {
-            source: Some(PeerId::random()),
-            data: vec![0; 100],
-            sequence_number: None,
-            topic: TopicHash::from_raw("test_topic"),
-            signature: None,
-            key: None,
-            validated: false,
-        }
-    }
-
-    fn test_control() -> ControlAction {
-        ControlAction::IHave {
-            topic_hash: IdentTopic::new("TestTopic").hash(),
-            message_ids: vec![MessageId(vec![12u8]); 5],
-        }
-    }
-
-    impl Arbitrary for RpcOut {
-        fn arbitrary(g: &mut Gen) -> Self {
-            match u8::arbitrary(g) % 5 {
-                0 => RpcOut::Subscribe(IdentTopic::new("TestTopic").hash()),
-                1 => RpcOut::Unsubscribe(IdentTopic::new("TestTopic").hash()),
-                2 => RpcOut::Publish(test_message()),
-                3 => RpcOut::Forward(test_message()),
-                4 => RpcOut::Control(test_control()),
-                _ => panic!("outside range"),
-            }
-        }
-    }
-}

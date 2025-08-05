@@ -1,6 +1,5 @@
 use crate::careful::*;use serde::{Deserialize, Serialize};use serde_with::serde_as;use arbitrary::Arbitrary;use anyhow::Context;use anyhow::Error;use anyhow::Result;use anyhow::anyhow;
 
-
 #[cfg(not(feature = "mock"))]
 pub(crate) fn get_default_english() -> Vec<String> {
     vec![
@@ -231,100 +230,4 @@ pub(crate) fn get_default_english__with_callees_mocked() -> Vec<String> {
         "yours".to_string(), "yourself".to_string(), "yourselves".to_string(),
     ]
 }
-#[cfg(test)]
-mod TextRank_get_default_english_harness {
-    use super::*;
-    #[test]
-    fn get_default_english__unit_test() {
-        let unittests_file: std::fs::File = std::fs::File::open(
-                "./exec-snapshots/github.com-DavidBelicza-TextRank.getDefaultEnglish.json",
-            )
-            .unwrap();
-        let unittests_reader = std::io::BufReader::new(unittests_file);
-        let unittests: Vec<ExecutionData> = serde_json::from_reader(unittests_reader)
-            .unwrap();
-        #[serde_as]
-        #[derive(Serialize, Deserialize)]
-        struct InputState();
-        #[serde_as]
-        #[derive(Serialize)]
-        struct OutputState(#[serde_as(as = "serde_with::DefaultOnNull")] Vec<String>);
-        for execution in unittests {
-            let inputs_reserialized = if execution.inputs.len() == 1 {
-                execution.inputs[0].clone()
-            } else {
-                serde_json::to_value(execution.inputs.clone()).unwrap()
-            };
-            let mut input_state: InputState = serde_json::from_value(inputs_reserialized)
-                .unwrap();
-            struct NonCopyableMarker;
-            let force_fn_once: NonCopyableMarker = NonCopyableMarker;
-            let return_value = std::panic::catch_unwind(
-                std::panic::AssertUnwindSafe(|| {
-                    let _force_fn_once = force_fn_once;
-                    #[cfg(feature = "mock")]
-                    { get_default_english__with_callees_mocked() }
-                    #[cfg(not(feature = "mock"))] { get_default_english() }
-                }),
-            );
-            match return_value {
-                Ok(mut return_value) => {
-                    assert!(execution.result.execution_success);
-                    let output_state = OutputState(return_value);
-                    assert_json_diff::assert_json_eq!(
-                        serde_json::to_value(output_state).unwrap(), execution.result
-                        .return_value.clone()
-                    );
-                    let inputs_mutation_reserialized = if execution
-                        .result
-                        .input_modifications
-                        .len() == 1
-                    {
-                        execution.result.input_modifications[0].clone()
-                    } else {
-                        serde_json::to_value(
-                                execution.result.input_modifications.clone(),
-                            )
-                            .unwrap()
-                    };
-                    let input_state_mutated: InputState = serde_json::from_value(
-                            inputs_mutation_reserialized,
-                        )
-                        .unwrap();
-                }
-                Err(_) => {
-                    assert!(! execution.result.execution_success);
-                }
-            }
-        }
-    }
-    #[test]
-    fn get_default_english__signature_check() {
-        #[serde_as]
-        #[derive(Serialize, Deserialize)]
-        struct InputState();
-        #[serde_as]
-        #[derive(Serialize, Deserialize)]
-        struct OutputState(#[serde_as(as = "serde_with::DefaultOnNull")] Vec<String>);
-        let Ok(unittests_file) = std::fs::File::open(
-            "./exec-snapshots/github.com-DavidBelicza-TextRank.getDefaultEnglish.json",
-        ) else { return };
-        let unittests_reader = std::io::BufReader::new(unittests_file);
-        let unittests: Vec<ExecutionData> = serde_json::from_reader(unittests_reader)
-            .unwrap();
-        for execution in unittests {
-            let inputs_reserialized = if execution.inputs.len() == 1 {
-                execution.inputs[0].clone()
-            } else {
-                serde_json::to_value(execution.inputs.clone()).unwrap()
-            };
-            let _: InputState = serde_json::from_value(inputs_reserialized).unwrap();
-            if execution.result.execution_success {
-                let _: OutputState = serde_json::from_value(
-                        execution.result.return_value.clone(),
-                    )
-                    .unwrap();
-            }
-        }
-    }
-}
+

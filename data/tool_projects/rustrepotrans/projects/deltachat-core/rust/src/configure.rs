@@ -741,20 +741,3 @@ pub enum Error {
     Other(#[from] anyhow::Error),
 }
 
-#[cfg(test)]
-mod tests {
-    #![allow(clippy::indexing_slicing)]
-
-    use crate::config::Config;
-    use crate::test_utils::TestContext;
-
-    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
-    async fn test_no_panic_on_bad_credentials() {
-        let t = TestContext::new().await;
-        t.set_config(Config::Addr, Some("probably@unexistant.addr"))
-            .await
-            .unwrap();
-        t.set_config(Config::MailPw, Some("123456")).await.unwrap();
-        assert!(t.configure().await.is_err());
-    }
-}

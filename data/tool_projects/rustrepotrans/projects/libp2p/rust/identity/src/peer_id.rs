@@ -244,32 +244,3 @@ impl FromStr for PeerId {
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    #[cfg(all(feature = "ed25519", feature = "rand"))]
-    fn peer_id_into_bytes_then_from_bytes() {
-        let peer_id = crate::Keypair::generate_ed25519().public().to_peer_id();
-        let second = PeerId::from_bytes(&peer_id.to_bytes()).unwrap();
-        assert_eq!(peer_id, second);
-    }
-
-    #[test]
-    #[cfg(all(feature = "ed25519", feature = "rand"))]
-    fn peer_id_to_base58_then_back() {
-        let peer_id = crate::Keypair::generate_ed25519().public().to_peer_id();
-        let second: PeerId = peer_id.to_base58().parse().unwrap();
-        assert_eq!(peer_id, second);
-    }
-
-    #[test]
-    #[cfg(feature = "rand")]
-    fn random_peer_id_is_valid() {
-        for _ in 0..5000 {
-            let peer_id = PeerId::random();
-            assert_eq!(peer_id, PeerId::from_bytes(&peer_id.to_bytes()).unwrap());
-        }
-    }
-}

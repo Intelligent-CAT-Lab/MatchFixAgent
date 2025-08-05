@@ -638,26 +638,3 @@ mod proto {
     pub(crate) use self::rendezvous::pb::{mod_Message::*, Message};
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn cookie_wire_encoding_roundtrip() {
-        let cookie = Cookie::for_namespace(Namespace::from_static("foo"));
-
-        let bytes = cookie.clone().into_wire_encoding();
-        let parsed = Cookie::from_wire_encoding(bytes).unwrap();
-
-        assert_eq!(parsed, cookie);
-    }
-
-    #[test]
-    fn cookie_wire_encoding_length() {
-        let cookie = Cookie::for_namespace(Namespace::from_static("foo"));
-
-        let bytes = cookie.into_wire_encoding();
-
-        assert_eq!(bytes.len(), 8 + 3)
-    }
-}

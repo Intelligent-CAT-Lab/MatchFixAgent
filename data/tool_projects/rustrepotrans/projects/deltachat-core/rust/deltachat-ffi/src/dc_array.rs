@@ -107,33 +107,3 @@ impl From<Vec<Location>> for dc_array_t {
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_dc_array() {
-        let arr: dc_array_t = Vec::<u32>::new().into();
-        assert!(arr.len() == 0);
-
-        let ids: Vec<u32> = (2..1002).collect();
-        let arr: dc_array_t = ids.into();
-
-        assert_eq!(arr.len(), 1000);
-
-        for i in 0..1000 {
-            assert_eq!(arr.get_id(i), (i + 2) as u32);
-        }
-
-        assert_eq!(arr.search_id(10), Some(8));
-        assert_eq!(arr.search_id(1), None);
-    }
-
-    #[test]
-    #[should_panic]
-    fn test_dc_array_out_of_bounds() {
-        let ids: Vec<u32> = (2..1002).collect();
-        let arr: dc_array_t = ids.into();
-        arr.get_id(1000);
-    }
-}

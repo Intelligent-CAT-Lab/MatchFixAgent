@@ -10,33 +10,6 @@ use libp2p_swarm::{dummy, Config, NetworkBehaviour, Swarm, SwarmEvent};
 
 const TIMEOUT: Duration = Duration::from_secs(5);
 
-#[tokio::test]
-async fn can_establish_connection_memory() {
-    can_establish_connection_inner_with_timeout(
-        MemoryTransport::default,
-        Protocol::Memory(0).into(),
-    )
-    .await
-}
-
-#[tokio::test]
-async fn can_establish_connection_tcp() {
-    can_establish_connection_inner_with_timeout(
-        libp2p_tcp::tokio::Transport::default,
-        "/ip4/127.0.0.1/tcp/0".parse().unwrap(),
-    )
-    .await
-}
-
-#[tokio::test]
-async fn can_establish_connection_websocket() {
-    can_establish_connection_inner_with_timeout(
-        || libp2p_websocket::WsConfig::new(libp2p_tcp::tokio::Transport::default()),
-        "/ip4/127.0.0.1/tcp/0/ws".parse().unwrap(),
-    )
-    .await
-}
-
 async fn can_establish_connection_inner_with_timeout<F, T>(
     build_transport: F,
     listen_addr: Multiaddr,

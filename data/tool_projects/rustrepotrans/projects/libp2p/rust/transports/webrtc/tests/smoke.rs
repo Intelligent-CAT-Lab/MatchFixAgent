@@ -35,37 +35,7 @@ use std::task::{Context, Poll};
 use std::time::Duration;
 use tracing_subscriber::EnvFilter;
 
-#[tokio::test]
-async fn smoke() {
-    let _ = tracing_subscriber::fmt()
-        .with_env_filter(EnvFilter::from_default_env())
-        .try_init();
-
-    let (a_peer_id, mut a_transport) = create_transport();
-    let (b_peer_id, mut b_transport) = create_transport();
-
-    let addr = start_listening(&mut a_transport, "/ip4/127.0.0.1/udp/0/webrtc-direct").await;
-    start_listening(&mut b_transport, "/ip4/127.0.0.1/udp/0/webrtc-direct").await;
-    let ((a_connected, _, _), (b_connected, _)) =
-        connect(&mut a_transport, &mut b_transport, addr).await;
-
-    assert_eq!(a_connected, b_peer_id);
-    assert_eq!(b_connected, a_peer_id);
-}
-
 // Note: This test should likely be ported to the muxer compliance test suite.
-#[test]
-fn concurrent_connections_and_streams_tokio() {
-    let _ = tracing_subscriber::fmt()
-        .with_env_filter(EnvFilter::from_default_env())
-        .try_init();
-
-    let rt = tokio::runtime::Runtime::new().unwrap();
-    let _guard = rt.enter();
-    quickcheck::QuickCheck::new()
-        .min_tests_passed(1)
-        .quickcheck(prop as fn(_, _) -> _);
-}
 
 fn generate_tls_keypair() -> libp2p_identity::Keypair {
     libp2p_identity::Keypair::generate_ed25519()

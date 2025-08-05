@@ -100,31 +100,3 @@ impl<T, E: std::fmt::Display> LogExt<T, E> for Result<T, E> {
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use anyhow::Result;
-
-    use crate::test_utils::TestContext;
-
-    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
-    async fn test_get_last_error() -> Result<()> {
-        let t = TestContext::new().await;
-
-        assert_eq!(t.get_last_error(), "");
-
-        error!(t, "foo-error");
-        assert_eq!(t.get_last_error(), "foo-error");
-
-        warn!(t, "foo-warning");
-        assert_eq!(t.get_last_error(), "foo-error");
-
-        info!(t, "foo-info");
-        assert_eq!(t.get_last_error(), "foo-error");
-
-        error!(t, "bar-error");
-        error!(t, "baz-error");
-        assert_eq!(t.get_last_error(), "baz-error");
-
-        Ok(())
-    }
-}

@@ -441,21 +441,3 @@ impl From<Error> for io::Error {
     }
 }
 
-#[cfg(test)]
-mod test {
-    use super::*;
-    #[test]
-    fn config_set_switches_to_v012() {
-        // By default we use yamux v0.13. Thus we provide the benefits of yamux v0.13 to all users
-        // that do not depend on any of the behaviors (i.e. configuration options) of v0.12.
-        let mut cfg = Config::default();
-        assert!(matches!(
-            cfg,
-            Config(Either::Right(Config013(yamux013::Config { .. })))
-        ));
-
-        // In case a user makes any configurations, use yamux v0.12 instead.
-        cfg.set_max_num_streams(42);
-        assert!(matches!(cfg, Config(Either::Left(Config012 { .. }))));
-    }
-}

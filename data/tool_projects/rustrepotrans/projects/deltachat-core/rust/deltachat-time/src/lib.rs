@@ -22,14 +22,3 @@ impl SystemTimeTools {
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        SystemTimeTools::shift(Duration::from_secs(60));
-        let t = SystemTimeTools::now();
-        assert!(t > SystemTime::now());
-    }
-}

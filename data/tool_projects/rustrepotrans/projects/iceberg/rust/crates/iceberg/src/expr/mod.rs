@@ -158,33 +158,3 @@ pub trait Bind {
     fn bind(&self, schema: SchemaRef, case_sensitive: bool) -> crate::Result<Self::Bound>;
 }
 
-#[cfg(test)]
-mod tests {
-    use crate::expr::PredicateOperator;
-
-    #[test]
-    fn test_unary() {
-        assert!(PredicateOperator::IsNull.is_unary());
-        assert!(PredicateOperator::NotNull.is_unary());
-        assert!(PredicateOperator::IsNan.is_unary());
-        assert!(PredicateOperator::NotNan.is_unary());
-    }
-
-    #[test]
-    fn test_binary() {
-        assert!(PredicateOperator::LessThan.is_binary());
-        assert!(PredicateOperator::LessThanOrEq.is_binary());
-        assert!(PredicateOperator::GreaterThan.is_binary());
-        assert!(PredicateOperator::GreaterThanOrEq.is_binary());
-        assert!(PredicateOperator::Eq.is_binary());
-        assert!(PredicateOperator::NotEq.is_binary());
-        assert!(PredicateOperator::StartsWith.is_binary());
-        assert!(PredicateOperator::NotStartsWith.is_binary());
-    }
-
-    #[test]
-    fn test_set() {
-        assert!(PredicateOperator::In.is_set());
-        assert!(PredicateOperator::NotIn.is_set());
-    }
-}

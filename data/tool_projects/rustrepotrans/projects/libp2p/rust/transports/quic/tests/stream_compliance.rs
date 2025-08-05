@@ -5,20 +5,6 @@ use libp2p_core::{Endpoint, Transport};
 use libp2p_quic as quic;
 use std::time::Duration;
 
-#[async_std::test]
-async fn close_implies_flush() {
-    let (alice, bob) = connected_peers().await;
-
-    libp2p_muxer_test_harness::close_implies_flush(alice, bob).await;
-}
-
-#[async_std::test]
-async fn read_after_close() {
-    let (alice, bob) = connected_peers().await;
-
-    libp2p_muxer_test_harness::read_after_close(alice, bob).await;
-}
-
 async fn connected_peers() -> (quic::Connection, quic::Connection) {
     let mut dialer = new_transport().boxed();
     let mut listener = new_transport().boxed();

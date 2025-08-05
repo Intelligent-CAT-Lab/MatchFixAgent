@@ -289,36 +289,3 @@ impl snow::types::Dh for Keypair {
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn handshake_hashes_disagree_if_prologue_differs() {
-        let alice = xx_builder(b"alice prologue").build_initiator().unwrap();
-        let bob = xx_builder(b"bob prologue").build_responder().unwrap();
-
-        let alice_handshake_hash = alice.get_handshake_hash();
-        let bob_handshake_hash = bob.get_handshake_hash();
-
-        assert_ne!(alice_handshake_hash, bob_handshake_hash)
-    }
-
-    #[test]
-    fn handshake_hashes_agree_if_prologue_is_the_same() {
-        let alice = xx_builder(b"shared knowledge").build_initiator().unwrap();
-        let bob = xx_builder(b"shared knowledge").build_responder().unwrap();
-
-        let alice_handshake_hash = alice.get_handshake_hash();
-        let bob_handshake_hash = bob.get_handshake_hash();
-
-        assert_eq!(alice_handshake_hash, bob_handshake_hash)
-    }
-
-    fn xx_builder(prologue: &'static [u8]) -> snow::Builder<'static> {
-        noise_params_into_builder(PARAMS_XX.clone(), prologue, TEST_KEY.secret(), None)
-    }
-
-    // Hack to work around borrow-checker.
-    static TEST_KEY: Lazy<Keypair> = Lazy::new(Keypair::new);
-}

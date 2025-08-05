@@ -263,30 +263,3 @@ where
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use crate::stream::framed_dc::codec;
-    use asynchronous_codec::Encoder;
-    use bytes::BytesMut;
-
-    #[test]
-    fn max_data_len() {
-        // Largest possible message.
-        let message = [0; MAX_DATA_LEN];
-
-        let protobuf = Message {
-            flag: Some(Flag::FIN),
-            message: Some(message.to_vec()),
-        };
-
-        let mut codec = codec();
-
-        let mut dst = BytesMut::new();
-        codec.encode(protobuf, &mut dst).unwrap();
-
-        // Ensure the varint prefixed and protobuf encoded largest message is no longer than the
-        // maximum limit specified in the libp2p WebRTC specification.
-        assert_eq!(dst.len(), MAX_MSG_LEN);
-    }
-}

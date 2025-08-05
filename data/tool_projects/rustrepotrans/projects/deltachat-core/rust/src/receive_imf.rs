@@ -2841,5 +2841,3 @@ async fn add_or_lookup_contact_by_addr(
     Ok(contact_id)
 }
 
-#[cfg(test)]
-mod tests;

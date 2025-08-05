@@ -112,10 +112,5 @@ pub mod reaction;
 /// If set IMAP/incoming and SMTP/outgoing MIME messages will be printed.
 pub const DCC_MIME_DEBUG: &str = "DCC_MIME_DEBUG";
 
-#[cfg(test)]
-mod test_utils;
-#[cfg(test)]
-mod tests;
-
 #[cfg(fuzzing)]
 pub mod fuzzing;

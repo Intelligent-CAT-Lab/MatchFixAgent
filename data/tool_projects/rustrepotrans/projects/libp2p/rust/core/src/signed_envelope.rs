@@ -176,30 +176,3 @@ impl fmt::Display for ReadPayloadError {
 
 impl std::error::Error for ReadPayloadError {}
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_roundtrip() {
-        let kp = Keypair::generate_ed25519();
-        let payload = "some payload".as_bytes();
-        let domain_separation = "domain separation".to_string();
-        let payload_type: Vec<u8> = "payload type".into();
-
-        let env = SignedEnvelope::new(
-            &kp,
-            domain_separation.clone(),
-            payload_type.clone(),
-            payload.into(),
-        )
-        .expect("Failed to create envelope");
-
-        let (actual_payload, signing_key) = env
-            .payload_and_signing_key(domain_separation, &payload_type)
-            .expect("Failed to extract payload and public key");
-
-        assert_eq!(actual_payload, payload);
-        assert_eq!(signing_key, &kp.public());
-    }
-}

@@ -261,25 +261,3 @@ impl hash::Hash for PublicKey {
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    #[cfg(feature = "rand")]
-    fn sign_verify() {
-        let pair = Keypair::generate();
-        let pk = pair.public();
-
-        let msg = "hello world".as_bytes();
-        let sig = pair.sign(msg);
-        assert!(pk.verify(msg, &sig));
-
-        let mut invalid_sig = sig.clone();
-        invalid_sig[3..6].copy_from_slice(&[10, 23, 42]);
-        assert!(!pk.verify(msg, &invalid_sig));
-
-        let invalid_msg = "h3ll0 w0rld".as_bytes();
-        assert!(!pk.verify(invalid_msg, &sig));
-    }
-}

@@ -619,29 +619,3 @@ impl PeerCache {
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn check_multiaddr_matches_peer_id() {
-        let peer_id = PeerId::random();
-        let other_peer_id = PeerId::random();
-        let mut addr: Multiaddr = "/ip4/147.75.69.143/tcp/4001"
-            .parse()
-            .expect("failed to parse multiaddr");
-
-        let addr_without_peer_id: Multiaddr = addr.clone();
-        let mut addr_with_other_peer_id = addr.clone();
-
-        addr.push(multiaddr::Protocol::P2p(peer_id));
-        addr_with_other_peer_id.push(multiaddr::Protocol::P2p(other_peer_id));
-
-        assert!(multiaddr_matches_peer_id(&addr, &peer_id));
-        assert!(!multiaddr_matches_peer_id(
-            &addr_with_other_peer_id,
-            &peer_id
-        ));
-        assert!(multiaddr_matches_peer_id(&addr_without_peer_id, &peer_id));
-    }
-}

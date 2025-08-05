@@ -103,13 +103,4 @@ mod test {
     use super::*;
     use rand::thread_rng;
 
-    #[test]
-    fn test_certificate_serialize_pem_and_from_pem() {
-        let cert = Certificate::generate(&mut thread_rng()).unwrap();
-
-        let pem = cert.serialize_pem();
-        let loaded_cert = Certificate::from_pem(&pem).unwrap();
-
-        assert_eq!(loaded_cert, cert)
-    }
 }

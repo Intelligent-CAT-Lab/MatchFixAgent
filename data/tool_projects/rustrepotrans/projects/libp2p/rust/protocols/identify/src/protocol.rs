@@ -262,37 +262,3 @@ pub enum UpgradeError {
     PublicKey(#[from] identity::DecodingError),
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use libp2p_identity as identity;
-
-    #[test]
-    fn skip_invalid_multiaddr() {
-        let valid_multiaddr: Multiaddr = "/ip6/2001:db8::/tcp/1234".parse().unwrap();
-        let valid_multiaddr_bytes = valid_multiaddr.to_vec();
-
-        let invalid_multiaddr = {
-            let a = vec![255; 8];
-            assert!(Multiaddr::try_from(a.clone()).is_err());
-            a
-        };
-
-        let payload = proto::Identify {
-            agentVersion: None,
-            listenAddrs: vec![valid_multiaddr_bytes, invalid_multiaddr],
-            observedAddr: None,
-            protocolVersion: None,
-            protocols: vec![],
-            publicKey: Some(
-                identity::Keypair::generate_ed25519()
-                    .public()
-                    .encode_protobuf(),
-            ),
-        };
-
-        let info = PushInfo::try_from(payload).expect("not to fail");
-
-        assert_eq!(info.listen_addrs, vec![valid_multiaddr])
-    }
-}

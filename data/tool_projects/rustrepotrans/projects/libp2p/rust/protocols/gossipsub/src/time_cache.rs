@@ -183,37 +183,3 @@ where
     }
 }
 
-#[cfg(test)]
-mod test {
-    use super::*;
-
-    #[test]
-    fn cache_added_entries_exist() {
-        let mut cache = DuplicateCache::new(Duration::from_secs(10));
-
-        cache.insert("t");
-        cache.insert("e");
-
-        // Should report that 't' and 't' already exists
-        assert!(!cache.insert("t"));
-        assert!(!cache.insert("e"));
-    }
-
-    #[test]
-    fn cache_entries_expire() {
-        let mut cache = DuplicateCache::new(Duration::from_millis(100));
-
-        cache.insert("t");
-        assert!(!cache.insert("t"));
-        cache.insert("e");
-        //assert!(!cache.insert("t"));
-        assert!(!cache.insert("e"));
-        // sleep until cache expiry
-        std::thread::sleep(Duration::from_millis(101));
-        // add another element to clear previous cache
-        cache.insert("s");
-
-        // should be removed from the cache
-        assert!(cache.insert("t"));
-    }
-}

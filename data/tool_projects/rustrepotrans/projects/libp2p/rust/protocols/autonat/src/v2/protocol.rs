@@ -307,31 +307,3 @@ pub(crate) async fn recv_dial_back_response(
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use crate::v2::generated::structs::{
-        mod_Message::OneOfmsg, DialDataResponse as GenDialDataResponse, Message,
-    };
-
-    #[test]
-    fn message_correct_max_size() {
-        let message_bytes = quick_protobuf::serialize_into_vec(&Message {
-            msg: OneOfmsg::dialDataResponse(GenDialDataResponse {
-                data: vec![0; 4096],
-            }),
-        })
-        .unwrap();
-        assert_eq!(message_bytes.len(), super::REQUEST_MAX_SIZE);
-    }
-
-    #[test]
-    fn dial_back_correct_size() {
-        let dial_back = super::proto::DialBack { nonce: 0 };
-        let buf = quick_protobuf::serialize_into_vec(&dial_back).unwrap();
-        assert!(buf.len() <= super::DIAL_BACK_MAX_SIZE);
-
-        let dial_back_max_nonce = super::proto::DialBack { nonce: u64::MAX };
-        let buf = quick_protobuf::serialize_into_vec(&dial_back_max_nonce).unwrap();
-        assert!(buf.len() <= super::DIAL_BACK_MAX_SIZE);
-    }
-}

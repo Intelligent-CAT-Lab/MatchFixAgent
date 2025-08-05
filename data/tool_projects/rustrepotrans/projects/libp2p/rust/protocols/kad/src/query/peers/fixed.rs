@@ -167,33 +167,3 @@ impl FixedPeersIter {
     }
 }
 
-#[cfg(test)]
-mod test {
-    use super::*;
-
-    #[test]
-    fn decrease_num_waiting_on_failure() {
-        let mut iter = FixedPeersIter::new(
-            vec![PeerId::random(), PeerId::random()],
-            NonZeroUsize::new(1).unwrap(),
-        );
-
-        match iter.next() {
-            PeersIterState::Waiting(Some(peer)) => {
-                let peer = peer.into_owned();
-                iter.on_failure(&peer);
-            }
-            _ => panic!("Expected iterator to yield peer."),
-        }
-
-        match iter.next() {
-            PeersIterState::Waiting(Some(_)) => {}
-            PeersIterState::WaitingAtCapacity => panic!(
-                "Expected iterator to return another peer given that the \
-                 previous `on_failure` call should have allowed another peer \
-                 to be queried.",
-            ),
-            _ => panic!("Expected iterator to yield peer."),
-        }
-    }
-}

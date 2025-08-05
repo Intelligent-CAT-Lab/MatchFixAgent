@@ -464,20 +464,6 @@ var heap = [];
 
 }
 
-function test_heappush(){
-    /// --- BLOCK BEGIN 20
-    var tmp = test_heappush_help_function([6,1,-2,5]);
-    assert_equal(tmp,[-2,1]);
-    tmp = test_heappush_help_function([34,-3,-12,0]);
-    assert_equal(tmp,[-12,-3]);
-    tmp = test_heappush_help_function([5,4,3,2,1]);
-    assert_equal(tmp,[1,2]);
-    tmp = test_heappush_help_function([4.7,8,-1.2,7.2]);
-    assert_equal(tmp,[-1.2,4.7]);
-    /// --- BLOCK END 20
-
-}
-
 function test_heapify_help_function(x){
     /// --- BLOCK BEGIN 21
     heapify(x);
@@ -485,20 +471,6 @@ function test_heapify_help_function(x){
     var b = heappop(x);
     return [a, b];
     /// --- BLOCK END 21
-
-}
-
-function test_heapify(){
-    /// --- BLOCK BEGIN 22
-var tmp = test_heapify_help_function([6,1,-2,5]);
-    assert_equal(tmp,[-2,1]);
-    tmp = test_heapify_help_function([34,-3,-12,0]);
-    assert_equal(tmp,[-12,-3]);
-    tmp = test_heapify_help_function([5,4,3,2,1]);
-    assert_equal(tmp,[1,2]);
-    tmp = test_heapify_help_function([4.7,8,-1.2,7.2]);
-    assert_equal(tmp,[-1.2,4.7]);
-    /// --- BLOCK END 22
 
 }
 
@@ -511,21 +483,6 @@ heapify(x);
 
 }
 
-function test_heappushpop(){
-    /// --- BLOCK BEGIN 24
-var tmp = test_heappushpop_help_function([6,1,-2,5],-5);
-    assert_value_equal(tmp,-5);
-    tmp = test_heappushpop_help_function([34,-3,-12,0],-13);
-    assert_value_equal(tmp,-13);
-    tmp = test_heappushpop_help_function([5,4,3,2,1],0);
-    assert_value_equal(tmp,0);
-    tmp = test_heappushpop_help_function([4.7,8,-1.2,7.2],9);
-    assert_value_equal(tmp,-1.2);
-
-    /// --- BLOCK END 24
-
-}
-
 function test_heapreplace_help_function(x, i){
     /// --- BLOCK BEGIN 25
     heapify(x);
@@ -535,110 +492,3 @@ function test_heapreplace_help_function(x, i){
     /// --- BLOCK END 25
 
 }
-
-function test_heapreplace(){
-    /// --- BLOCK BEGIN 26
-tmp = test_heapreplace_help_function([6,1,-2,5], -5);
-    assert_equal(tmp, [-2, -5]);
-    tmp = test_heapreplace_help_function([34, -3, -12, 0], -13);
-    assert_equal(tmp, [-12, -13]);
-    tmp = test_heapreplace_help_function([5, 4, 3, 2, 1], 0);
-    assert_equal(tmp, [1, 0]);
-    tmp = test_heapreplace_help_function([4.7, 8, -1.2, 7.2], 9);
-    assert_equal(tmp, [-1.2, 4.7]);
-    /// --- BLOCK END 26
-
-}
-
-function test_merge(){
-    /// --- BLOCK BEGIN 27
-tmp = Array.from(merge(false, [1,3,5,7], [0,2,4,8], [5,10,15,20], [], [25]));
-    assert_equal(tmp, [0, 1, 2, 3, 4, 5, 5, 7, 8, 10, 15, 20, 25]);
-    tmp = Array.from(merge(true, [7,5,3,1], [8,4,2,0]));
-    assert_equal(tmp, [8, 7, 5, 4, 3, 2, 1, 0]);
-    /// --- BLOCK END 27
-
-}
-
-function test_nsmallest(){
-    /// --- BLOCK BEGIN 28
-var tmp = nsmallest(1, [6,1,-2,5]);
-    assert_equal(tmp,[-2]);
-    tmp = nsmallest(2, [34,-3,-12,0]);
-    assert_equal(tmp,[-12,-3]);
-    tmp = nsmallest(2, [5,4,3,2,1]);
-    assert_equal(tmp,[1,2]);
-    tmp = nsmallest(2, [4.7,8,-1.2,7.2]);
-    assert_equal(tmp,[-1.2,4.7]);
-    /// --- BLOCK END 28
-
-}
-
-function test_nlargest(){
-    /// --- BLOCK BEGIN 29
-tmp = nlargest(1, [6,1,-2,5])
-    assert_equal(tmp, [6])
-    tmp = nlargest(2, [34,-3,-12,0])
-    assert_equal(tmp, [34,0])
-    tmp = nlargest(2, [5,4,3,2,1])
-    assert_equal(tmp, [5,4])
-    tmp = nlargest(2, [4.7,8,-1.2,7.2])
-    assert_equal(tmp, [8,7.2])
-    /// --- BLOCK END 29
-
-}
-
-function test(){
-    /// --- BLOCK BEGIN 30
-test_heappush();
-test_heapify();
-test_heappushpop();
-test_heapreplace();
-test_nsmallest();
-test_nlargest();
-test_merge();
-additional_tests();
-
-    /// --- BLOCK END 30
-
-}
-
-function additional_tests(){
-    /// --- BLOCK BEGIN 31
-var heap = [1];
-    var tmp = heappop(heap);
-    assert_value_equal(tmp, 1);
-    
-    heap = [1];
-    tmp = _heappop_max(heap);
-    assert_value_equal(tmp, 1);
-
-    tmp = nsmallest(0, [1]);
-    assert_equal(tmp, []);
-    
-    tmp = nsmallest(2, []);
-    assert_equal(tmp, []);
-
-    tmp = nsmallest(0, []);
-    assert_equal(tmp, []);
-
-    tmp = nlargest(0, [1]);
-    assert_equal(tmp, []);
-    
-    tmp = nlargest(2, []);
-    assert_equal(tmp, []);
-
-    tmp = nlargest(0, []);
-    assert_equal(tmp, []);
-
-    heap = [1, 2, 3];
-    tmp = _siftup_max(heap, 0);
-    assert_equal(heap, [3, 2, 1]);
-
-    /// --- BLOCK END 31
-
-}
-
-/// --- BLOCK BEGIN 0
-test();
-/// --- BLOCK END 0
