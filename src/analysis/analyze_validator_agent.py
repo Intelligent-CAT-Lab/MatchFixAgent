@@ -430,10 +430,22 @@ def main(args):
                             "other",
                         ]:
                             agent_output = item[args.agent_name]["output"]["verdict"]
-                            copy_trajectory_file(item[args.agent_name]["output"]["verdict"]["first_json"]["session_id"]) if args.agent_name == "match_agent" else None
+                            (
+                                copy_trajectory_file(
+                                    item[args.agent_name]["output"]["verdict"]["first_json"]["session_id"]
+                                )
+                                if args.agent_name == "match_agent"
+                                else None
+                            )
                         else:
                             agent_output = item[args.agent_name]["output"]["test_repair"]
-                            copy_trajectory_file(item[args.agent_name]["output"]["test_repair"]["first_json"]["session_id"]) if args.agent_name == "match_agent" else None
+                            (
+                                copy_trajectory_file(
+                                    item[args.agent_name]["output"]["test_repair"]["first_json"]["session_id"]
+                                )
+                                if args.agent_name == "match_agent"
+                                else None
+                            )
 
                     total_methods += 1
 
