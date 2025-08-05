@@ -4,6 +4,9 @@ if [ "${PWD: -10}" != "docker-env" ]; then
     exit 1
 fi
 
+mkdir -p ../logs
+mkdir -p ../reports
+
 docker run --name matchfixagent_container -d -t \
     --mount type=bind,source=$PWD/../configs,target=/workspace/configs \
     --mount type=bind,source=$PWD/../data,target=/workspace/data \
