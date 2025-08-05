@@ -39,29 +39,3 @@ pub fn str_to_color(s: &str) -> u32 {
 pub fn color_int_to_hex_string(color: u32) -> String {
     format!("{color:#08x}").replace("0x", "#")
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_str_to_angle() {
-        // Test against test vectors from
-        // <https://xmpp.org/extensions/xep-0392.html#testvectors-fullrange-no-cvd>
-        assert!((str_to_angle("Romeo") - 327.255249).abs() < 1e-6);
-        assert!((str_to_angle("juliet@capulet.lit") - 209.410400).abs() < 1e-6);
-        assert!((str_to_angle("😺") - 331.199341).abs() < 1e-6);
-        assert!((str_to_angle("council") - 359.994507).abs() < 1e-6);
-        assert!((str_to_angle("Board") - 171.430664).abs() < 1e-6);
-    }
-
-    #[test]
-    fn test_rgb_to_u32() {
-        assert_eq!(rgb_to_u32((0.0, 0.0, 0.0)), 0);
-        assert_eq!(rgb_to_u32((1.0, 1.0, 1.0)), 0xffffff);
-        assert_eq!(rgb_to_u32((0.0, 0.0, 1.0)), 0x0000ff);
-        assert_eq!(rgb_to_u32((0.0, 1.0, 0.0)), 0x00ff00);
-        assert_eq!(rgb_to_u32((1.0, 0.0, 0.0)), 0xff0000);
-        assert_eq!(rgb_to_u32((1.0, 0.5, 0.0)), 0xff8000);
-    }
-}

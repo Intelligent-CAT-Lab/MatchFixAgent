@@ -151,36 +151,3 @@ impl Context {
         Ok(())
     }
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
-    async fn test_needs_quota_warning() -> Result<()> {
-        assert!(!needs_quota_warning(0, 0));
-        assert!(!needs_quota_warning(10, 0));
-        assert!(!needs_quota_warning(70, 0));
-        assert!(!needs_quota_warning(75, 0));
-        assert!(!needs_quota_warning(79, 0));
-        assert!(needs_quota_warning(80, 0));
-        assert!(needs_quota_warning(81, 0));
-        assert!(!needs_quota_warning(85, 80));
-        assert!(!needs_quota_warning(85, 81));
-        assert!(needs_quota_warning(95, 82));
-        assert!(!needs_quota_warning(97, 95));
-        assert!(!needs_quota_warning(97, 96));
-        assert!(!needs_quota_warning(1000, 96));
-        Ok(())
-    }
-
-    #[allow(clippy::assertions_on_constants)]
-    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
-    async fn test_quota_thresholds() -> anyhow::Result<()> {
-        assert!(QUOTA_ALLCLEAR_PERCENTAGE > 50);
-        assert!(QUOTA_ALLCLEAR_PERCENTAGE < QUOTA_WARN_THRESHOLD_PERCENTAGE);
-        assert!(QUOTA_WARN_THRESHOLD_PERCENTAGE < QUOTA_ERROR_THRESHOLD_PERCENTAGE);
-        assert!(QUOTA_ERROR_THRESHOLD_PERCENTAGE < 100);
-        Ok(())
-    }
-}

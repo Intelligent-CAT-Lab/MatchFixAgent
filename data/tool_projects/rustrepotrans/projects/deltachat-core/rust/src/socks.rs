@@ -117,35 +117,3 @@ impl fmt::Display for Socks5Config {
         )
     }
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_socks5h_url() {
-        let config = Socks5Config {
-            host: "127.0.0.1".to_string(),
-            port: 9050,
-            user_password: None,
-        };
-        assert_eq!(config.to_url(), "socks5h://127.0.0.1:9050");
-
-        let config = Socks5Config {
-            host: "example.org".to_string(),
-            port: 1080,
-            user_password: Some(("root".to_string(), "toor".to_string())),
-        };
-        assert_eq!(config.to_url(), "socks5h://root:toor@example.org:1080");
-
-        let config = Socks5Config {
-            host: "example.org".to_string(),
-            port: 1080,
-            user_password: Some(("root".to_string(), "foo/?\\@".to_string())),
-        };
-        assert_eq!(
-            config.to_url(),
-            "socks5h://root:foo%2F%3F%5C%40@example.org:1080"
-        );
-    }
-}

@@ -2840,6 +2840,3 @@ async fn add_or_lookup_contact_by_addr(
         Contact::add_or_lookup(context, &display_name_normalized, &addr, origin).await?;
     Ok(contact_id)
 }
-
-#[cfg(test)]
-mod tests;
