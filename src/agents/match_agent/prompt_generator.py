@@ -285,9 +285,6 @@ class MatchAgentPromptGenerator:
             and "response_format" in self.prompt_templates["templates"]["match_agent"][agent_type]
         ):
             prompt += self.prompt_templates["templates"]["match_agent"][agent_type]["response_format"]
-        else:
-            # Fallback to match_agent base response format if specific agent response format not found
-            prompt += self.prompt_templates["templates"]["match_agent"]["response_format"]
         prompt += "\n\n"
 
         return prompt
