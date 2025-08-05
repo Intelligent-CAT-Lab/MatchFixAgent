@@ -28,7 +28,7 @@ def find_trajectory_file(session_id):
     raise FileNotFoundError(f"Trajectory file for session {session_id} not found in {trajectory_dir}.")
 
 
-def copy_trajectory_file(trajectory_file, destination_dir):
+def copy_trajectory_file(session_id):
     """
     Copy the trajectory file for a given session ID to the specified destination directory.
 
@@ -39,11 +39,17 @@ def copy_trajectory_file(trajectory_file, destination_dir):
     Returns:
         str: The path to the copied trajectory file.
     """
-    os.makedirs(destination_dir, exist_ok=True)
-    destination_path = os.path.join(destination_dir, os.path.basename(trajectory_file))
+
+    try:
+        trajectory_file = find_trajectory_file(session_id)
+    except FileNotFoundError as e:
+        return False, str(e)
+
+    os.makedirs("data/agent_trajectories/claude", exist_ok=True)
+    destination_path = os.path.join("data/agent_trajectories/claude", os.path.basename(trajectory_file))
     with open(trajectory_file, "r") as src_file, open(destination_path, "w") as dest_file:
         dest_file.write(src_file.read())
-    return destination_path
+    return True, trajectory_file
 
 
 def get_agent_cost(agent_output):
@@ -61,12 +67,11 @@ def get_agent_cost(agent_output):
 
     # Load and analyze agent trajectory files
     session_id = agent_output["session_id"]
-    try:
-        trajectory_file = find_trajectory_file(session_id)
-    except FileNotFoundError as e:
+
+    found, trajectory_file = copy_trajectory_file(session_id)
+    if not found:
         return cost
 
-    copy_trajectory_file(trajectory_file, "data/agent_trajectories/claude")
     agent_trajectory = []
     with open(trajectory_file, "r") as f:
         agent_trajectory = [json.loads(line) for line in f]
@@ -425,8 +430,10 @@ def main(args):
                             "other",
                         ]:
                             agent_output = item[args.agent_name]["output"]["verdict"]
+                            copy_trajectory_file(item[args.agent_name]["output"]["verdict"]["first_json"]["session_id"]) if args.agent_name == "match_agent" else None
                         else:
                             agent_output = item[args.agent_name]["output"]["test_repair"]
+                            copy_trajectory_file(item[args.agent_name]["output"]["test_repair"]["first_json"]["session_id"]) if args.agent_name == "match_agent" else None
 
                     total_methods += 1
 
