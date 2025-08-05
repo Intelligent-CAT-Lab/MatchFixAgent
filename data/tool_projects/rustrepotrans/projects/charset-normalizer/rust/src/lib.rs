@@ -152,6 +152,7 @@ mod cd;
 pub mod consts;
 pub mod entity;
 mod md;
+mod tests;
 pub mod utils;
 
 // Given a raw bytes sequence, return the best possibles charset usable to render str objects.

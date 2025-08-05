@@ -1242,3 +1242,44 @@ async fn write_msg(context: &Context, prefix: &str, msg: &Message, buf: &mut Str
     )
     .unwrap();
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    // The following three tests demonstrate, when made to fail, the log output being
+    // directed to the correct test output.
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_with_alice() {
+        let alice = TestContext::builder().configure_alice().build().await;
+        alice.ctx.emit_event(EventType::Info("hello".into()));
+        // panic!("Alice fails");
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_with_bob() {
+        let bob = TestContext::builder().configure_bob().build().await;
+        bob.ctx.emit_event(EventType::Info("there".into()));
+        // panic!("Bob fails");
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_with_both() {
+        let mut tcm = TestContextManager::new();
+        let alice = tcm.alice().await;
+        let bob = tcm.bob().await;
+
+        alice.ctx.emit_event(EventType::Info("hello".into()));
+        bob.ctx.emit_event(EventType::Info("there".into()));
+        // panic!("Both fail");
+    }
+
+    /// Checks that dropping the `TestContext` after the runtime does not panic,
+    /// e.g. that `TestContext::drop` does not assume the runtime still exists.
+    #[test]
+    fn test_new_test_context() {
+        let runtime = tokio::runtime::Runtime::new().expect("unable to create tokio runtime");
+        runtime.block_on(TestContext::new());
+    }
+}

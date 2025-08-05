@@ -285,3 +285,88 @@ pub fn get_provider_by_id(id: &str) -> Option<&'static Provider> {
         None
     }
 }
+
+#[cfg(test)]
+mod tests {
+    #![allow(clippy::indexing_slicing)]
+
+    use super::*;
+    use crate::test_utils::TestContext;
+
+    #[test]
+    fn test_get_provider_by_domain_unexistant() {
+        let provider = get_provider_by_domain("unexistant.org");
+        assert!(provider.is_none());
+    }
+
+    #[test]
+    fn test_get_provider_by_domain_mixed_case() {
+        let provider = get_provider_by_domain("nAUta.Cu").unwrap();
+        assert!(provider.status == Status::Ok);
+    }
+
+    #[test]
+    fn test_get_provider_by_domain() {
+        let addr = "nauta.cu";
+        let provider = get_provider_by_domain(addr).unwrap();
+        assert!(provider.status == Status::Ok);
+        let server = &provider.server[0];
+        assert_eq!(server.protocol, Protocol::Imap);
+        assert_eq!(server.socket, Socket::Starttls);
+        assert_eq!(server.hostname, "imap.nauta.cu");
+        assert_eq!(server.port, 143);
+        assert_eq!(server.username_pattern, UsernamePattern::Email);
+        let server = &provider.server[1];
+        assert_eq!(server.protocol, Protocol::Smtp);
+        assert_eq!(server.socket, Socket::Starttls);
+        assert_eq!(server.hostname, "smtp.nauta.cu");
+        assert_eq!(server.port, 25);
+        assert_eq!(server.username_pattern, UsernamePattern::Email);
+
+        let provider = get_provider_by_domain("gmail.com").unwrap();
+        assert!(provider.status == Status::Preparation);
+        assert!(!provider.before_login_hint.is_empty());
+        assert!(!provider.overview_page.is_empty());
+
+        let provider = get_provider_by_domain("googlemail.com").unwrap();
+        assert!(provider.status == Status::Preparation);
+    }
+
+    #[test]
+    fn test_get_provider_by_id() {
+        let provider = get_provider_by_id("gmail").unwrap();
+        assert!(provider.id == "gmail");
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_get_provider_info() {
+        let t = TestContext::new().await;
+        assert!(get_provider_info(&t, "", false).await.is_none());
+        assert!(get_provider_info(&t, "google.com", false).await.unwrap().id == "gmail");
+        assert!(get_provider_info(&t, "example@google.com", false)
+            .await
+            .is_none());
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_get_provider_info_by_addr() -> Result<()> {
+        let t = TestContext::new().await;
+        assert!(get_provider_info_by_addr(&t, "google.com", false)
+            .await
+            .is_err());
+        assert!(
+            get_provider_info_by_addr(&t, "example@google.com", false)
+                .await?
+                .unwrap()
+                .id
+                == "gmail"
+        );
+        Ok(())
+    }
+
+    #[test]
+    fn test_get_resolver() -> Result<()> {
+        assert!(get_resolver().is_ok());
+        Ok(())
+    }
+}

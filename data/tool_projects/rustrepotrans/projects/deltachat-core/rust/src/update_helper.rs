@@ -82,3 +82,134 @@ impl Params {
         Ok(false)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::chat::Chat;
+    use crate::receive_imf::receive_imf;
+    use crate::test_utils::TestContext;
+    use crate::tools::time;
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_params_update_timestamp() -> Result<()> {
+        let mut params = Params::new();
+        let ts = time();
+
+        assert!(params.update_timestamp(Param::LastSubject, ts)?);
+        assert!(params.update_timestamp(Param::LastSubject, ts)?); // same timestamp -> update
+        assert!(params.update_timestamp(Param::LastSubject, ts + 10)?);
+        assert!(!params.update_timestamp(Param::LastSubject, ts)?); // `ts` is now too old
+        assert!(!params.update_timestamp(Param::LastSubject, 0)?);
+        assert_eq!(params.get_i64(Param::LastSubject).unwrap(), ts + 10);
+
+        assert!(params.update_timestamp(Param::GroupNameTimestamp, 0)?); // stay unset -> update ...
+        assert!(params.update_timestamp(Param::GroupNameTimestamp, 0)?); // ... also on multiple calls
+        assert_eq!(params.get_i64(Param::GroupNameTimestamp).unwrap(), 0);
+
+        assert!(!params.update_timestamp(Param::AvatarTimestamp, -1)?);
+        assert_eq!(params.get_i64(Param::AvatarTimestamp), None);
+
+        Ok(())
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_out_of_order_subject() -> Result<()> {
+        let t = TestContext::new_alice().await;
+
+        receive_imf(
+            &t,
+            b"From: Bob Authname <bob@example.org>\n\
+                 To: alice@example.org\n\
+                 Subject: updated subject\n\
+                 Message-ID: <msg2@example.org>\n\
+                 Chat-Version: 1.0\n\
+                 Date: Sun, 22 Mar 2021 23:37:57 +0000\n\
+                 \n\
+                 second message\n",
+            false,
+        )
+        .await?;
+        receive_imf(
+            &t,
+            b"From: Bob Authname <bob@example.org>\n\
+                 To: alice@example.org\n\
+                 Subject: original subject\n\
+                 Message-ID: <msg1@example.org>\n\
+                 Chat-Version: 1.0\n\
+                 Date: Sun, 22 Mar 2021 22:37:57 +0000\n\
+                 \n\
+                 first message\n",
+            false,
+        )
+        .await?;
+
+        let msg = t.get_last_msg().await;
+        let chat = Chat::load_from_db(&t, msg.chat_id).await?;
+        assert_eq!(
+            chat.param.get(Param::LastSubject).unwrap(),
+            "updated subject"
+        );
+
+        Ok(())
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_out_of_order_group_name() -> Result<()> {
+        let t = TestContext::new_alice().await;
+
+        receive_imf(
+            &t,
+            b"From: Bob Authname <bob@example.org>\n\
+                 To: alice@example.org\n\
+                 Message-ID: <msg1@example.org>\n\
+                 Chat-Version: 1.0\n\
+                 Chat-Group-ID: abcde123456\n\
+                 Chat-Group-Name: initial name\n\
+                 Date: Sun, 22 Mar 2021 01:00:00 +0000\n\
+                 \n\
+                 first message\n",
+            false,
+        )
+        .await?;
+        let msg = t.get_last_msg().await;
+        let chat = Chat::load_from_db(&t, msg.chat_id).await?;
+        assert_eq!(chat.name, "initial name");
+
+        receive_imf(
+            &t,
+            b"From: Bob Authname <bob@example.org>\n\
+                 To: alice@example.org\n\
+                 Message-ID: <msg3@example.org>\n\
+                 Chat-Version: 1.0\n\
+                 Chat-Group-ID: abcde123456\n\
+                 Chat-Group-Name: another name update\n\
+                 Chat-Group-Name-Changed: a name update\n\
+                 Date: Sun, 22 Mar 2021 03:00:00 +0000\n\
+                 \n\
+                 third message\n",
+            false,
+        )
+        .await?;
+        receive_imf(
+            &t,
+            b"From: Bob Authname <bob@example.org>\n\
+                 To: alice@example.org\n\
+                 Message-ID: <msg2@example.org>\n\
+                 Chat-Version: 1.0\n\
+                 Chat-Group-ID: abcde123456\n\
+                 Chat-Group-Name: a name update\n\
+                 Chat-Group-Name-Changed: initial name\n\
+                 Date: Sun, 22 Mar 2021 02:00:00 +0000\n\
+                 \n\
+                 second message\n",
+            false,
+        )
+        .await?;
+        let msg = t.get_last_msg().await;
+        let chat = Chat::load_from_db(&t, msg.chat_id).await?;
+        assert_eq!(chat.name, "another name update");
+
+        Ok(())
+    }
+}

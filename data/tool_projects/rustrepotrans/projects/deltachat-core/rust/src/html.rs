@@ -258,3 +258,314 @@ pub fn new_html_mimepart(html: String) -> PartBuilder {
         .content_type(&"text/html; charset=utf-8".parse::<mime::Mime>().unwrap())
         .body(html)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::chat;
+    use crate::chat::forward_msgs;
+    use crate::config::Config;
+    use crate::contact::ContactId;
+    use crate::message::{MessengerMessage, Viewtype};
+    use crate::receive_imf::receive_imf;
+    use crate::test_utils::TestContext;
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_htmlparse_plain_unspecified() {
+        let t = TestContext::new().await;
+        let raw = include_bytes!("../test-data/message/text_plain_unspecified.eml");
+        let parser = HtmlMsgParser::from_bytes(&t.ctx, raw).await.unwrap();
+        assert_eq!(
+            parser.html,
+            r#"<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="color-scheme" content="light dark" />
+</head><body>
+This message does not have Content-Type nor Subject.<br/>
+<br/>
+</body></html>
+"#
+        );
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_htmlparse_plain_iso88591() {
+        let t = TestContext::new().await;
+        let raw = include_bytes!("../test-data/message/text_plain_iso88591.eml");
+        let parser = HtmlMsgParser::from_bytes(&t.ctx, raw).await.unwrap();
+        assert_eq!(
+            parser.html,
+            r#"<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="color-scheme" content="light dark" />
+</head><body>
+message with a non-UTF-8 encoding: äöüßÄÖÜ<br/>
+<br/>
+</body></html>
+"#
+        );
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_htmlparse_plain_flowed() {
+        let t = TestContext::new().await;
+        let raw = include_bytes!("../test-data/message/text_plain_flowed.eml");
+        let parser = HtmlMsgParser::from_bytes(&t.ctx, raw).await.unwrap();
+        assert!(parser.plain.unwrap().flowed);
+        assert_eq!(
+            parser.html,
+            r#"<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="color-scheme" content="light dark" />
+</head><body>
+This line ends with a space and will be merged with the next one due to format=flowed.<br/>
+<br/>
+This line does not end with a space<br/>
+and will be wrapped as usual.<br/>
+<br/>
+</body></html>
+"#
+        );
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_htmlparse_alt_plain() {
+        let t = TestContext::new().await;
+        let raw = include_bytes!("../test-data/message/text_alt_plain.eml");
+        let parser = HtmlMsgParser::from_bytes(&t.ctx, raw).await.unwrap();
+        assert_eq!(
+            parser.html,
+            r#"<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="color-scheme" content="light dark" />
+</head><body>
+mime-modified should not be set set as there is no html and no special stuff;<br/>
+although not being a delta-message.<br/>
+test some special html-characters as &lt; &gt; and &amp; but also &quot; and &#x27; :)<br/>
+<br/>
+<br/>
+</body></html>
+"#
+        );
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_htmlparse_html() {
+        let t = TestContext::new().await;
+        let raw = include_bytes!("../test-data/message/text_html.eml");
+        let parser = HtmlMsgParser::from_bytes(&t.ctx, raw).await.unwrap();
+
+        // on windows, `\r\n` linends are returned from mimeparser,
+        // however, rust multiline-strings use just `\n`;
+        // therefore, we just remove `\r` before comparison.
+        assert_eq!(
+            parser.html.replace('\r', ""),
+            r##"
+<html>
+  <p>mime-modified <b>set</b>; simplify is always regarded as lossy.</p>
+</html>"##
+        );
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_htmlparse_alt_html() {
+        let t = TestContext::new().await;
+        let raw = include_bytes!("../test-data/message/text_alt_html.eml");
+        let parser = HtmlMsgParser::from_bytes(&t.ctx, raw).await.unwrap();
+        assert_eq!(
+            parser.html.replace('\r', ""), // see comment in test_htmlparse_html()
+            r##"<html>
+  <p>mime-modified <b>set</b>; simplify is always regarded as lossy.</p>
+</html>
+
+"##
+        );
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_htmlparse_alt_plain_html() {
+        let t = TestContext::new().await;
+        let raw = include_bytes!("../test-data/message/text_alt_plain_html.eml");
+        let parser = HtmlMsgParser::from_bytes(&t.ctx, raw).await.unwrap();
+        assert_eq!(
+            parser.html.replace('\r', ""), // see comment in test_htmlparse_html()
+            r##"<html>
+  <p>
+    this is <b>html</b>
+  </p>
+</html>
+
+"##
+        );
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_htmlparse_apple_cid_jpg() {
+        // load raw mime html-data with related image-part (cid:)
+        // and make sure, Content-Id has angle-brackets that are removed correctly.
+        let t = TestContext::new().await;
+        let raw = include_bytes!("../test-data/message/apple_cid_jpg.eml");
+        let test = String::from_utf8_lossy(raw);
+        assert!(test.contains("Content-Id: <8AE052EF-BC90-486F-BB78-58D3590308EC@fritz.box>"));
+        assert!(test.contains("cid:8AE052EF-BC90-486F-BB78-58D3590308EC@fritz.box"));
+        assert!(test.find("data:").is_none());
+
+        // parsing converts cid: to data:
+        let parser = HtmlMsgParser::from_bytes(&t.ctx, raw).await.unwrap();
+        assert!(parser.html.contains("<html>"));
+        assert!(!parser.html.contains("Content-Id:"));
+        assert!(parser.html.contains("data:image/jpeg;base64,/9j/4AAQ"));
+        assert!(!parser.html.contains("cid:"));
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_get_html_invalid_msgid() {
+        let t = TestContext::new().await;
+        let msg_id = MsgId::new(100);
+        assert!(msg_id.get_html(&t).await.is_err())
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_html_forwarding() {
+        // alice receives a non-delta html-message
+        let alice = TestContext::new_alice().await;
+        let chat = alice
+            .create_chat_with_contact("", "sender@testrun.org")
+            .await;
+        let raw = include_bytes!("../test-data/message/text_alt_plain_html.eml");
+        receive_imf(&alice, raw, false).await.unwrap();
+        let msg = alice.get_last_msg_in(chat.get_id()).await;
+        assert_ne!(msg.get_from_id(), ContactId::SELF);
+        assert_eq!(msg.is_dc_message, MessengerMessage::No);
+        assert!(!msg.is_forwarded());
+        assert!(msg.get_text().contains("this is plain"));
+        assert!(msg.has_html());
+        let html = msg.get_id().get_html(&alice).await.unwrap().unwrap();
+        assert!(html.contains("this is <b>html</b>"));
+
+        // alice: create chat with bob and forward received html-message there
+        let chat = alice.create_chat_with_contact("", "bob@example.net").await;
+        forward_msgs(&alice, &[msg.get_id()], chat.get_id())
+            .await
+            .unwrap();
+        let msg = alice.get_last_msg_in(chat.get_id()).await;
+        assert_eq!(msg.get_from_id(), ContactId::SELF);
+        assert_eq!(msg.is_dc_message, MessengerMessage::Yes);
+        assert!(msg.is_forwarded());
+        assert!(msg.get_text().contains("this is plain"));
+        assert!(msg.has_html());
+        let html = msg.get_id().get_html(&alice).await.unwrap().unwrap();
+        assert!(html.contains("this is <b>html</b>"));
+
+        // bob: check that bob also got the html-part of the forwarded message
+        let bob = TestContext::new_bob().await;
+        let chat = bob.create_chat_with_contact("", "alice@example.org").await;
+        let msg = bob.recv_msg(&alice.pop_sent_msg().await).await;
+        assert_eq!(chat.id, msg.chat_id);
+        assert_ne!(msg.get_from_id(), ContactId::SELF);
+        assert_eq!(msg.is_dc_message, MessengerMessage::Yes);
+        assert!(msg.is_forwarded());
+        assert!(msg.get_text().contains("this is plain"));
+        assert!(msg.has_html());
+        let html = msg.get_id().get_html(&bob).await.unwrap().unwrap();
+        assert!(html.contains("this is <b>html</b>"));
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_html_forwarding_encrypted() {
+        // Alice receives a non-delta html-message
+        // (`ShowEmails=AcceptedContacts` lets Alice actually receive non-delta messages for known
+        // contacts, the contact is marked as known by creating a chat using `chat_with_contact()`)
+        let alice = TestContext::new_alice().await;
+        alice
+            .set_config(Config::ShowEmails, Some("1"))
+            .await
+            .unwrap();
+        let chat = alice
+            .create_chat_with_contact("", "sender@testrun.org")
+            .await;
+        let raw = include_bytes!("../test-data/message/text_alt_plain_html.eml");
+        receive_imf(&alice, raw, false).await.unwrap();
+        let msg = alice.get_last_msg_in(chat.get_id()).await;
+
+        // forward the message to saved-messages,
+        // this will encrypt the message as new_alice() has set up keys
+        let chat = alice.get_self_chat().await;
+        forward_msgs(&alice, &[msg.get_id()], chat.get_id())
+            .await
+            .unwrap();
+        let msg = alice.pop_sent_msg().await;
+
+        // receive the message on another device
+        let alice = TestContext::new_alice().await;
+        alice
+            .set_config(Config::ShowEmails, Some("0"))
+            .await
+            .unwrap();
+        let msg = alice.recv_msg(&msg).await;
+        assert_eq!(msg.chat_id, alice.get_self_chat().await.id);
+        assert_eq!(msg.get_from_id(), ContactId::SELF);
+        assert_eq!(msg.is_dc_message, MessengerMessage::Yes);
+        assert!(msg.get_showpadlock());
+        assert!(msg.is_forwarded());
+        assert!(msg.get_text().contains("this is plain"));
+        assert!(msg.has_html());
+        let html = msg.get_id().get_html(&alice).await.unwrap().unwrap();
+        assert!(html.contains("this is <b>html</b>"));
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_set_html() {
+        let alice = TestContext::new_alice().await;
+        let bob = TestContext::new_bob().await;
+
+        // alice sends a message with html-part to bob
+        let chat_id = alice.create_chat(&bob).await.id;
+        let mut msg = Message::new(Viewtype::Text);
+        msg.set_text("plain text".to_string());
+        msg.set_html(Some("<b>html</b> text".to_string()));
+        assert!(msg.mime_modified);
+        chat::send_msg(&alice, chat_id, &mut msg).await.unwrap();
+
+        // check the message is written correctly to alice's db
+        let msg = alice.get_last_msg_in(chat_id).await;
+        assert_eq!(msg.get_text(), "plain text");
+        assert!(!msg.is_forwarded());
+        assert!(msg.mime_modified);
+        let html = msg.get_id().get_html(&alice).await.unwrap().unwrap();
+        assert!(html.contains("<b>html</b> text"));
+
+        // let bob receive the message
+        let chat_id = bob.create_chat(&alice).await.id;
+        let msg = bob.recv_msg(&alice.pop_sent_msg().await).await;
+        assert_eq!(msg.chat_id, chat_id);
+        assert_eq!(msg.get_text(), "plain text");
+        assert!(!msg.is_forwarded());
+        assert!(msg.mime_modified);
+        let html = msg.get_id().get_html(&bob).await.unwrap().unwrap();
+        assert!(html.contains("<b>html</b> text"));
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_cp1252_html() -> Result<()> {
+        let t = TestContext::new_alice().await;
+        receive_imf(
+            &t,
+            include_bytes!("../test-data/message/cp1252-html.eml"),
+            false,
+        )
+        .await?;
+        let msg = t.get_last_msg().await;
+        assert_eq!(msg.viewtype, Viewtype::Text);
+        assert!(msg.text.contains("foo bar ä ö ü ß"));
+        assert!(msg.has_html());
+        let html = msg.get_id().get_html(&t).await?.unwrap();
+        println!("{html}");
+        assert!(html.contains("foo bar ä ö ü ß"));
+        Ok(())
+    }
+}

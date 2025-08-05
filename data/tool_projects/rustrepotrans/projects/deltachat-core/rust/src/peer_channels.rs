@@ -448,3 +448,349 @@ async fn subscribe_loop(
         };
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::{
+        chat::send_msg,
+        message::{Message, Viewtype},
+        test_utils::TestContextManager,
+        EventType,
+    };
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_can_communicate() {
+        let mut tcm = TestContextManager::new();
+        let alice = &mut tcm.alice().await;
+        let bob = &mut tcm.bob().await;
+
+        // Alice sends webxdc to bob
+        let alice_chat = alice.create_chat(bob).await;
+        let mut instance = Message::new(Viewtype::File);
+        instance
+            .set_file_from_bytes(
+                alice,
+                "minimal.xdc",
+                include_bytes!("../test-data/webxdc/minimal.xdc"),
+                None,
+            )
+            .await
+            .unwrap();
+
+        send_msg(alice, alice_chat.id, &mut instance).await.unwrap();
+        let alice_webxdc = alice.get_last_msg().await;
+        assert_eq!(alice_webxdc.get_viewtype(), Viewtype::Webxdc);
+
+        let webxdc = alice.pop_sent_msg().await;
+        let bob_webdxc = bob.recv_msg(&webxdc).await;
+        assert_eq!(bob_webdxc.get_viewtype(), Viewtype::Webxdc);
+
+        bob_webdxc.chat_id.accept(bob).await.unwrap();
+
+        // Alice advertises herself.
+        send_webxdc_realtime_advertisement(alice, alice_webxdc.id)
+            .await
+            .unwrap();
+
+        bob.recv_msg_trash(&alice.pop_sent_msg().await).await;
+        let bob_iroh = bob.get_or_try_init_peer_channel().await.unwrap();
+
+        // Bob adds alice to gossip peers.
+        let members = get_iroh_gossip_peers(bob, bob_webdxc.id)
+            .await
+            .unwrap()
+            .into_iter()
+            .map(|addr| addr.node_id)
+            .collect::<Vec<_>>();
+
+        let alice_iroh = alice.get_or_try_init_peer_channel().await.unwrap();
+        assert_eq!(
+            members,
+            vec![alice_iroh.get_node_addr().await.unwrap().node_id]
+        );
+
+        bob_iroh
+            .join_and_subscribe_gossip(bob, bob_webdxc.id)
+            .await
+            .unwrap()
+            .unwrap()
+            .await
+            .unwrap();
+
+        // Alice sends ephemeral message
+        alice_iroh
+            .send_webxdc_realtime_data(alice, alice_webxdc.id, "alice -> bob".as_bytes().to_vec())
+            .await
+            .unwrap();
+
+        loop {
+            let event = bob.evtracker.recv().await.unwrap();
+            if let EventType::WebxdcRealtimeData { data, .. } = event.typ {
+                if data == "alice -> bob".as_bytes() {
+                    break;
+                } else {
+                    panic!(
+                        "Unexpected status update: {}",
+                        String::from_utf8_lossy(&data)
+                    );
+                }
+            }
+        }
+        // Bob sends ephemeral message
+        bob_iroh
+            .send_webxdc_realtime_data(bob, bob_webdxc.id, "bob -> alice".as_bytes().to_vec())
+            .await
+            .unwrap();
+
+        loop {
+            let event = alice.evtracker.recv().await.unwrap();
+            if let EventType::WebxdcRealtimeData { data, .. } = event.typ {
+                if data == "bob -> alice".as_bytes() {
+                    break;
+                } else {
+                    panic!(
+                        "Unexpected status update: {}",
+                        String::from_utf8_lossy(&data)
+                    );
+                }
+            }
+        }
+
+        // Alice adds bob to gossip peers.
+        let members = get_iroh_gossip_peers(alice, alice_webxdc.id)
+            .await
+            .unwrap()
+            .into_iter()
+            .map(|addr| addr.node_id)
+            .collect::<Vec<_>>();
+
+        assert_eq!(
+            members,
+            vec![bob_iroh.get_node_addr().await.unwrap().node_id]
+        );
+
+        bob_iroh
+            .send_webxdc_realtime_data(bob, bob_webdxc.id, "bob -> alice 2".as_bytes().to_vec())
+            .await
+            .unwrap();
+
+        loop {
+            let event = alice.evtracker.recv().await.unwrap();
+            if let EventType::WebxdcRealtimeData { data, .. } = event.typ {
+                if data == "bob -> alice 2".as_bytes() {
+                    break;
+                } else {
+                    panic!(
+                        "Unexpected status update: {}",
+                        String::from_utf8_lossy(&data)
+                    );
+                }
+            }
+        }
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_can_reconnect() {
+        let mut tcm = TestContextManager::new();
+        let alice = &mut tcm.alice().await;
+        let bob = &mut tcm.bob().await;
+
+        // Alice sends webxdc to bob
+        let alice_chat = alice.create_chat(bob).await;
+        let mut instance = Message::new(Viewtype::File);
+        instance
+            .set_file_from_bytes(
+                alice,
+                "minimal.xdc",
+                include_bytes!("../test-data/webxdc/minimal.xdc"),
+                None,
+            )
+            .await
+            .unwrap();
+
+        send_msg(alice, alice_chat.id, &mut instance).await.unwrap();
+        let alice_webxdc = alice.get_last_msg().await;
+        assert_eq!(alice_webxdc.get_viewtype(), Viewtype::Webxdc);
+
+        let webxdc = alice.pop_sent_msg().await;
+        let bob_webdxc = bob.recv_msg(&webxdc).await;
+        assert_eq!(bob_webdxc.get_viewtype(), Viewtype::Webxdc);
+
+        bob_webdxc.chat_id.accept(bob).await.unwrap();
+
+        // Alice advertises herself.
+        send_webxdc_realtime_advertisement(alice, alice_webxdc.id)
+            .await
+            .unwrap();
+
+        bob.recv_msg_trash(&alice.pop_sent_msg().await).await;
+        let bob_iroh = bob.get_or_try_init_peer_channel().await.unwrap();
+
+        // Bob adds alice to gossip peers.
+        let members = get_iroh_gossip_peers(bob, bob_webdxc.id)
+            .await
+            .unwrap()
+            .into_iter()
+            .map(|addr| addr.node_id)
+            .collect::<Vec<_>>();
+
+        let alice_iroh = alice.get_or_try_init_peer_channel().await.unwrap();
+        assert_eq!(
+            members,
+            vec![alice_iroh.get_node_addr().await.unwrap().node_id]
+        );
+
+        bob_iroh
+            .join_and_subscribe_gossip(bob, bob_webdxc.id)
+            .await
+            .unwrap()
+            .unwrap()
+            .await
+            .unwrap();
+
+        // Alice sends ephemeral message
+        alice_iroh
+            .send_webxdc_realtime_data(alice, alice_webxdc.id, "alice -> bob".as_bytes().to_vec())
+            .await
+            .unwrap();
+
+        loop {
+            let event = bob.evtracker.recv().await.unwrap();
+            if let EventType::WebxdcRealtimeData { data, .. } = event.typ {
+                if data == "alice -> bob".as_bytes() {
+                    break;
+                } else {
+                    panic!(
+                        "Unexpected status update: {}",
+                        String::from_utf8_lossy(&data)
+                    );
+                }
+            }
+        }
+
+        // TODO: check that seq number is persisted
+        leave_webxdc_realtime(bob, bob_webdxc.id).await.unwrap();
+
+        bob_iroh
+            .join_and_subscribe_gossip(bob, bob_webdxc.id)
+            .await
+            .unwrap()
+            .unwrap()
+            .await
+            .unwrap();
+
+        bob_iroh
+            .send_webxdc_realtime_data(bob, bob_webdxc.id, "bob -> alice".as_bytes().to_vec())
+            .await
+            .unwrap();
+
+        loop {
+            let event = alice.evtracker.recv().await.unwrap();
+            if let EventType::WebxdcRealtimeData { data, .. } = event.typ {
+                if data == "bob -> alice".as_bytes() {
+                    break;
+                } else {
+                    panic!(
+                        "Unexpected status update: {}",
+                        String::from_utf8_lossy(&data)
+                    );
+                }
+            }
+        }
+
+        // channel is only used to remeber if an advertisement has been sent
+        // bob for example does not change the channels because he never sends an
+        // advertisement
+        assert_eq!(
+            alice.iroh.get().unwrap().iroh_channels.read().await.len(),
+            1
+        );
+        leave_webxdc_realtime(alice, alice_webxdc.id).await.unwrap();
+        let topic = get_iroh_topic_for_msg(alice, alice_webxdc.id)
+            .await
+            .unwrap();
+        assert!(if let Some(state) = alice
+            .iroh
+            .get()
+            .unwrap()
+            .iroh_channels
+            .read()
+            .await
+            .get(&topic)
+        {
+            state.subscribe_loop.is_none()
+        } else {
+            false
+        });
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_parallel_connect() {
+        let mut tcm = TestContextManager::new();
+        let alice = &mut tcm.alice().await;
+        let bob = &mut tcm.bob().await;
+
+        // Alice sends webxdc to bob
+        let alice_chat = alice.create_chat(bob).await;
+        let mut instance = Message::new(Viewtype::File);
+        instance
+            .set_file_from_bytes(
+                alice,
+                "minimal.xdc",
+                include_bytes!("../test-data/webxdc/minimal.xdc"),
+                None,
+            )
+            .await
+            .unwrap();
+        send_msg(alice, alice_chat.id, &mut instance).await.unwrap();
+        let alice_webxdc = alice.get_last_msg().await;
+
+        let webxdc = alice.pop_sent_msg().await;
+        let bob_webxdc = bob.recv_msg(&webxdc).await;
+        assert_eq!(bob_webxdc.get_viewtype(), Viewtype::Webxdc);
+
+        bob_webxdc.chat_id.accept(bob).await.unwrap();
+
+        eprintln!("Sending advertisements");
+        // Alice advertises herself.
+        let alice_advertisement_future = send_webxdc_realtime_advertisement(alice, alice_webxdc.id)
+            .await
+            .unwrap()
+            .unwrap();
+        let alice_advertisement = alice.pop_sent_msg().await;
+
+        send_webxdc_realtime_advertisement(bob, bob_webxdc.id)
+            .await
+            .unwrap();
+        let bob_advertisement = bob.pop_sent_msg().await;
+
+        eprintln!("Receiving advertisements");
+        bob.recv_msg_trash(&alice_advertisement).await;
+        alice.recv_msg_trash(&bob_advertisement).await;
+
+        eprintln!("Alice waits for connection");
+        alice_advertisement_future.await.unwrap();
+
+        // Alice sends ephemeral message
+        eprintln!("Sending ephemeral message");
+        send_webxdc_realtime_data(alice, alice_webxdc.id, b"alice -> bob".into())
+            .await
+            .unwrap();
+
+        eprintln!("Waiting for ephemeral message");
+        loop {
+            let event = bob.evtracker.recv().await.unwrap();
+            if let EventType::WebxdcRealtimeData { data, .. } = event.typ {
+                if data == b"alice -> bob" {
+                    break;
+                } else {
+                    panic!(
+                        "Unexpected status update: {}",
+                        String::from_utf8_lossy(&data)
+                    );
+                }
+            }
+        }
+    }
+}

@@ -114,6 +114,8 @@ pub const DCC_MIME_DEBUG: &str = "DCC_MIME_DEBUG";
 
 #[cfg(test)]
 mod test_utils;
+#[cfg(test)]
+mod tests;
 
 #[cfg(fuzzing)]
 pub mod fuzzing;

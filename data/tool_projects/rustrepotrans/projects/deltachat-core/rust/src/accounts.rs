@@ -672,3 +672,334 @@ impl AccountConfig {
         accounts_dir.join(&self.dir).join(DB_NAME)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::stock_str::{self, StockMessage};
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_account_new_open() {
+        let dir = tempfile::tempdir().unwrap();
+        let p: PathBuf = dir.path().join("accounts1");
+
+        {
+            let writable = true;
+            let mut accounts = Accounts::new(p.clone(), writable).await.unwrap();
+            accounts.add_account().await.unwrap();
+
+            assert_eq!(accounts.accounts.len(), 1);
+            assert_eq!(accounts.config.get_selected_account(), 1);
+        }
+        for writable in [true, false] {
+            let accounts = Accounts::new(p.clone(), writable).await.unwrap();
+
+            assert_eq!(accounts.accounts.len(), 1);
+            assert_eq!(accounts.config.get_selected_account(), 1);
+        }
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_account_new_open_conflict() {
+        let dir = tempfile::tempdir().unwrap();
+        let p: PathBuf = dir.path().join("accounts");
+        let writable = true;
+        let _accounts = Accounts::new(p.clone(), writable).await.unwrap();
+
+        let writable = true;
+        assert!(Accounts::new(p.clone(), writable).await.is_err());
+
+        let writable = false;
+        let accounts = Accounts::new(p, writable).await.unwrap();
+        assert_eq!(accounts.accounts.len(), 0);
+        assert_eq!(accounts.config.get_selected_account(), 0);
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_account_new_add_remove() {
+        let dir = tempfile::tempdir().unwrap();
+        let p: PathBuf = dir.path().join("accounts");
+
+        let writable = true;
+        let mut accounts = Accounts::new(p.clone(), writable).await.unwrap();
+        assert_eq!(accounts.accounts.len(), 0);
+        assert_eq!(accounts.config.get_selected_account(), 0);
+
+        let id = accounts.add_account().await.unwrap();
+        assert_eq!(id, 1);
+        assert_eq!(accounts.accounts.len(), 1);
+        assert_eq!(accounts.config.get_selected_account(), 1);
+
+        let id = accounts.add_account().await.unwrap();
+        assert_eq!(id, 2);
+        assert_eq!(accounts.config.get_selected_account(), id);
+        assert_eq!(accounts.accounts.len(), 2);
+
+        accounts.select_account(1).await.unwrap();
+        assert_eq!(accounts.config.get_selected_account(), 1);
+
+        accounts.remove_account(1).await.unwrap();
+        assert_eq!(accounts.config.get_selected_account(), 2);
+        assert_eq!(accounts.accounts.len(), 1);
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_accounts_remove_last() -> Result<()> {
+        let dir = tempfile::tempdir()?;
+        let p: PathBuf = dir.path().join("accounts");
+
+        let writable = true;
+        let mut accounts = Accounts::new(p.clone(), writable).await?;
+        assert!(accounts.get_selected_account().is_none());
+        assert_eq!(accounts.config.get_selected_account(), 0);
+
+        let id = accounts.add_account().await?;
+        assert!(accounts.get_selected_account().is_some());
+        assert_eq!(id, 1);
+        assert_eq!(accounts.accounts.len(), 1);
+        assert_eq!(accounts.config.get_selected_account(), id);
+
+        accounts.remove_account(id).await?;
+        assert!(accounts.get_selected_account().is_none());
+
+        Ok(())
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_migrate_account() {
+        let dir = tempfile::tempdir().unwrap();
+        let p: PathBuf = dir.path().join("accounts");
+
+        let writable = true;
+        let mut accounts = Accounts::new(p.clone(), writable).await.unwrap();
+        assert_eq!(accounts.accounts.len(), 0);
+        assert_eq!(accounts.config.get_selected_account(), 0);
+
+        let extern_dbfile: PathBuf = dir.path().join("other");
+        let ctx = Context::new(&extern_dbfile, 0, Events::new(), StockStrings::new())
+            .await
+            .unwrap();
+        ctx.set_config(crate::config::Config::Addr, Some("me@mail.com"))
+            .await
+            .unwrap();
+
+        drop(ctx);
+
+        accounts
+            .migrate_account(extern_dbfile.clone())
+            .await
+            .unwrap();
+        assert_eq!(accounts.accounts.len(), 1);
+        assert_eq!(accounts.config.get_selected_account(), 1);
+
+        let ctx = accounts.get_selected_account().unwrap();
+        assert_eq!(
+            "me@mail.com",
+            ctx.get_config(crate::config::Config::Addr)
+                .await
+                .unwrap()
+                .unwrap()
+        );
+    }
+
+    /// Tests that accounts are sorted by ID.
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_accounts_sorted() {
+        let dir = tempfile::tempdir().unwrap();
+        let p: PathBuf = dir.path().join("accounts");
+
+        let writable = true;
+        let mut accounts = Accounts::new(p.clone(), writable).await.unwrap();
+
+        for expected_id in 1..10 {
+            let id = accounts.add_account().await.unwrap();
+            assert_eq!(id, expected_id);
+        }
+
+        let ids = accounts.get_all();
+        for (i, expected_id) in (1..10).enumerate() {
+            assert_eq!(ids.get(i), Some(&expected_id));
+        }
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_accounts_ids_unique_increasing_and_persisted() -> Result<()> {
+        let dir = tempfile::tempdir()?;
+        let p: PathBuf = dir.path().join("accounts");
+        let dummy_accounts = 10;
+
+        let (id0, id1, id2) = {
+            let writable = true;
+            let mut accounts = Accounts::new(p.clone(), writable).await?;
+            accounts.add_account().await?;
+            let ids = accounts.get_all();
+            assert_eq!(ids.len(), 1);
+
+            let id0 = *ids.first().unwrap();
+            let ctx = accounts.get_account(id0).unwrap();
+            ctx.set_config(crate::config::Config::Addr, Some("one@example.org"))
+                .await?;
+
+            let id1 = accounts.add_account().await?;
+            let ctx = accounts.get_account(id1).unwrap();
+            ctx.set_config(crate::config::Config::Addr, Some("two@example.org"))
+                .await?;
+
+            // add and remove some accounts and force a gap (ids must not be reused)
+            for _ in 0..dummy_accounts {
+                let to_delete = accounts.add_account().await?;
+                accounts.remove_account(to_delete).await?;
+            }
+
+            let id2 = accounts.add_account().await?;
+            let ctx = accounts.get_account(id2).unwrap();
+            ctx.set_config(crate::config::Config::Addr, Some("three@example.org"))
+                .await?;
+
+            accounts.select_account(id1).await?;
+
+            (id0, id1, id2)
+        };
+        assert!(id0 > 0);
+        assert!(id1 > id0);
+        assert!(id2 > id1 + dummy_accounts);
+
+        let (id0_reopened, id1_reopened, id2_reopened) = {
+            let writable = false;
+            let accounts = Accounts::new(p.clone(), writable).await?;
+            let ctx = accounts.get_selected_account().unwrap();
+            assert_eq!(
+                ctx.get_config(crate::config::Config::Addr).await?,
+                Some("two@example.org".to_string())
+            );
+
+            let ids = accounts.get_all();
+            assert_eq!(ids.len(), 3);
+
+            let id0 = *ids.first().unwrap();
+            let ctx = accounts.get_account(id0).unwrap();
+            assert_eq!(
+                ctx.get_config(crate::config::Config::Addr).await?,
+                Some("one@example.org".to_string())
+            );
+
+            let id1 = *ids.get(1).unwrap();
+            let t = accounts.get_account(id1).unwrap();
+            assert_eq!(
+                t.get_config(crate::config::Config::Addr).await?,
+                Some("two@example.org".to_string())
+            );
+
+            let id2 = *ids.get(2).unwrap();
+            let ctx = accounts.get_account(id2).unwrap();
+            assert_eq!(
+                ctx.get_config(crate::config::Config::Addr).await?,
+                Some("three@example.org".to_string())
+            );
+
+            (id0, id1, id2)
+        };
+        assert_eq!(id0, id0_reopened);
+        assert_eq!(id1, id1_reopened);
+        assert_eq!(id2, id2_reopened);
+
+        Ok(())
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_no_accounts_event_emitter() -> Result<()> {
+        let dir = tempfile::tempdir().unwrap();
+        let p: PathBuf = dir.path().join("accounts");
+
+        let writable = true;
+        let accounts = Accounts::new(p.clone(), writable).await?;
+
+        // Make sure there are no accounts.
+        assert_eq!(accounts.accounts.len(), 0);
+
+        // Create event emitter.
+        let event_emitter = accounts.get_event_emitter();
+
+        // Test that event emitter does not return `None` immediately.
+        let duration = std::time::Duration::from_millis(1);
+        assert!(tokio::time::timeout(duration, event_emitter.recv())
+            .await
+            .is_err());
+
+        // When account manager is dropped, event emitter is exhausted.
+        drop(accounts);
+        assert_eq!(event_emitter.recv().await, None);
+
+        Ok(())
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_encrypted_account() -> Result<()> {
+        let dir = tempfile::tempdir().context("failed to create tempdir")?;
+        let p: PathBuf = dir.path().join("accounts");
+
+        let writable = true;
+        let mut accounts = Accounts::new(p.clone(), writable)
+            .await
+            .context("failed to create accounts manager")?;
+
+        assert_eq!(accounts.accounts.len(), 0);
+        let account_id = accounts
+            .add_closed_account()
+            .await
+            .context("failed to add closed account")?;
+        let account = accounts
+            .get_selected_account()
+            .context("failed to get account")?;
+        assert_eq!(account.id, account_id);
+        let passphrase_set_success = account
+            .open("foobar".to_string())
+            .await
+            .context("failed to set passphrase")?;
+        assert!(passphrase_set_success);
+        drop(accounts);
+
+        let writable = false;
+        let accounts = Accounts::new(p.clone(), writable)
+            .await
+            .context("failed to create second accounts manager")?;
+        let account = accounts
+            .get_selected_account()
+            .context("failed to get account")?;
+        assert_eq!(account.is_open().await, false);
+
+        // Try wrong passphrase.
+        assert_eq!(account.open("barfoo".to_string()).await?, false);
+        assert_eq!(account.open("".to_string()).await?, false);
+
+        assert_eq!(account.open("foobar".to_string()).await?, true);
+        assert_eq!(account.is_open().await, true);
+
+        Ok(())
+    }
+
+    /// Tests that accounts share stock string translations.
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_accounts_share_translations() -> Result<()> {
+        let dir = tempfile::tempdir().unwrap();
+        let p: PathBuf = dir.path().join("accounts");
+
+        let writable = true;
+        let mut accounts = Accounts::new(p.clone(), writable).await?;
+        accounts.add_account().await?;
+        accounts.add_account().await?;
+
+        let account1 = accounts.get_account(1).context("failed to get account 1")?;
+        let account2 = accounts.get_account(2).context("failed to get account 2")?;
+
+        assert_eq!(stock_str::no_messages(&account1).await, "No messages.");
+        assert_eq!(stock_str::no_messages(&account2).await, "No messages.");
+        account1
+            .set_stock_translation(StockMessage::NoMessages, "foobar".to_string())
+            .await?;
+        assert_eq!(stock_str::no_messages(&account1).await, "foobar");
+        assert_eq!(stock_str::no_messages(&account2).await, "foobar");
+
+        Ok(())
+    }
+}

@@ -878,3 +878,279 @@ async fn maybe_send_locations(context: &Context) -> Result<Option<u64>> {
 
     Ok(next_event)
 }
+
+#[cfg(test)]
+mod tests {
+    #![allow(clippy::indexing_slicing)]
+
+    use super::*;
+    use crate::config::Config;
+    use crate::message::MessageState;
+    use crate::receive_imf::receive_imf;
+    use crate::test_utils::{TestContext, TestContextManager};
+    use crate::tools::SystemTime;
+
+    #[test]
+    fn test_kml_parse() {
+        let xml =
+            b"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<kml xmlns=\"http://www.opengis.net/kml/2.2\">\n<Document addr=\"user@example.org\">\n<Placemark><Timestamp><when>2019-03-06T21:09:57Z</when></Timestamp><Point><coordinates accuracy=\"32.000000\">9.423110,53.790302</coordinates></Point></Placemark>\n<PlaceMARK>\n<Timestamp><WHEN > \n\t2018-12-13T22:11:12Z\t</WHEN></Timestamp><Point><coordinates aCCuracy=\"2.500000\"> 19.423110 \t , \n 63.790302\n </coordinates></Point></PlaceMARK>\n</Document>\n</kml>";
+
+        let kml = Kml::parse(xml).expect("parsing failed");
+
+        assert!(kml.addr.is_some());
+        assert_eq!(kml.addr.as_ref().unwrap(), "user@example.org",);
+
+        let locations_ref = &kml.locations;
+        assert_eq!(locations_ref.len(), 2);
+
+        assert!(locations_ref[0].latitude > 53.6f64);
+        assert!(locations_ref[0].latitude < 53.8f64);
+        assert!(locations_ref[0].longitude > 9.3f64);
+        assert!(locations_ref[0].longitude < 9.5f64);
+        assert!(locations_ref[0].accuracy > 31.9f64);
+        assert!(locations_ref[0].accuracy < 32.1f64);
+        assert_eq!(locations_ref[0].timestamp, 1551906597);
+
+        assert!(locations_ref[1].latitude > 63.6f64);
+        assert!(locations_ref[1].latitude < 63.8f64);
+        assert!(locations_ref[1].longitude > 19.3f64);
+        assert!(locations_ref[1].longitude < 19.5f64);
+        assert!(locations_ref[1].accuracy > 2.4f64);
+        assert!(locations_ref[1].accuracy < 2.6f64);
+        assert_eq!(locations_ref[1].timestamp, 1544739072);
+    }
+
+    #[test]
+    fn test_kml_parse_error() {
+        let xml = b"<?><xmlversi\"\"\">?</document>";
+        assert!(Kml::parse(xml).is_err());
+    }
+
+    #[test]
+    fn test_get_message_kml() {
+        let timestamp = 1598490000;
+
+        let xml = get_message_kml(timestamp, 51.423723f64, 8.552556f64);
+        let kml = Kml::parse(xml.as_bytes()).expect("parsing failed");
+        let locations_ref = &kml.locations;
+        assert_eq!(locations_ref.len(), 1);
+
+        assert!(locations_ref[0].latitude >= 51.423723f64);
+        assert!(locations_ref[0].latitude < 51.423724f64);
+        assert!(locations_ref[0].longitude >= 8.552556f64);
+        assert!(locations_ref[0].longitude < 8.552557f64);
+        assert!(locations_ref[0].accuracy.abs() < f64::EPSILON);
+        assert_eq!(locations_ref[0].timestamp, timestamp);
+    }
+
+    #[test]
+    fn test_is_marker() {
+        assert!(is_marker("f"));
+        assert!(!is_marker("foo"));
+        assert!(is_marker("🏠"));
+        assert!(!is_marker(" "));
+        assert!(!is_marker("\t"));
+    }
+
+    /// Tests that location.kml is hidden.
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn receive_location_kml() -> Result<()> {
+        let alice = TestContext::new_alice().await;
+
+        receive_imf(
+            &alice,
+            br#"Subject: Hello
+Message-ID: hello@example.net
+To: Alice <alice@example.org>
+From: Bob <bob@example.net>
+Date: Mon, 20 Dec 2021 00:00:00 +0000
+Chat-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed; delsp=no
+
+Text message."#,
+            false,
+        )
+        .await?;
+        let received_msg = alice.get_last_msg().await;
+        assert_eq!(received_msg.text, "Text message.");
+
+        receive_imf(
+            &alice,
+            br#"Subject: locations
+MIME-Version: 1.0
+To: <alice@example.org>
+From: <bob@example.net>
+Date: Tue, 21 Dec 2021 00:00:00 +0000
+Chat-Version: 1.0
+Message-ID: <foobar@example.net>
+Content-Type: multipart/mixed; boundary="U8BOG8qNXfB0GgLiQ3PKUjlvdIuLRF"
+
+
+--U8BOG8qNXfB0GgLiQ3PKUjlvdIuLRF
+Content-Type: text/plain; charset=utf-8; format=flowed; delsp=no
+
+
+
+--U8BOG8qNXfB0GgLiQ3PKUjlvdIuLRF
+Content-Type: application/vnd.google-earth.kml+xml
+Content-Disposition: attachment; filename="location.kml"
+
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document addr="bob@example.net">
+<Placemark><Timestamp><when>2021-11-21T00:00:00Z</when></Timestamp><Point><coordinates accuracy="1.0000000000000000">10.00000000000000,20.00000000000000</coordinates></Point></Placemark>
+</Document>
+</kml>
+
+--U8BOG8qNXfB0GgLiQ3PKUjlvdIuLRF--"#,
+            false,
+        )
+        .await?;
+
+        // Received location message is not visible, last message stays the same.
+        let received_msg2 = alice.get_last_msg().await;
+        assert_eq!(received_msg2.id, received_msg.id);
+
+        let locations = get_range(&alice, None, None, 0, 0).await?;
+        assert_eq!(locations.len(), 1);
+        Ok(())
+    }
+
+    /// Tests that `location.kml` is not hidden and not seen if it contains a message.
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn receive_visible_location_kml() -> Result<()> {
+        let alice = TestContext::new_alice().await;
+
+        receive_imf(
+            &alice,
+            br#"Subject: locations
+MIME-Version: 1.0
+To: <alice@example.org>
+From: <bob@example.net>
+Date: Tue, 21 Dec 2021 00:00:00 +0000
+Chat-Version: 1.0
+Message-ID: <foobar@localhost>
+Content-Type: multipart/mixed; boundary="U8BOG8qNXfB0GgLiQ3PKUjlvdIuLRF"
+
+
+--U8BOG8qNXfB0GgLiQ3PKUjlvdIuLRF
+Content-Type: text/plain; charset=utf-8; format=flowed; delsp=no
+
+Text message.
+
+
+--U8BOG8qNXfB0GgLiQ3PKUjlvdIuLRF
+Content-Type: application/vnd.google-earth.kml+xml
+Content-Disposition: attachment; filename="location.kml"
+
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document addr="bob@example.net">
+<Placemark><Timestamp><when>2021-11-21T00:00:00Z</when></Timestamp><Point><coordinates accuracy="1.0000000000000000">10.00000000000000,20.00000000000000</coordinates></Point></Placemark>
+</Document>
+</kml>
+
+--U8BOG8qNXfB0GgLiQ3PKUjlvdIuLRF--"#,
+            false,
+        )
+        .await?;
+
+        let received_msg = alice.get_last_msg().await;
+        assert_eq!(received_msg.text, "Text message.");
+        assert_eq!(received_msg.state, MessageState::InFresh);
+
+        let locations = get_range(&alice, None, None, 0, 0).await?;
+        assert_eq!(locations.len(), 1);
+        Ok(())
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_send_locations_to_chat() -> Result<()> {
+        let alice = TestContext::new_alice().await;
+        let bob = TestContext::new_bob().await;
+
+        let alice_chat = alice.create_chat(&bob).await;
+        send_locations_to_chat(&alice, alice_chat.id, 1000).await?;
+        let sent = alice.pop_sent_msg().await;
+        let msg = bob.recv_msg(&sent).await;
+        assert_eq!(msg.text, "Location streaming enabled by alice@example.org.");
+        let bob_chat_id = msg.chat_id;
+
+        assert_eq!(set(&alice, 10.0, 20.0, 1.0).await?, true);
+
+        // Send image without text.
+        let file_name = "image.png";
+        let bytes = include_bytes!("../test-data/image/logo.png");
+        let file = alice.get_blobdir().join(file_name);
+        tokio::fs::write(&file, bytes).await?;
+        let mut msg = Message::new(Viewtype::Image);
+        msg.set_file(file.to_str().unwrap(), None);
+        let sent = alice.send_msg(alice_chat.id, &mut msg).await;
+        let alice_msg = Message::load_from_db(&alice, sent.sender_msg_id).await?;
+        assert_eq!(alice_msg.has_location(), false);
+
+        let msg = bob.recv_msg_opt(&sent).await.unwrap();
+        assert!(msg.chat_id == bob_chat_id);
+        assert_eq!(msg.msg_ids.len(), 1);
+
+        let bob_msg = Message::load_from_db(&bob, *msg.msg_ids.first().unwrap()).await?;
+        assert_eq!(bob_msg.chat_id, bob_chat_id);
+        assert_eq!(bob_msg.viewtype, Viewtype::Image);
+        assert_eq!(bob_msg.has_location(), false);
+
+        let bob_locations = get_range(&bob, None, None, 0, 0).await?;
+        assert_eq!(bob_locations.len(), 1);
+
+        Ok(())
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_delete_expired_locations() -> Result<()> {
+        let mut tcm = TestContextManager::new();
+        let alice = &tcm.alice().await;
+        let bob = &tcm.bob().await;
+
+        // Alice enables deletion of messages from device after 1 week.
+        alice
+            .set_config(Config::DeleteDeviceAfter, Some("604800"))
+            .await?;
+        // Bob enables deletion of messages from device after 1 day.
+        bob.set_config(Config::DeleteDeviceAfter, Some("86400"))
+            .await?;
+
+        let alice_chat = alice.create_chat(bob).await;
+
+        // Alice enables location streaming.
+        // Bob receives a message saying that Alice enabled location streaming.
+        send_locations_to_chat(alice, alice_chat.id, 60).await?;
+        bob.recv_msg(&alice.pop_sent_msg().await).await;
+
+        // Alice gets new location from GPS.
+        assert_eq!(set(alice, 10.0, 20.0, 1.0).await?, true);
+        assert_eq!(get_range(alice, None, None, 0, 0).await?.len(), 1);
+
+        // 10 seconds later location sending stream manages to send location.
+        SystemTime::shift(Duration::from_secs(10));
+        delete_expired(alice, time()).await?;
+        maybe_send_locations(alice).await?;
+        bob.recv_msg_opt(&alice.pop_sent_msg().await).await;
+        assert_eq!(get_range(alice, None, None, 0, 0).await?.len(), 1);
+        assert_eq!(get_range(bob, None, None, 0, 0).await?.len(), 1);
+
+        // Day later Bob removes location.
+        SystemTime::shift(Duration::from_secs(86400));
+        delete_expired(alice, time()).await?;
+        delete_expired(bob, time()).await?;
+        assert_eq!(get_range(alice, None, None, 0, 0).await?.len(), 1);
+        assert_eq!(get_range(bob, None, None, 0, 0).await?.len(), 0);
+
+        // Week late Alice removes location.
+        SystemTime::shift(Duration::from_secs(604800));
+        delete_expired(alice, time()).await?;
+        delete_expired(bob, time()).await?;
+        assert_eq!(get_range(alice, None, None, 0, 0).await?.len(), 0);
+        assert_eq!(get_range(bob, None, None, 0, 0).await?.len(), 0);
+
+        Ok(())
+    }
+}

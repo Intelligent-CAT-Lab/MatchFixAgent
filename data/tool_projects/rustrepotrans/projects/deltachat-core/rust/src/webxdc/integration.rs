@@ -102,3 +102,28 @@ impl Message {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::config::Config;
+    use crate::test_utils::TestContext;
+    use anyhow::Result;
+    use std::time::Duration;
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_default_integrations_are_single_device() -> Result<()> {
+        let t = TestContext::new_alice().await;
+        t.set_config_bool(Config::BccSelf, false).await?;
+
+        let bytes = include_bytes!("../../test-data/webxdc/minimal.xdc");
+        let file = t.get_blobdir().join("maps.xdc");
+        tokio::fs::write(&file, bytes).await.unwrap();
+        t.set_webxdc_integration(file.to_str().unwrap()).await?;
+
+        // default integrations are shipped with the apps and should not be sent over the wire
+        let sent = t.pop_sent_msg_opt(Duration::from_secs(1)).await;
+        assert!(sent.is_none());
+
+        Ok(())
+    }
+}

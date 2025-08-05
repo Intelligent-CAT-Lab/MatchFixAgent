@@ -355,3 +355,92 @@ fn normalize_addr(addr: &str) -> &str {
     let normalized = addr.trim();
     normalized.trim_start_matches("mailto:")
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::test_utils::TestContext;
+
+    #[test]
+    fn test_normalize_addr() {
+        assert_eq!(normalize_addr(" hello@mail.de  "), "hello@mail.de");
+        assert_eq!(normalize_addr("mailto:hello@mail.de  "), "hello@mail.de");
+    }
+
+    #[test]
+    fn test_replace_in_uri() {
+        assert_eq!(
+            replace_in_uri("helloworld", "world", "a-b c"),
+            "helloa%2Db%20c"
+        );
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_oauth_from_address() {
+        let t = TestContext::new().await;
+        assert_eq!(
+            Oauth2::from_address(&t, "hello@gmail.com", false).await,
+            Some(OAUTH2_GMAIL)
+        );
+        assert_eq!(
+            Oauth2::from_address(&t, "hello@googlemail.com", false).await,
+            Some(OAUTH2_GMAIL)
+        );
+        assert_eq!(
+            Oauth2::from_address(&t, "hello@yandex.com", false).await,
+            Some(OAUTH2_YANDEX)
+        );
+        assert_eq!(
+            Oauth2::from_address(&t, "hello@yandex.ru", false).await,
+            Some(OAUTH2_YANDEX)
+        );
+        assert_eq!(Oauth2::from_address(&t, "hello@web.de", false).await, None);
+    }
+
+    // #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    // async fn test_oauth_from_mx() {
+    //     // youtube staff seems to use "google workspace with oauth2", figures this out by MX lookup
+    //     let t = TestContext::new().await;
+    //     assert_eq!(
+    //         Oauth2::from_address(&t, "hello@youtube.com", false).await,
+    //         Some(OAUTH2_GMAIL)
+    //     );
+    //     // without MX lookup, we would not know as youtube.com is not in our provider-db
+    //     assert_eq!(
+    //         Oauth2::from_address(&t, "hello@youtube.com", true).await,
+    //         None
+    //     );
+    // }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_get_oauth2_addr() {
+        let ctx = TestContext::new().await;
+        let addr = "dignifiedquire@gmail.com";
+        let code = "fail";
+        let res = get_oauth2_addr(&ctx.ctx, addr, code).await.unwrap();
+        // this should fail as it is an invalid password
+        assert_eq!(res, None);
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_get_oauth2_url() {
+        let ctx = TestContext::new().await;
+        let addr = "dignifiedquire@gmail.com";
+        let redirect_uri = "chat.delta:/com.b44t.messenger";
+        let res = get_oauth2_url(&ctx.ctx, addr, redirect_uri).await.unwrap();
+
+        assert_eq!(res, Some("https://accounts.google.com/o/oauth2/auth?client_id=959970109878%2D4mvtgf6feshskf7695nfln6002mom908%2Eapps%2Egoogleusercontent%2Ecom&redirect_uri=chat%2Edelta%3A%2Fcom%2Eb44t%2Emessenger&response_type=code&scope=https%3A%2F%2Fmail.google.com%2F%20email&access_type=offline".into()));
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_get_oauth2_token() {
+        let ctx = TestContext::new().await;
+        let addr = "dignifiedquire@gmail.com";
+        let code = "fail";
+        let res = get_oauth2_access_token(&ctx.ctx, addr, code, false)
+            .await
+            .unwrap();
+        // this should fail as it is an invalid password
+        assert_eq!(res, None);
+    }
+}

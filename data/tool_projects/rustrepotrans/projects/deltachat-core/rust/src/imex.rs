@@ -814,3 +814,403 @@ async fn export_database(
         })
         .await
 }
+
+#[cfg(test)]
+mod tests {
+    use std::time::Duration;
+
+    use ::pgp::armor::BlockType;
+    use tokio::task;
+
+    use super::*;
+    use crate::pgp::{split_armored_data, HEADER_AUTOCRYPT, HEADER_SETUPCODE};
+    use crate::receive_imf::receive_imf;
+    use crate::stock_str::StockMessage;
+    use crate::test_utils::{alice_keypair, TestContext, TestContextManager};
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_render_setup_file() {
+        let t = TestContext::new_alice().await;
+        let msg = render_setup_file(&t, "hello").await.unwrap();
+        println!("{}", &msg);
+        // Check some substrings, indicating things got substituted.
+        assert!(msg.contains("<title>Autocrypt Setup Message</title"));
+        assert!(msg.contains("<h1>Autocrypt Setup Message</h1>"));
+        assert!(msg.contains("<p>This is the Autocrypt Setup Message used to"));
+        assert!(msg.contains("-----BEGIN PGP MESSAGE-----\r\n"));
+        assert!(msg.contains("Passphrase-Format: numeric9x4\r\n"));
+        assert!(msg.contains("Passphrase-Begin: he\r\n"));
+        assert!(msg.contains("-----END PGP MESSAGE-----\r\n"));
+
+        for line in msg.rsplit_terminator('\n') {
+            assert!(line.ends_with('\r'));
+        }
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_render_setup_file_newline_replace() {
+        let t = TestContext::new_alice().await;
+        t.set_stock_translation(StockMessage::AcSetupMsgBody, "hello\r\nthere".to_string())
+            .await
+            .unwrap();
+        let msg = render_setup_file(&t, "pw").await.unwrap();
+        println!("{}", &msg);
+        assert!(msg.contains("<p>hello<br>there</p>"));
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_create_setup_code() {
+        let t = TestContext::new().await;
+        let setupcode = create_setup_code(&t);
+        assert_eq!(setupcode.len(), 44);
+        assert_eq!(setupcode.chars().nth(4).unwrap(), '-');
+        assert_eq!(setupcode.chars().nth(9).unwrap(), '-');
+        assert_eq!(setupcode.chars().nth(14).unwrap(), '-');
+        assert_eq!(setupcode.chars().nth(19).unwrap(), '-');
+        assert_eq!(setupcode.chars().nth(24).unwrap(), '-');
+        assert_eq!(setupcode.chars().nth(29).unwrap(), '-');
+        assert_eq!(setupcode.chars().nth(34).unwrap(), '-');
+        assert_eq!(setupcode.chars().nth(39).unwrap(), '-');
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_export_public_key_to_asc_file() {
+        let context = TestContext::new().await;
+        let key = alice_keypair().public;
+        let blobdir = Path::new("$BLOBDIR");
+        assert!(export_key_to_asc_file(&context.ctx, blobdir, None, &key)
+            .await
+            .is_ok());
+        let blobdir = context.ctx.get_blobdir().to_str().unwrap();
+        let filename = format!("{blobdir}/public-key-default.asc");
+        let bytes = tokio::fs::read(&filename).await.unwrap();
+
+        assert_eq!(bytes, key.to_asc(None).into_bytes());
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_export_private_key_to_asc_file() {
+        let context = TestContext::new().await;
+        let key = alice_keypair().secret;
+        let blobdir = Path::new("$BLOBDIR");
+        assert!(export_key_to_asc_file(&context.ctx, blobdir, None, &key)
+            .await
+            .is_ok());
+        let blobdir = context.ctx.get_blobdir().to_str().unwrap();
+        let filename = format!("{blobdir}/private-key-default.asc");
+        let bytes = tokio::fs::read(&filename).await.unwrap();
+
+        assert_eq!(bytes, key.to_asc(None).into_bytes());
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_export_and_import_key() {
+        let export_dir = tempfile::tempdir().unwrap();
+
+        let context = TestContext::new_alice().await;
+        if let Err(err) = imex(
+            &context.ctx,
+            ImexMode::ExportSelfKeys,
+            export_dir.path(),
+            None,
+        )
+        .await
+        {
+            panic!("got error on export: {err:#}");
+        }
+
+        let context2 = TestContext::new_alice().await;
+        if let Err(err) = imex(
+            &context2.ctx,
+            ImexMode::ImportSelfKeys,
+            export_dir.path(),
+            None,
+        )
+        .await
+        {
+            panic!("got error on import: {err:#}");
+        }
+
+        let keyfile = export_dir.path().join("private-key-default.asc");
+        let context3 = TestContext::new_alice().await;
+        if let Err(err) = imex(&context3.ctx, ImexMode::ImportSelfKeys, &keyfile, None).await {
+            panic!("got error on import: {err:#}");
+        }
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_import_second_key() -> Result<()> {
+        let alice = &TestContext::new_alice().await;
+        let chat = alice.create_chat(alice).await;
+        let sent = alice.send_text(chat.id, "Encrypted with old key").await;
+        let export_dir = tempfile::tempdir().unwrap();
+
+        let alice = &TestContext::new().await;
+        alice.configure_addr("alice@example.org").await;
+        imex(alice, ImexMode::ExportSelfKeys, export_dir.path(), None).await?;
+
+        let alice = &TestContext::new_alice().await;
+        let old_key = key::load_self_secret_key(alice).await?;
+
+        imex(alice, ImexMode::ImportSelfKeys, export_dir.path(), None).await?;
+
+        let new_key = key::load_self_secret_key(alice).await?;
+        assert_ne!(new_key, old_key);
+        assert_eq!(
+            key::load_self_secret_keyring(alice).await?,
+            vec![new_key, old_key]
+        );
+
+        let msg = alice.recv_msg(&sent).await;
+        assert!(msg.get_showpadlock());
+        assert_eq!(msg.chat_id, alice.get_self_chat().await.id);
+        assert_eq!(msg.get_text(), "Encrypted with old key");
+
+        Ok(())
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_export_and_import_backup() -> Result<()> {
+        for set_verified_oneonone_chats in [true, false] {
+            let backup_dir = tempfile::tempdir().unwrap();
+
+            let context1 = TestContext::new_alice().await;
+            assert!(context1.is_configured().await?);
+            if set_verified_oneonone_chats {
+                context1
+                    .set_config_bool(Config::VerifiedOneOnOneChats, true)
+                    .await?;
+            }
+
+            let context2 = TestContext::new().await;
+            assert!(!context2.is_configured().await?);
+            assert!(has_backup(&context2, backup_dir.path()).await.is_err());
+
+            // export from context1
+            assert!(
+                imex(&context1, ImexMode::ExportBackup, backup_dir.path(), None)
+                    .await
+                    .is_ok()
+            );
+            let _event = context1
+                .evtracker
+                .get_matching(|evt| matches!(evt, EventType::ImexProgress(1000)))
+                .await;
+
+            // import to context2
+            let backup = has_backup(&context2, backup_dir.path()).await?;
+
+            // Import of unencrypted backup with incorrect "foobar" backup passphrase fails.
+            assert!(imex(
+                &context2,
+                ImexMode::ImportBackup,
+                backup.as_ref(),
+                Some("foobar".to_string())
+            )
+            .await
+            .is_err());
+
+            assert!(
+                imex(&context2, ImexMode::ImportBackup, backup.as_ref(), None)
+                    .await
+                    .is_ok()
+            );
+            let _event = context2
+                .evtracker
+                .get_matching(|evt| matches!(evt, EventType::ImexProgress(1000)))
+                .await;
+
+            assert!(context2.is_configured().await?);
+            assert_eq!(
+                context2.get_config(Config::Addr).await?,
+                Some("alice@example.org".to_string())
+            );
+            assert_eq!(
+                context2
+                    .get_config_bool(Config::VerifiedOneOnOneChats)
+                    .await?,
+                false
+            );
+            assert_eq!(
+                context1
+                    .get_config_bool(Config::VerifiedOneOnOneChats)
+                    .await?,
+                set_verified_oneonone_chats
+            );
+        }
+        Ok(())
+    }
+
+    /// This is a regression test for
+    /// https://github.com/deltachat/deltachat-android/issues/2263
+    /// where the config cache wasn't reset properly after a backup.
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_import_backup_reset_config_cache() -> Result<()> {
+        let backup_dir = tempfile::tempdir()?;
+        let context1 = TestContext::new_alice().await;
+        let context2 = TestContext::new().await;
+        assert!(!context2.is_configured().await?);
+
+        // export from context1
+        imex(&context1, ImexMode::ExportBackup, backup_dir.path(), None).await?;
+
+        // import to context2
+        let backup = has_backup(&context2, backup_dir.path()).await?;
+        let context2_cloned = context2.clone();
+        let handle = task::spawn(async move {
+            imex(
+                &context2_cloned,
+                ImexMode::ImportBackup,
+                backup.as_ref(),
+                None,
+            )
+            .await
+            .unwrap();
+        });
+
+        while !handle.is_finished() {
+            // The database is still unconfigured;
+            // fill the config cache with the old value.
+            context2.is_configured().await.ok();
+            tokio::time::sleep(Duration::from_micros(1)).await;
+        }
+
+        // Assert that the config cache has the new value now.
+        assert!(context2.is_configured().await?);
+
+        Ok(())
+    }
+
+    #[test]
+    fn test_normalize_setup_code() {
+        let norm = normalize_setup_code("123422343234423452346234723482349234");
+        assert_eq!(norm, "1234-2234-3234-4234-5234-6234-7234-8234-9234");
+
+        let norm =
+            normalize_setup_code("\t1 2 3422343234- foo bar-- 423-45 2 34 6234723482349234      ");
+        assert_eq!(norm, "1234-2234-3234-4234-5234-6234-7234-8234-9234");
+    }
+
+    /* S_EM_SETUPFILE is a AES-256 symm. encrypted setup message created by Enigmail
+    with an "encrypted session key", see RFC 4880.  The code is in S_EM_SETUPCODE */
+    const S_EM_SETUPCODE: &str = "1742-0185-6197-1303-7016-8412-3581-4441-0597";
+    const S_EM_SETUPFILE: &str = include_str!("../test-data/message/stress.txt");
+
+    // Autocrypt Setup Message payload "encrypted" with plaintext algorithm.
+    const S_PLAINTEXT_SETUPFILE: &str =
+        include_str!("../test-data/message/plaintext-autocrypt-setup.txt");
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_split_and_decrypt() {
+        let buf_1 = S_EM_SETUPFILE.as_bytes().to_vec();
+        let (typ, headers, base64) = split_armored_data(&buf_1).unwrap();
+        assert_eq!(typ, BlockType::Message);
+        assert!(S_EM_SETUPCODE.starts_with(headers.get(HEADER_SETUPCODE).unwrap()));
+        assert!(!headers.contains_key(HEADER_AUTOCRYPT));
+
+        assert!(!base64.is_empty());
+
+        let setup_file = S_EM_SETUPFILE.to_string();
+        let decrypted =
+            decrypt_setup_file(S_EM_SETUPCODE, std::io::Cursor::new(setup_file.as_bytes()))
+                .await
+                .unwrap();
+
+        let (typ, headers, _base64) = split_armored_data(decrypted.as_bytes()).unwrap();
+
+        assert_eq!(typ, BlockType::PrivateKey);
+        assert_eq!(headers.get(HEADER_AUTOCRYPT), Some(&"mutual".to_string()));
+        assert!(!headers.contains_key(HEADER_SETUPCODE));
+    }
+
+    /// Tests that Autocrypt Setup Message encrypted with "plaintext" algorithm cannot be
+    /// decrypted.
+    ///
+    /// According to <https://datatracker.ietf.org/doc/html/rfc4880#section-13.4>
+    /// "Implementations MUST NOT use plaintext in Symmetrically Encrypted Data packets".
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_decrypt_plaintext_autocrypt_setup_message() {
+        let setup_file = S_PLAINTEXT_SETUPFILE.to_string();
+        let incorrect_setupcode = "0000-0000-0000-0000-0000-0000-0000-0000-0000";
+        assert!(decrypt_setup_file(
+            incorrect_setupcode,
+            std::io::Cursor::new(setup_file.as_bytes()),
+        )
+        .await
+        .is_err());
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_key_transfer() -> Result<()> {
+        let alice = TestContext::new_alice().await;
+
+        let setup_code = initiate_key_transfer(&alice).await?;
+
+        // Get Autocrypt Setup Message.
+        let sent = alice.pop_sent_msg().await;
+
+        // Alice sets up a second device.
+        let alice2 = TestContext::new().await;
+        alice2.set_name("alice2");
+        alice2.configure_addr("alice@example.org").await;
+        alice2.recv_msg(&sent).await;
+        let msg = alice2.get_last_msg().await;
+        assert!(msg.is_setupmessage());
+
+        // Send a message that cannot be decrypted because the keys are
+        // not synchronized yet.
+        let sent = alice2.send_text(msg.chat_id, "Test").await;
+        let trashed_message = alice.recv_msg_opt(&sent).await;
+        assert!(trashed_message.is_none());
+        assert_ne!(alice.get_last_msg().await.get_text(), "Test");
+
+        // Transfer the key.
+        continue_key_transfer(&alice2, msg.id, &setup_code).await?;
+
+        // Alice sends a message to self from the new device.
+        let sent = alice2.send_text(msg.chat_id, "Test").await;
+        alice.recv_msg(&sent).await;
+        assert_eq!(alice.get_last_msg().await.get_text(), "Test");
+
+        Ok(())
+    }
+
+    /// Tests that Autocrypt Setup Messages is only clickable if it is self-sent.
+    /// This prevents Bob from tricking Alice into changing the key
+    /// by sending her an Autocrypt Setup Message as long as Alice's server
+    /// does not allow to forge the `From:` header.
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_key_transfer_non_self_sent() -> Result<()> {
+        let mut tcm = TestContextManager::new();
+        let alice = tcm.alice().await;
+        let bob = tcm.bob().await;
+
+        let _setup_code = initiate_key_transfer(&alice).await?;
+
+        // Get Autocrypt Setup Message.
+        let sent = alice.pop_sent_msg().await;
+
+        let rcvd = bob.recv_msg(&sent).await;
+        assert!(!rcvd.is_setupmessage());
+
+        Ok(())
+    }
+
+    /// Tests reception of Autocrypt Setup Message from K-9 6.802.
+    ///
+    /// Unlike Autocrypt Setup Message sent by Delta Chat,
+    /// this message does not contain `Autocrypt-Prefer-Encrypt` header.
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_key_transfer_k_9() -> Result<()> {
+        let t = &TestContext::new().await;
+        t.configure_addr("autocrypt@nine.testrun.org").await;
+
+        let raw = include_bytes!("../test-data/message/k-9-autocrypt-setup-message.eml");
+        let received = receive_imf(t, raw, false).await?.unwrap();
+
+        let setup_code = "0655-9868-8252-5455-4232-5158-1237-5333-2638";
+        continue_key_transfer(t, *received.msg_ids.last().unwrap(), setup_code).await?;
+
+        Ok(())
+    }
+}

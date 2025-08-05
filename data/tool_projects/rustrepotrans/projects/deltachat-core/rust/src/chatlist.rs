@@ -466,3 +466,335 @@ pub async fn get_last_message_for_chat(
         )
         .await
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::chat::{
+        add_contact_to_chat, create_group_chat, get_chat_contacts, remove_contact_from_chat,
+        send_text_msg, ProtectionStatus,
+    };
+    use crate::message::Viewtype;
+    use crate::receive_imf::receive_imf;
+    use crate::stock_str::StockMessage;
+    use crate::test_utils::TestContext;
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_try_load() {
+        let t = TestContext::new_bob().await;
+        let chat_id1 = create_group_chat(&t, ProtectionStatus::Unprotected, "a chat")
+            .await
+            .unwrap();
+        let chat_id2 = create_group_chat(&t, ProtectionStatus::Unprotected, "b chat")
+            .await
+            .unwrap();
+        let chat_id3 = create_group_chat(&t, ProtectionStatus::Unprotected, "c chat")
+            .await
+            .unwrap();
+
+        // check that the chatlist starts with the most recent message
+        let chats = Chatlist::try_load(&t, 0, None, None).await.unwrap();
+        assert_eq!(chats.len(), 3);
+        assert_eq!(chats.get_chat_id(0).unwrap(), chat_id3);
+        assert_eq!(chats.get_chat_id(1).unwrap(), chat_id2);
+        assert_eq!(chats.get_chat_id(2).unwrap(), chat_id1);
+
+        // New drafts are sorted to the top
+        // We have to set a draft on the other two messages, too, as
+        // chat timestamps are only exact to the second and sorting by timestamp
+        // would not work.
+        // Message timestamps are "smeared" and unique, so we don't have this problem
+        // if we have any message (can be a draft) in all chats.
+        // Instead of setting drafts for chat_id1 and chat_id3, we could also sleep
+        // 2s here.
+        for chat_id in &[chat_id1, chat_id3, chat_id2] {
+            let mut msg = Message::new(Viewtype::Text);
+            msg.set_text("hello".to_string());
+            chat_id.set_draft(&t, Some(&mut msg)).await.unwrap();
+        }
+
+        let chats = Chatlist::try_load(&t, 0, None, None).await.unwrap();
+        assert_eq!(chats.get_chat_id(0).unwrap(), chat_id2);
+
+        // check chatlist query and archive functionality
+        let chats = Chatlist::try_load(&t, 0, Some("b"), None).await.unwrap();
+        assert_eq!(chats.len(), 1);
+
+        // receive a message from alice
+        let alice = TestContext::new_alice().await;
+        let alice_chat_id = create_group_chat(&alice, ProtectionStatus::Unprotected, "alice chat")
+            .await
+            .unwrap();
+        add_contact_to_chat(
+            &alice,
+            alice_chat_id,
+            Contact::create(&alice, "bob", "bob@example.net")
+                .await
+                .unwrap(),
+        )
+        .await
+        .unwrap();
+        send_text_msg(&alice, alice_chat_id, "hi".into())
+            .await
+            .unwrap();
+        let sent_msg = alice.pop_sent_msg().await;
+
+        t.recv_msg(&sent_msg).await;
+        let chats = Chatlist::try_load(&t, 0, Some("is:unread"), None)
+            .await
+            .unwrap();
+        assert!(chats.len() == 1);
+
+        let chats = Chatlist::try_load(&t, DC_GCL_ARCHIVED_ONLY, None, None)
+            .await
+            .unwrap();
+        assert_eq!(chats.len(), 0);
+
+        chat_id1
+            .set_visibility(&t, ChatVisibility::Archived)
+            .await
+            .ok();
+        let chats = Chatlist::try_load(&t, DC_GCL_ARCHIVED_ONLY, None, None)
+            .await
+            .unwrap();
+        assert_eq!(chats.len(), 1);
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_sort_self_talk_up_on_forward() {
+        let t = TestContext::new().await;
+        t.update_device_chats().await.unwrap();
+        create_group_chat(&t, ProtectionStatus::Unprotected, "a chat")
+            .await
+            .unwrap();
+
+        let chats = Chatlist::try_load(&t, 0, None, None).await.unwrap();
+        assert!(chats.len() == 3);
+        assert!(!Chat::load_from_db(&t, chats.get_chat_id(0).unwrap())
+            .await
+            .unwrap()
+            .is_self_talk());
+
+        let chats = Chatlist::try_load(&t, DC_GCL_FOR_FORWARDING, None, None)
+            .await
+            .unwrap();
+        assert!(chats.len() == 2); // device chat cannot be written and is skipped on forwarding
+        assert!(Chat::load_from_db(&t, chats.get_chat_id(0).unwrap())
+            .await
+            .unwrap()
+            .is_self_talk());
+
+        remove_contact_from_chat(&t, chats.get_chat_id(1).unwrap(), ContactId::SELF)
+            .await
+            .unwrap();
+        let chats = Chatlist::try_load(&t, DC_GCL_FOR_FORWARDING, None, None)
+            .await
+            .unwrap();
+        assert!(chats.len() == 1);
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_search_special_chat_names() {
+        let t = TestContext::new().await;
+        t.update_device_chats().await.unwrap();
+
+        let chats = Chatlist::try_load(&t, 0, Some("t-1234-s"), None)
+            .await
+            .unwrap();
+        assert_eq!(chats.len(), 0);
+        let chats = Chatlist::try_load(&t, 0, Some("t-5678-b"), None)
+            .await
+            .unwrap();
+        assert_eq!(chats.len(), 0);
+
+        t.set_stock_translation(StockMessage::SavedMessages, "test-1234-save".to_string())
+            .await
+            .unwrap();
+        let chats = Chatlist::try_load(&t, 0, Some("t-1234-s"), None)
+            .await
+            .unwrap();
+        assert_eq!(chats.len(), 1);
+
+        t.set_stock_translation(StockMessage::DeviceMessages, "test-5678-babbel".to_string())
+            .await
+            .unwrap();
+        let chats = Chatlist::try_load(&t, 0, Some("t-5678-b"), None)
+            .await
+            .unwrap();
+        assert_eq!(chats.len(), 1);
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_search_single_chat() -> anyhow::Result<()> {
+        let t = TestContext::new_alice().await;
+
+        // receive a one-to-one-message
+        receive_imf(
+            &t,
+            b"From: Bob Authname <bob@example.org>\n\
+                 To: alice@example.org\n\
+                 Subject: foo\n\
+                 Message-ID: <msg1234@example.org>\n\
+                 Chat-Version: 1.0\n\
+                 Date: Sun, 22 Mar 2021 22:37:57 +0000\n\
+                 \n\
+                 hello foo\n",
+            false,
+        )
+        .await?;
+
+        let chats = Chatlist::try_load(&t, 0, Some("Bob Authname"), None).await?;
+        // Contact request should be searchable
+        assert_eq!(chats.len(), 1);
+
+        let msg = t.get_last_msg().await;
+        let chat_id = msg.get_chat_id();
+        chat_id.accept(&t).await.unwrap();
+
+        let contacts = get_chat_contacts(&t, chat_id).await?;
+        let contact_id = *contacts.first().unwrap();
+        let chat = Chat::load_from_db(&t, chat_id).await?;
+        assert_eq!(chat.get_name(), "Bob Authname");
+
+        // check, the one-to-one-chat can be found using chatlist search query
+        let chats = Chatlist::try_load(&t, 0, Some("bob authname"), None).await?;
+        assert_eq!(chats.len(), 1);
+        assert_eq!(chats.get_chat_id(0).unwrap(), chat_id);
+
+        // change the name of the contact; this also changes the name of the one-to-one-chat
+        let test_id = Contact::create(&t, "Bob Nickname", "bob@example.org").await?;
+        assert_eq!(contact_id, test_id);
+        let chat = Chat::load_from_db(&t, chat_id).await?;
+        assert_eq!(chat.get_name(), "Bob Nickname");
+        let chats = Chatlist::try_load(&t, 0, Some("bob authname"), None).await?;
+        assert_eq!(chats.len(), 0);
+        let chats = Chatlist::try_load(&t, 0, Some("bob nickname"), None).await?;
+        assert_eq!(chats.len(), 1);
+
+        // revert contact to authname, this again changes the name of the one-to-one-chat
+        let test_id = Contact::create(&t, "", "bob@example.org").await?;
+        assert_eq!(contact_id, test_id);
+        let chat = Chat::load_from_db(&t, chat_id).await?;
+        assert_eq!(chat.get_name(), "Bob Authname");
+        let chats = Chatlist::try_load(&t, 0, Some("bob authname"), None).await?;
+        assert_eq!(chats.len(), 1);
+        let chats = Chatlist::try_load(&t, 0, Some("bob nickname"), None).await?;
+        assert_eq!(chats.len(), 0);
+
+        Ok(())
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_search_single_chat_without_authname() -> anyhow::Result<()> {
+        let t = TestContext::new_alice().await;
+
+        // receive a one-to-one-message without authname set
+        receive_imf(
+            &t,
+            b"From: bob@example.org\n\
+                 To: alice@example.org\n\
+                 Subject: foo\n\
+                 Message-ID: <msg5678@example.org>\n\
+                 Chat-Version: 1.0\n\
+                 Date: Sun, 22 Mar 2021 22:38:57 +0000\n\
+                 \n\
+                 hello foo\n",
+            false,
+        )
+        .await?;
+
+        let msg = t.get_last_msg().await;
+        let chat_id = msg.get_chat_id();
+        chat_id.accept(&t).await.unwrap();
+        let contacts = get_chat_contacts(&t, chat_id).await?;
+        let contact_id = *contacts.first().unwrap();
+        let chat = Chat::load_from_db(&t, chat_id).await?;
+        assert_eq!(chat.get_name(), "bob@example.org");
+
+        // check, the one-to-one-chat can be found using chatlist search query
+        let chats = Chatlist::try_load(&t, 0, Some("bob@example.org"), None).await?;
+        assert_eq!(chats.len(), 1);
+        assert_eq!(chats.get_chat_id(0)?, chat_id);
+
+        // change the name of the contact; this also changes the name of the one-to-one-chat
+        let test_id = Contact::create(&t, "Bob Nickname", "bob@example.org").await?;
+        assert_eq!(contact_id, test_id);
+        let chat = Chat::load_from_db(&t, chat_id).await?;
+        assert_eq!(chat.get_name(), "Bob Nickname");
+        let chats = Chatlist::try_load(&t, 0, Some("bob@example.org"), None).await?;
+        assert_eq!(chats.len(), 0); // email-addresses are searchable in contacts, not in chats
+        let chats = Chatlist::try_load(&t, 0, Some("Bob Nickname"), None).await?;
+        assert_eq!(chats.len(), 1);
+        assert_eq!(chats.get_chat_id(0)?, chat_id);
+
+        // revert name change, this again changes the name of the one-to-one-chat to the email-address
+        let test_id = Contact::create(&t, "", "bob@example.org").await?;
+        assert_eq!(contact_id, test_id);
+        let chat = Chat::load_from_db(&t, chat_id).await?;
+        assert_eq!(chat.get_name(), "bob@example.org");
+        let chats = Chatlist::try_load(&t, 0, Some("bob@example.org"), None).await?;
+        assert_eq!(chats.len(), 1);
+        let chats = Chatlist::try_load(&t, 0, Some("bob nickname"), None).await?;
+        assert_eq!(chats.len(), 0);
+
+        // finally, also check that a simple substring-search is working with email-addresses
+        let chats = Chatlist::try_load(&t, 0, Some("b@exa"), None).await?;
+        assert_eq!(chats.len(), 1);
+        let chats = Chatlist::try_load(&t, 0, Some("b@exac"), None).await?;
+        assert_eq!(chats.len(), 0);
+
+        Ok(())
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_get_summary_unwrap() {
+        let t = TestContext::new().await;
+        let chat_id1 = create_group_chat(&t, ProtectionStatus::Unprotected, "a chat")
+            .await
+            .unwrap();
+
+        let mut msg = Message::new(Viewtype::Text);
+        msg.set_text("foo:\nbar \r\n test".to_string());
+        chat_id1.set_draft(&t, Some(&mut msg)).await.unwrap();
+
+        let chats = Chatlist::try_load(&t, 0, None, None).await.unwrap();
+        let summary = chats.get_summary(&t, 0, None).await.unwrap();
+        assert_eq!(summary.text, "foo: bar test"); // the linebreak should be removed from summary
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_load_broken() {
+        let t = TestContext::new_bob().await;
+        let chat_id1 = create_group_chat(&t, ProtectionStatus::Unprotected, "a chat")
+            .await
+            .unwrap();
+        create_group_chat(&t, ProtectionStatus::Unprotected, "b chat")
+            .await
+            .unwrap();
+        create_group_chat(&t, ProtectionStatus::Unprotected, "c chat")
+            .await
+            .unwrap();
+
+        // check that the chatlist starts with the most recent message
+        let chats = Chatlist::try_load(&t, 0, None, None).await.unwrap();
+        assert_eq!(chats.len(), 3);
+
+        // obfuscated one chat
+        t.sql
+            .execute("UPDATE chats SET type=10 WHERE id=?", (chat_id1,))
+            .await
+            .unwrap();
+
+        // obfuscated chat can't be loaded
+        assert!(Chat::load_from_db(&t, chat_id1).await.is_err());
+
+        // chatlist loads fine
+        let chats = Chatlist::try_load(&t, 0, None, None).await.unwrap();
+
+        // only corrupted chat fails to create summary
+        assert!(chats.get_summary(&t, 0, None).await.is_ok());
+        assert!(chats.get_summary(&t, 1, None).await.is_ok());
+        assert!(chats.get_summary(&t, 2, None).await.is_err());
+        assert_eq!(chats.get_index_for_id(chat_id1).unwrap(), 2);
+    }
+}

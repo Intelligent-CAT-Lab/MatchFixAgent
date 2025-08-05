@@ -37,3 +37,16 @@ pub async fn wrap_tls<T: AsyncRead + AsyncWrite + Unpin>(
     let tls_stream = tls.connect(hostname, stream).await?;
     Ok(tls_stream)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_build_tls() {
+        // we are using some additional root certificates.
+        // make sure, they do not break construction of TlsConnector
+        let _ = build_tls(true);
+        let _ = build_tls(false);
+    }
+}

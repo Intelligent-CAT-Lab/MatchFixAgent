@@ -280,3 +280,137 @@ impl Message {
         summary.split_whitespace().collect::<Vec<&str>>().join(" ")
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::param::Param;
+    use crate::test_utils as test;
+
+    async fn assert_summary_texts(msg: &Message, ctx: &Context, expected: &str) {
+        assert_eq!(msg.get_summary_text(ctx).await, expected);
+        assert_eq!(msg.get_summary_text_without_prefix(ctx).await, expected);
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_get_summary_text() {
+        let d = test::TestContext::new().await;
+        let ctx = &d.ctx;
+
+        let some_text = " bla \t\n\tbla\n\t".to_string();
+
+        let mut msg = Message::new(Viewtype::Text);
+        msg.set_text(some_text.to_string());
+        assert_summary_texts(&msg, ctx, "bla bla").await; // for simple text, the type is not added to the summary
+
+        let mut msg = Message::new(Viewtype::Image);
+        msg.set_file("foo.jpg", None);
+        assert_summary_texts(&msg, ctx, "📷 Image").await; // file names are not added for images
+
+        let mut msg = Message::new(Viewtype::Image);
+        msg.set_text(some_text.to_string());
+        msg.set_file("foo.jpg", None);
+        assert_summary_texts(&msg, ctx, "📷 bla bla").await; // type is visible by emoji if text is set
+
+        let mut msg = Message::new(Viewtype::Video);
+        msg.set_file("foo.mp4", None);
+        assert_summary_texts(&msg, ctx, "🎥 Video").await; // file names are not added for videos
+
+        let mut msg = Message::new(Viewtype::Video);
+        msg.set_text(some_text.to_string());
+        msg.set_file("foo.mp4", None);
+        assert_summary_texts(&msg, ctx, "🎥 bla bla").await; // type is visible by emoji if text is set
+
+        let mut msg = Message::new(Viewtype::Gif);
+        msg.set_file("foo.gif", None);
+        assert_summary_texts(&msg, ctx, "GIF").await; // file names are not added for GIFs
+
+        let mut msg = Message::new(Viewtype::Gif);
+        msg.set_text(some_text.to_string());
+        msg.set_file("foo.gif", None);
+        assert_summary_texts(&msg, ctx, "GIF \u{2013} bla bla").await; // file names are not added for GIFs
+
+        let mut msg = Message::new(Viewtype::Sticker);
+        msg.set_file("foo.png", None);
+        assert_summary_texts(&msg, ctx, "Sticker").await; // file names are not added for stickers
+
+        let mut msg = Message::new(Viewtype::Voice);
+        msg.set_file("foo.mp3", None);
+        assert_summary_texts(&msg, ctx, "🎤 Voice message").await; // file names are not added for voice messages
+
+        let mut msg = Message::new(Viewtype::Voice);
+        msg.set_text(some_text.clone());
+        msg.set_file("foo.mp3", None);
+        assert_summary_texts(&msg, ctx, "🎤 bla bla").await;
+
+        let mut msg = Message::new(Viewtype::Audio);
+        msg.set_file("foo.mp3", None);
+        assert_summary_texts(&msg, ctx, "🎵 foo.mp3").await; // file name is added for audio
+
+        let mut msg = Message::new(Viewtype::Audio);
+        msg.set_text(some_text.clone());
+        msg.set_file("foo.mp3", None);
+        assert_summary_texts(&msg, ctx, "🎵 foo.mp3 \u{2013} bla bla").await; // file name and text added for audio
+
+        let mut msg = Message::new(Viewtype::File);
+        msg.set_file("foo.bar", None);
+        assert_summary_texts(&msg, ctx, "📎 foo.bar").await; // file name is added for files
+
+        let mut msg = Message::new(Viewtype::File);
+        msg.set_text(some_text.clone());
+        msg.set_file("foo.bar", None);
+        assert_summary_texts(&msg, ctx, "📎 foo.bar \u{2013} bla bla").await; // file name is added for files
+
+        let mut msg = Message::new(Viewtype::VideochatInvitation);
+        msg.set_text(some_text.clone());
+        msg.set_file("foo.bar", None);
+        assert_summary_texts(&msg, ctx, "Video chat invitation").await; // text is not added for videochat invitations
+
+        let mut msg = Message::new(Viewtype::Vcard);
+        msg.set_file("foo.vcf", None);
+        assert_summary_texts(&msg, ctx, "👤 Contact").await;
+        msg.set_text(some_text.clone());
+        assert_summary_texts(&msg, ctx, "👤 bla bla").await;
+
+        let mut msg = Message::new(Viewtype::Vcard);
+        msg.set_file_from_bytes(
+            ctx,
+            "alice.vcf",
+            b"BEGIN:VCARD\n\
+              VERSION:4.0\n\
+              FN:Alice Wonderland\n\
+              EMAIL;TYPE=work:alice@example.org\n\
+              END:VCARD",
+            None,
+        )
+        .await
+        .unwrap();
+        assert_summary_texts(&msg, ctx, "👤 Contact").await;
+
+        // Forwarded
+        let mut msg = Message::new(Viewtype::Text);
+        msg.set_text(some_text.clone());
+        msg.param.set_int(Param::Forwarded, 1);
+        assert_eq!(msg.get_summary_text(ctx).await, "Forwarded: bla bla"); // for simple text, the type is not added to the summary
+        assert_eq!(msg.get_summary_text_without_prefix(ctx).await, "bla bla"); // skipping prefix used for reactions summaries
+
+        let mut msg = Message::new(Viewtype::File);
+        msg.set_text(some_text.clone());
+        msg.set_file("foo.bar", None);
+        msg.param.set_int(Param::Forwarded, 1);
+        assert_eq!(
+            msg.get_summary_text(ctx).await,
+            "Forwarded: 📎 foo.bar \u{2013} bla bla"
+        );
+        assert_eq!(
+            msg.get_summary_text_without_prefix(ctx).await,
+            "📎 foo.bar \u{2013} bla bla"
+        ); // skipping prefix used for reactions summaries
+
+        let mut msg = Message::new(Viewtype::File);
+        msg.set_text(some_text.clone());
+        msg.param.set(Param::File, "foo.bar");
+        msg.param.set_cmd(SystemMessage::AutocryptSetupMessage);
+        assert_summary_texts(&msg, ctx, "Autocrypt Setup Message").await; // file name is not added for autocrypt setup messages
+    }
+}

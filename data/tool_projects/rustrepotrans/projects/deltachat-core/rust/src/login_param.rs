@@ -318,3 +318,55 @@ fn unset_empty(s: &str) -> &str {
         s
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::test_utils::TestContext;
+
+    #[test]
+    fn test_certificate_checks_display() {
+        use std::string::ToString;
+
+        assert_eq!(
+            "accept_invalid_certificates".to_string(),
+            CertificateChecks::AcceptInvalidCertificates.to_string()
+        );
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_save_load_login_param() -> Result<()> {
+        let t = TestContext::new().await;
+
+        let param = LoginParam {
+            addr: "alice@example.org".to_string(),
+            imap: ServerLoginParam {
+                server: "imap.example.com".to_string(),
+                user: "alice".to_string(),
+                password: "foo".to_string(),
+                port: 123,
+                security: Socket::Starttls,
+                oauth2: false,
+                certificate_checks: CertificateChecks::Strict,
+            },
+            smtp: ServerLoginParam {
+                server: "smtp.example.com".to_string(),
+                user: "alice@example.org".to_string(),
+                password: "bar".to_string(),
+                port: 456,
+                security: Socket::Ssl,
+                oauth2: false,
+                certificate_checks: CertificateChecks::AcceptInvalidCertificates,
+            },
+            provider: get_provider_by_id("example.com"),
+            // socks5_config is not saved by `save_to_database`, using default value
+            socks5_config: None,
+        };
+
+        param.save_as_configured_params(&t).await?;
+        let loaded = LoginParam::load_configured_params(&t).await?;
+
+        assert_eq!(param, loaded);
+        Ok(())
+    }
+}

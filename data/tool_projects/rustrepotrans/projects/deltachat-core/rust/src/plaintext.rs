@@ -107,3 +107,199 @@ impl PlainText {
         ret
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_plain_to_html() {
+        let html = PlainText {
+            text: r##"line 1
+line 2
+line with https://link-mid-of-line.org and http://link-end-of-line.com/file?foo=bar%20
+http://link-at-start-of-line.org
+"##
+            .to_string(),
+            flowed: false,
+            delsp: false,
+        }
+        .to_html();
+        assert_eq!(
+            html,
+            r#"<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="color-scheme" content="light dark" />
+</head><body>
+line 1<br/>
+line 2<br/>
+line with <a href="https://link-mid-of-line.org">https://link-mid-of-line.org</a> and <a href="http://link-end-of-line.com/file?foo=bar%20">http://link-end-of-line.com/file?foo=bar%20</a><br/>
+<a href="http://link-at-start-of-line.org">http://link-at-start-of-line.org</a><br/>
+<br/>
+</body></html>
+"#
+        );
+    }
+
+    #[test]
+    fn test_plain_to_html_encapsulated() {
+        let html = PlainText {
+            text: r#"line with <http://encapsulated.link/?foo=_bar> here!"#.to_string(),
+            flowed: false,
+            delsp: false,
+        }
+        .to_html();
+        assert_eq!(
+            html,
+            r#"<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="color-scheme" content="light dark" />
+</head><body>
+line with &lt;<a href="http://encapsulated.link/?foo=_bar">http://encapsulated.link/?foo=_bar</a>&gt; here!<br/>
+</body></html>
+"#
+        );
+    }
+
+    #[test]
+    fn test_plain_to_html_nolink() {
+        let html = PlainText {
+            text: r#"line with nohttp://no.link here"#.to_string(),
+            flowed: false,
+            delsp: false,
+        }
+        .to_html();
+        assert_eq!(
+            html,
+            r#"<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="color-scheme" content="light dark" />
+</head><body>
+line with nohttp://no.link here<br/>
+</body></html>
+"#
+        );
+    }
+
+    #[test]
+    fn test_plain_to_html_mailto() {
+        let html = PlainText {
+            text: r#"just an address: foo@bar.org another@one.de"#.to_string(),
+            flowed: false,
+            delsp: false,
+        }
+        .to_html();
+        assert_eq!(
+            html,
+            r#"<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="color-scheme" content="light dark" />
+</head><body>
+just an address: <a href="mailto:foo@bar.org">foo@bar.org</a> <a href="mailto:another@one.de">another@one.de</a><br/>
+</body></html>
+"#
+        );
+    }
+
+    #[test]
+    fn test_plain_to_html_flowed() {
+        let html = PlainText {
+            text: "line \nstill line\n>quote \n>still quote\n >no quote".to_string(),
+            flowed: true,
+            delsp: false,
+        }
+        .to_html();
+        assert_eq!(
+            html,
+            r#"<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="color-scheme" content="light dark" />
+</head><body>
+line still line<br/>
+<em>&gt;quote </em><br/>
+<em>&gt;still quote</em><br/>
+&gt;no quote<br/>
+</body></html>
+"#
+        );
+    }
+
+    #[test]
+    fn test_plain_to_html_flowed_delsp() {
+        let html = PlainText {
+            text: "line \nstill line\n>quote \n>still quote\n >no quote".to_string(),
+            flowed: true,
+            delsp: true,
+        }
+        .to_html();
+        assert_eq!(
+            html,
+            r#"<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="color-scheme" content="light dark" />
+</head><body>
+linestill line<br/>
+<em>&gt;quote </em><br/>
+<em>&gt;still quote</em><br/>
+&gt;no quote<br/>
+</body></html>
+"#
+        );
+    }
+
+    #[test]
+    fn test_plain_to_html_fixed() {
+        let html = PlainText {
+            text: "line \nstill line\n>quote \n>still quote\n >no quote".to_string(),
+            flowed: false,
+            delsp: false,
+        }
+        .to_html();
+        assert_eq!(
+            html,
+            r#"<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="color-scheme" content="light dark" />
+</head><body>
+line <br/>
+still line<br/>
+<em>&gt;quote </em><br/>
+<em>&gt;still quote</em><br/>
+&nbsp;&gt;no quote<br/>
+</body></html>
+"#
+        );
+    }
+
+    #[test]
+    fn test_plain_to_html_indentation() {
+        let html = PlainText {
+            text: "def foo():\n    pass\n\ndef bar(x):\n    return x + 5".to_string(),
+            flowed: false,
+            delsp: false,
+        }
+        .to_html();
+        assert_eq!(
+            html,
+            r#"<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="color-scheme" content="light dark" />
+</head><body>
+def foo():<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;pass<br/>
+<br/>
+def bar(x):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;return x + 5<br/>
+</body></html>
+"#
+        );
+    }
+}

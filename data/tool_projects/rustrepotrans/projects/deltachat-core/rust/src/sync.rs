@@ -312,3 +312,274 @@ impl Context {
         Ok(())
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use std::time::Duration;
+
+    use anyhow::bail;
+
+    use super::*;
+    use crate::chatlist::Chatlist;
+    use crate::contact::{Contact, Origin};
+    use crate::test_utils::TestContext;
+    use crate::tools::SystemTime;
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_config_sync_msgs() -> Result<()> {
+        let t = TestContext::new_alice().await;
+        assert!(!t.get_config_bool(Config::SyncMsgs).await?);
+        t.set_config_bool(Config::SyncMsgs, true).await?;
+        assert!(t.get_config_bool(Config::SyncMsgs).await?);
+        t.set_config_bool(Config::SyncMsgs, false).await?;
+        assert!(!t.get_config_bool(Config::SyncMsgs).await?);
+        Ok(())
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_build_sync_json() -> Result<()> {
+        let t = TestContext::new_alice().await;
+        t.set_config_bool(Config::SyncMsgs, true).await?;
+
+        assert!(t.build_sync_json().await?.is_none());
+
+        // Having one test on `SyncData::AlterChat` is sufficient here as
+        // `chat::SyncAction::SetMuted` introduces enums inside items and `SystemTime`. Let's avoid
+        // in-depth testing of the serialiser here which is an external crate.
+        t.add_sync_item_with_timestamp(
+            SyncData::AlterChat {
+                id: chat::SyncId::ContactAddr("bob@example.net".to_string()),
+                action: chat::SyncAction::SetMuted(chat::MuteDuration::Until(
+                    SystemTime::UNIX_EPOCH + Duration::from_millis(42999),
+                )),
+            },
+            1631781315,
+        )
+        .await?;
+
+        t.add_sync_item_with_timestamp(
+            SyncData::AddQrToken(QrTokenData {
+                invitenumber: "testinvite".to_string(),
+                auth: "testauth".to_string(),
+                grpid: Some("group123".to_string()),
+            }),
+            1631781316,
+        )
+        .await?;
+        t.add_sync_item_with_timestamp(
+            SyncData::DeleteQrToken(QrTokenData {
+                invitenumber: "123!?\":.;{}".to_string(),
+                auth: "456".to_string(),
+                grpid: None,
+            }),
+            1631781317,
+        )
+        .await?;
+
+        let (serialized, ids) = t.build_sync_json().await?.unwrap();
+        assert_eq!(
+            serialized,
+            r#"{"items":[
+{"timestamp":1631781315,"data":{"AlterChat":{"id":{"ContactAddr":"bob@example.net"},"action":{"SetMuted":{"Until":{"secs_since_epoch":42,"nanos_since_epoch":999000000}}}}}},
+{"timestamp":1631781316,"data":{"AddQrToken":{"invitenumber":"testinvite","auth":"testauth","grpid":"group123"}}},
+{"timestamp":1631781317,"data":{"DeleteQrToken":{"invitenumber":"123!?\":.;{}","auth":"456","grpid":null}}}
+]}"#
+        );
+
+        assert!(t.build_sync_json().await?.is_some());
+        t.delete_sync_ids(ids).await?;
+        assert!(t.build_sync_json().await?.is_none());
+
+        let sync_items = t.parse_sync_items(serialized)?;
+        assert_eq!(sync_items.items.len(), 3);
+
+        Ok(())
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_build_sync_json_sync_msgs_off() -> Result<()> {
+        let t = TestContext::new_alice().await;
+        t.set_config_bool(Config::SyncMsgs, false).await?;
+        t.add_sync_item(SyncData::AddQrToken(QrTokenData {
+            invitenumber: "testinvite".to_string(),
+            auth: "testauth".to_string(),
+            grpid: Some("group123".to_string()),
+        }))
+        .await?;
+        assert!(t.build_sync_json().await?.is_none());
+        Ok(())
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_parse_sync_items() -> Result<()> {
+        let t = TestContext::new_alice().await;
+
+        assert!(t.parse_sync_items(r#"{bad json}"#.to_string()).is_err());
+
+        assert!(t.parse_sync_items(r#"{"badname":[]}"#.to_string()).is_err());
+
+        for bad_item_example in [
+            r#"{"items":[{"timestamp":1631781316,"data":{"BadItem":{"invitenumber":"in","auth":"a","grpid":null}}}]}"#,
+            r#"{"items":[{"timestamp":1631781316,"data":{"AddQrToken":{"invitenumber":"in","auth":123}}}]}"#, // `123` is invalid for `String`
+            r#"{"items":[{"timestamp":1631781316,"data":{"AddQrToken":{"invitenumber":"in","auth":true}}}]}"#, // `true` is invalid for `String`
+            r#"{"items":[{"timestamp":1631781316,"data":{"AddQrToken":{"invitenumber":"in","auth":[]}}}]}"#, // `[]` is invalid for `String`
+            r#"{"items":[{"timestamp":1631781316,"data":{"AddQrToken":{"invitenumber":"in","auth":{}}}}]}"#, // `{}` is invalid for `String`
+            r#"{"items":[{"timestamp":1631781316,"data":{"AddQrToken":{"invitenumber":"in","grpid":null}}}]}"#, // missing field
+            r#"{"items":[{"timestamp":1631781316,"data":{"AlterChat":{"id":{"ContactAddr":"bob@example.net"},"action":"Burn"}}}]}"#, // Unknown enum value
+        ] {
+            let sync_items = t.parse_sync_items(bad_item_example.to_string()).unwrap();
+            assert_eq!(sync_items.items.len(), 1);
+            assert!(matches!(sync_items.items[0].timestamp, 1631781316));
+            assert!(matches!(
+                sync_items.items[0].data,
+                SyncDataOrUnknown::Unknown(_)
+            ));
+        }
+
+        // Test enums inside items and SystemTime
+        let sync_items = t.parse_sync_items(
+            r#"{"items":[{"timestamp":1631781318,"data":{"AlterChat":{"id":{"ContactAddr":"bob@example.net"},"action":{"SetMuted":{"Until":{"secs_since_epoch":42,"nanos_since_epoch":999000000}}}}}}]}"#.to_string(),
+        )?;
+        assert_eq!(sync_items.items.len(), 1);
+        let SyncDataOrUnknown::SyncData(AlterChat { id, action }) =
+            &sync_items.items.first().unwrap().data
+        else {
+            bail!("bad item");
+        };
+        assert_eq!(
+            *id,
+            chat::SyncId::ContactAddr("bob@example.net".to_string())
+        );
+        assert_eq!(
+            *action,
+            chat::SyncAction::SetMuted(chat::MuteDuration::Until(
+                SystemTime::UNIX_EPOCH + Duration::from_millis(42999)
+            ))
+        );
+
+        // empty item list is okay
+        assert_eq!(
+            t.parse_sync_items(r#"{"items":[]}"#.to_string())?
+                .items
+                .len(),
+            0
+        );
+
+        // to allow forward compatibility, additional fields should not break parsing
+        let sync_items = t
+            .parse_sync_items(
+                r#"{"items":[
+{"timestamp":1631781316,"data":{"DeleteQrToken":{"invitenumber":"in","auth":"yip","grpid":null}}},
+{"timestamp":1631781316,"data":{"AddQrToken":{"invitenumber":"in","auth":"yip","additional":123,"grpid":null}}}
+]}"#
+                .to_string(),
+            )
+            ?;
+        assert_eq!(sync_items.items.len(), 2);
+
+        let sync_items = t.parse_sync_items(
+            r#"{"items":[
+{"timestamp":1631781318,"data":{"AddQrToken":{"invitenumber":"in","auth":"yip","grpid":null}}}
+],"additional":"field"}"#
+                .to_string(),
+        )?;
+
+        assert_eq!(sync_items.items.len(), 1);
+        if let SyncDataOrUnknown::SyncData(AddQrToken(token)) =
+            &sync_items.items.first().unwrap().data
+        {
+            assert_eq!(token.invitenumber, "in");
+            assert_eq!(token.auth, "yip");
+            assert_eq!(token.grpid, None);
+        } else {
+            bail!("bad item");
+        }
+
+        // to allow backward compatibility, missing `Option<>` should not break parsing
+        let sync_items = t.parse_sync_items(
+               r#"{"items":[{"timestamp":1631781319,"data":{"AddQrToken":{"invitenumber":"in","auth":"a"}}}]}"#.to_string(),
+           )
+           ?;
+        assert_eq!(sync_items.items.len(), 1);
+
+        Ok(())
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_execute_sync_items() -> Result<()> {
+        let t = TestContext::new_alice().await;
+
+        assert!(!token::exists(&t, Namespace::Auth, "yip-auth").await?);
+
+        let sync_items = t
+            .parse_sync_items(
+                r#"{"items":[
+{"timestamp":1631781315,"data":{"AlterChat":{"id":{"ContactAddr":"bob@example.net"},"action":"Block"}}},
+{"timestamp":1631781316,"data":{"AddQrToken":{"invitenumber":"yip-in","auth":"a"}}},
+{"timestamp":1631781316,"data":{"DeleteQrToken":{"invitenumber":"in","auth":"delete unexistent, shall continue"}}},
+{"timestamp":1631781316,"data":{"AddQrToken":{"invitenumber":"in","auth":"yip-auth"}}},
+{"timestamp":1631781316,"data":{"AddQrToken":{"invitenumber":"in","auth":"foo","grpid":"non-existent"}}},
+{"timestamp":1631781316,"data":{"AddQrToken":{"invitenumber":"in","auth":"directly deleted"}}},
+{"timestamp":1631781316,"data":{"DeleteQrToken":{"invitenumber":"in","auth":"directly deleted"}}}
+]}"#
+                .to_string(),
+            )
+            ?;
+        t.execute_sync_items(&sync_items).await;
+
+        assert!(
+            Contact::lookup_id_by_addr(&t, "bob@example.net", Origin::Unknown)
+                .await?
+                .is_none()
+        );
+        assert!(token::exists(&t, Namespace::InviteNumber, "yip-in").await?);
+        assert!(token::exists(&t, Namespace::Auth, "yip-auth").await?);
+        assert!(!token::exists(&t, Namespace::Auth, "non-existent").await?);
+        assert!(!token::exists(&t, Namespace::Auth, "directly deleted").await?);
+
+        Ok(())
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn test_send_sync_msg() -> Result<()> {
+        let alice = TestContext::new_alice().await;
+        alice.set_config_bool(Config::SyncMsgs, true).await?;
+        alice
+            .add_sync_item(SyncData::AddQrToken(QrTokenData {
+                invitenumber: "in".to_string(),
+                auth: "testtoken".to_string(),
+                grpid: None,
+            }))
+            .await?;
+        let msg_id = alice.send_sync_msg().await?.unwrap();
+        let msg = Message::load_from_db(&alice, msg_id).await?;
+        let chat = Chat::load_from_db(&alice, msg.chat_id).await?;
+        assert!(chat.is_self_talk());
+
+        // check that the used self-talk is not visible to the user
+        // but that creation will still work (in this case, the chat is empty)
+        assert_eq!(Chatlist::try_load(&alice, 0, None, None).await?.len(), 0);
+        let chat_id = ChatId::create_for_contact(&alice, ContactId::SELF).await?;
+        let chat = Chat::load_from_db(&alice, chat_id).await?;
+        assert!(chat.is_self_talk());
+        assert_eq!(Chatlist::try_load(&alice, 0, None, None).await?.len(), 1);
+        let msgs = chat::get_chat_msgs(&alice, chat_id).await?;
+        assert_eq!(msgs.len(), 0);
+
+        // let alice's other device receive and execute the sync message,
+        // also here, self-talk should stay hidden
+        let sent_msg = alice.pop_sent_msg().await;
+        let alice2 = TestContext::new_alice().await;
+        alice2.set_config_bool(Config::SyncMsgs, true).await?;
+        alice2.recv_msg_trash(&sent_msg).await;
+        assert!(token::exists(&alice2, token::Namespace::Auth, "testtoken").await?);
+        assert_eq!(Chatlist::try_load(&alice2, 0, None, None).await?.len(), 0);
+
+        // the same sync message sent to bob must not be executed
+        let bob = TestContext::new_bob().await;
+        bob.recv_msg(&sent_msg).await;
+        assert!(!token::exists(&bob, token::Namespace::Auth, "testtoken").await?);
+
+        Ok(())
+    }
+}
