@@ -256,6 +256,7 @@ impl TableScan {
                         }
                     }
 
+
                     if let Some(bound_predicate) = context.bound_filter() {
                         // reject any manifest entries whose data file's metrics don't match the filter.
                         if !InclusiveMetricsEvaluator::eval(
