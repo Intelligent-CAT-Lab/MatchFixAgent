@@ -204,12 +204,15 @@ def main(args):
             except UnicodeDecodeError as e:
                 print(f"Error decoding ground truth target function: {e}")
                 continue
+            except UnicodeEncodeError as e:
+                print(f"Error encoding ground truth target function: {e}")
+                continue
 
         if configs["tool_name"] in ["rustrepotrans", "skel"]:
             try:
                 insert_translation(configs, fragment_details)
             except ValueError as e:
-                print(f"Error inserting translation: {e}")
+                print(f"Error inserting {fragment_details['id']} translation: {e}")
                 raise
 
         status, agent_output = validate_by_agent(configs, fragment_details)
