@@ -95,36 +95,35 @@ RUN pip install --no-cache-dir \
     astor==0.8.1 \
     pydot==3.0.4
 
+# Copy project snapshot into image
+COPY ../.claude /workspace/.claude
+COPY ../configs /workspace/configs
+COPY ../data /workspace/data
+COPY ../scripts /workspace/scripts
+COPY ../src /workspace/src
+COPY ../.gitignore /workspace/.gitignore
+COPY ../.gitattributes /workspace/.gitattributes
+COPY ../AGENTS.md /workspace/AGENTS.md
+COPY ../CLAUDE.local.md /workspace/CLAUDE.local.md
+COPY ../README.md /workspace/README.md
+
 # Create .codex directory and copy configuration
 RUN mkdir -p /root/.codex
 COPY configs/codex_mcp_config.toml /root/.codex/config.toml
+
+# Init Git repo with full project snapshot
+WORKDIR /workspace
+RUN git init --initial-branch=main \
+    && git config user.email "matchfixagent@example.com" \
+    && git config user.name "MatchFixAgent" \
+    && git add . \
+    && git commit -m "Initial commit with full project snapshot"
 
 # Configure shell with basic coloring
 RUN echo 'export TERM=xterm-256color' >> /root/.bashrc \
     && echo 'alias ls="ls --color=auto"' >> /root/.bashrc \
     && echo 'alias grep="grep --color=auto"' >> /root/.bashrc \
     && echo 'PS1="\[\033[1;36m\]\u\[\033[1;31m\]@\[\033[1;32m\]\h:\[\033[1;35m\]\w\[\033[1;31m\]\$\[\033[0m\] "' >> /root/.bashrc
-
-# Set working directory
-WORKDIR /workspace
-
-# Create startup script for git initialization
-RUN echo '#!/bin/bash' > /usr/local/bin/init-git.sh \
-    && echo 'cd /workspace' >> /usr/local/bin/init-git.sh \
-    && echo 'if [ ! -d ".git" ]; then' >> /usr/local/bin/init-git.sh \
-    && echo '  echo "Initializing git repository..."' >> /usr/local/bin/init-git.sh \
-    && echo '  git init --initial-branch=main' >> /usr/local/bin/init-git.sh \
-    && echo '  git config user.email "ci-bot@example.com"' >> /usr/local/bin/init-git.sh \
-    && echo '  git config user.name "CI Bot"' >> /usr/local/bin/init-git.sh \
-    && echo '  git add .' >> /usr/local/bin/init-git.sh \
-    && echo '  git commit -m "Initial commit with mounted workspace"' >> /usr/local/bin/init-git.sh \
-    && echo 'fi' >> /usr/local/bin/init-git.sh \
-    && chmod +x /usr/local/bin/init-git.sh
-
-# Update bashrc to run git initialization on shell start
-RUN echo '' >> /root/.bashrc \
-    && echo '# Initialize git repository if needed' >> /root/.bashrc \
-    && echo '/usr/local/bin/init-git.sh' >> /root/.bashrc
 
 # Default command
 CMD ["/bin/bash"]
