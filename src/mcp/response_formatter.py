@@ -74,7 +74,7 @@ def export_test_repair_agent_response(
             "source_test_execution_outcome": source_test_execution_outcome,
             "target_test_file_implementation": target_test_file_implementation,
             "target_test_execution_outcome": target_test_execution_outcome,
-            "correct_target_method_implementation": correct_target_method_implementation
+            "correct_target_method_implementation": correct_target_method_implementation,
         }
 
         # Format the JSON response with proper indentation

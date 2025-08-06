@@ -164,7 +164,7 @@ def main(args):
 
     # Get the current branch to return to it later
     current_branch = run(["git", "branch", "--show-current"], stdout=PIPE, text=True, check=True).stdout.strip()
-    
+
     for fragment_details in results:
 
         if (
@@ -185,14 +185,14 @@ def main(args):
             not in openai_study
         ):
             continue
-        
+
         # Create a unique branch name for this instance
-        branch_name = f"{configs['tool_name']}.{configs['project_name']}.{fragment_details['source_language']}.{fragment_details['target_language']}.{fragment_details['id']}"
-        
+        branch_name = f"{configs['agent_name']}.{configs['tool_name']}.{configs['project_name']}.{fragment_details['source_language']}.{fragment_details['target_language']}.{fragment_details['id']}"
+
         # Create and checkout to the new branch
         print(f"Creating branch: {branch_name}")
         run(["git", "checkout", "-b", branch_name], check=True)
-        
+
         cleanup(configs)
 
         update_memory(fragment_details)
@@ -235,16 +235,25 @@ def main(args):
 
         # Commit all tracked and untracked files
         print(f"Committing changes to branch: {branch_name}")
-        run(["git", "add", "-A"], check=True)
-        run(["git", "commit", "-m", f"Processing {fragment_details['id']} from {fragment_details['source_language']} to {fragment_details['target_language']}"], check=False)
-        
+        target_dir = os.path.join("data", "tool_projects", configs["tool_name"], "projects", configs["project_name"])
+        run(["git", "add", "-A", target_dir], check=True)
+        run(
+            [
+                "git",
+                "commit",
+                "-m",
+                f"Processing {fragment_details['id']} from {fragment_details['source_language']} to {fragment_details['target_language']}",
+            ],
+            check=False,
+        )
+
         # Checkout back to the original branch
         print(f"Checking out back to: {current_branch}")
         run(["git", "checkout", current_branch], check=True)
 
         with open(os.path.join(results_path, f"{configs['project_name']}.json"), "w") as f:
             json.dump(results, f, indent=4)
-        
+
 
 if __name__ == "__main__":
     """
