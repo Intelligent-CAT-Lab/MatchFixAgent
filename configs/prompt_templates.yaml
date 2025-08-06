@@ -266,10 +266,24 @@ templates:
             - If you find that the target implementation is not functionally equivalent, provide a correct implementation in your response
             - To fix the <target_fragment_method>, YOU MUST make edits in-place in the file given in <target_fragment_path>
             - You MUST only do my instructions and DO NOT perform any additional analysis to determine functional equivalence. Terminate as soon as possible.
-            - Once you are done, do not delete anything you created or modified, just call 'export_test_repair_agent_response(is_equivalent: str, explanation: str, source_test_file_implementation: str, source_test_execution_outcome: str, target_test_file_implementation: str, target_test_execution_outcome: str, correct_target_method_implementation: str = "")' to export your response.
+            - Once you are done, do not delete anything you created or modified, just call 'export_test_repair_agent_response(is_equivalent: str, explanation: str, source_test_file_implementation: str, source_test_execution_outcome: str, target_test_file_implementation: str, target_test_execution_outcome: str, correct_target_method_implementation: str = "")' to export your response like <final_response_format>.
           </general_notes>
 
         </instruction>
+      response_format: |-
+        Provide your response in the following format and DO NOT include any additional text outside the JSON response. Make sure you wrap the JSON inside <final_response_format> tags.
+        
+        <final_response_format>
+        {
+          "is_equivalent": "yes" / "no" / "other",
+          "explanation": "<explanation>",
+          "source_test_file_implementation": "<source_test_file_implementation>",
+          "source_test_execution_outcome": "<stdout/stderr output of the test execution in source language. This should be captured from terminal output after executing the test and should PASS in source language>",
+          "target_test_file_implementation": "<target_test_file_implementation>",
+          "target_test_execution_outcome": "<stdout/stderr output of the test execution in target language. This should be captured from terminal output after executing the test and should FAIL in target language if is_equivalent is 'no', otherwise should PASS in target language>",
+          "correct_target_method_implementation": "<correct_target_method_implementation if is_equivalent is 'no', otherwise empty. this should PASS on the previously failed tests in target language>"
+        }
+        </final_response_format>
     verdict_agent:
       instruction: |-
         <instruction>
@@ -295,9 +309,19 @@ templates:
             - You must only focus on provided analyses and DO NOT perform any additional analysis to determine functional equivalence
             - You are expected to provide to provide a final verdict as soon as possible after reviewing all agent reports
             - You MUST give more attention to the analyses of test generation and repair agent, as it provides concrete evidence of functional equivalence or differences through test generation and execution
-            - Once you are done, do not delete anything you created or modified, just call 'export_verdict_agent_response(is_equivalent: str, confidence_level: str, explanation: str) -> str' to export your response.
+            - Once you are done, do not delete anything you created or modified, just call 'export_verdict_agent_response(is_equivalent: str, confidence_level: str, explanation: str) -> str' to export your response like <final_response_format>.
           </general_notes>
         </instruction>
+      response_format: |-
+        Provide your response in the following format and DO NOT include any additional text outside the JSON response. Make sure you wrap the JSON inside <final_response_format> tags.
+        
+        <final_response_format>
+        {
+          "is_equivalent": "yes" / "no" / "other",
+          "confidence_level": "high" / "medium" / "low",
+          "explanation": "<detailed explanation of your verdict, synthesizing all agent perspectives>"
+        }
+        </final_response_format>
     fragment_details: |-
       <fragment_details>
         
