@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
     nano \
     less \
     graphviz \
+    tmux \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Go 1.24.4
