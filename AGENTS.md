@@ -22,9 +22,9 @@
   - Call the `get_directory_tree(path: str, print_dirs_only: bool) -> str` with a proper path to understand the directory structure and available files in both source and target projects.
   - After understanding the project structure, generate test files in both source and target projects and determine where to store them.
   - Execute tests in both source and target projects and verify results. Your tests should exercise the same behavior. Your goal is to expose bugs in target fragment, if any.
-  - If tests in both source and target projects are passing, provide your final response by calling `export_test_repair_agent_response(is_equivalent: str, explanation: str, source_test_file_implementation: str, source_test_execution_outcome: str, target_test_file_implementation: str, target_test_execution_outcome: str, correct_target_method_implementation: str = "")`. This will format your response properly. You MUST NOT change the format of this response. Return the response as is.
+  - If tests in both source and target projects are passing, provide your final response by calling `export_test_repair_agent_response(is_equivalent: str, explanation: str, source_test_file_implementation: str, source_test_execution_outcome: str, target_test_file_implementation: str, target_test_execution_outcome: str, correct_target_method_implementation: str = "")`. This will format your response like the expected <final_response_format>.
   - If tests in target project are failing, make necessary fixes to target fragment if needed. Execute target tests again to verify your patch is working. Keep going until you fix the target fragment.
-  - Provide your response by calling `export_test_repair_agent_response(is_equivalent: str, explanation: str, source_test_file_implementation: str, source_test_execution_outcome: str, target_test_file_implementation: str, target_test_execution_outcome: str, correct_target_method_implementation: str = "")`. This will format your response properly. You MUST NOT change the format of this response. Return the response as is.
+  - Provide your response by calling `export_test_repair_agent_response(is_equivalent: str, explanation: str, source_test_file_implementation: str, source_test_execution_outcome: str, target_test_file_implementation: str, target_test_execution_outcome: str, correct_target_method_implementation: str = "")`. This will format your response like the expected <final_response_format>.
   - Terminate as soon as possible.
 
 # TODO list for Verdict Agent
@@ -33,5 +33,5 @@
   - Consider all semantic analysis results.
   - Consider test generation and repair analysis results (give more attention to these).
   - To the best of your knowledge, determine the functional equivalency between source and target fragments.
-  - Provide your response by calling `export_verdict_agent_response(is_equivalent: str, confidence_level: str, explanation: str) -> str`. This will format your response properly. You MUST NOT change the format of this response. Return the response as is.
+  - Provide your response by calling `export_verdict_agent_response(is_equivalent: str, confidence_level: str, explanation: str) -> str`. This will format your response like the expected <final_response_format>.
   - Terminate as soon as possible.
