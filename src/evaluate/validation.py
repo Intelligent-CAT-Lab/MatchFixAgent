@@ -82,27 +82,6 @@ def cleanup(configs: dict):
         os.remove(memory_file)
 
 
-def update_memory(fragment_details: dict):
-    """
-    Update the memory of the ValidatorAgent with the current method details.
-
-    This function updates the ValidatorAgent's memory with the details of the
-    method being validated, including source and target languages, code snippets,
-    and other relevant information.
-
-    Args:
-        fragment_details (dict): Details of the method to validate, including:
-            - source_language: Source language of the method
-            - target_language: Target language of the method
-            - source_code: Source code in the source language
-            - target_code: Target code in the target language
-    """
-    # This function is a placeholder for any future memory update logic.
-    os.makedirs("memory", exist_ok=True)
-    with open(f"memory/{fragment_details['project']}.json", "w") as f:
-        json.dump({"id": fragment_details["id"]}, f, indent=4)
-
-
 def insert_translation(configs: dict, item: dict):
     """
     Insert a translation item into the RustRepoTrans tool results.
@@ -186,17 +165,6 @@ def main(args):
         ):
             continue
 
-        # Create a unique branch name for this instance
-        branch_name = f"{configs['agent_name']}.{configs['tool_name']}.{configs['project_name']}.{fragment_details['source_language']}.{fragment_details['target_language']}.{fragment_details['id']}"
-
-        # Create and checkout to the new branch
-        print(f"Creating branch: {branch_name}")
-        run(["git", "checkout", "-b", branch_name], check=True)
-
-        cleanup(configs)
-
-        update_memory(fragment_details)
-
         if (
             fragment_details["source_language"] != configs["source_language"]
             or fragment_details["target_language"] != configs["target_language"]
@@ -218,6 +186,21 @@ def main(args):
             except UnicodeEncodeError as e:
                 print(f"Error encoding ground truth target function: {e}")
                 continue
+
+        cleanup(configs)
+
+        # Create a unique branch name for this instance
+        branch_name = f"{configs['agent_name']}.{configs['tool_name']}.{configs['project_name']}.{fragment_details['source_language']}.{fragment_details['target_language']}.{fragment_details['id']}"
+
+        # if branch exists, delete it first
+        try:
+            run(["git", "branch", "-D", branch_name], check=True)
+        except subprocess.CalledProcessError:
+            print(f"Branch {branch_name} does not exist or could not be deleted.")
+
+        # Create and checkout to the new branch
+        print(f"Creating branch: {branch_name}")
+        run(["git", "checkout", "-b", branch_name], check=True)
 
         if configs["tool_name"] in ["rustrepotrans", "skel"]:
             try:
@@ -250,6 +233,8 @@ def main(args):
         # Checkout back to the original branch
         print(f"Checking out back to: {current_branch}")
         run(["git", "checkout", current_branch], check=True)
+
+        cleanup(configs)
 
         with open(os.path.join(results_path, f"{configs['project_name']}.json"), "w") as f:
             json.dump(results, f, indent=4)
