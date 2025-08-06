@@ -4,10 +4,17 @@ if [ "${PWD: -10}" != "docker-env" ]; then
     exit 1
 fi
 
+CONTAINER_NAME=$1
+
+if [ -z "$CONTAINER_NAME" ]; then
+    echo "Please provide a container name as the first argument."
+    exit 1
+fi
+
 mkdir -p ../logs
 mkdir -p ../reports
 
-docker run --name matchfixagent_container -d -t \
+docker run --name $CONTAINER_NAME -d -t \
     --mount type=bind,source=$PWD/../configs,target=/workspace/configs \
     --mount type=bind,source=$PWD/../data,target=/workspace/data \
     --mount type=bind,source=$PWD/../.gitignore,target=/workspace/.gitignore \
@@ -22,5 +29,5 @@ docker run --name matchfixagent_container -d -t \
     --mount type=bind,source=$PWD/../reports,target=/workspace/reports \
     matchfixagent
 
-docker ps | grep matchfixagent_container
+docker ps | grep $CONTAINER_NAME > /dev/null
 echo "# The container is running. To stop running the container: bash docker_stop.sh"

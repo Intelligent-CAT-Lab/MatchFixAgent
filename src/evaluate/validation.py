@@ -47,41 +47,6 @@ def validate_by_agent(configs: dict, fragment_details: dict) -> tuple[bool, dict
     return status, agent_output
 
 
-def cleanup(configs: dict):
-    """
-    Cleanup function to remove temporary files created during validation.
-
-    This function deletes the temporary files used by the ValidatorAgent
-    to ensure no residual data is left after validation.
-    """
-
-    target_dir = os.path.join("data", "tool_projects", configs["tool_name"], "projects", configs["project_name"])
-
-    assert target_dir, f"Target directory {target_dir} does not exist"
-    assert os.path.exists(target_dir), f"Target directory {target_dir} does not exist"
-
-    # Run `git status --porcelain data/tool_projects`
-    proc = subprocess.run(["git", "status", "--porcelain", target_dir], capture_output=True, text=True, check=True)
-    for line in proc.stdout.splitlines():
-        if not line.strip():
-            continue
-        status, path = line[:2], line[3:]
-        # Untracked files (“??”) → delete
-        if status.strip() == "??":
-            if os.path.isdir(path):
-                shutil.rmtree(path)
-            elif os.path.isfile(path):
-                os.remove(path)
-        # Any other status → restore to HEAD
-        else:
-            subprocess.run(["git", "restore", path], check=False)
-
-    # delete memory file
-    memory_file = os.path.join("memory", configs["project_name"] + ".json")
-    if os.path.exists(memory_file):
-        os.remove(memory_file)
-
-
 def insert_translation(configs: dict, item: dict):
     """
     Insert a translation item into the RustRepoTrans tool results.
@@ -141,9 +106,6 @@ def main(args):
     with open(os.path.join("data", "samples", "openai_study.json"), "r") as f:
         openai_study = json.load(f)
 
-    # Get the current branch to return to it later
-    current_branch = run(["git", "branch", "--show-current"], stdout=PIPE, text=True, check=True).stdout.strip()
-
     for fragment_details in results:
 
         if (
@@ -187,14 +149,14 @@ def main(args):
                 print(f"Error encoding ground truth target function: {e}")
                 continue
 
-        cleanup(configs)
-
         # Create a unique branch name for this instance
         branch_name = f"{configs['agent_name']}.{configs['tool_name']}.{configs['project_name']}.{fragment_details['source_language']}.{fragment_details['target_language']}.{fragment_details['id']}"
 
         # if branch exists, delete it first
         try:
-            run(["git", "branch", "-D", branch_name], check=True)
+            if branch_name not in ["main", "master"]:
+                print(f"Deleting branch: {branch_name}")
+                run(["git", "branch", "-D", branch_name], check=True)
         except subprocess.CalledProcessError:
             print(f"Branch {branch_name} does not exist or could not be deleted.")
 
@@ -231,10 +193,8 @@ def main(args):
         )
 
         # Checkout back to the original branch
-        print(f"Checking out back to: {current_branch}")
-        run(["git", "checkout", current_branch], check=True)
-
-        cleanup(configs)
+        print(f"Checking out back to: main")
+        run(["git", "checkout", "main"], check=True)
 
         with open(os.path.join(results_path, f"{configs['project_name']}.json"), "w") as f:
             json.dump(results, f, indent=4)
