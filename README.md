@@ -1,30 +1,27 @@
 # MatchFixAgent: Language-Agnostic Autonomous Repository-Level Code Translation Validation and Repair
 
-MatchFixAgent is a language-agnostic neuro-symbolic approach for autonomous repository-level
-code translation validation and repair. MatchFixAgent leverages static semantic analysis combined with
-Large Language Model (LLM) agents to validate translations and repair bugs across multiple PLs efficiently. To
-simplify the problem for LLM agents, MatchFixAgent performs multifaceted semantic analyses—including
-control-flow and data-flow analyses—to systematically generate targeted tests, enabling demonstration of
-functional equivalence or detection of semantic bugs.
+MatchFixAgent is a language-agnostic neuro-symbolic approach for autonomous repository-level code translation validation and repair. MatchFixAgent leverages static semantic analysis combined with Large Language Model (LLM) agents to validate translations and repair bugs across multiple PLs efficiently. To simplify the problem for LLM agents, MatchFixAgent performs multifaceted semantic analyses—including control-flow and data-flow analyses—to systematically generate targeted tests, enabling demonstration of functional equivalence or detection of semantic bugs.
 
 ## Docker Container
 
-For reproducing our results and evaluating MatchFixAgent on more projects, we recommend using our [`Dockerfile`](./docker-env/Dockerfile) to build a docker image. All required dependencies are installed during `docker build`, making it easier for users to interact with MatchFixAgent.
+For re-running and evaluating MatchFixAgent on more projects, we recommend using our [`Dockerfile`](./docker-env/Dockerfile) to build a docker image. All required dependencies are installed during `docker build`, making it easier for users to interact with MatchFixAgent.
 
 To build a new image from scratch and run it inside a container:
 
 ```bash
-cd docker-env           # change directory to docker-env
-bash docker_build.sh    # build docker image
-bash docker_run.sh      # run docker image in a docker container
-bash docker_shell.sh    # open an interactive shell to docker container
+cd docker-env                             # change directory to docker-env
+bash docker_build.sh                      # build docker image
+bash docker_run.sh <container_name>       # run docker image in a docker container
+bash docker_shell.sh <container_name>     # open an interactive shell to docker container
 ```
 
-If you want to delete the image and container:
+If you want to check our results in the paper, please download and run our docker snapshots from [Zenodo](). There are 23 images, each corresponding to a specific project. Each image includes log files, agent trajectories, git branches for every source and target fragment pair.
 
 ```bash
-bash docker_stop.sh     # delete docker container
-bash docker_rmi.sh      # delete docker image
+docker load -i <image_name>.tar                                                               # load docker image (.tar file downloaded from Zenodo)
+docker image list                                                                             # verify image has been loaded properly
+docker run --name <container_name> -d -t <image_name>                                         # run docker image in a docker container
+docker exec -it -w /workspace -e NODE_PATH=/usr/lib/node_modules <container_name> /bin/bash   # open an interactive shell to docker container
 ```
 
 ## Credentials
@@ -117,4 +114,4 @@ If you need to experiment with other programming languages not supported by Matc
 
 ### MCP Servers
 
-MatchFixAgent by default uses two MCP servers, namely `DirectoryTreeExplorer` and `TestExecutor`. If you need to add more MCP servers, please add them under [`src/mcp`](./src/mcp) and configure them in [`claude_mcp_config.json`](./configs/claude_mcp_config.json) and [`codex_mcp_config.toml`](./configs/codex_mcp_config.toml).
+MatchFixAgent by default uses one custom MCP server, called `DirectoryTreeExplorer`. If you need to add more MCP servers, please add them under [`src/mcp`](./src/mcp) and configure them in [`claude_mcp_config.json`](./configs/claude_mcp_config.json) and [`codex_mcp_config.toml`](./configs/codex_mcp_config.toml). You may also need to update the [`Claude Memory`](./CLAUDE.local.md) and [`Codex Memory`](./AGENTS.md) files.
