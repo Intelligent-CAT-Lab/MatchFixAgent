@@ -73,20 +73,29 @@ class TestGenRepairAgent:
         self.logger.info("Generating tests and repairs based on analysis results")
 
         if self.configs["tool_name"] == "rustrepotrans":
-            target_dir = os.path.join("data", "tool_projects", self.configs["tool_name"], "projects", self.configs["project_name"], "rust")
+            target_dir = os.path.join(
+                "data", "tool_projects", self.configs["tool_name"], "projects", self.configs["project_name"], "rust"
+            )
             has_compile_bug = False
             try:
                 if self.configs["project_name"] != "incubator-milagro-crypto":
                     proc = subprocess.run(["cargo", "check", "--all"], cwd=target_dir, capture_output=True, text=True)
                 else:
-                    proc = subprocess.run(["cargo", "check", "--all", "--all-features", "--release"], cwd=target_dir, capture_output=True, text=True)
+                    proc = subprocess.run(
+                        ["cargo", "check", "--all", "--all-features", "--release"],
+                        cwd=target_dir,
+                        capture_output=True,
+                        text=True,
+                    )
                 if proc.returncode != 0:
                     has_compile_bug = True
             except Exception as e:
                 has_compile_bug = True
-            
+
             if has_compile_bug:
-                self.logger.error("Compilation error detected in the Rust project. Cannot proceed with test generation.")
+                self.logger.error(
+                    "Compilation error detected in the Rust project. Cannot proceed with test generation."
+                )
                 return {"parsed_final_response": {"is_equivalent": "no", "explanation": "compilation bug"}}
 
         semantic_analyzer_analyses = {}
