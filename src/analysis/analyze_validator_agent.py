@@ -331,8 +331,10 @@ def main(args):
     global_total_time = 0
     global_total_tool_calls = 0
     global_timeout_count = 0
-
-    # Initialize global error counts
+    global_d1 = 0
+    global_d2 = 0
+    global_failure_agreement = 0
+    global_newly_covered_fragments = 0
     global_test_repair_errors = 0
     global_verdict_errors = 0
     global_disagreements = {}
@@ -604,6 +606,9 @@ def main(args):
 
                 total_methods = max(total_methods, 1)  # Avoid division by zero
 
+                global_newly_covered_fragments += total_newly_covered_fragments
+                global_failure_agreement += confusion_df.loc["failure", "no"]
+
                 # Prepare the report content
                 report_content = []
                 report_content.append(f"Project: {project.split('.')[0]}")
@@ -650,6 +655,8 @@ def main(args):
                 report_content.append("---" * 50)
                 report_content.append(f"Total Tool (YES) vs Agent (NO): {confusion_df.loc['success', 'no']}")
                 report_content.append(f"Total Tool (NO) vs Agent (YES): {confusion_df.loc['failure', 'yes']}")
+                global_d1 += confusion_df.loc["success", "no"]
+                global_d2 += confusion_df.loc["failure", "yes"]
                 report_content.append("---" * 50)
                 report_content.append(f"Total Test Repair Agent Errors: {len(test_repair_error)}")
                 report_content.append(f"Total Verdict Agent Errors: {len(verdict_error)}")
@@ -753,6 +760,11 @@ def main(args):
     )
     print("}")
     print()
+    print(f"Disagreements: [D1: {global_d1}, D2: {global_d2}]")
+    print(f"Failure Agreement: {global_failure_agreement} [{global_failure_agreement / global_total_methods:.2%}]")
+    print(
+        f"Newly Covered Fragments: {global_newly_covered_fragments} [{global_newly_covered_fragments / global_total_methods:.2%}]"
+    )
     print(
         f"Total Methods: {global_equivalency_dist['yes'] + global_equivalency_dist['no'] + global_equivalency_dist['other'] + global_equivalency_dist['error']} [{global_total_methods / global_total:.2%}]"
     )
@@ -763,7 +775,7 @@ def main(args):
         f"Total tool calls: {global_total_tool_calls} [Average: {global_total_tool_calls / global_total_methods:.2f}]"
     )
     print(
-        f"API Error Rate: {global_error_rate:.2%} [Test Repair Errors: {global_test_repair_errors}, Verdict Errors: {global_verdict_errors}]"
+        f"API Error Rate: {(global_test_repair_errors + global_verdict_errors)} [{global_error_rate:.2%}] {{ Test Repair Errors: {global_test_repair_errors} [{global_test_repair_errors / global_total_methods:.2%}], Verdict Errors: {global_verdict_errors} [{global_verdict_errors / global_total_methods:.2%}] }}"
     )
     print(f"Global Timeout Cases: {global_timeout_count} [{global_timeout_percentage:.2f}%]")
 
