@@ -80,6 +80,8 @@ MatchFixAgent generates patches for incorrect translations. Please execute the f
 bash scripts/run_repair.sh configs/oxidizer/match_agent_oxidizer_checkdigit_go_rust.yaml
 ```
 
+Prior to running the above command, please download and place `original_tool_projects.zip` in the repository directory from [Zenodo]().
+
 ### RQ3
 
 To show the adaptability of MatchFixAgent with other LLM agents and models, we use OpenAI Codex and `o4-mini-2025-04-16`. Please execute the following script with the configuration file of your agent, tool and project. For instance, the following runs the experiment for `tool=oxidizer`, `project=checkdigit`, and `agent=openai_agent`.
