@@ -338,8 +338,6 @@ def main(args):
 
     for fragment_details in results:
 
-        cleanup(configs)
-
         if configs["agent_name"] not in fragment_details:
             continue
 
@@ -355,6 +353,8 @@ def main(args):
             != "no"
         ) or (fragment_details["result"] != "failure"):
             continue
+
+        os.system(f"unzip -o original_tool_projects.zip -d data")
 
         if configs["tool_name"] in ["skel", "rustrepotrans"]:
             target_function = "\n".join(fragment_details["ground_truth_target_function"])
@@ -385,8 +385,6 @@ def main(args):
             total_fixed += 1
         else:
             total_failed += 1
-
-        cleanup(configs)
 
     print()
     print(f"Total fragments fixed: {total_fixed}")
