@@ -72,6 +72,12 @@ To check the effectiveness of MatchFixAgent, execute the following script to sav
 bash scripts/analyze_validator_agent.sh match_agent oxidizer checkdigit
 ```
 
+To replay the trajectory of the agent, execute the following script with the trajectory file you want to visualize. Trajectory files are stored under `data/agent_trajectories/claude` and named after `session_id` of the agent conversation. You can find the session ID from the results in `data/agent_results`.
+
+```bash
+python src/analysis/visualize_trajectory.py <path_to_trajectory_file>
+```
+
 ### RQ2
 
 MatchFixAgent generates patches for incorrect translations. Please execute the following script with the configuration file of your agent, tool and project. For instance, the following runs the experiment for `tool=oxidizer`, `project=checkdigit`, and `agent=match_agent`.
