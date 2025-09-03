@@ -1,0 +1,19 @@
+agent_name: "test_agent"
+mcp_config_file: ""
+credential_file: "configs/aws_credentials.yaml"
+project_name: "bst"
+source_language: "python"
+target_language: "javascript"
+tool_name: "skel"
+tool_source_projects_path: "data/tool_projects/skel"
+tool_target_projects_path: "data/tool_projects/skel"
+tool_results_path: "data/agent_results/test_agent/skel"
+max_retries: 1
+extra_agent_args: ["--output-format", "stream-json", "--verbose", "--settings", "/workspace/.claude/settings.local.json"]
+available_credentials: ["one"]
+sub_agents:
+  test_gen_repair_agent:
+    extra_agent_args: ["--output-format", "stream-json", "--verbose", "--settings", "/workspace/.claude/settings.local.json"]
+  verdict_agent:
+    extra_agent_args: ["--output-format", "stream-json", "--verbose", "--settings", "/workspace/.claude/settings.local.json"]
+vendor: "anthropic"
