@@ -106,6 +106,12 @@ To evaluate the impact of different components in MatchFixAgent, we perform an a
 bash scripts/run_validation.sh configs/oxidizer/base_agent_oxidizer_checkdigit_go_rust.yaml
 ```
 
+We perform another ablation study and run MatchFixAgent without semantic analyses. Please execute the following script with the configuration file of your agent, tool and project. For instance, the following runs the experiment for `tool=oxidizer`, `project=checkdigit`, and `agent=test_agent`.
+
+```bash
+bash scripts/run_validation.sh configs/oxidizer/test_agent_oxidizer_checkdigit_go_rust.yaml
+```
+
 ## Building on MatchFixAgent
 
 ### Evaluating More Projects
