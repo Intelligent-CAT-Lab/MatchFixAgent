@@ -59,7 +59,12 @@ def get_agent_cost(agent_output):
     if agent_output["parsed_final_response"]["is_equivalent"] in ["error", "other"]:
         return cost
 
-    agent_output = agent_output["last_json"] or agent_output["first_json"]
+    if "last_json" in agent_output:
+        agent_output = agent_output["last_json"]
+    elif "first_json" in agent_output:
+        agent_output = agent_output["first_json"]
+    else:
+        return cost
 
     cost["total_num_turns"] += agent_output["num_turns"]
     cost["total_cost_usd"] += agent_output["total_cost_usd"]
@@ -426,7 +431,7 @@ def main(args):
                     #     continue
 
                     agent_output = item[args.agent_name]["output"]
-                    if args.agent_name in ["match_agent", "openai_agent"]:
+                    if args.agent_name in ["match_agent", "openai_agent", "test_agent"]:
                         if item[args.agent_name]["output"]["test_repair"]["parsed_final_response"]["is_equivalent"] in [
                             "error",
                             "other",
@@ -436,7 +441,8 @@ def main(args):
                                 copy_trajectory_file(
                                     item[args.agent_name]["output"]["verdict"]["first_json"]["session_id"]
                                 )
-                                if args.agent_name == "match_agent"
+                                if args.agent_name in ["match_agent", "test_agent"]
+                                and "first_json" in item[args.agent_name]["output"]["verdict"]
                                 else None
                             )
                         else:
@@ -445,7 +451,8 @@ def main(args):
                                 copy_trajectory_file(
                                     item[args.agent_name]["output"]["test_repair"]["first_json"]["session_id"]
                                 )
-                                if args.agent_name == "match_agent"
+                                if args.agent_name in ["match_agent", "test_agent"]
+                                and "first_json" in item[args.agent_name]["output"]["test_repair"]
                                 else None
                             )
 
@@ -579,7 +586,7 @@ def main(args):
                     tool_validation_dist[tool_validation] += 1
                     equivalency_dist[llm_prediction] += 1
 
-                    if args.agent_name == "match_agent":
+                    if args.agent_name in ["match_agent", "test_agent"]:
                         test_repair_agent = item[args.agent_name]["output"]["test_repair"]
                         verdict_agent = item[args.agent_name]["output"]["verdict"]
 
