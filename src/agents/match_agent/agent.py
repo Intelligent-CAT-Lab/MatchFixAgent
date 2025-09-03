@@ -114,42 +114,49 @@ class MatchAgent:
         # Create prompt generator for all agents
         prompt_generator = MatchAgentPromptGenerator(configs=self.configs, fragment_details=fragment_details)
 
-        # Run the 6 semantic analyzer agents in parallel
-        self.logger.info("Starting parallel execution of 6 semantic analyzer agents")
+        if self.configs["agent_name"] not in ["test_agent"]:
 
-        analysis_tasks = [
-            self.control_flow_agent.analyze(
-                prompt_generator, agent_name=f"{self.configs['agent_name']}", sub_agent_name="control_flow_agent"
-            ),
-            self.data_flow_agent.analyze(
-                prompt_generator, agent_name=f"{self.configs['agent_name']}", sub_agent_name="data_flow_agent"
-            ),
-            self.io_agent.analyze(
-                prompt_generator, agent_name=f"{self.configs['agent_name']}", sub_agent_name="io_agent"
-            ),
-            self.library_equivalence_agent.analyze(
-                prompt_generator, agent_name=f"{self.configs['agent_name']}", sub_agent_name="library_equivalence_agent"
-            ),
-            self.exception_error_agent.analyze(
-                prompt_generator, agent_name=f"{self.configs['agent_name']}", sub_agent_name="exception_error_agent"
-            ),
-            self.spec_agent.analyze(
-                prompt_generator, agent_name=f"{self.configs['agent_name']}", sub_agent_name="spec_agent"
-            ),
-        ]
+            # Run the 6 semantic analyzer agents in parallel
+            self.logger.info("Starting parallel execution of 6 semantic analyzer agents")
 
-        semantic_analyzer_results = await asyncio.gather(*analysis_tasks)
+            analysis_tasks = [
+                self.control_flow_agent.analyze(
+                    prompt_generator, agent_name=f"{self.configs['agent_name']}", sub_agent_name="control_flow_agent"
+                ),
+                self.data_flow_agent.analyze(
+                    prompt_generator, agent_name=f"{self.configs['agent_name']}", sub_agent_name="data_flow_agent"
+                ),
+                self.io_agent.analyze(
+                    prompt_generator, agent_name=f"{self.configs['agent_name']}", sub_agent_name="io_agent"
+                ),
+                self.library_equivalence_agent.analyze(
+                    prompt_generator,
+                    agent_name=f"{self.configs['agent_name']}",
+                    sub_agent_name="library_equivalence_agent",
+                ),
+                self.exception_error_agent.analyze(
+                    prompt_generator, agent_name=f"{self.configs['agent_name']}", sub_agent_name="exception_error_agent"
+                ),
+                self.spec_agent.analyze(
+                    prompt_generator, agent_name=f"{self.configs['agent_name']}", sub_agent_name="spec_agent"
+                ),
+            ]
 
-        all_analysis_results = {
-            "control_flow": semantic_analyzer_results[0],
-            "data_flow": semantic_analyzer_results[1],
-            "io": semantic_analyzer_results[2],
-            "library_equivalence": semantic_analyzer_results[3],
-            "exception_error": semantic_analyzer_results[4],
-            "spec": semantic_analyzer_results[5],
-        }
+            semantic_analyzer_results = await asyncio.gather(*analysis_tasks)
 
-        self.logger.info("All semantic analyzer agent analyses completed")
+            all_analysis_results = {
+                "control_flow": semantic_analyzer_results[0],
+                "data_flow": semantic_analyzer_results[1],
+                "io": semantic_analyzer_results[2],
+                "library_equivalence": semantic_analyzer_results[3],
+                "exception_error": semantic_analyzer_results[4],
+                "spec": semantic_analyzer_results[5],
+            }
+
+            self.logger.info("All semantic analyzer agent analyses completed")
+        else:
+            self.logger.warning("Skipping semantic analyzer agent analyses")
+            all_analysis_results = {}
 
         # Run the test generation and repair agent
         self.logger.info("Starting test generation and repair agent")
@@ -222,7 +229,7 @@ class MatchAgent:
         log_dir = Path(f"logs/{self.configs['agent_name']}")
 
         # For match_agent itself, the filename is just the session ID
-        if agent_name in ["match_agent", "openai_agent"]:
+        if agent_name in ["match_agent", "openai_agent", "test_agent"]:
             original_log_file = log_dir / f"{old_session_id}.log"
             new_log_file = log_dir / new_session_id / f"{new_session_id}.log"
             logger_name = agent_name
@@ -239,7 +246,7 @@ class MatchAgent:
         os.makedirs(new_log_file.parent, exist_ok=True)
 
         # For match_agent, close its logger handlers first
-        if agent_name in ["match_agent", "openai_agent"]:
+        if agent_name in ["match_agent", "openai_agent", "test_agent"]:
             logger = logging.getLogger(f"{logger_name}.{old_session_id}")
             for handler in logger.handlers[:]:
                 handler.close()
@@ -252,7 +259,7 @@ class MatchAgent:
 
         # Create a new logger with the new session ID for match_agent only
         # We don't need to recreate loggers for sub-agents as they're finished executing
-        if agent_name in ["match_agent", "openai_agent"]:
+        if agent_name in ["match_agent", "openai_agent", "test_agent"]:
             new_logger = logging.getLogger(f"{logger_name}.{new_session_id}")
             new_logger.setLevel(logging.INFO)
             new_logger.propagate = False

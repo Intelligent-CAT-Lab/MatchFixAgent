@@ -39,6 +39,8 @@ def validate_by_agent(configs: dict, fragment_details: dict) -> tuple[bool, dict
         validator_agent = MatchAgent(configs=configs)
     elif configs["agent_name"] == "openai_agent":
         validator_agent = MatchAgent(configs=configs)
+    elif configs["agent_name"] == "test_agent":
+        validator_agent = MatchAgent(configs=configs)
     else:
         raise ValueError(f"Agent {configs['agent_name']} is not supported")
 
@@ -109,7 +111,7 @@ def main(args):
     for fragment_details in results:
 
         if (
-            configs["agent_name"] in ["base_agent"]
+            configs["agent_name"] in ["base_agent", "test_agent"]
             and [fragment_details["id"], fragment_details["project"], configs["tool_name"]] not in ablation_study
         ):
             continue
