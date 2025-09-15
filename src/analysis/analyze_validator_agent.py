@@ -379,6 +379,9 @@ def main(args):
             ]:
                 continue
 
+            if tool == "rustrepotrans" and project.split(".")[0] == "libp2p":
+                continue
+
             if args.project_name and project.split(".")[0] != args.project_name:
                 continue
 
