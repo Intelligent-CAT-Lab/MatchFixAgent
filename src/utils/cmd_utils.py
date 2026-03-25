@@ -46,23 +46,8 @@ async def run_claude_code(
     if not agent_name:
         raise ValueError("Agent name must be provided to run Claude command")
 
-    # Import and use credential utility
-    from src.utils.credential_utils import setup_environment_for_agent
-
-    # Set up environment with appropriate credentials
-    try:
-        env, credential_name = setup_environment_for_agent(
-            agent_name=agent_name, sub_agent_name=sub_agent_name, configs=configs
-        )
-
-        if logger:
-            logger.info(f"Using credentials for agent: {agent_name}, sub-agent: {sub_agent_name or 'None'}")
-            logger.info(f"Using credential: '{credential_name}' in region: {env.get('AWS_REGION', 'unknown')}")
-            logger.info(f"Using Claude model: {env.get('ANTHROPIC_MODEL', 'unknown')}")
-    except Exception as e:
-        if logger:
-            logger.error(f"Failed to set up credentials: {str(e)}")
-        raise
+    if logger:
+        logger.info(f"Running Claude CLI for agent: {agent_name}, sub-agent: {sub_agent_name or 'None'}")
 
     if feedback != "" and logger:
         logger.info(f"Feedback provided: {feedback}")
@@ -84,7 +69,7 @@ async def run_claude_code(
             *cmd,
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,
-            env=env,
+            env=None,
             cwd=working_dir if working_dir else None,
         )
 
@@ -327,7 +312,10 @@ async def prompt_claude(
         response = bedrock_runtime.invoke_model(body=body, modelId=env["ANTHROPIC_MODEL"])
         response_body = json.loads(response.get("body").read())
 
-        result = response_body.get("content", [{}])[0].get("text", "")
+        if response_body.get("choices"):
+            result = response_body["choices"][0].get("message", {}).get("content", "")
+        else:
+            result = response_body.get("content", [{}])[0].get("text", "")
         response_body["result"] = result
 
         if logger:
