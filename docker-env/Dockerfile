@@ -67,7 +67,7 @@ RUN node -v && npm -v \
 RUN npm install -g \
     crc-32@1.2.2 \
     numjs@0.16.1 \
-    @anthropic-ai/claude-code@1.0.67 \
+    @anthropic-ai/claude-code@2.1.83 \
     @openai/codex@0.11.0
 
 
