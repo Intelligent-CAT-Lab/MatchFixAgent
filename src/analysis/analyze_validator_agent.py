@@ -343,6 +343,8 @@ def main(args):
     global_test_repair_errors = 0
     global_verdict_errors = 0
     global_disagreements = {}
+    global_agreements = {}
+    global_a1 = 0
 
     # ablation study
     semantic_analyzer_alignment = {"cfg": [], "dfg": [], "io": [], "spec": [], "error": [], "api": []}
@@ -409,6 +411,7 @@ def main(args):
 
                 disagreements = []
                 disagreement_ids = []
+                agreements = []
 
                 # Count timeout cases for the project
                 project_timeout_count = []
@@ -562,6 +565,23 @@ def main(args):
                     global_disagreements[tool][project.split(".")[0]].setdefault(
                         source_language, {target_language: {"D1": [], "D2": []}}
                     )
+                    global_agreements.setdefault(tool, {})
+                    global_agreements[tool].setdefault(project.split(".")[0], {})
+                    global_agreements[tool][project.split(".")[0]].setdefault(
+                        source_language, {target_language: {"A1": [], "A2": []}}
+                    )
+
+                    if tool_validation == "success" and llm_prediction == "yes":
+                        agreements.append(f"Tool (YES) vs Agent (YES): ID - {item['id']}")
+                        global_agreements[tool][project.split(".")[0]][source_language][target_language]["A1"].append(
+                            item["id"]
+                        )
+
+                    if tool_validation == "failure" and llm_prediction == "no":
+                        agreements.append(f"Tool (NO) vs Agent (NO): ID - {item['id']}")
+                        global_agreements[tool][project.split(".")[0]][source_language][target_language]["A2"].append(
+                            item["id"]
+                        )
 
                     if tool_validation == "success" and llm_prediction == "no":
                         disagreements.append(f"Tool (YES) vs Agent (NO): ID - {item['id']}")
@@ -667,6 +687,7 @@ def main(args):
                 report_content.append(f"Total Tool (NO) vs Agent (YES): {confusion_df.loc['failure', 'yes']}")
                 global_d1 += confusion_df.loc["success", "no"]
                 global_d2 += confusion_df.loc["failure", "yes"]
+                global_a1 += confusion_df.loc["success", "yes"]
                 report_content.append("---" * 50)
                 report_content.append(f"Total Test Repair Agent Errors: {len(test_repair_error)}")
                 report_content.append(f"Total Verdict Agent Errors: {len(verdict_error)}")
@@ -693,6 +714,9 @@ def main(args):
                 report_content.append("---" * 50)
                 report_content.append("Disagreements:")
                 report_content.extend(disagreements)
+                report_content.append("---" * 50)
+                report_content.append("Agreements:")
+                report_content.extend(agreements)
                 report_content.append("---" * 50)
 
                 # Write the report to a .txt file
@@ -771,6 +795,7 @@ def main(args):
     print("}")
     print()
     print(f"Disagreements: [D1: {global_d1}, D2: {global_d2}]")
+    print(f"Agreements: [A1: {global_a1}, A2: {global_failure_agreement}]")
     print(f"Failure Agreement: {global_failure_agreement} [{global_failure_agreement / global_total_methods:.2%}]")
     print(
         f"Newly Covered Fragments: {global_newly_covered_fragments} [{global_newly_covered_fragments / global_total_methods:.2%}]"
@@ -806,6 +831,26 @@ def main(args):
 
     with open(f"reports/{args.agent_name}/disagreements.txt", "w") as f:
         f.writelines("\n".join(sampled))
+
+    sampled_agreements = []
+    for tool, projects in global_agreements.items():
+        for project, languages in projects.items():
+            # One pool per project: all (success,yes) and (failure,no) across language pairs; sample up to 5.
+            pool = []
+            for source_language, targets in languages.items():
+                for target_language, ids in targets.items():
+                    for row_id in ids["A1"]:
+                        pool.append((source_language, target_language, row_id, "A1"))
+                    for row_id in ids["A2"]:
+                        pool.append((source_language, target_language, row_id, "A2"))
+            k = min(5, len(pool))
+            if k == 0:
+                continue
+            for source_language, target_language, row_id, tag in random.sample(pool, k):
+                sampled_agreements.append(f"{tool},{project},{source_language},{target_language},{row_id},{tag}")
+
+    with open(f"reports/{args.agent_name}/agreements.txt", "w") as f:
+        f.writelines("\n".join(sampled_agreements))
 
     plot_confusion_matrix(semantic_analyzer_alignment)
 
