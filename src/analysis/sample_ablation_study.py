@@ -49,6 +49,30 @@ def main(args):
                         ]
                     )
 
+                if (
+                    item[args.agent_name]["output"]["test_repair"]["parsed_final_response"]["is_equivalent"] == "yes"
+                    and item["result"] == "failure"
+                ):
+                    pool.append(
+                        [
+                            item["id"],
+                            item["project"],
+                            tool,
+                        ]
+                    )
+
+                if (
+                    item[args.agent_name]["output"]["test_repair"]["parsed_final_response"]["is_equivalent"] == "no"
+                    and item["result"] == "success"
+                ):
+                    pool.append(
+                        [
+                            item["id"],
+                            item["project"],
+                            tool,
+                        ]
+                    )
+
     project_counts = {}
     for item in pool:
         project = item[1]
