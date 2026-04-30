@@ -15,7 +15,7 @@ bash docker_run.sh <container_name>       # run docker image in a docker contain
 bash docker_shell.sh <container_name>     # open an interactive shell to docker container
 ```
 
-If you want to check our results in the paper, please download and run our docker snapshots from [Zenodo](https://doi.org/10.5281/zenodo.17051107). There are 23 images, each corresponding to a specific project. Each image includes log files, agent trajectories, git branches for every source and target fragment pair.
+If you want to check our results in the paper, please download and run our docker snapshots from [Zenodo](https://doi.org/10.5281/zenodo.17051106). There are 23 images, each corresponding to a specific project. Each image includes log files, agent trajectories, git branches for every source and target fragment pair.
 
 ```bash
 docker load -i <image_name>.tar                                                               # load docker image (.tar file downloaded from Zenodo)
@@ -86,7 +86,7 @@ MatchFixAgent generates patches for incorrect translations. Please execute the f
 bash scripts/run_repair.sh configs/oxidizer/match_agent_oxidizer_checkdigit_go_rust.yaml
 ```
 
-Prior to running the above command, please download and place `original_tool_projects.zip` in the repository directory from [Zenodo](https://doi.org/10.5281/zenodo.17051107).
+Prior to running the above command, please download and place `original_tool_projects.zip` in the repository directory from [Zenodo](https://doi.org/10.5281/zenodo.17051106).
 
 ### RQ3
 
@@ -129,3 +129,7 @@ If you need to experiment with other programming languages not supported by Matc
 ### MCP Servers
 
 MatchFixAgent by default uses one custom MCP server, called `DirectoryTreeExplorer`. If you need to add more MCP servers, please add them under [`src/mcp`](./src/mcp) and configure them in [`claude_mcp_config.json`](./configs/claude_mcp_config.json) and [`codex_mcp_config.toml`](./configs/codex_mcp_config.toml). You may also need to update the [`Claude Memory`](./CLAUDE.local.md) and [`Codex Memory`](./AGENTS.md) files.
+
+## Contact
+
+We look forward to hearing your feedback. Please open an issue for any questions or comments 🙏.
