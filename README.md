@@ -1,6 +1,6 @@
 # MatchFixAgent: Language-Agnostic Autonomous Repository-Level Code Translation Validation and Repair
 
-MatchFixAgent is a language-agnostic neuro-symbolic approach for autonomous repository-level code translation validation and repair. MatchFixAgent leverages static semantic analysis combined with Large Language Model (LLM) agents to validate translations and repair bugs across multiple PLs efficiently. To simplify the problem for LLM agents, MatchFixAgent performs multifaceted semantic analyses—including control-flow and data-flow analyses—to systematically generate targeted tests, enabling demonstration of functional equivalence or detection of semantic bugs.
+MatchFixAgent is a language-agnostic agentic approach for autonomous repository-level code translation validation and repair. MatchFixAgent leverages static semantic analysis combined with Large Language Model (LLM) agents to validate translations and repair bugs across multiple PLs efficiently. To simplify the problem for LLM agents, MatchFixAgent performs various semantic analyses—including control-flow and data-flow analyses—to systematically generate targeted tests, enabling demonstration of functional equivalence or detection of semantic bugs.
 
 ## Docker Container
 
@@ -15,7 +15,7 @@ bash docker_run.sh <container_name>       # run docker image in a docker contain
 bash docker_shell.sh <container_name>     # open an interactive shell to docker container
 ```
 
-If you want to check our results in the paper, please download and run our docker snapshots from [Zenodo](https://doi.org/10.5281/zenodo.17051106). There are 23 images, each corresponding to a specific project. Each image includes log files, agent trajectories, git branches for every source and target fragment pair.
+If you want to check our results in the paper, please download and run our docker snapshots from [Zenodo](https://doi.org/10.5281/zenodo.17051106). The images for main experiments in the paper are inside `main-experiments.zip`. There are 22 images, each corresponding to a specific project. Each image includes log files, agent trajectories, git branches for every source and target fragment pair. The remaining results from rebuttal experiments are inside `rebuttal-experiments.zip`. You can load the images from either zip files using the following commands:
 
 ```bash
 docker load -i <image_name>.tar                                                               # load docker image (.tar file downloaded from Zenodo)
@@ -58,7 +58,7 @@ Furthermore, Codex supports other LLMs, specifically open-source LLMs from [Open
 
 MatchFixAgent depends on well-defined configuaration files to run properly. We provide all configuration files required for reproducing MatchFixAgent results in [configs](./configs).
 
-### RQ1
+### Translation Validation
 
 To run the experiment for translation validation, please execute the following script with the configuration file of your agent, tool and project. For instance, the following runs the experiment for `tool=oxidizer`, `project=checkdigit`, and `agent=match_agent`.
 
@@ -78,7 +78,7 @@ To replay the trajectory of the agent, execute the following script with the tra
 python src/analysis/visualize_trajectory.py <path_to_trajectory_file>
 ```
 
-### RQ2
+### Translation Repair
 
 MatchFixAgent generates patches for incorrect translations. Please execute the following script with the configuration file of your agent, tool and project. For instance, the following runs the experiment for `tool=oxidizer`, `project=checkdigit`, and `agent=match_agent`.
 
@@ -88,7 +88,7 @@ bash scripts/run_repair.sh configs/oxidizer/match_agent_oxidizer_checkdigit_go_r
 
 Prior to running the above command, please download and place `original_tool_projects.zip` in the repository directory from [Zenodo](https://doi.org/10.5281/zenodo.17051106).
 
-### RQ3
+### Development Cost and Adaptability
 
 To show the adaptability of MatchFixAgent with other LLM agents and models, we use OpenAI Codex and `o4-mini-2025-04-16`. Please execute the following script with the configuration file of your agent, tool and project. For instance, the following runs the experiment for `tool=oxidizer`, `project=checkdigit`, and `agent=openai_agent`.
 
@@ -98,7 +98,7 @@ bash scripts/run_validation.sh configs/oxidizer/openai_agent_oxidizer_checkdigit
 
 This experiment only focus on up to 4 samples from every project. If you need to run the experiment on all samples, please make necessary changes in [`sample_openai_study`](./src/analysis/sample_openai_study.py) file.
 
-### RQ4
+### Ablation Study
 
 To evaluate the impact of different components in MatchFixAgent, we perform an ablation study and run the Claude agent by itself without semantic analyses and targeted test generation. Please execute the following script with the configuration file of your agent, tool and project. For instance, the following runs the experiment for `tool=oxidizer`, `project=checkdigit`, and `agent=base_agent`.
 
@@ -129,6 +129,20 @@ If you need to experiment with other programming languages not supported by Matc
 ### MCP Servers
 
 MatchFixAgent by default uses one custom MCP server, called `DirectoryTreeExplorer`. If you need to add more MCP servers, please add them under [`src/mcp`](./src/mcp) and configure them in [`claude_mcp_config.json`](./configs/claude_mcp_config.json) and [`codex_mcp_config.toml`](./configs/codex_mcp_config.toml). You may also need to update the [`Claude Memory`](./CLAUDE.local.md) and [`Codex Memory`](./AGENTS.md) files.
+
+## Citation
+
+If you find MatchFixAgent useful in your research, please cite our paper:
+
+```bibtex
+@inproceedings{ibrahimzada2026matchfixagent,
+	title        = {MatchFixAgent: Language-Agnostic Autonomous Repository-Level Code Translation Validation and Repair},
+	author       = {Ibrahimzada, Ali Reza and Paulsen, Brandon and Jabbarvand, Reyhaneh and Dodds, Joey and Kroening, Daniel},
+	year         = 2026,
+	booktitle    = {Forty-third International Conference on Machine Learning},
+	url          = {https://openreview.net/forum?id=MuyXpH3GL1}
+}
+```
 
 ## Contact
 
