@@ -4,5 +4,4 @@ if [ "${PWD: -10}" != "docker-env" ]; then
     exit 1
 fi
 
-
 docker build -t matchfixagent -f ./Dockerfile ..

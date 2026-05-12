@@ -15,7 +15,7 @@ bash docker_run.sh <container_name>       # run docker image in a docker contain
 bash docker_shell.sh <container_name>     # open an interactive shell to docker container
 ```
 
-If you want to check our results in the paper, please download and run our docker snapshots from [Zenodo](https://doi.org/10.5281/zenodo.17051106). The images for main experiments in the paper are inside `main-experiments.zip`. There are 22 images, each corresponding to a specific project. Each image includes log files, agent trajectories, git branches for every source and target fragment pair. The remaining results from rebuttal experiments are inside `rebuttal-experiments.zip`. You can load the images from either zip files using the following commands:
+If you want to check our results in the paper, please download and run our docker snapshots from [Zenodo](https://doi.org/10.5281/zenodo.17051106). The images for main experiments in the paper are inside `main-experiments.zip` (requires ~170GB of disk space when unzipped). There are 22 images, each corresponding to a specific project. Each image includes log files, agent trajectories, git branches for every source and target fragment pair. The remaining results from rebuttal experiments are inside `rebuttal-experiments.zip` (requires ~485GB of disk space when unzipped). You can load the images from either zip files using the following commands:
 
 ```bash
 docker load -i <image_name>.tar                                                               # load docker image (.tar file downloaded from Zenodo)
