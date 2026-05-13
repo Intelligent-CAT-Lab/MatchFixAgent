@@ -24,6 +24,9 @@ docker run --name <container_name> -d -t <image_name>                           
 docker exec -it -w /workspace -e NODE_PATH=/usr/lib/node_modules <container_name> /bin/bash   # open an interactive shell to docker container
 ```
 
+> [!NOTE]
+> Due to space limitations on Zenodo, we have not included the images for (1) dispute samples ablation and (2) threshold=0.9 and threshold=0.5 experiments for incubator-milagro-crypto project. Please create an issue if you need these images and we will find a way to share them.
+
 ## Credentials
 
 ### Claude Code
